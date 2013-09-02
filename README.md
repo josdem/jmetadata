@@ -26,3 +26,6 @@ In FeaturesInDevelopment section you can take a look about what we're thinking a
 It requires Java JRE 1.6. JMetadata has been developed with Windows 7, Linux Ubuntu 12.10 And Mac 10.6.8.
 
 “As we enjoy great advantages from inventions of others, we should be glad of an opportunity to serve others by any invention of ours; and this we should do freely and generously.” Benjamin Franklin
+
+
+Download page: https://code.google.com/p/jaudioscrobbler/downloads/list
