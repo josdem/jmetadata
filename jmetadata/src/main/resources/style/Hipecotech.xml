@@ -1,0 +1,2268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synth>
+	<!-- ******************************************************************************** 
+		* Default Style 
+	******************************************************************************** -->
+	<style id="defaultStyle">
+		<font id="defaultFont" name="Dialog" size="12" />
+		<font id="defaultWhiteFont" name="Dialog" size="11" style="BOLD">
+			<color id="whiteFont" value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</font>
+		<font id="plainFont" name="Dialog" size="11" style="PLAIN" />
+		<defaultsProperty key="plainFont" type="idref" value="plainFont" />
+		<state>
+			<color id="defaultBgDescPanel" value="#4D4D4D" type="BACKGROUND" />
+			<color id="defaultBg" value="#D2D2D2" type="BACKGROUND" />
+			<color id="defaultFg" value="BLACK" type="FOREGROUND" />
+			<color id="whiteBg" value="#BEBEBE" type="BACKGROUND" />
+			<color id="whiteFg" value="#BEBEBE" type="BACKGROUND" />
+			<color id="scrollCornerBg" value="#EBF0F5" type="BACKGROUND" />
+		</state>
+	</style>
+	<bind style="defaultStyle" type="region" key=".*" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray505050">
+		<int>50</int>
+		<int>50</int>
+		<int>50</int>
+	</object>
+	<defaultsProperty key="Color.gray505050" type="idref"
+		value="gray505050" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray646464">
+		<int>64</int>
+		<int>64</int>
+		<int>64</int>
+	</object>
+	<defaultsProperty key="Color.gray646464" type="idref"
+		value="gray646464" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray727272">
+		<int>72</int>
+		<int>72</int>
+		<int>72</int>
+	</object>
+	<defaultsProperty key="Color.gray727272" type="idref"
+		value="gray727272" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray252_252_252">
+		<int>252</int>
+		<int>252</int>
+		<int>252</int>
+	</object>
+	<defaultsProperty key="Color.gray252_252_252" type="idref"
+		value="gray252_252_252" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray240_240_240">
+		<int>240</int>
+		<int>240</int>
+		<int>240</int>
+	</object>
+	<defaultsProperty key="Color.gray240_240_240" type="idref"
+		value="gray240_240_240" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="searchFontColor">
+		<int>50</int>
+		<int>15</int>
+		<int>50</int>
+	</object>
+	<defaultsProperty key="Search.fontColor" type="idref"
+		value="searchFontColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="tableGridColor">
+		<int>77</int>
+		<int>77</int>
+		<int>77</int>
+	</object>
+	<defaultsProperty key="Table.gridColor" type="idref"
+		value="tableGridColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray170_170_170">
+		<int>170</int>
+		<int>170</int>
+		<int>170</int>
+	</object>
+	<defaultsProperty key="Color.gray170_170_170" type="idref"
+		value="gray170_170_170" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="grid150_150_150">
+		<int>150</int>
+		<int>150</int>
+		<int>150</int>
+	</object>
+	<defaultsProperty key="Color.grid150_150_150" type="idref"
+		value="grid150_150_150" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="clearGray245_245_245">
+		<int>245</int>
+		<int>245</int>
+		<int>245</int>
+	</object>
+	<defaultsProperty key="Color.clearGray245_245_245"
+		type="idref" value="clearGray245_245_245" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="white255_255_255">
+		<int>255</int>
+		<int>255</int>
+		<int>255</int>
+	</object>
+	<defaultsProperty key="Color.white255_255_255" type="idref"
+		value="white255_255_255" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="blue175_205_225">
+		<int>175</int>
+		<int>205</int>
+		<int>225</int>
+	</object>
+	<defaultsProperty key="Color.blue175_205_225" type="idref"
+		value="blue175_205_225" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray77_77_77">
+		<int>77</int>
+		<int>77</int>
+		<int>77</int>
+	</object>
+	<defaultsProperty key="Color.gray77_77_77" type="idref"
+		value="gray77_77_77" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray210_210_210">
+		<int>210</int>
+		<int>210</int>
+		<int>210</int>
+	</object>
+	<defaultsProperty key="Color.gray210_210_210" type="idref"
+		value="gray210_210_210" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="tableReferenceTrackForegroundColor">
+		<int>130</int>
+		<int>130</int>
+		<int>130</int>
+	</object>
+	<defaultsProperty key="Table.foregroundReferenceTrackColor"
+		type="idref" value="tableReferenceTrackForegroundColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="mailTableAlternateColor">
+		<int>240</int>
+		<int>239</int>
+		<int>239</int>
+	</object>
+	<defaultsProperty key="mailTable.alternateColor" type="idref"
+		value="mailTableAlternateColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="mailSelectedColor">
+		<int>200</int>
+		<int>200</int>
+		<int>200</int>
+	</object>
+	<defaultsProperty key="mailTable.selectedColor" type="idref"
+		value="mailSelectedColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="mailTableHeaderColor">
+		<int>224</int>
+		<int>224</int>
+		<int>224</int>
+	</object>
+	<defaultsProperty key="mailTable.headerColor" type="idref"
+		value="mailTableHeaderColor"></defaultsProperty>
+
+	<object class="javax.swing.plaf.ColorUIResource" id="mailTableBorderColor">
+		<int>149</int>
+		<int>149</int>
+		<int>149</int>
+	</object>
+	<defaultsProperty key="mailTable.borderColor" type="idref"
+		value="mailTableBorderColor" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple8233117">
+		<int>82</int>
+		<int>33</int>
+		<int>117</int>
+	</object>
+	<defaultsProperty key="Color.purple8233117" type="idref"
+		value="purple8233117" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple704090">
+		<int>70</int>
+		<int>40</int>
+		<int>90</int>
+	</object>
+	<defaultsProperty key="Color.purple704090" type="idref"
+		value="purple704090" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple143_91_177">
+		<int>143</int>
+		<int>91</int>
+		<int>177</int>
+	</object>
+	<defaultsProperty key="Color.purple143_91_177" type="idref"
+		value="purple143_91_177" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="color_240_240_240">
+		<int>240</int>
+		<int>240</int>
+		<int>240</int>
+	</object>
+	<defaultsProperty key="Color.240_240_240" type="idref"
+		value="color_240_240_240" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple12040140">
+		<int>120</int>
+		<int>40</int>
+		<int>140</int>
+	</object>
+	<defaultsProperty key="Color.purple12040140" type="idref"
+		value="purple12040140" />
+
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray909090">
+		<int>90</int>
+		<int>90</int>
+		<int>90</int>
+	</object>
+	<defaultsProperty key="Color.gray909090" type="idref"
+		value="gray909090" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="color_51_17_41">
+		<int>51</int>
+		<int>17</int>
+		<int>41</int>
+	</object>
+	<defaultsProperty key="Color.color_51_17_41" type="idref"
+		value="color_51_17_41" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple662D91">
+		<int>102</int>
+		<int>45</int>
+		<int>145</int>
+	</object>
+	<defaultsProperty key="Color.purple662D91" type="idref"
+		value="purple662D91" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple12040140">
+		<int>120</int>
+		<int>40</int>
+		<int>140</int>
+	</object>
+	<defaultsProperty key="Color.purple12040140" type="idref"
+		value="purple12040140" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple8030110">
+		<int>80</int>
+		<int>30</int>
+		<int>110</int>
+	</object>
+	<defaultsProperty key="Color.purple8030110" type="idref"
+		value="purple8030110" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="black515151">
+		<int>51</int>
+		<int>51</int>
+		<int>51</int>
+	</object>
+	<defaultsProperty key="Color.black515151" type="idref"
+		value="black515151" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="blue160200240">
+		<int>160</int>
+		<int>200</int>
+		<int>240</int>
+	</object>
+	<defaultsProperty key="Color.blue160200240" type="idref"
+		value="blue160200240" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="gray190_190_190">
+		<int>190</int>
+		<int>190</int>
+		<int>190</int>
+	</object>
+	<defaultsProperty key="Color.gray190_190_190" type="idref"
+		value="gray190_190_190" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="purple149_128_174">
+		<int>149</int>
+		<int>128</int>
+		<int>174</int>
+	</object>
+	<defaultsProperty key="Color.purple149_128_174" type="idref"
+		value="purple149_128_174" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="treeBackgroundColor">
+		<int>235</int>
+		<int>240</int>
+		<int>245</int>
+	</object>
+
+	<imageIcon id="createAccountBullet" path="/images/login/createAccountBullet.png" />
+
+	<defaultsProperty key="icons.createAccountBullet"
+		type="idref" value="createAccountBullet" />
+
+	<imageIcon id="loaderAnimationFrame1" path="/images/loader/loader0001.png" />
+	<imageIcon id="loaderAnimationFrame2" path="/images/loader/loader0002.png" />
+	<imageIcon id="loaderAnimationFrame3" path="/images/loader/loader0003.png" />
+	<imageIcon id="loaderAnimationFrame4" path="/images/loader/loader0004.png" />
+	<imageIcon id="loaderAnimationFrame5" path="/images/loader/loader0005.png" />
+	<imageIcon id="loaderAnimationFrame6" path="/images/loader/loader0006.png" />
+	<imageIcon id="loaderAnimationFrame7" path="/images/loader/loader0007.png" />
+	<imageIcon id="loaderAnimationFrame8" path="/images/loader/loader0008.png" />
+	<imageIcon id="loaderAnimationFrame9" path="/images/loader/loader0009.png" />
+	<imageIcon id="loaderAnimationFrame10" path="/images/loader/loader0010.png" />
+	<imageIcon id="loaderAnimationFrame11" path="/images/loader/loader0011.png" />
+	<imageIcon id="loaderAnimationFrame12" path="/images/loader/loader0012.png" />
+	<imageIcon id="loaderAnimationFrame13" path="/images/loader/loader0013.png" />
+	<imageIcon id="loaderAnimationFrame14" path="/images/loader/loader0014.png" />
+	<imageIcon id="loaderAnimationFrame15" path="/images/loader/loader0015.png" />
+	<imageIcon id="loaderAnimationFrame16" path="/images/loader/loader0016.png" />
+	<imageIcon id="loaderAnimationFrame17" path="/images/loader/loader0017.png" />
+	<imageIcon id="loaderAnimationFrame18" path="/images/loader/loader0018.png" />
+	<imageIcon id="loaderAnimationFrame19" path="/images/loader/loader0019.png" />
+	<imageIcon id="loaderAnimationFrame20" path="/images/loader/loader0020.png" />
+	<imageIcon id="loaderAnimationFrame21" path="/images/loader/loader0021.png" />
+	<imageIcon id="loaderAnimationFrame22" path="/images/loader/loader0022.png" />
+	<imageIcon id="loaderAnimationFrame23" path="/images/loader/loader0023.png" />
+	<imageIcon id="loaderAnimationFrame24" path="/images/loader/loader0024.png" />
+	<imageIcon id="loaderAnimationFrame25" path="/images/loader/loader0025.png" />
+	<imageIcon id="loaderAnimationFrame26" path="/images/loader/loader0026.png" />
+	<imageIcon id="loaderAnimationFrame27" path="/images/loader/loader0027.png" />
+	<imageIcon id="loaderAnimationFrame28" path="/images/loader/loader0028.png" />
+	<imageIcon id="loaderAnimationFrame29" path="/images/loader/loader0029.png" />
+	<imageIcon id="loaderAnimationFrame30" path="/images/loader/loader0030.png" />
+	<imageIcon id="loaderAnimationFrame31" path="/images/loader/loader0031.png" />
+	<imageIcon id="loaderAnimationFrame32" path="/images/loader/loader0032.png" />
+	<imageIcon id="loaderAnimationFrame33" path="/images/loader/loader0033.png" />
+	<imageIcon id="loaderAnimationFrame34" path="/images/loader/loader0034.png" />
+	<imageIcon id="loaderAnimationFrame35" path="/images/loader/loader0035.png" />
+	<imageIcon id="loaderAnimationFrame36" path="/images/loader/loader0036.png" />
+	<imageIcon id="loaderAnimationFrame37" path="/images/loader/loader0037.png" />
+	<imageIcon id="loaderAnimationFrame38" path="/images/loader/loader0038.png" />
+	<imageIcon id="loaderAnimationFrame39" path="/images/loader/loader0039.png" />
+	<imageIcon id="loaderAnimationFrame40" path="/images/loader/loader0040.png" />
+
+	<defaultsProperty key="icons.loaderAnimationFrame1" type="idref" value="loaderAnimationFrame1" />
+	<defaultsProperty key="icons.loaderAnimationFrame2" type="idref" value="loaderAnimationFrame2" />
+	<defaultsProperty key="icons.loaderAnimationFrame3" type="idref" value="loaderAnimationFrame3" />
+	<defaultsProperty key="icons.loaderAnimationFrame4" type="idref" value="loaderAnimationFrame4" />
+	<defaultsProperty key="icons.loaderAnimationFrame5" type="idref" value="loaderAnimationFrame5" />
+	<defaultsProperty key="icons.loaderAnimationFrame6" type="idref" value="loaderAnimationFrame6" />
+	<defaultsProperty key="icons.loaderAnimationFrame7" type="idref" value="loaderAnimationFrame7" />
+	<defaultsProperty key="icons.loaderAnimationFrame8" type="idref" value="loaderAnimationFrame8" />
+	<defaultsProperty key="icons.loaderAnimationFrame9" type="idref" value="loaderAnimationFrame9" />
+	<defaultsProperty key="icons.loaderAnimationFrame10" type="idref" value="loaderAnimationFrame10" />
+	<defaultsProperty key="icons.loaderAnimationFrame11" type="idref" value="loaderAnimationFrame11" />
+	<defaultsProperty key="icons.loaderAnimationFrame12" type="idref" value="loaderAnimationFrame12" />
+	<defaultsProperty key="icons.loaderAnimationFrame13" type="idref" value="loaderAnimationFrame13" />
+	<defaultsProperty key="icons.loaderAnimationFrame14" type="idref" value="loaderAnimationFrame14" />
+	<defaultsProperty key="icons.loaderAnimationFrame15" type="idref" value="loaderAnimationFrame15" />
+	<defaultsProperty key="icons.loaderAnimationFrame16" type="idref" value="loaderAnimationFrame16" />
+	<defaultsProperty key="icons.loaderAnimationFrame17" type="idref" value="loaderAnimationFrame17" />
+	<defaultsProperty key="icons.loaderAnimationFrame18" type="idref" value="loaderAnimationFrame18" />
+	<defaultsProperty key="icons.loaderAnimationFrame19" type="idref" value="loaderAnimationFrame19" />
+	<defaultsProperty key="icons.loaderAnimationFrame20" type="idref" value="loaderAnimationFrame20" />
+	<defaultsProperty key="icons.loaderAnimationFrame21" type="idref" value="loaderAnimationFrame21" />
+	<defaultsProperty key="icons.loaderAnimationFrame22" type="idref" value="loaderAnimationFrame22" />
+	<defaultsProperty key="icons.loaderAnimationFrame23" type="idref" value="loaderAnimationFrame23" />
+	<defaultsProperty key="icons.loaderAnimationFrame24" type="idref" value="loaderAnimationFrame24" />
+	<defaultsProperty key="icons.loaderAnimationFrame25" type="idref" value="loaderAnimationFrame25" />
+	<defaultsProperty key="icons.loaderAnimationFrame26" type="idref" value="loaderAnimationFrame26" />
+	<defaultsProperty key="icons.loaderAnimationFrame27" type="idref" value="loaderAnimationFrame27" />
+	<defaultsProperty key="icons.loaderAnimationFrame28" type="idref" value="loaderAnimationFrame28" />
+	<defaultsProperty key="icons.loaderAnimationFrame29" type="idref" value="loaderAnimationFrame29" />
+	<defaultsProperty key="icons.loaderAnimationFrame30" type="idref" value="loaderAnimationFrame30" />
+	<defaultsProperty key="icons.loaderAnimationFrame31" type="idref" value="loaderAnimationFrame31" />
+	<defaultsProperty key="icons.loaderAnimationFrame32" type="idref" value="loaderAnimationFrame32" />
+	<defaultsProperty key="icons.loaderAnimationFrame33" type="idref" value="loaderAnimationFrame33" />
+	<defaultsProperty key="icons.loaderAnimationFrame34" type="idref" value="loaderAnimationFrame34" />
+	<defaultsProperty key="icons.loaderAnimationFrame35" type="idref" value="loaderAnimationFrame35" />
+	<defaultsProperty key="icons.loaderAnimationFrame36" type="idref" value="loaderAnimationFrame36" />
+	<defaultsProperty key="icons.loaderAnimationFrame37" type="idref" value="loaderAnimationFrame37" />
+	<defaultsProperty key="icons.loaderAnimationFrame38" type="idref" value="loaderAnimationFrame38" />
+	<defaultsProperty key="icons.loaderAnimationFrame39" type="idref" value="loaderAnimationFrame39" />
+	<defaultsProperty key="icons.loaderAnimationFrame40" type="idref" value="loaderAnimationFrame40" />
+
+	<defaultsProperty key="Tree.background" type="idref" value="treeBackgroundColor" />
+
+	<style id="boldItalicFont12Purple320f32Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD ITALIC" />
+			<color value="#320f32" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont12Purple320f32Style" type="NAME" key="boldItalicFont12Purple320f32" />
+
+	<style id="tooltip" clone="defaultStyle">
+		<insets top="2" left="10" bottom="2" right="10" />
+		<state>
+			<font name="dialog" size="11" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+			<imagePainter method="tooltipBackground" path="/images/tooltip/tooltip.png"
+				sourceInsets="5 10 5 10" />
+		</state>
+	</style>
+	<bind style="tooltip" type="region" key="ToolTip" />
+
+	<style id="backPanelStyle">
+		<opaque value="TRUE" />
+		<state>
+			<imagePainter method="RootPaneBackground" path="/images/dialog/BackPanel.png"
+				sourceInsets="25 25 14 14" />
+			<color idref="defaultBg" type="BACKGROUND" />
+		</state>
+	</style>
+	<bind style="backPanelStyle" type="name" key="RootPane" />
+
+	<style id="backgroundPanelStyle">
+		<opaque value="TRUE" />
+		<state>
+			<color idref="defaultBgDescPanel" type="BACKGROUND" />
+		</state>
+	</style>
+	<bind style="backgroundPanelStyle" type="name" key="backgroundPanel" />
+
+	<style id="popUpMenuStyle">
+		<opaque value="TRUE"></opaque>
+		<font idref="defaultFont" />
+		<insets top="3" left="0" bottom="3" right="0"></insets>
+		<state>
+			<imagePainter method="popupMenuBorder"
+				path="/images/menu/PopUpMenuBackground.png" sourceInsets="4 4 4 4" />
+		</state>
+	</style>
+	<bind style="popUpMenuStyle" type="region" key="PopUpMenu" />
+
+	<style id="popUpMenuSeparatorStyle">
+		<property key="Separator.thickness" type="integer" value="1" />
+		<state>
+			<imagePainter method="separatorBackground" path="/images/menu/separador.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="popUpMenuSeparatorStyle" type="region" key="PopupMenuSeparator" />
+
+	<!-- Define Arroy Up and Down from scrollbars -->
+	<style id="scrollBarArrowStyle">
+		<state>
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/SB H Up Arrow.png" center="true" direction="north" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/SB H Down Arrow.png" center="true"
+				direction="south" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/Scrollbar Arrow_Left.png" center="true"
+				direction="west" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/Scrollbar Arrow_Right.png" center="true"
+				direction="east" />
+		</state>
+		<state value="PRESSED">
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/SB H Up Arrow Pressed.png" center="true"
+				direction="north" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/SB H Down Arrow Pressed.png" center="true"
+				direction="south" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/Left Arrow Pressed.png" center="true"
+				direction="west" />
+			<imagePainter method="arrowButtonForeground"
+				path="/images/scrollbar/Right Arrow Pressed.png" center="true"
+				direction="east" />
+		</state>
+	</style>
+	<bind style="scrollBarArrowStyle" type="name" key="ScrollBar.button" />
+
+	<!-- Define Scroll object Style -->
+	<style id="scrollBarThumbStyle">
+		<state>
+			<imagePainter method="scrollBarThumbBackground"
+				direction="horizontal" path="/images/scrollbar/ScollbarH Slider.png"
+				sourceInsets="0 7 0 7" />
+			<imagePainter method="scrollBarThumbBackground"
+				direction="vertical" path="/images/scrollbar/SB V Scrollbar Slider.png"
+				sourceInsets="7 0 7 0" />
+		</state>
+		<state value="MOUSE_OVER">
+			<imagePainter method="scrollBarThumbBackground"
+				direction="horizontal" path="/images/scrollbar/ScollbarH Slider.png"
+				sourceInsets="0 7 0 7" />
+			<imagePainter method="scrollBarThumbBackground"
+				direction="vertical" path="/images/scrollbar/SB V Scrollbar Slider.png"
+				sourceInsets="7 0 7 0" />
+		</state>
+		<state value="DISABLED">
+		</state>
+	</style>
+	<bind style="scrollBarThumbStyle" type="REGION" key="ScrollBarThumb" />
+
+
+	<!-- Define BackGround from Scrollbar -->
+	<style id="scrollbarTrackStyle">
+		<state>
+			<imagePainter method="scrollBarTrackBackground"
+				path="/images/scrollbar/ScrollbarH Background.png" direction="horizontal"
+				sourceInsets="1 1 1 1" />
+			<imagePainter method="scrollBarTrackBackground"
+				path="/images/scrollbar/SB Scrollbar Background.png" direction="vertical"
+				sourceInsets="1 1 1 1" />
+		</state>
+	</style>
+	<bind style="scrollbarTrackStyle" type="REGION" key="ScrollBarTrack" />
+
+	<!-- Define style for a scrollbar -->
+	<style id="scrollBarStyle">
+		<property key="ScrollBar.thumbHeight" type="Integer" value="12" />
+		<property key="ScrollBar.width" type="Integer" value="12" />
+		<property key="ScrollBar.squareButtons" type="Boolean" value="true" />
+	</style>
+	<bind style="scrollBarStyle" type="REGION" key="ScrollBar" />
+
+	<style id="List">
+		<insets top="0" left="5" bottom="0" right="0" />
+		<property key="List.rendererUseUIBorder" type="boolean"
+			value="true" />
+		<property key="List.rendererUseListColors" type="boolean"
+			value="true" />
+		<state value="SELECTED">
+			<color type="TEXT_FOREGROUND" value="#000000" />
+			<color type="TEXT_BACKGROUND" value="#CCCCCC" />
+		</state>
+		<state value="ENABLED">
+			<color type="BACKGROUND" value="#FFFFFF" />
+		</state>
+		<state value="DISABLED">
+			<color type="BACKGROUND" value="#EEE0D0" />
+		</state>
+	</style>
+	<bind style="List" type="region" key="List" />
+
+	<style id="boldItalicFont11Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD ITALIC" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME" key="boldItalicFont11Gray77_77_77" />
+
+	<style id="artistTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="artistTextFieldStyle" type="name" key="artistTextField" />
+
+	<style id="albumTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="albumTextFieldStyle" type="name" key="albumTextField" />
+
+	<style id="genreTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="genreTextFieldStyle" type="name" key="genreTextField" />
+
+	<style id="yearTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="yearTextFieldStyle" type="name" key="yearTextField" />
+
+	<style id="tracksTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="tracksTextFieldStyle" type="name" key="tracksTextField" />
+
+	<style id="cdTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="cdTextFieldStyle" type="name" key="cdTextField" />
+
+	<style id="cdsTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="cdsTextFieldStyle" type="name" key="cdsTextField" />
+
+	<style id="infoAlertIcon">
+		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
+		<defaultsProperty key="Info.alertIcon" type="idref" value="alertIcon" />
+	</style>
+
+	<style id="menuBarStyle">
+		<insets top="0" left="16" bottom="0" right="0" />
+		<state>
+			<imagePainter method="menuBarBackground" path="/images/menu/MenuBar.png"
+				sourceInsets="1 13 0 13" />
+		</state>
+	</style>
+	<bind style="menuBarStyle" type="REGION" key="menuBar" />
+
+	<style id="loginMenuBarStyle">
+		<insets top="0" left="16" bottom="0" right="0" />
+		<state>
+			<imagePainter method="menuBarBackground"
+				path="/images/menu/loginMenuBarBackground.png" sourceInsets="1 13 0 13" />
+		</state>
+	</style>
+	<bind style="loginMenuBarStyle" type="NAME" key="loginMenuBar" />
+
+	<style id="menuParentStyle">
+		<state value="SELECTED">
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+			<imagePainter method="menuBackground" path="/images/menu/MenuItemOver.png"
+				sourceInsets="0 3 0 3" />
+		</state>
+		<state>
+			<insets top="1" left="8" bottom="1" right="5"></insets>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="#c5c6c8" type="FOREGROUND" />
+			<color value="#4d4d4d" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="menuParentStyle" type="NAME" key="parentMenu" />
+
+	<style id="menuItemStyle">
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+			<imagePainter method="menuItemBackground" path="/images/menu/MenuItemOver.png"
+				sourceInsets="0 3 0 3" />
+		</state>
+		<state value="DISABLED">
+			<color value="GRAY" type="FOREGROUND" />
+			<color value="GRAY" type="TEXT_FOREGROUND" />
+			<font name="Dialog" size="10" style="PLAIN" />
+		</state>
+		<state>
+			<insets top="1" left="8" bottom="1" right="5"></insets>
+			<color value="BLACK" type="FOREGROUND" />
+			<color value="#4d4d4d" type="TEXT_FOREGROUND" />
+			<font name="Dialog" size="10" style="PLAIN" />
+		</state>
+	</style>
+	<bind style="menuItemStyle" type="REGION" key="menuItem" />
+
+	<style id="menuAcceleratorStyle">
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="10" style="BOLD" />
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="GRAY" type="TEXT_FOREGROUND" />
+		</state>
+		<state>
+			<insets top="5" left="0" bottom="5" right="8"></insets>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="BLACK" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="menuAcceleratorStyle" type="REGION" key="MenuItemAccelerator" />
+
+	<style id="progresSliderStyle">
+		<property key="Slider.thumbWidth" type="Integer" value="6" />
+		<property key="Slider.thumbHeight" type="Integer" value="6" />
+		<property key="Slider.trackBorder" type="Integer" value="0" />
+		<property key="Slider.paintValue" type="Boolean" value="false" />
+		<insets top="1" left="1" right="1" bottom="1" />
+		<state>
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgresSliderPainter" />
+			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
+			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
+		</state>
+	</style>
+	<bind style="progresSliderStyle" type="name" key="progresSlider" />
+
+	<style id="dragIconNotAllowedStyle">
+		<!-- opaque value="FALSE" /> -->
+		<state>
+			<imagePainter method="labelBackground"
+				path="/images/dnd/drag-not-allowed-icon.png" sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="dragIconNotAllowedStyle" type="name" key="dragNotPermitted" />
+	<style id="dragIconPermittedStyle">
+		<state>
+			<imagePainter method="labelBackground" path="/images/dnd/drag-allow-icon.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="dragIconPermittedStyle" type="name" key="dragPermitted" />
+	<style id="dragPanelPermittedStyle">
+		<state>
+			<imagePainter method="labelBackground" path="/images/dnd/drag-allow-icon.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="dragPanelPermittedStyle" type="name" key="dragPermittedPanel" />
+	<style id="trackIconDragStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/images/dnd/drag-track.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="trackIconDragStyle" type="name" key="dragTrack" />
+
+	<style id="playlistIconDragStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/images/dnd/drag-playlist.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="playlistIconDragStyle" type="name" key="dragPlaylist" />
+	<style id="folderIconDragStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/images/dnd/drag-folder.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="folderIconDragStyle" type="name" key="dragFolder" />
+	<style id="dragDialogStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="9 9 7 7"
+				path="/images/dnd/drag-box.png" />
+		</state>
+	</style>
+	<bind style="dragDialogStyle" type="name" key="dragDialog" />
+
+	<style id="dragContactDialogStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="6 6 6 6"
+				path="/images/dnd/drag-box.png" />
+		</state>
+	</style>
+	<bind style="dragContactDialogStyle" type="name" key="dragContactDialog" />
+
+	<style id="plainFont11Dark_GrayStyle">
+		<font name="Label" size="11" />
+		<state>
+			<color value="DARK_GRAY" type="FOREGROUND" />
+			<color value="DARK_GRAY" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Dark_GrayStyle" type="name" key="plainFont11Dark_Gray" />
+
+	<style id="closeWindowButtonStyle">
+		<state>
+			<imagePainter method="buttonBackground"
+				path="/images/window/Close Window Button.png" sourceInsets="0 15 0 15" />
+		</state>
+	</style>
+	<bind style="closeWindowButtonStyle" type="name" key="closeButton" />
+
+	<style id="closeDialogButtonStyle">
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground"
+				path="/images/dialog/closeDialogPressed.png" sourceInsets="1 1 1 1" />
+		</state>
+		<state>
+			<imagePainter method="buttonBackground"
+				path="/images/dialog/closeDialogNormal.png" sourceInsets="1 1 1 1" />
+		</state>
+	</style>
+	<bind style="closeDialogButtonStyle" type="name" key="closeDialogButton" />
+
+	<style id="boldFont23Purple130_60_165Style">
+		<state>
+			<font name="Dialog" size="23" style="BOLD" />
+			<color value="#823CA5" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont23Purple130_60_165Style" type="name" key="boldFont23Purple130_60_165" />
+
+	<style id="plainFont12Purple130_60_165Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#823CA5" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple130_60_165Style" type="name" key="plainFont12Purple130_60_165" />
+
+	<style id="myMusicDnDPanelStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
+				path="/images/dnd/myMusicDnDPanel.png" />
+		</state>
+	</style>
+	<bind style="myMusicDnDPanelStyle" type="name" key="myMusicDnDPanel" />
+	
+	<style id="bigDnDImageStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
+				path="/images/dnd/drag_300.png" />
+		</state>
+	</style>
+	<bind style="bigDnDImageStyle" type="name" key="bigDnDImagePanel" />
+	
+	<style id="smallDnDImageStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
+				path="/images/dnd/drag_150.png" />
+		</state>
+	</style>
+	<bind style="smallDnDImageStyle" type="name" key="smallDnDImagePanel" />
+
+	<imageIcon id="myMusicDndArrow" path="/images/dnd/flechaMorada.png" />
+	<defaultsProperty key="icons.myMusicDndArrow" type="idref"
+		value="myMusicDndArrow" />
+
+	<imageIcon id="myMusicDndArrowWhite" path="/images/dnd/flechaBlanca.png" />
+	<defaultsProperty key="icons.myMusicDndArrowWhite" type="idref" value="myMusicDndArrowWhite" />
+
+	<style id="headerBlackPanelStyle">
+		<state>
+			<color id="blackBg" value="BLACK" type="BACKGROUND" />
+		</state>
+	</style>
+
+	<bind style="headerBlackPanelStyle" type="name" key="headerBlackPanel" />
+
+	<style id="TableHeaderStyle">
+		<state>
+			<object id="tableHeaderPanelPainter" class="org.jas.laf.painter.TableHeaderPanelPainter" />
+			<imagePainter method="panelBackground" idref="tableHeaderPanelPainter" />
+		</state>
+	</style>
+	<bind style="TableHeaderStyle" type="name" key="tableHeader" />
+
+	<!-- The style for the list renderer of JComboBox -->
+	<style id="comboBoxListRenderer">
+		<opaque value="true" />
+		<state value="ENABLED">
+			<color type="TEXT_FOREGROUND" value="#000000" />
+		</state>
+		<state value="SELECTED">
+			<color type="TEXT_FOREGROUND" value="#CC6600" />
+			<color type="TEXT_BACKGROUND" value="#FFEEDD" />
+		</state>
+	</style>
+	<bind style="comboBoxListRenderer" type="name" key="ComboBox.listRenderer" />
+
+	<!-- Filechooser -->
+	<style id="importTrackFileChooserStyle">
+		<imageIcon id="upFolderIcon" path="/images/filechooser/up_folder.png" />
+		<imageIcon id="folderIcon" path="/images/filechooser/Folder.png" />
+		<imageIcon id="fileIcon" path="/images/filechooser/music_file.png" />
+
+		<property key="FileChooser.upFolderIcon" value="upFolderIcon" />
+		<property key="FileView.fileIcon" value="fileIcon" />
+		<property key="FileView.directoryIcon" value="folderIcon" />
+	</style>
+	<bind style="importTrackFileChooserStyle" type="region" key="FileChooser" />
+
+	<style id="ButtonStyle">
+		<property key="Button.textShiftOffset" type="integer" value="1" />
+		<insets top="3" left="15" right="15" bottom="3" />
+		<font idref="defaultFont" />
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground"
+				path="/images/button/Disabled Button.png" sourceInsets="0 0 0 0" />
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
+		</state>
+		<state value="ENABLED">
+			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
+				sourceInsets="0 0 0 0" />
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
+		</state>
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground"
+				path="/images/button/Gray Button Pressed.png" sourceInsets="0 0 0 0" />
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
+			<font idref="defaultFont" />
+		</state>
+	</style>
+	<bind style="ButtonStyle" type="name" key="SynthFileChooser.cancelButton" />
+	<bind style="ButtonStyle" type="name" key="SynthFileChooser.approveButton" />
+
+	<style id="highlightTreeNodeStyle">
+		<imageIcon id="highlightTreeNodeIcon" path="/images/dnd/HighlightDragOver.png" />
+		<defaultsProperty key="Tree.highlight" type="idref"
+			value="highlightTreeNodeIcon" />
+	</style>
+
+	<style id="emailFontStyle">
+		<state>
+			<font name="Dialog" size="12" style="BOLD ITALIC" />
+		</state>
+	</style>
+	<bind style="emailFontStyle" type="name" key="emailFont" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="contactTreeHiglightFillColor">
+		<int>193</int>
+		<int>171</int>
+		<int>218</int>
+	</object>
+	<defaultsProperty key="contactTreeHiglightFillColor" type="idref" value="contactTreeHiglightFillColor" />
+
+	<!-- MAIN FRAME Buttons Styles -->
+	<!--style for the close window button -->
+	<style id="closeMainWindowStyle">
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground" path="/images/window/ClosePressed.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+		<state value="MOUSE_OVER">
+			<imagePainter method="buttonBackground" path="/images/window/CloseMouseOver.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground" path="/images/window/CloseDisabled.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+		<state>
+			<imagePainter method="buttonBackground" path="/images/window/CloseNormal.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="closeMainWindowStyle" type="name" key="closeWindowButton" />
+	<!--end style for the close window button -->
+
+	<!--style for the maximize window button -->
+	<style id="maximizeMainWindowStyle">
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MaximizePressed.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state value="MOUSE_OVER">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MaximizeMouseOver.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MaximizeDisabled.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state>
+			<imagePainter method="buttonBackground" path="/images/window/MaximizeNormal.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="maximizeMainWindowStyle" type="name" key="maximizeWindowButton" />
+	<!--end style for the maximize window button -->
+
+	<!--style for the minimize window button -->
+	<style id="minimizeMainWindowStyle">
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MinimizePressed.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state value="MOUSE_OVER">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MinimizeMouseOver.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground"
+				path="/images/window/MinimizeDisabled.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state>
+			<imagePainter method="buttonBackground" path="/images/window/MinimizeNormal.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="minimizeMainWindowStyle" type="name" key="minimizeWindowButton" />
+	<!--end style for the minimize window button -->
+
+	<!--style for the restore window button -->
+	<style id="restoreMainWindowStyle">
+		<state value="PRESSED">
+			<imagePainter method="buttonBackground" path="/images/window/RestorePressed.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+		<state value="MOUSE_OVER">
+			<imagePainter method="buttonBackground"
+				path="/images/window/RestoreMouseOver.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state value="DISABLED">
+			<imagePainter method="buttonBackground"
+				path="/images/window/RestoreDisabled.png" sourceInsets="0 0 0 0" />
+		</state>
+		<state>
+			<imagePainter method="buttonBackground" path="/images/window/RestoreNormal.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="restoreMainWindowStyle" type="name" key="restoreWindowButton" />
+	<!--end style for the minimize window button -->
+
+	<style id="backgroundContentPaneStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/colors/color_777777.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="backgroundContentPaneStyle" type="name" key="backgroundContentPane" />
+
+	<style id="textFieldStyle">
+		<insets left="10" right="10" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/textfield.png"
+				sourceInsets="2 9 2 9" stretch="true" />
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color type="TEXT_BACKGROUND" value="#4D4D4D" />
+		</state>
+	</style>
+	<bind style="textFieldStyle" type="name" key="textField[A-Za-z0-9]*" />
+
+	<style id="textAreaStyle">
+		<insets left="10" right="10" top="5" bottom="5" />
+		<state>
+			<imagePainter method="textAreaBackground" path="/images/textfield/textfield.png"
+				sourceInsets="10 9 10 9" />
+		</state>
+	</style>
+	<bind style="textAreaStyle" type="name" key="textArea[A-Za-z0-9]*" />
+
+	<style id="passwordFieldStyle">
+		<insets left="10" right="10" />
+		<state>
+			<imagePainter method="passwordFieldBackground" path="/images/textfield/textfield.png"
+				sourceInsets="2 9 2 9" stretch="true" />
+		</state>
+	</style>
+	<bind style="passwordFieldStyle" type="name" key="textField[A-Za-z0-9]*" />
+
+	<style id="buttonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray505050" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/images/commons/buttonPressed.png"
+				sourceInsets="0 7 0 7" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray505050" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/images/commons/buttonOver.png"
+				sourceInsets="0 7 0 7" />
+		</state>
+		<state value="FOCUSED">
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray505050" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/images/commons/buttonOver.png"
+				sourceInsets="0 7 0 7" />
+		</state>
+		<state value="SELECTED">
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray505050" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/images/commons/buttonOver.png"
+				sourceInsets="0 7 0 7" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#B2B2B2" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/commons/buttonDisabled.png" sourceInsets="0 7 0 7" />
+		</state>
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#333333" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground" path="/images/commons/buttonNormal.png"
+				sourceInsets="0 7 0 7" />
+		</state>
+	</style>
+	<bind style="buttonStyle" type="name" key="button[A-Za-z0-9]+" />
+
+	<style id="privacyTextAreaStyle">
+		<font name="Dialog" size="10" style="PLAIN" />
+		<state>
+			<imagePainter method="textAreaBackground" path="/colors/color_E5E5E4.png"
+				sourceInsets="0 0 0 0" />
+			<imagePainter method="panelBackground" path="/colors/color_E5E5E4.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="privacyTextAreaStyle" type="name" key="privacyTextArea" />
+
+	<style id="privacyLabelStyle">
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="#969696" type="TEXT_FOREGROUND" />
+		</state>
+		<state>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="privacyLabelStyle" type="name" key="privacyLabel" />
+
+	<style id="plainFont10Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont10Gray77_77_77Style" type="name"
+		key="plainFont10Gray77_77_77" />
+
+	<style id="boldFont14Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="14" style="PLAIN" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Gray77_77_77Style" type="name"
+		key="boldFont14Gray77_77_77" />
+
+	<style id="boldFont11Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Gray77_77_77Style" type="name"
+		key="boldFont11Gray77_77_77" />
+
+	<style id="plainFont11_50_15_50Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" idref="searchFontColor" />
+		</state>
+	</style>
+	<bind style="plainFont11_50_15_50Style" type="name" key="plainFont11_50_15_50" />
+
+	<object class="javax.swing.plaf.ColorUIResource" id="newAccountTextForegroundColor">
+		<int>77</int>
+		<int>77</int>
+		<int>77</int>
+	</object>
+	<defaultsProperty key="newAccount.textForegroundColor" type="idref" value="newAccountTextForegroundColor" />
+
+	<style id="plainFont12Gray51_51_51Style">
+		<font name="Dialog" size="12" style="PLAIN" />
+		<color type="TEXT_FOREGROUND" value="#333333" />
+		<opaque value="FALSE" />
+	</style>
+	<bind style="plainFont12Gray51_51_51Style" type="name" key="plainFont12Gray51_51_51" />
+
+	<style id="roundedBlackTransparentBackgroundLabelStyle">
+		<insets top="5" left="5" right="5" bottom="5" />
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+			<color value="#FFFFFF" type="FOREGROUND" />
+			<imagePainter method="labelBackground" path="/images/dialog/backRoundBg.png"
+				sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="roundedBlackTransparentBackgroundLabelStyle" type="name" key="roundedBlackTransparentBackgroundLabel" />
+
+	<style id="cropPanelStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/images/dialog/backgroundCrop.png"
+				sourceInsets="1 8 1 8" />
+		</state>
+	</style>
+	<bind style="cropPanelStyle" type="name" key="cropPanel" />
+
+	<style id="plaintFont11WhiteStyle">
+		<font name="Dialog" size="11" style="PLAIN" />
+		<state>
+			<color value="WHITE" type="FOREGROUND" />
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plaintFont11WhiteStyle" type="name" key="plaintFont11White" />
+
+	<style id="plainFont11Gray100_100_100Style">
+		<font name="Dialog" size="11" style="PLAIN" />
+		<state>
+			<color value="#646464" type="FOREGROUND" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Gray100_100_100Style" type="name"
+		key="plainFont11Gray100_100_100" />
+
+	<style id="versionTextStyle">
+		<font name="Futura Light Condensed" size="16" style="PLAIN" />
+		<state>
+			<color value="WHITE" type="FOREGROUND" />
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="versionTextStyle" type="name" key="textVersion" />
+
+	<style id="grayRoundedBorderPanelStyle">
+		<state>
+			<imagePainter method="panelBackground"
+				path="/images/dialog/backgroundGris50x50.png" sourceInsets="10 10 10 10" />
+		</state>
+	</style>
+	<bind style="grayRoundedBorderPanelStyle" type="name" key="grayRoundedBorderPanel" />
+
+	<style id="BigProgressBarStyle">
+		<property key="Slider.thumbWidth" type="Integer" value="140" />
+		<property key="Slider.thumbHeight" type="Integer" value="10" />
+		<property key="Slider.trackBorder" type="Integer" value="0" />
+		<property key="Slider.paintValue" type="Boolean" value="false" />
+		<state>
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBigBarPainter" />
+			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
+			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
+		</state>
+	</style>
+	<bind style="BigProgressBarStyle" type="name" key="bigProgressBar" />
+
+	<!-- Styles for the flood search. -->
+	<style id="TableSearchSelectedHeaderStyle">
+		<state>
+			<object id="tableSearchSelectedHeaderPanelPainter"
+				class="org.jas.laf.painter.TableSearchSelectedHeaderPanelPainter" />
+			<imagePainter method="panelBackground"
+				idref="tableSearchSelectedHeaderPanelPainter" />
+		</state>
+	</style>
+
+	<style id="boldFont12Gray100_100_100Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray100_100_100Style" type="name" key="boldFont12Gray100_100_100" />
+
+	<style id="boldFont12Gray110_110_110Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color value="#6E6E6E" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray110_110_110Style" type="name" key="boldFont12Gray110_110_110" />
+
+	<style id="boldFont14Gray100_100_100Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Gray100_100_100Style" type="name" key="boldFont14Gray100_100_100" />
+
+	<style id="boldFont26WhiteStyle">
+		<state>
+			<font name="Dialog" size="26" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont26WhiteStyle" type="name" key="boldFont26White" />
+
+	<style id="boldItalicFont15_73_25_73Style">
+		<state>
+			<font name="Dialog" size="15" style="BOLD ITALIC" />
+			<color value="#491949" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont15_73_25_73Style" type="NAME" key="boldItalicFont15_73_25_73" />
+
+	<style id="plainFont12_80_80_80Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#505050" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12_80_80_80Style" type="NAME" key="plainFont12_80_80_80" />
+
+	<style id="plainFont12_123_119_130Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#7B7782" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12_123_119_130Style" type="name" key="plainFont12_123_119_130" />
+
+	<style id="boldFont14Purple87_63_106Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Purple87_63_106Style" type="name" key="boldFont14Purple87_63_106" />
+
+	<style id="plainFont14_87_63_106Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont14_87_63_106Style" type="name" key="plainFont14_87_63_106" />
+
+	<style id="plainFont16_87_63_106Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont16_87_63_106Style" type="name" key="plainFont16_87_63_106" />
+
+	<style id="plainFont10_107_83_125Style">
+		<state>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color value="#6B537D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont10_107_83_125Style" type="name" key="plainFont10_107_83_125" />
+
+	<style id="plainFont12_107_83_125Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#6B537D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12_107_83_125Style" type="name" key="plainFont12_107_83_125" />
+
+	<style id="plainFont12Gray100_100_100Style">
+		<state>
+			<font name="DIALOG" size="12" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" value="#646464" />
+		</state>
+	</style>
+	<bind style="plainFont12Gray100_100_100Style" type="name" key="plainFont12Gray100_100_100" />
+
+	<style id="boldItalicFont12Gray100_100_100Style">
+		<state>
+			<font name="DIALOG" size="12" style="BOLD ITALIC" />
+			<color type="TEXT_FOREGROUND" value="#646464" />
+		</state>
+	</style>
+	<bind style="boldItalicFont12Gray100_100_100Style" type="name" key="boldItalicFont12Gray100_100_100" />
+
+	<style id="boldFont12Purple102_45_145Style">
+		<state>
+			<font name="DIALOG" size="12" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#662d91" />
+		</state>
+	</style>
+	<bind style="boldFont12Purple102_45_145Style" type="name" key="boldFont12Purple102_45_145" />
+
+	<style id="plainFont12Purple102_45_145Style">
+		<state>
+			<font name="DIALOG" size="12" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" value="#662d91" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple102_45_145Style" type="name" key="plainFont12Purple102_45_145" />
+
+	<style id="boldFont10_180_180_180Style">
+		<state>
+			<font name="DIALOG" size="10" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#b4b4b4" />
+		</state>
+	</style>
+	<bind style="boldFont10_180_180_180Style" type="name" key="boldFont10_180_180_180" />
+
+	<style id="plainFont14Purple102_45_145Style">
+		<state>
+			<font name="Dialog" size="14" style="PLAIN" />
+			<color value="#662D91" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont14Purple102_45_145Style" type="NAME" key="plainFont14Purple102_45_145" />
+
+	<style id="boldFont12Purple90_74_103Style">
+		<font name="Dialog" size="12" style="BOLD" />
+		<state>
+			<color value="#5A4A67" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Purple90_74_103Style" type="name" key="boldFont12Purple90_74_103" />
+
+	<style id="plainFont11Purple90_74_103Style">
+		<font name="Dialog" size="11" />
+		<state>
+			<color value="#5A4A67" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Purple90_74_103Style" type="name" key="plainFont11Purple90_74_103" />
+
+	<style id="separatorPanelStyle">
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
+				path="/images/separator/FilterPanel.png" />
+		</state>
+	</style>
+	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
+
+	<style id="boldFont15Purple87_63_106Style">
+		<state>
+			<font name="Dialog" size="15" style="BOLD" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont15Purple87_63_106Style" type="name" key="boldFont15Purple87_63_106" />
+
+	<style id="plainFont18Purple87_63_106Style">
+		<state>
+			<font name="Dialog" size="18" style="PLAIN" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont18Purple87_63_106Style" type="name" key="plainFont18Purple87_63_106" />
+
+	<style id="plainFont12Purple87_63_106Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#573F6A" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple87_63_106Style" type="name" key="plainFont12Purple87_63_106" />
+
+	<style id="whiteDialogBold12Style">
+		<state>
+			<color value="WHITE" type="TEXT_FOREGROUND" />
+			<font name="Dialog" size="12" style="BOLD" />
+		</state>
+	</style>
+	<bind style="whiteDialogBold12Style" type="name" key="whiteDialogBold12" />
+
+	<style id="boldItalicFont14Purple49_19_49Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD ITALIC" />
+			<color value="#311331" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont14Purple49_19_49Style" type="name" key="boldItalicFont14Purple49_19_49" />
+
+	<style id="purpleDialogBold12Style">
+		<state>
+			<color value="#311331" type="TEXT_FOREGROUND" />
+			<font name="Dialog" size="14" style="BOLD" />
+		</state>
+	</style>
+	<bind style="purpleDialogBold12Style" type="name" key="purpleDialogBold12" />
+
+	<style id="boldItalicFont16Purple49_19_49Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD ITALIC" />
+			<color value="#311331" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont16Purple49_19_49Style" type="name" key="boldItalicFont16Purple49_19_49" />
+
+	<style id="boldFont32Purple8233117Style">
+		<state>
+			<font name="Dialog" size="32" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont32Purple8233117Style" type="name" key="boldFont32Purple8233117" />
+
+	<style id="boldFont30Purple8233117Style">
+		<state>
+			<font name="Dialog" size="30" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont30Purple8233117Style" type="name" key="boldFont30Purple8233117" />
+
+	<style id="boldFont29Purple8233117Style">
+		<state>
+			<font name="Dialog" size="29" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont29Purple8233117Style" type="name" key="boldFont29Purple8233117" />
+
+	<style id="boldFont37Purple8233117Style">
+		<state>
+			<font name="Dialog" size="37" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont37Purple8233117Style" type="name" key="boldFont37Purple8233117" />
+
+	<style id="boldFont28Purple8233117Style">
+		<state>
+			<font name="Dialog" size="28" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont28Purple8233117Style" type="name" key="boldFont28Purple8233117" />
+
+	<style id="plainFont20Purple8030110Style">
+		<state>
+			<font name="Dialog" size="20" style="PLAIN" />
+			<color idref="purple8030110" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont20Purple8030110Style" type="name" key="plainFont20Purple8030110" />
+
+
+	<style id="plainFont12Purple8233117Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple8233117Style" type="name" key="plainFont12Purple8233117" />
+
+	<style id="boldFont16Gray909090Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color idref="gray909090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont16Gray909090Style" type="name" key="boldFont16Gray909090" />
+
+	<style id="boldFont16Purple8233117Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont16Purple8233117Style" type="name" key="boldFont16Purple8233117" />
+
+	<style id="boldFont16Purple704090Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont16Purple704090Style" type="name" key="boldFont16Purple704090" />
+
+	<style id="plainFont15Purple70_40_90Style">
+		<state>
+			<font name="Dialog" size="15" style="PLAIN" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont15Purple70_40_90Style" type="name" key="plainFont15Purple70_40_90" />
+
+	<style id="plainFont12_240_240_240Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color idref="color_240_240_240" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12_240_240_240Style" type="name" key="plainFont12_240_240_240" />
+
+	<style id="boldFont16_240_240_240Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color idref="color_240_240_240" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont16_240_240_240Style" type="name" key="boldFont16_240_240_240" />
+
+	<style id="plainFont16Purple704090Style">
+		<state>
+			<font name="Dialog" size="16" style="PLAIN" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont16Purple704090Style" type="name" key="plainFont16Purple704090" />
+
+	<style id="plainFont11Purple70_40_90Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Purple70_40_90Style" type="name" key="plainFont11Purple70_40_90" />
+
+	<style id="boldFont12Purple143_91_177Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color idref="purple143_91_177" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Purple143_91_177Style" type="name" key="boldFont12Purple143_91_177" />
+
+	<style id="plainFont12Purple70_40_90Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple70_40_90Style" type="name" key="plainFont12Purple70_40_90" />
+
+	<style id="plainFont13Purple70_40_90Style">
+		<state>
+			<font name="Dialog" size="13" style="PLAIN" />
+			<color idref="purple704090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont13Purple70_40_90Style" type="name" key="plainFont13Purple70_40_90" />
+
+	<style id="boldFont18Purple8233117Style">
+		<state>
+			<font name="Dialog" size="18" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont18Purple8233117Style" type="name" key="boldFont18Purple8233117" />
+
+	<style id="boldFont14Gray909090Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color idref="gray909090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Gray909090Style" type="name" key="boldFont14Gray909090" />
+
+	<style id="boldFont12Gray909090Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color idref="gray909090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray909090Style" type="name" key="boldFont12Gray909090" />
+
+	<style id="boldFont11Purple120_40_140Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="purple12040140" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Purple120_40_140Style" type="name" key="boldFont11Purple120_40_140" />
+
+	<style id="plainFont11Purple120_40_140Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color idref="purple12040140" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Purple120_40_140Style" type="name" key="plainFont11Purple120_40_140" />
+
+	<style id="boldFont14Purple12040140Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color idref="purple12040140" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Purple12040140Style" type="name" key="boldFont14Purple12040140" />
+
+	<style id="plainFont14Purple18030110Style">
+		<state>
+			<font name="Dialog" size="14" style="PLAIN" />
+			<color idref="purple8030110" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont14Purple18030110Style" type="name" key="plainFont14Purple18030110" />
+
+	<style id="boldFont14Purple18030110Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color idref="purple8030110" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Purple18030110Style" type="name" key="boldFont14Purple18030110" />
+
+	<style id="boldFont22Purple18030110Style">
+		<state>
+			<font name="Dialog" size="22" style="BOLD" />
+			<color idref="purple8030110" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont22Purple18030110Style" type="name" key="boldFont22Purple18030110" />
+
+	<style id="boldFont14Purple8233117Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color idref="purple8233117" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14Purple8233117Style" type="name" key="boldFont14Purple8233117" />
+
+	<style id="boldFont14WhiteStyle">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont14WhiteStyle" type="name" key="boldFont14White" />
+
+	<style id="boldFont15WhiteStyle">
+		<state>
+			<font name="Dialog" size="15" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont15WhiteStyle" type="name" key="boldFont15White" />
+
+	<style id="italicFont10Gray909090Style">
+		<state>
+			<font name="Dialog" size="10" style="ITALIC" />
+			<color idref="gray909090" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="italicFont10Gray909090Style" type="name" key="italicFont10Gray909090" />
+
+	<style id="boldItalicFont14_51_17_41Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD ITALIC" />
+			<color idref="color_51_17_41" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldItalicFont14_51_17_41Style" type="name" key="boldItalicFont14_51_17_41" />
+
+	<style id="plainFont12Purple8030110Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color idref="purple8030110" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple8030110Style" type="name" key="plainFont12Purple8030110" />
+
+	<style id="plainFont12Purple12040140Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color idref="purple12040140" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple12040140Style" type="name" key="plainFont12Purple12040140" />
+
+	<style id="boldFont12WhiteStyle">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12WhiteStyle" type="name" key="boldFont12White" />
+
+	<style id="boldFont12Gray505050Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color idref="gray505050" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray505050Style" type="name" key="boldFont12Gray505050" />
+
+	<style id="boldFont12Gray646464Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color idref="gray646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray646464Style" type="name" key="boldFont12Gray646464" />
+
+	<style id="boldFont11Gray646464Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Gray646464Style" type="name" key="boldFont11Gray646464" />
+
+	<style id="boldFont11WhiteStyle">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11WhiteStyle" type="name" key="boldFont11White" />
+
+
+	<style id="plainFont10Gray646464Style">
+		<state>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color idref="gray646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont10Gray646464Style" type="name" key="plainFont10Gray646464" />
+
+	<style id="boldFont11Gray727272Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color idref="gray646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Gray727272Style" type="name" key="boldFont11Gray727272" />
+
+	<style id="plainFont11Gray727272Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color idref="gray646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Gray727272Style" type="name" key="plainFont11Gray727272" />
+
+	<style id="plainFont11Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color idref="tableGridColor" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Gray77_77_77Style" type="name" key="plainFont11Gray77_77_77" />
+
+	<style id="plainFont11Gray170_170_170Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color value="#AAAAAA" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11Gray170_170_170Style" type="name" key="plainFont11Gray170_170_170" />
+
+	<style id="boldFont11Gray170_170_170Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#AAAAAA" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Gray170_170_170Style" type="name" key="boldFont11Gray170_170_170" />
+
+	<style id="plainFont11BlackStyle">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color value="BLACK" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont11BlackStyle" type="name" key="plainFont11Black" />
+
+	<style id="boldFont11BlackStyle">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+		</state>
+	</style>
+	<bind style="boldFont11BlackStyle" type="name" key="boldFont11Black" />
+
+	<style id="loginTextFieldStyle">
+		<insets left="10" right="10" />
+		<state>
+			<font name="Dialog" size="20" style="PLAIN" />
+			<color idref="tableGridColor" type="TEXT_FOREGROUND" />
+			<imagePainter method="textFieldBackground" path="/images/login/loginTextField.png"
+				sourceInsets="2 9 2 9" stretch="true" />
+		</state>
+	</style>
+	<bind style="loginTextFieldStyle" type="name" key="loginTextField[A-Za-z0-9]*" />
+
+	<style id="passwordLoginFieldStyle">
+		<insets left="10" right="10" />
+		<state>
+			<imagePainter method="passwordFieldBackground" path="/images/login/loginTextField.png"
+				sourceInsets="2 9 2 9" stretch="true" />
+		</state>
+	</style>
+	<bind style="passwordLoginFieldStyle" type="name" key="passwordLoginField[A-Za-z0-9]*" />
+
+	<style id="buttonCenterLoginStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonCenterLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonCenterLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonCenterLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonCenterLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonCenterLoginStyle" type="name" key="buttonCenterLogin" />
+
+	<style id="openButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="openButtonStyle" type="name" key="openButton" />
+
+	<style id="sendButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="sendButtonStyle" type="name" key="sendButton" />
+
+	<style id="completeMetadataButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="completeMetadataButtonStyle" type="name" key="completeMetadataButton" />
+
+	<style id="exportButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="exportButtonStyle" type="name" key="exportButton" />
+
+	<style id="applyButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="applyButtonStyle" type="name" key="applyButton" />
+
+	<style id="plainFont16Gray100100100Style">
+		<state>
+			<font name="Dialog" size="16" style="PLAIN" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont16Gray100100100Style" type="name"
+		key="plainFont16Gray100100100" />
+
+	<style id="plainFont18Gray100100100Style">
+		<state>
+			<font name="Dialog" size="18" style="PLAIN" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plainFont18Gray100100100Style" type="name"
+		key="plainFont18Gray100100100" />
+
+	<style id="plaintFont12WhiteStyle">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="plaintFont12WhiteStyle" type="name" key="plaintFont12White" />
+
+	<style id="boldFont13_51_00_51Style">
+		<state>
+			<font name="Dialog" size="13" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#330033" />
+		</state>
+	</style>
+	<bind style="boldFont13_51_00_51Style" type="name" key="boldFont13_51_00_51" />
+
+	<style id="boldFont12_100_45_145Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#642D91" />
+		</state>
+	</style>
+	<bind style="boldFont12_100_45_145Style" type="name" key="boldFont12_100_45_145" />
+
+	<style id="plainFont11_51_51_51Style">
+		<state>
+			<font name="Dialog" size="11" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" idref="black515151" />
+		</state>
+	</style>
+	<bind style="plainFont11_51_51_51Style" type="name" key="plainFont11_51_51_51" />
+
+	<style id="boldFont16_50_15_50Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#320F32" />
+		</state>
+	</style>
+	<bind style="boldFont16_50_15_50Style" type="name" key="boldFont16_50_15_50" />
+
+	<style id="plainFont12Purple50_15_50Style">
+		<state>
+			<font name="Dialog" size="12" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" value="#320F32" />
+		</state>
+	</style>
+	<bind style="plainFont12Purple50_15_50Style" type="name" key="plainFont12Purple50_15_50" />
+
+	<style id="boldFont14Purple50_15_50Style">
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color type="TEXT_FOREGROUND" value="#320F32" />
+		</state>
+	</style>
+	<bind style="boldFont14Purple50_15_50Style" type="name" key="boldFont14Purple50_15_50" />
+
+
+	<!-- The style for the list renderer of JComboBox -->
+	<style id="comboBoxTextField">
+		<state>
+			<color type="TEXT_FOREGROUND" value="#646464" />
+		</state>
+	</style>
+	<bind style="comboBoxTextField" type="name" key="ComboBox.textField" />
+
+	<style id="plainFont13Gray50_50_50Style">
+		<font name="Dialog" size="13" style="PLAIN" />
+		<color type="TEXT_FOREGROUND" idref="gray505050" />
+		<opaque value="FALSE" />
+	</style>
+	<bind style="plainFont13Gray50_50_50Style" type="name"
+		key="plainFont13Gray50_50_50" />
+
+	<style id="plainFont10Gray100_100_100Style">
+		<font name="Dialog" size="10" style="PLAIN" />
+		<color type="TEXT_FOREGROUND" value="#646464" />
+		<opaque value="FALSE" />
+	</style>
+	<bind style="plainFont10Gray100_100_100Style" type="name" key="plainFont10Gray100_100_100" />
+
+	<style id="plainFont10Gray120_120_120Style">
+		<state>
+			<font name="Dialog" size="10" style="PLAIN" />
+			<color type="TEXT_FOREGROUND" value="#787878" />
+			<opaque value="FALSE" />
+		</state>
+	</style>
+	<bind style="plainFont10Gray120_120_120Style" type="name" key="plainFont10Gray120_120_120" />
+
+	<style id="boldItalicFont16Purple50_15_50Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD ITALIC" />
+			<color type="TEXT_FOREGROUND" value="#320F32" />
+		</state>
+	</style>
+	<bind style="boldItalicFont16Purple50_15_50Style" type="name" key="boldItalicFont16Purple50_15_50" />
+
+	<style id="boldFont16_77_77_77Style">
+		<state>
+			<font name="Dialog" size="16" style="BOLD" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont16_77_77_77Style" type="NAME" key="boldFont16_77_77_77" />
+
+	<style id="italicFont11_120_120_120Style">
+		<state>
+			<font name="Dialog" size="11" style="ITALIC" />
+			<color value="#787878" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="italicFont11_120_120_120Style" type="NAME" key="italicFont11_120_120_120" />
+
+	<style id="boldFont12Gray77_77_77Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray77_77_77Style" type="name" key="boldFont12Gray77_77_77" />
+
+	<style id="boldFont20Gray51_51_51Style">
+		<state>
+			<font name="Dialog" size="20" style="BOLD" />
+			<color value="#333333" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont20Gray51_51_51Style" type="name" key="boldFont20Gray51_51_51" />
+
+	<style id="boldFont20RedStyle">
+		<state>
+			<font name="Dialog" size="20" style="BOLD" />
+			<color value="#FF0000" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont20RedStyle" type="name" key="boldFont20Red" />
+
+	<style id="italicFont10Gray100_100_100Style">
+		<state>
+			<font name="Dialog" size="10" style="ITALIC" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="italicFont10Gray100_100_100Style" type="name" key="italicFont10Gray100_100_100" />
+
+	<style id="italicFont12Gray100_100_100Style">
+		<state>
+			<font name="Dialog" size="12" style="ITALIC" />
+			<color value="#646464" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="italicFont12Gray100_100_100Style" type="name" key="italicFont12Gray100_100_100" />
+
+	<style id="boldFont12Gray150_150_150Style">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+			<color value="#969696" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont12Gray150_150_150Style" type="name" key="boldFont12Gray150_150_150" />
+	
+	<style id="italicFont10Gray150_150_150Style">
+		<state>
+			<font name="Dialog" size="10" style="ITALIC" />
+			<color value="#969696" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="italicFont10Gray150_150_150Style" type="name" key="italicFont10Gray150_150_150" />
+	
+	<style id="boldFont10BlackStyle">
+		<state>
+			<font name="Dialog" size="10" style="BOLD" />
+		</state>
+	</style>
+	<bind style="boldFont10BlackStyle" type="name" key="boldFont10Black" />
+	<style id="boldFont12BlackStyle">
+		<state>
+			<font name="Dialog" size="12" style="BOLD" />
+		</state>
+	</style>
+	<bind style="boldFont12BlackStyle" type="name" key="boldFont12Black" />
+	<style id="boldFont13Gray12039139Style">
+		<state>
+			<font name="Dialog" size="13" style="BOLD" />
+			<color value="#781E8B" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont13Gray12039139Style" type="name" key="boldFont13Gray12039139" />
+	
+	<style id="boldFont11Blue17520525Style">
+		<state>
+			<font name="Dialog" size="11" style="BOLD" />
+			<color value="#AFCDE1" type="TEXT_FOREGROUND" />
+		</state>
+	</style>
+	<bind style="boldFont11Blue17520525Style" type="name" key="boldFont11Blue17520525" />
+
+	<style id="colorD5D5D5SeparatorStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/colors/color_D5D5D5.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="colorD5D5D5SeparatorStyle" type="name" key="colorD5D5D5Separator" />
+
+</synth>

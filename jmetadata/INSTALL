@@ -1,0 +1,128 @@
+----------------------------------------------------------------------------
+*********************
+*  UBUNTU INSTALLER *
+*********************
+
+1. Create the following file system structure: 
+
+debian-DEBIAN-control
+		 -usr-bin-JAudioScrobbler
+		 	 -lib-JAudioScrobbler-*.jar
+		 	 -share-applications-jaudioscrobbler.desktop
+		 	 	   -jaudioscrobbler-jas.png
+		 	 	   -doc-jaudioscrobbler-copyright
+		 	 	   					   -changelog.Debian.gz
+		 	 	   
+2. In debian directory level type the command below
+dpkg --build debian
+
+3. mv debian.deb JAudioScrobbler_Installer.deb
+
+
+*********************
+* 	   control		*
+*********************
+
+Package: jaudioscrobbler
+Version: 1.0.0
+Section: java
+Priority: optional
+Architecture: all
+Maintainer: Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>
+Description: Complete their metadata with MusicBrainz, LastFM or manually,
+ explore & Scrobble audio files (m4a & mp3) to your LastFM account.
+ .
+
+***********************
+*  changelog.Debian   *
+***********************
+
+JAudioScrobbler (1.0.0)
+
+  * New upstream release
+    - Beta was released
+
+ -- Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>  Mon, 29 Apr 2013 22:24:36 +1000
+ 
+ 
+ *********************
+ *     copyright     *
+ *********************
+ 
+This package was debianized by Jose Luis De la Cruz <joseluis.delacruz@gmail.com> on
+Mon, 29 Apr 2013 22:05:54 +0100.
+
+Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+***************************
+* jaudioscrobbler.desktop *
+***************************
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=JAudioScrobbler
+Comment=Complete their metadata with MusicBrainz, LastFM or manually
+Exec=/usr/bin/jaudioscrobbler
+Icon=/usr/share/jaudioscrobbler/jas.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Music
+StartupNotify=true
+ 
+--------------------------------------------------------------------------------
+*********************
+* WINDOWS INSTALLER *
+*********************
+JSmooth 
+1. Install JSmooth http://jsmooth.sourceforge.net/
+2. Skeleton: Windowed Wrapper
+3. Executable: 
+Executable Binary > JAudioScrobbler.exe
+Executable Icon > jas.png
+4. Application:
+Main Class > org.jas.Launcher
+Classpath > *.jar
+5. JVM Selection
+Minimum JVM Version > 1.5.0
+Maximum JVM Version > 1.8.0
+
+
+NSIS
+1. Install NSIS http://nsis.sourceforge.net/
+2. Installer based on ZIP file
+3. Select JAudioScrobbler.zip
+4. Installer Name > JAudioScrobbler-Installer
+5. Output EXE File > JAudioScrobbler-Installer.exe
+6. Click on Generate.
+
+--------------------------------------------------------------------------------
+*********************
+* MAC INSTALLER *
+*********************
+
+Jar Bundler
+1. Open Jar Bundler
+2. Classpath and files > Select *.jar
+3. Build Information > Choose Main Class (JAudioScrobbler-0.0.1-SNAPSHOT.jar) > Choose Icon.
+4. Properties > Version 1.0.0
+5. Create Application
+
+Package Manager
+1. Open Package Manager
+2. Organization > org.jas > Minimum Target > Mac OS X v10.5 Leopard
+3. Drop contents here > Drag Jar Bundler result
+4. Configuration > Title > JAudioScrobbler-Installer.pkg
+5. Build and Run.

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+<suppressions>
+   <suppress checks="MagicNumber" files="src/main/java/*"/>
+    <suppress checks="FileLength" files="src/main/java/*"/>
+    <suppress checks="MethodLength" files="src/main/java/*"/>
+    <suppress checks="LineLength" files="src/main/java/*"/>
+    <suppress checks="ParameterName" files="src/main/java/*"/>
+    <suppress checks="ConstantName" files="src/main/java/*"/>
+    <suppress checks="LocalVariableName" files="src/main/java/*"/>
+    <suppress checks="MemberName" files="src/main/java/*"/>
+    <suppress checks="StaticVariableName" files="src/main/java/*"/>
+    <suppress checks="TypeName" files="src/main/java/*"/>
+    <!--<suppress checks="AvoidStarImport" files="src/*"/>-->
+    <suppress checks="InterfaceIsType" files="src/main/java/*"/>
+    <suppress checks="VisibilityModifier" files="src/main/java/*"/>
+    <suppress checks="EqualsHashCode" files="src/main/java/*"/>
+    <!--Stuff in tests-->
+    <suppress checks="ParameterName" files="src/test/java/*"/>
+    <suppress checks="MagicNumber" files="src/test/java/*"/>
+    <suppress checks="FileLength" files="src/test/java/*"/>
+    <suppress checks="MethodLength" files="src/test/java/*"/>
+    <suppress checks="ConstantName" files="src/test/java/*"/>
+    <suppress checks="LocalVariableName" files="src/test/java/*"/>
+    <suppress checks="MemberName" files="src/test/java/*"/>
+    <suppress checks="StaticVariableName" files="src/test/java/*"/>
+    <!--<suppress checks="AvoidStarImport" files="src/test/java/*"/>-->
+    <suppress checks="InterfaceIsType" files="src/test/java/*"/>
+</suppressions>
