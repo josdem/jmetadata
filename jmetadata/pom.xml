@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.lastfm</groupId>
-	<artifactId>jaudioscrobbler</artifactId>
+	<groupId>org.jas</groupId>
+	<artifactId>jmetadata</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jaudioscrobbler</name>
+	<name>jmetadata</name>
 	<description>This project is based on last.fm API bindings for Java &amp; MusicBrainz our goal is create a complete stand alone that keep a good Metadata Quality &amp; Music Taste Analyzer. </description>
 	<profiles>
 		<profile>
@@ -52,7 +52,7 @@
 					<programs>
 						<program>
 							<mainClass>org.lastfm.Launcher</mainClass>
-							<name>JAudioScrobbler</name>
+							<name>JMetadata</name>
 						</program>
 					</programs>
 				</configuration>
@@ -62,7 +62,7 @@
 			  <artifactId>maven-assembly-plugin</artifactId>
 			  <configuration>
 			  <finalName>
-						JAudioScrobbler
+						JMetadata
 					</finalName>
 					<descriptors>
 						<descriptor>${distribution.descriptor}</descriptor>
