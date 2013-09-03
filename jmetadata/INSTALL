@@ -6,43 +6,42 @@
 1. Create the following file system structure: 
 
 debian-DEBIAN-control
-		 -usr-bin-JAudioScrobbler
-		 	 -lib-JAudioScrobbler-*.jar
-		 	 -share-applications-jaudioscrobbler.desktop
-		 	 	   -jaudioscrobbler-jas.png
-		 	 	   -doc-jaudioscrobbler-copyright
+		 -usr-bin-JMetadata
+		 	 -lib-JMetadata-*.jar
+		 	 -share-applications-jmetadata.desktop
+		 	 	   -jmetadata-jmetadata.png
+		 	 	   -doc-jmetadata-copyright
 		 	 	   					   -changelog.Debian.gz
 		 	 	   
 2. In debian directory level type the command below
 dpkg --build debian
 
-3. mv debian.deb JAudioScrobbler_Installer.deb
+3. mv debian.deb JMetadata_Installer.deb
 
 
 *********************
 * 	   control		*
 *********************
 
-Package: jaudioscrobbler
+Package: jmetadata
 Version: 1.0.0
 Section: java
 Priority: optional
 Architecture: all
 Maintainer: Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>
-Description: Complete their metadata with MusicBrainz, LastFM or manually,
- explore & Scrobble audio files (m4a & mp3) to your LastFM account.
+Description: Complete their metadata with MusicBrainz, LastFM or manually
  .
 
 ***********************
 *  changelog.Debian   *
 ***********************
 
-JAudioScrobbler (1.0.0)
+JMetadata (1.0.0)
 
   * New upstream release
     - Beta was released
 
- -- Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>  Mon, 29 Apr 2013 22:24:36 +1000
+ -- Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>  Mon, 2 Sep 2013 21:43:36 +1000
  
  
  *********************
@@ -68,15 +67,15 @@ limitations under the License.
 
 
 ***************************
-* jaudioscrobbler.desktop *
+* jmetadata.desktop *
 ***************************
 
 [Desktop Entry]
 Encoding=UTF-8
 Name=JAudioScrobbler
 Comment=Complete their metadata with MusicBrainz, LastFM or manually
-Exec=/usr/bin/jaudioscrobbler
-Icon=/usr/share/jaudioscrobbler/jas.png
+Exec=/usr/bin/JMetadata
+Icon=/usr/share/jmetadata/jmetadata.png
 Terminal=false
 Type=Application
 Categories=GNOME;Application;Music
