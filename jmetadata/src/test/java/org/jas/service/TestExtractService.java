@@ -1,12 +1,11 @@
 package org.jas.service;
 
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
 
 import org.jas.model.Metadata;
-import org.jas.service.ExtractService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -20,8 +19,6 @@ public class TestExtractService {
 	
 	@Mock
 	private File file;
-	@Mock
-	private Metadata metadata;
 	
 	@Before
 	public void setup() throws Exception {
@@ -32,12 +29,11 @@ public class TestExtractService {
 	public void shouldExtractMetadataFromFileWhenDash() throws Exception {
 		String filename = "jenifer lopez - 9A - 112.mp3";
 		when(file.getName()).thenReturn(filename);
-		when(metadata.getFile()).thenReturn(file);
 		
-		extractService.extractFromFileName(metadata);
+		Metadata result = extractService.extractFromFileName(file);
 		
-		verify(metadata).setArtist("jenifer lopez ");
-		verify(metadata).setTitle(" 9A ");
+		assertEquals("jenifer lopez ", result.getArtist());
+		assertEquals(" 9A ", result.getTitle());
 	}
 	
 	@Test
@@ -45,12 +41,11 @@ public class TestExtractService {
 		String expectedName = "jenifer lopez";
 		String filename = "jenifer lopez.mp3";
 		when(file.getName()).thenReturn(filename);
-		when(metadata.getFile()).thenReturn(file);
 		
-		extractService.extractFromFileName(metadata);
+		Metadata result = extractService.extractFromFileName(file);
 		
-		verify(metadata).setArtist(expectedName);
-		verify(metadata).setTitle(expectedName);
+		assertEquals(expectedName, result.getArtist());
+		assertEquals(expectedName, result.getTitle());
 	}
 
 }

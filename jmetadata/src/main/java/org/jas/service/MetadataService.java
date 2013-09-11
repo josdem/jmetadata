@@ -275,7 +275,7 @@ public class MetadataService {
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 			} else {
-				metadataList.add(extractService.extractFromFileName(metadata));
+				metadataList.add(extractService.extractFromFileName(file));
 				filesWithoutMinimumMetadata.add(file);
 			}
 		}

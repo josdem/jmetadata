@@ -1,5 +1,6 @@
 package org.jas.service;
 
+import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -13,8 +14,10 @@ public class ExtractService {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public Metadata extractFromFileName(Metadata metadata) {
-		String titleComplete = metadata.getFile().getName();
+	public Metadata extractFromFileName(File file) {
+		String titleComplete = file.getName();
+		Metadata metadata = new Metadata();
+		metadata.setFile(file);
 		try{
 			StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
 			String artist = stringTokenizer.nextToken();

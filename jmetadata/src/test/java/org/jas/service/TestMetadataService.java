@@ -267,11 +267,13 @@ public class TestMetadataService {
 	private File pepeGarden;
 	@Mock
 	private File checkStyleFile;
+	@Mock
+	private File file;
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
 
-
 	private List<File> fileList;
+
 	private static final String ALBUM = "Lemon Flavored Kiss";
 	private static final String MY_REMIXES = "My Remixes";
 	private static final int FIRST_ELEMENT = 0;
@@ -367,7 +369,7 @@ public class TestMetadataService {
 
 		assertEquals(1, metadatas.size());
 		verify(fileUtils, never()).isM4aFile(pepeGarden);
-		verify(extractService).extractFromFileName(metadata);
+		verify(extractService).extractFromFileName(file);
 		verify(filesWithoutMinimumMetadata).add(pepeGarden);
 	}
 	
