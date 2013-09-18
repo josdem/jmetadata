@@ -28,4 +28,4 @@ It requires Java JRE 1.6. JMetadata has been developed with Windows 7, Linux Ubu
 “As we enjoy great advantages from inventions of others, we should be glad of an opportunity to serve others by any invention of ours; and this we should do freely and generously.” Benjamin Franklin
 
 
-Installers Download page: https://code.google.com/p/jaudioscrobbler/downloads/list
+Installers Download page: https://github.com/josdem/jmetadata/wiki/Downloads
