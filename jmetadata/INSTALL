@@ -120,9 +120,10 @@ Jar Bundler
 4. Properties > Version 1.0.0
 5. Create Application
 
-Package Manager
-1. Open Package Manager
-2. Organization > org.jas > Minimum Target > Mac OS X v10.5 Leopard
-3. Drop contents here > Drag Jar Bundler result
-4. Configuration > Title > JAudioScrobbler-Installer.pkg
-5. Build and Run.
+Create a DMG
+1. Download iDMG from here: http://www.macupdate.com/app/mac/27392/idmg
+2. Open Inspector, Volume name: JMetadata
+3. Drag & Drop Jar Bundler result
+4. Create a symbolic link to the applications: ln -s /Applications/ Applications
+5. Open JMetadata device
+6. Drag & Drop Applications folder
