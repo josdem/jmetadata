@@ -65,6 +65,15 @@ public class TestMetadataCollaborator {
 	}
 	
 	@Test
+	public void shouldGetEmptyArtist() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getArtist()).thenReturn(null);
+		when(metadataTwo.getArtist()).thenReturn(null);
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getArtist());
+	}
+	
+	@Test
 	public void shouldGetAlbum() throws Exception {
 		setMetadatasExpectations();
 		when(metadataOne.getAlbum()).thenReturn(album);
@@ -78,6 +87,15 @@ public class TestMetadataCollaborator {
 		setMetadatasExpectations();
 		when(metadataOne.getAlbum()).thenReturn(album);
 		when(metadataTwo.getAlbum()).thenReturn("otherAlbum");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
+	}
+	
+	@Test
+	public void shouldGetEmptyAlbum() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getAlbum()).thenReturn(null);
+		when(metadataTwo.getAlbum()).thenReturn(null);
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
 	}
@@ -101,6 +119,15 @@ public class TestMetadataCollaborator {
 	}
 	
 	@Test
+	public void shouldGetEmptyGenre() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getGenre()).thenReturn(null);
+		when(metadataTwo.getGenre()).thenReturn(null);
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getGenre());
+	}
+	
+	@Test
 	public void shouldGetYear() throws Exception {
 		setMetadatasExpectations();
 		when(metadataOne.getYear()).thenReturn(year);
@@ -114,6 +141,15 @@ public class TestMetadataCollaborator {
 		setMetadatasExpectations();
 		when(metadataOne.getYear()).thenReturn(year);
 		when(metadataTwo.getYear()).thenReturn("otherYear");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
+	}
+	
+	@Test
+	public void shouldGetEmptyYear() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getYear()).thenReturn(null);
+		when(metadataTwo.getYear()).thenReturn(null);
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
 	}
@@ -137,6 +173,15 @@ public class TestMetadataCollaborator {
 	}
 	
 	@Test
+	public void shouldGetEmptyTotalTracks() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalTracks()).thenReturn(null);
+		when(metadataTwo.getTotalTracks()).thenReturn(null);
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
+	}
+	
+	@Test
 	public void shouldGetCdNumber() throws Exception {
 		setMetadatasExpectations();
 		when(metadataOne.getCdNumber()).thenReturn(cdNumber);
@@ -155,6 +200,15 @@ public class TestMetadataCollaborator {
 	}
 	
 	@Test
+	public void shouldGetEmptyCdNumber() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getCdNumber()).thenReturn(null);
+		when(metadataTwo.getCdNumber()).thenReturn(null);
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getCdNumber());
+	}
+	
+	@Test
 	public void shouldGetTotalCds() throws Exception {
 		setMetadatasExpectations();
 		when(metadataOne.getTotalCds()).thenReturn(totalCds);
@@ -168,6 +222,15 @@ public class TestMetadataCollaborator {
 		setMetadatasExpectations();
 		when(metadataOne.getTotalCds()).thenReturn(totalCds);
 		when(metadataTwo.getTotalCds()).thenReturn("otherCds");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
+	}
+	
+	@Test
+	public void shouldGetEmptyTotalCds() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalCds()).thenReturn(null);
+		when(metadataTwo.getTotalCds()).thenReturn(null);
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
 	}

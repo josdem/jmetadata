@@ -220,6 +220,9 @@ public class MetadataCollaborator {
 	public String getArtist() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getArtist() == null && metadatas.get(i-1).getArtist() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getArtist().equals(metadatas.get(i-1).getArtist())){
 				isTheSame = false;
 			}
@@ -230,6 +233,9 @@ public class MetadataCollaborator {
 	public String getAlbum() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getAlbum() == null && metadatas.get(i-1).getAlbum() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getAlbum().equals(metadatas.get(i-1).getAlbum())){
 				isTheSame = false;
 			}
@@ -240,6 +246,9 @@ public class MetadataCollaborator {
 	public String getGenre() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getGenre() == null && metadatas.get(i-1).getGenre() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getGenre().equals(metadatas.get(i-1).getGenre())){
 				isTheSame = false;
 			}
@@ -250,6 +259,9 @@ public class MetadataCollaborator {
 	public String getYear() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getYear() == null && metadatas.get(i-1).getYear() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getYear().equals(metadatas.get(i-1).getYear())){
 				isTheSame = false;
 			}
@@ -260,6 +272,9 @@ public class MetadataCollaborator {
 	public String getTotalTracks() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getTotalTracks() == null && metadatas.get(i-1).getTotalTracks() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getTotalTracks().equals(metadatas.get(i-1).getTotalTracks())){
 				isTheSame = false;
 			}
@@ -270,6 +285,9 @@ public class MetadataCollaborator {
 	public String getTotalCds() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getTotalCds() == null && metadatas.get(i-1).getTotalCds() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getTotalCds().equals(metadatas.get(i-1).getTotalCds())){
 				isTheSame = false;
 			}
@@ -280,6 +298,9 @@ public class MetadataCollaborator {
 	public String getCdNumber() {
 		boolean isTheSame = true;
 		for (int i=1; i< metadatas.size(); i++) {
+			if (metadatas.get(i).getCdNumber() == null && metadatas.get(i-1).getCdNumber() == null){
+				return StringUtils.EMPTY;
+			}
 			if (!metadatas.get(i).getCdNumber().equals(metadatas.get(i-1).getCdNumber())){
 				isTheSame = false;
 			}
