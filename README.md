@@ -29,4 +29,5 @@ It requires Java JRE 1.6. JMetadata has been developed with Windows 7, Linux Ubu
 
 
 Installers Download page: https://github.com/josdem/jmetadata/wiki/Downloads
+
 Wiki page: https://github.com/josdem/jmetadata/wiki
