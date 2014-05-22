@@ -204,9 +204,7 @@
 
 package org.jas.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.model.Metadata;
@@ -792,6 +790,55 @@ public class TestFormatterService {
 		
 		assertTrue(formatter.isABadFormat(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
+	@Test
+	public void shouldBeAnalyzable() throws Exception {
+		String title = "Beatniks";
+		String artist = "Jaytin";
+		String album = "Nina";
+		
+		metadata.setTitle(title);
+		metadata.setArtist(artist);
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isAnalyzable(metadata));
+	}
+	
+	@Test
+	public void shouldNotBeAnalyzableDueToAlbum() throws Exception {
+		String title = "Beatniks";
+		String artist = "Jaytin";
+		
+		metadata.setTitle(title);
+		metadata.setArtist(artist);
+		metadata.setAlbum(null);
+		
+		assertFalse(formatter.isAnalyzable(metadata));
+	}
+	
+	@Test
+	public void shouldNotBeAnalyzableDueToArtist() throws Exception {
+		String title = "Beatniks";
+		String album = "Nina";
+		
+		metadata.setTitle(title);
+		metadata.setArtist(null);
+		metadata.setAlbum(album);
+		
+		assertFalse(formatter.isAnalyzable(metadata));
+	}
+	
+	@Test
+	public void shouldNotBeAnalyzableDueToTitle() throws Exception {
+		String artist = "Jaytin";
+		String album = "Nina";
+		
+		metadata.setTitle(null);
+		metadata.setArtist(artist);
+		metadata.setAlbum(album);
+		
+		assertFalse(formatter.isAnalyzable(metadata));
 	}
 	
 }

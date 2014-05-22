@@ -85,4 +85,8 @@ public class FormatterService {
 		return minutes + ":" + seconds;
 	}
 
+	public boolean isAnalyzable(Metadata metadata) {
+		return metadata.getTitle() != null && metadata.getArtist() != null && metadata.getAlbum() !=null;
+	}
+
 }

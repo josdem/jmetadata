@@ -220,6 +220,8 @@ public class FormatterController {
 	
 	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
 	public synchronized ActionResult format(Metadata metadata) {
+		boolean analyzable = formatterService.isAnalyzable(metadata);
+		if (!analyzable) return ActionResult.Complete;
 		boolean formatted = formatterService.isABadFormat(metadata);
 		boolean capitalized = formatterService.isNotCamelized(metadata);
 		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;

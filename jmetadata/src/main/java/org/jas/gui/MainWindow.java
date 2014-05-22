@@ -370,7 +370,6 @@ public class MainWindow extends JFrame {
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
 	private ImageUtils imageUtils = new ImageUtils();
-	private Log log = LogFactory.getLog(this.getClass());
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	private DialogHelper dialogHelper = new DialogHelper();
@@ -386,6 +385,8 @@ public class MainWindow extends JFrame {
 	private ViewEngineConfigurator viewEngineConfigurator;
 	@Autowired
 	private ControlEngineConfigurator controlEngineConfigurator;
+
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public MainWindow() {
 		super(ApplicationState.APPLICATION_NAME);
