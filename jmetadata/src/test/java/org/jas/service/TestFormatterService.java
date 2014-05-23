@@ -841,4 +841,37 @@ public class TestFormatterService {
 		assertFalse(formatter.isAnalyzable(metadata));
 	}
 	
+	@Test
+	public void shouldDetectUcircInTitle() throws Exception {
+		String title = "J&auml;hdytin";
+		String expectedTitle = "Jähdytin";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectUcircInArtist() throws Exception {
+		String artist = "Aganj&ucirc;";
+		String expectedArtist = "Aganjû";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectAUcircInAlbum() throws Exception {
+		String album = "Aganj&ucirc;";
+		String expectedAlbum = "Aganjû";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
 }
