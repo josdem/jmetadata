@@ -203,9 +203,7 @@
 */
 package org.jas.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -271,8 +269,7 @@ public class TestMetadataService {
 	private File file;
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
-
-	private List<File> fileList;
+	private List<File> fileList = new ArrayList<File>();
 
 	private static final String ALBUM = "Lemon Flavored Kiss";
 	private static final String MY_REMIXES = "My Remixes";
@@ -369,7 +366,7 @@ public class TestMetadataService {
 
 		assertEquals(1, metadatas.size());
 		verify(fileUtils, never()).isM4aFile(pepeGarden);
-		verify(extractService).extractFromFileName(file);
+		verify(extractService).extractFromFileName(pepeGarden);
 		verify(filesWithoutMinimumMetadata).add(pepeGarden);
 	}
 	
@@ -379,7 +376,6 @@ public class TestMetadataService {
 		when(anotherMetadata.getAlbum()).thenReturn(ALBUM);
 		
 		addMetadatas();
-		
 		assertTrue(metadataService.isSameAlbum(metadatas));
 	}
 	
@@ -396,6 +392,16 @@ public class TestMetadataService {
 	private void addMetadatas() {
 		metadatas.add(metadata);
 		metadatas.add(anotherMetadata);
+	}
+	
+	@Test
+	public void shouldKnowWhenNoAlbumIsThere() throws Exception {
+		when(metadata.getAlbum()).thenReturn(null);
+		when(anotherMetadata.getAlbum()).thenReturn(MY_REMIXES);
+		
+		addMetadatas();
+		
+		assertFalse(metadataService.isSameAlbum(metadatas));
 	}
 	
 }

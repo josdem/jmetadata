@@ -248,6 +248,7 @@ public class MetadataService {
 	private List<Metadata> metadataList;
 	private Set<File> filesWithoutMinimumMetadata;
 	private FileUtils fileUtils = new FileUtils();
+	
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
@@ -284,6 +285,9 @@ public class MetadataService {
 	
 	public boolean isSameAlbum(List<Metadata> metadatas) {
 		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
+			if (metadatas.get(i).getAlbum() == null){
+				return false;
+			}
 			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
 				return false;
 			}
