@@ -226,10 +226,18 @@ public class TrackHelper {
 		List<Release> releases = getReleases(track);
 		return (releases.get(FIRST_RELEASE).getTrackList().getOffset()).trim();
 	}
+	
+	public String getTrackNumber(Release release) {
+		return release.getTrackList().getOffset().trim();
+	}
 
 	public int getTotalTrackNumber(Track track) throws ServerUnavailableException {
 		List<Release> releases = getReleases(track);
 		return releases.get(FIRST_RELEASE).getTracks().size();
+	}
+	
+	public int getTotalTrackNumber(Release release) throws ServerUnavailableException {
+		return release.getTracks().size();
 	}
 
 	public String getAlbum(Track track) {
@@ -251,6 +259,16 @@ public class TrackHelper {
 
 	public String getMusicBrainzID(Track track) {
 		return track.getId();
+	}
+
+	public Release findAlbumByTrack(Track track, String album) {
+		List<Release> releases = getReleases(track);
+		for (Release release : releases) {
+			if(album.equalsIgnoreCase(release.getTitle())){
+				return release;
+			}
+		}
+		return null;
 	}
 	
 }

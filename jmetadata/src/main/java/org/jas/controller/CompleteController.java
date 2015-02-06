@@ -261,7 +261,7 @@ public class CompleteController {
 				}
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" I'm going to complete rest of information");
-				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getAlbum());
+				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
 				return ActionResult.New;
 			}
 		} catch (ServerUnavailableException sue) {

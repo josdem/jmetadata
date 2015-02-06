@@ -213,6 +213,7 @@ import org.jas.model.MusicBrainzTrack;
 import org.springframework.stereotype.Service;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
+import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
 
 /**
@@ -224,10 +225,10 @@ import com.slychief.javamusicbrainz.entities.Track;
 @Service
 public class TrackFinder implements MusicBrainzFinder {
 	private List<Track> trackList;
-	private int trackNumber;
 	private TrackHelper trackHelper = new TrackHelper();
 	private static final Log log = LogFactory.getLog(TrackFinder.class);
 
+	@Override
 	public synchronized MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException {
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
 		String album = StringUtils.EMPTY;
@@ -242,7 +243,7 @@ public class TrackFinder implements MusicBrainzFinder {
 					log.debug("Artist: " + artistFromMusicBrainz);
 					String trackNumberAsString = trackHelper.getTrackNumber(track);
 					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
-					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
+					Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
 					album = trackHelper.getAlbum(track);
 					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
 					log.debug("totalTrackNumber: " + totalTrackNumber);
@@ -263,8 +264,22 @@ public class TrackFinder implements MusicBrainzFinder {
 	}
 
 	@Override
-	public MusicBrainzTrack getByAlbum(String album) throws ServerUnavailableException {
-		// TODO Auto-generated method stub
-		return null;
+	public synchronized MusicBrainzTrack getByAlbum(String trackname, String album) throws ServerUnavailableException {
+		trackList = trackHelper.findByTitle(trackname);
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		if (!trackList.isEmpty()) {
+			for (Track track : trackList) {
+				Release release = trackHelper.findAlbumByTrack(track, album);
+				musicBrainzTrack.setAlbum(album);
+				String trackNumberAsString = trackHelper.getTrackNumber(release);
+				Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
+				musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
+				String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(release));
+				musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
+				musicBrainzTrack.setCdNumber(trackHelper.getCdNumber(track));
+				musicBrainzTrack.setTotalCds(trackHelper.getTotalCds(track));
+			}
+		}
+		return musicBrainzTrack;
 	}
 }
