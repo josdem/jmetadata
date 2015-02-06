@@ -242,8 +242,6 @@ public class TestTrackFinder {
 	private String trackname = "The Bottle Hymn 2.0";
 	private String album = "The Bottle Hymn 2.0 EP";
 	private List<Track> trackList= new ArrayList<Track>();
-
-
 	
 	@Before
 	public void setup() throws Exception {
@@ -269,6 +267,17 @@ public class TestTrackFinder {
 		verifyTrackHelperExpectations(expectedTrack, result);
 	}
 
+	@Test
+	public void shouldGetAlbumIgnoreCase() throws Exception {
+		String expectedTrack = "2";
+		setTrackHelperExpectations();
+		when(trackHelper.getArtist(track)).thenReturn("sander van doorn");
+
+		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
+		
+		verifyTrackHelperExpectations(expectedTrack, result);
+	}
+	
 	private void verifyTrackHelperExpectations(String expectedTrack, MusicBrainzTrack result) {
 		assertEquals(album, result.getAlbum());
 		assertEquals(expectedTrack, result.getTrackNumber());

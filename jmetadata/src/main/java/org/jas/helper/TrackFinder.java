@@ -232,7 +232,8 @@ public class TrackFinder extends Track {
 			log.debug("Getting album for track: " + trackname);
 			for (Track track : trackList) {
 				String artistFromMusicBrainz = trackHelper.getArtist(track);
-				if (artist.equals(artistFromMusicBrainz)) {
+				log.info("Artist from MusicBrainz: " + artistFromMusicBrainz);
+				if (artist.equalsIgnoreCase(artistFromMusicBrainz)) {
 					log.info("MusicBrainz Id: " + trackHelper.getMusicBrainzID(track));
 					log.debug("Artist: " + artistFromMusicBrainz);
 					String trackNumberAsString = trackHelper.getTrackNumber(track);
