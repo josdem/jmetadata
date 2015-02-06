@@ -213,13 +213,13 @@ import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
-import org.jas.helper.MusicBrainzDelegator;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
 import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
+import org.jas.service.MusicBrainzFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -233,18 +233,19 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 @Controller
 public class CompleteController {
 	private Log log = LogFactory.getLog(this.getClass());
-	private MusicBrainzDelegator service = new MusicBrainzDelegator();
 	private MetadataWriter metadataWriter = new MetadataWriter();
 
 	@Autowired
 	private LastfmService lastfmService;
+	@Autowired
+	private MusicBrainzFinder musicBrainzFinder;
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
 			log.info("trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle() + " - " + metadata.getAlbum());
-//			if (StringUtils.isEmpty(metadata.getAlbum())) {
-				MusicBrainzTrack musicBrainzTrack = service.getAlbum(metadata.getArtist(), metadata.getTitle());
+			if (StringUtils.isEmpty(metadata.getAlbum())) {
+				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getAlbum(metadata.getArtist(), metadata.getTitle());
 				log.info("musicBrainzTrack: " + ToStringBuilder.reflectionToString(musicBrainzTrack));
 				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
 					log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
@@ -258,10 +259,11 @@ public class CompleteController {
 					log.info("There is no need to find an album for track: " + metadata.getTitle());
 					return ActionResult.Not_Found;
 				}
-//			} else {
-//				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" there is no need in complete by MusicBrainz");
-//				return ActionResult.Complete;
-//			}
+			} else {
+				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" I'm going to complete rest of information");
+				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getAlbum());
+				return ActionResult.New;
+			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
 			return ActionResult.Error;

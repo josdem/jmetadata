@@ -200,100 +200,71 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.jas.helper;
+ */
+package org.jas.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.MusicBrainzDelegator;
-import org.jas.helper.TrackFinder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jas.helper.TrackHelper;
 import org.jas.model.MusicBrainzTrack;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.stereotype.Service;
 
-public class TestMusicBrainzDelegator {
-	private static final Object ZERO = "0";
+import com.slychief.javamusicbrainz.ServerUnavailableException;
+import com.slychief.javamusicbrainz.entities.Track;
 
-	@InjectMocks
-	MusicBrainzDelegator service = new MusicBrainzDelegator();
-	
-	@Mock
-	private TrackFinder trackService;
-	
-	private String artistName = "";
-	private String trackName = "";
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @understands A class who knows how to get Album and track number using
+ *              MusicBrainz
+ */
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoArtistOrTrackName() throws Exception {
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoTrackname() throws Exception {
-		artistName = "Tiesto";
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoArtist() throws Exception {
-		trackName = "Here on Earth";
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldGetAlbum() throws Exception {
-		artistName = "Deadmau5";
-		trackName = "Faxing Berlin";
-		String album = "Some Kind Of Blue";
-		MusicBrainzTrack track = new MusicBrainzTrack();
-		track.setAlbum(album);
-		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
+@Service
+public class TrackFinder implements MusicBrainzFinder {
+	private List<Track> trackList;
+	private int trackNumber;
+	private TrackHelper trackHelper = new TrackHelper();
+	private static final Log log = LogFactory.getLog(TrackFinder.class);
 
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertEquals(album, result.getAlbum());
+	public synchronized MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException {
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		String album = StringUtils.EMPTY;
+		trackList = trackHelper.findByTitle(trackname);
+		if (!trackList.isEmpty()) {
+			log.debug("Getting album for track: " + trackname);
+			for (Track track : trackList) {
+				String artistFromMusicBrainz = trackHelper.getArtist(track);
+				log.info("Artist from MusicBrainz: " + artistFromMusicBrainz);
+				if (artist.equalsIgnoreCase(artistFromMusicBrainz)) {
+					log.info("MusicBrainz Id: " + trackHelper.getMusicBrainzID(track));
+					log.debug("Artist: " + artistFromMusicBrainz);
+					String trackNumberAsString = trackHelper.getTrackNumber(track);
+					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
+					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
+					album = trackHelper.getAlbum(track);
+					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
+					log.debug("totalTrackNumber: " + totalTrackNumber);
+					String cdNumber = trackHelper.getCdNumber(track);
+					log.debug("cdNumber: " + cdNumber);
+					String totalCds = trackHelper.getTotalCds(track);
+					log.debug("totalCds: " + totalCds);
+					musicBrainzTrack.setAlbum(album);
+					musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
+					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
+					musicBrainzTrack.setCdNumber(cdNumber);
+					musicBrainzTrack.setTotalCds(totalCds);
+					break;
+				}
+			}
+		}
+		return musicBrainzTrack;
 	}
-	
-	@Test
-	public void shouldReturnTrackNumber() throws Exception {
-		artistName = "Above & Beyond";
-		trackName = "Anjunabeach";
-		String album = "Anjunabeach";
-		String trackNumber = "12";
-		
-		MusicBrainzTrack track = new MusicBrainzTrack();
-		track.setAlbum(album);
-		track.setTrackNumber(trackNumber);
-		
-		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertEquals(album, result.getAlbum());
-		assertEquals(trackNumber, result.getTrackNumber());
+
+	@Override
+	public MusicBrainzTrack getByAlbum(String album) throws ServerUnavailableException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

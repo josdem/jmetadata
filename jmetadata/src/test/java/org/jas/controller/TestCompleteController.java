@@ -213,14 +213,13 @@ import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
-import org.jas.controller.CompleteController;
-import org.jas.helper.MusicBrainzDelegator;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
 import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
+import org.jas.service.MusicBrainzFinder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -237,9 +236,9 @@ public class TestCompleteController {
 	private CompleteController controller = new CompleteController();
 	
 	@Mock
-	private MusicBrainzDelegator musicBrainzDelegator;
-	@Mock
 	private MetadataWriter metadataWriter;
+	@Mock
+	private MusicBrainzFinder musicBrainzFinder;
 	@Mock
 	private Metadata metadata;
 	@Mock
@@ -279,12 +278,10 @@ public class TestCompleteController {
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
 		MusicBrainzTrack musicBrainzTrack = setExpectations();
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
-		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
 		verify(metadata).setTrackNumber(trackNumber);
 		verify(metadata).setTotalTracks(totalTracks);
@@ -303,7 +300,7 @@ public class TestCompleteController {
 	@Test
 	public void shouldDetectAnErrorInService() throws Exception {
 		when(metadata.getAlbum()).thenReturn("");
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
+		when(musicBrainzFinder.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
 		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
@@ -314,7 +311,7 @@ public class TestCompleteController {
 	public void shouldNotFoundAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn("");
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
+		when(musicBrainzFinder.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 
