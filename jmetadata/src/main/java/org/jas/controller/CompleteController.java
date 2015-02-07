@@ -262,7 +262,7 @@ public class CompleteController {
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" I'm going to complete rest of information");
 				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
-				return ActionResult.New;
+				return StringUtils.isEmpty(musicBrainzTrack.getAlbum()) ? ActionResult.Not_Found : ActionResult.New;
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);

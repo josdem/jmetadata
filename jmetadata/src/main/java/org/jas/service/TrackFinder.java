@@ -270,14 +270,16 @@ public class TrackFinder implements MusicBrainzFinder {
 		if (!trackList.isEmpty()) {
 			for (Track track : trackList) {
 				Release release = trackHelper.findAlbumByTrack(track, album);
-				musicBrainzTrack.setAlbum(album);
-				String trackNumberAsString = trackHelper.getTrackNumber(release);
-				Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
-				musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
-				String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(release));
-				musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
-				musicBrainzTrack.setCdNumber(trackHelper.getCdNumber(track));
-				musicBrainzTrack.setTotalCds(trackHelper.getTotalCds(track));
+				if(release != null){
+					musicBrainzTrack.setAlbum(album);
+					String trackNumberAsString = trackHelper.getTrackNumber(release);
+					Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
+					musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
+					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(release));
+					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
+					musicBrainzTrack.setCdNumber(trackHelper.getCdNumber(track));
+					musicBrainzTrack.setTotalCds(trackHelper.getTotalCds(track));
+				}
 			}
 		}
 		return musicBrainzTrack;
