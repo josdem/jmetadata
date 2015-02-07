@@ -228,11 +228,11 @@ public class TestFormatterService {
 	private String badFormatAcute = "What&acute;s The Time";
 	private String badFormatAcuteExpected = "What's The Time";
 	private String artist = "angel tears";
-	private String artistExpected = "Angel Tears";
+	private String expectedArtist = "Angel Tears";
 	private String title = "legends of the fall";
-	private String titleExpected = "Legends Of The Fall";
+	private String expectedTitle = "Legends Of The Fall";
 	private String album = "vision";
-	private String albumExpected = "Vision";
+	private String expectedAlbum = "Vision";
 	private Metadata metadata = new Metadata();
 
 	
@@ -247,7 +247,7 @@ public class TestFormatterService {
 	public void shouldDetectAaccentMarkTitle() throws Exception {
 		metadata.setTitle(badFormatA);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAExpected , metadata.getTitle());
 
 	}
@@ -256,7 +256,7 @@ public class TestFormatterService {
 	public void shouldDetectEaccentMarkTitle() throws Exception {
 		metadata.setTitle(badFormatE);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatEExpected , metadata.getTitle());
 
 	}
@@ -265,7 +265,7 @@ public class TestFormatterService {
 	public void shouldDetectIaccentMarkTitle() throws Exception {
 		metadata.setTitle(badFormatI);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatIExpected , metadata.getTitle());
 
 	}
@@ -274,7 +274,7 @@ public class TestFormatterService {
 	public void shouldDetectOaccentMarkTitle() throws Exception {
 		metadata.setTitle(badFormatO);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(bFormatOExpected , metadata.getTitle());
 
 	}
@@ -283,7 +283,7 @@ public class TestFormatterService {
 	public void shouldDetectUaccentMarkTitle() throws Exception {
 		metadata.setTitle(badFormatU);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatUExpected , metadata.getTitle());
 
 	}
@@ -292,7 +292,7 @@ public class TestFormatterService {
 	public void shouldDetectAaccentMarkArtist() throws Exception {
 		metadata.setArtist(badFormatA);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAExpected , metadata.getArtist());
 
 	}
@@ -301,7 +301,7 @@ public class TestFormatterService {
 	public void shouldDetectEaccentMarkArtist() throws Exception {
 		metadata.setArtist(badFormatE);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatEExpected , metadata.getArtist());
 
 	}
@@ -310,7 +310,7 @@ public class TestFormatterService {
 	public void shouldDetectIaccentMarkArtist() throws Exception {
 		metadata.setArtist(badFormatI);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatIExpected , metadata.getArtist());
 
 	}
@@ -319,7 +319,7 @@ public class TestFormatterService {
 	public void shouldDetectOaccentMarkArtist() throws Exception {
 		metadata.setArtist(badFormatO);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(bFormatOExpected , metadata.getArtist());
 
 	}
@@ -328,7 +328,7 @@ public class TestFormatterService {
 	public void shouldDetectUaccentMarkArtist() throws Exception {
 		metadata.setArtist(badFormatU);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatUExpected , metadata.getArtist());
 	}
 	
@@ -336,16 +336,52 @@ public class TestFormatterService {
 	public void shouldDetectAaccentMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatA);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAExpected , metadata.getAlbum());
 
+	}
+	
+	@Test
+	public void shouldFormatTitleWhenNull() throws Exception {
+		metadata.setArtist(badFormatA);
+		metadata.setTitle(null);
+		metadata.setAlbum(badFormatE);
+
+		assertTrue(formatter.wasFormatted(metadata));
+	}
+	
+	@Test
+	public void shouldFormatTitleWhenEmpty() throws Exception {
+		metadata.setArtist(badFormatA);
+		metadata.setTitle(StringUtils.EMPTY);
+		metadata.setAlbum(badFormatE);
+
+		assertTrue(formatter.wasFormatted(metadata));
+	}
+	
+	@Test
+	public void shouldFormatAlbumWhenNull() throws Exception {
+		metadata.setArtist(badFormatA);
+		metadata.setTitle(badFormatE);
+		metadata.setAlbum(null);
+
+		assertTrue(formatter.wasFormatted(metadata));
+	}
+	
+	@Test
+	public void shouldFormatAlbumWhenEmpty() throws Exception {
+		metadata.setArtist(badFormatA);
+		metadata.setTitle(badFormatE);
+		metadata.setAlbum(StringUtils.EMPTY);
+
+		assertTrue(formatter.wasFormatted(metadata));
 	}
 	
 	@Test
 	public void shouldDetectEaccentMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatE);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatEExpected , metadata.getAlbum());
 
 	}
@@ -354,7 +390,7 @@ public class TestFormatterService {
 	public void shouldDetectIaccentMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatI);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatIExpected , metadata.getAlbum());
 
 	}
@@ -363,7 +399,7 @@ public class TestFormatterService {
 	public void shouldDetectOaccentMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatO);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(bFormatOExpected , metadata.getAlbum());
 
 	}
@@ -372,7 +408,7 @@ public class TestFormatterService {
 	public void shouldDetectUaccentMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatU);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatUExpected , metadata.getAlbum());
 
 	}
@@ -382,7 +418,7 @@ public class TestFormatterService {
 		metadata.setTitle(title);
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(titleExpected , metadata.getTitle());
+		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
 	@Test
@@ -390,7 +426,7 @@ public class TestFormatterService {
 		metadata.setArtist(artist);
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(artistExpected , metadata.getArtist());
+		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
 	@Test
@@ -398,7 +434,7 @@ public class TestFormatterService {
 		metadata.setAlbum(album);
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(albumExpected , metadata.getAlbum());
+		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
 	@Test
@@ -406,7 +442,7 @@ public class TestFormatterService {
 		metadata.setAlbum(album.toUpperCase());
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(albumExpected , metadata.getAlbum());
+		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
 	@Test
@@ -414,7 +450,7 @@ public class TestFormatterService {
 		metadata.setTitle(title.toUpperCase());
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(titleExpected , metadata.getTitle());
+		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
 	@Test
@@ -422,7 +458,7 @@ public class TestFormatterService {
 		metadata.setArtist(artist.toUpperCase());
 
 		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(artistExpected , metadata.getArtist());
+		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
 	@Test
@@ -469,7 +505,7 @@ public class TestFormatterService {
 	public void shouldDetectAcuteMarkTitle() throws Exception {
 		metadata.setTitle(badFormatAcute);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAcuteExpected , metadata.getTitle());
 
 	}
@@ -478,7 +514,7 @@ public class TestFormatterService {
 	public void shouldDetectAcuteMarkArtist() throws Exception {
 		metadata.setArtist(badFormatAcute);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAcuteExpected , metadata.getArtist());
 
 	}
@@ -487,7 +523,7 @@ public class TestFormatterService {
 	public void shouldDetectAcuteMarkAlbum() throws Exception {
 		metadata.setAlbum(badFormatAcute);
 
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(badFormatAcuteExpected , metadata.getAlbum());
 
 	}
@@ -532,7 +568,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -543,7 +579,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -554,7 +590,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -591,7 +627,7 @@ public class TestFormatterService {
 		metadata.setAlbum(album);
 		
 		assertFalse(formatter.wasCamelized(metadata));
-		assertFalse(formatter.isABadFormat(metadata));
+		assertFalse(formatter.wasFormatted(metadata));
 	}
 	
 	@Test
@@ -601,7 +637,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -612,7 +648,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -623,7 +659,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 
@@ -634,7 +670,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -645,7 +681,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -656,7 +692,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
@@ -667,7 +703,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -678,7 +714,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -689,7 +725,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
@@ -700,7 +736,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -711,7 +747,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -722,7 +758,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
@@ -733,7 +769,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -744,7 +780,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -755,7 +791,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
@@ -766,7 +802,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -777,7 +813,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -788,7 +824,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
@@ -848,7 +884,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -859,7 +895,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedArtist , metadata.getArtist());
 	}
 	
@@ -870,7 +906,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 		
-		assertTrue(formatter.isABadFormat(metadata));
+		assertTrue(formatter.wasFormatted(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	

@@ -222,8 +222,9 @@ public class FormatterController {
 	public synchronized ActionResult format(Metadata metadata) {
 		Boolean analyzable = formatterService.isAnalyzable(metadata);
 		if (!analyzable) return ActionResult.Complete;
-		Boolean formatted = formatterService.isABadFormat(metadata);
+		Boolean formatted = formatterService.wasFormatted(metadata);
 		Boolean capitalized = formatterService.wasCamelized(metadata);
 		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
 	}
+	
 }
