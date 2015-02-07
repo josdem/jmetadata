@@ -32,7 +32,7 @@ public class TestFormatterController {
 	public void shouldFormatWhenBadFormat() throws Exception {
 		when(formatterService.isAnalyzable(metadata)).thenReturn(true);
 		when(formatterService.isABadFormat(metadata)).thenReturn(true);
-		when(formatterService.isNotCamelized(metadata)).thenReturn(false);
+		when(formatterService.wasCamelized(metadata)).thenReturn(false);
 		ActionResult result = formatterController.format(metadata);
 		assertEquals(ActionResult.New, result);
 	}
@@ -41,7 +41,7 @@ public class TestFormatterController {
 	public void shouldFormatWhenNotCamelized() throws Exception {
 		when(formatterService.isAnalyzable(metadata)).thenReturn(true);
 		when(formatterService.isABadFormat(metadata)).thenReturn(false);
-		when(formatterService.isNotCamelized(metadata)).thenReturn(true);
+		when(formatterService.wasCamelized(metadata)).thenReturn(true);
 		ActionResult result = formatterController.format(metadata);
 		assertEquals(ActionResult.New, result);
 	}
@@ -50,7 +50,7 @@ public class TestFormatterController {
 	public void shouldReturnComplete() throws Exception {
 		when(formatterService.isAnalyzable(metadata)).thenReturn(true);
 		when(formatterService.isABadFormat(metadata)).thenReturn(false);
-		when(formatterService.isNotCamelized(metadata)).thenReturn(false);
+		when(formatterService.wasCamelized(metadata)).thenReturn(false);
 		ActionResult result = formatterController.format(metadata);
 		assertEquals(ActionResult.Complete, result);
 	}
@@ -61,7 +61,7 @@ public class TestFormatterController {
 		ActionResult result = formatterController.format(metadata);
 		assertEquals(ActionResult.Complete, result);
 		verify(formatterService, never()).isABadFormat(metadata);
-		verify(formatterService, never()).isNotCamelized(metadata);
+		verify(formatterService, never()).wasCamelized(metadata);
 	}
 	
 }

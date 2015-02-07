@@ -204,9 +204,6 @@
 
 package org.jas.controller;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
@@ -221,15 +218,12 @@ public class FormatterController {
 	@Autowired
 	private FormatterService formatterService;
 	
-	private Log log = LogFactory.getLog(getClass());
-	
 	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
 	public synchronized ActionResult format(Metadata metadata) {
-		log.info("Analizing: " + ToStringBuilder.reflectionToString(metadata));
-		boolean analyzable = formatterService.isAnalyzable(metadata);
+		Boolean analyzable = formatterService.isAnalyzable(metadata);
 		if (!analyzable) return ActionResult.Complete;
-		boolean formatted = formatterService.isABadFormat(metadata);
-		boolean capitalized = formatterService.isNotCamelized(metadata);
+		Boolean formatted = formatterService.isABadFormat(metadata);
+		Boolean capitalized = formatterService.wasCamelized(metadata);
 		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
 	}
 }

@@ -381,7 +381,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeTitle() throws Exception {
 		metadata.setTitle(title);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(titleExpected , metadata.getTitle());
 	}
 	
@@ -389,7 +389,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeArtist() throws Exception {
 		metadata.setArtist(artist);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(artistExpected , metadata.getArtist());
 	}
 	
@@ -397,7 +397,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeAlbum() throws Exception {
 		metadata.setAlbum(album);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(albumExpected , metadata.getAlbum());
 	}
 	
@@ -405,7 +405,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
 		metadata.setAlbum(album.toUpperCase());
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(albumExpected , metadata.getAlbum());
 	}
 	
@@ -413,7 +413,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeTitleWhenUppercase() throws Exception {
 		metadata.setTitle(title.toUpperCase());
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(titleExpected , metadata.getTitle());
 	}
 	
@@ -421,7 +421,7 @@ public class TestFormatterService {
 	public void shouldCapitalizeArtistWhenUppercase() throws Exception {
 		metadata.setArtist(artist.toUpperCase());
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(artistExpected , metadata.getArtist());
 	}
 	
@@ -432,7 +432,7 @@ public class TestFormatterService {
 		
 		metadata.setArtist(artist);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(artistExpected , metadata.getArtist());
 	}
 	
@@ -443,7 +443,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(titleExpected , metadata.getTitle());
 	}
 	
@@ -454,7 +454,7 @@ public class TestFormatterService {
 		
 		metadata.setAlbum(album);
 
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(albumExpected , metadata.getAlbum());
 	}
 	
@@ -499,7 +499,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -510,7 +510,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -521,7 +521,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -565,7 +565,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -576,7 +576,7 @@ public class TestFormatterService {
 		
 		metadata.setTitle(title);
 		
-		assertTrue(formatter.isNotCamelized(metadata));
+		assertTrue(formatter.wasCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
 	
@@ -590,7 +590,7 @@ public class TestFormatterService {
 		metadata.setTitle(title);
 		metadata.setAlbum(album);
 		
-		assertFalse(formatter.isNotCamelized(metadata));
+		assertFalse(formatter.wasCamelized(metadata));
 		assertFalse(formatter.isABadFormat(metadata));
 	}
 	

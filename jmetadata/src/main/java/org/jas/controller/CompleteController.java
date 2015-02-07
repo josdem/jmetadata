@@ -260,7 +260,7 @@ public class CompleteController {
 					return ActionResult.Not_Found;
 				}
 			} else {
-				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" I'm going to complete rest of information");
+				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: " + metadata.getAlbum() + " I'll try to complete information using MusicBrainz");
 				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
 				return StringUtils.isEmpty(musicBrainzTrack.getAlbum()) ? ActionResult.Not_Found : ActionResult.New;
 			}
