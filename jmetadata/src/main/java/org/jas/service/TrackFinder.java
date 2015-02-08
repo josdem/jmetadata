@@ -208,6 +208,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.helper.TrackHelper;
 import org.jas.model.MusicBrainzTrack;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
@@ -222,8 +223,10 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 @Service
 public class TrackFinder implements MusicBrainzFinder {
+
+	@Autowired
+	private TrackHelper trackHelper;
 	private List<Track> trackList;
-	private TrackHelper trackHelper = new TrackHelper();
 
 	@Override
 	public synchronized MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException {

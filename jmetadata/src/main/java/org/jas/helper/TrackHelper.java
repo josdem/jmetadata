@@ -205,11 +205,13 @@ package org.jas.helper;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
 
-
+@Component
 public class TrackHelper {
 	private static final int FIRST_RELEASE = 0;
 	private static final String ONE = "1";
