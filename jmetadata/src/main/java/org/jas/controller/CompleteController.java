@@ -257,12 +257,12 @@ public class CompleteController {
 					return ActionResult.New;
 				} else {
 					log.info("There is no need to find an album for track: " + metadata.getTitle());
-					return ActionResult.Not_Found;
+					return ActionResult.NotFound;
 				}
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: " + metadata.getAlbum() + " I'll try to complete information using MusicBrainz");
 				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
-				return StringUtils.isEmpty(musicBrainzTrack.getAlbum()) ? ActionResult.Not_Found : ActionResult.New;
+				return StringUtils.isEmpty(musicBrainzTrack.getAlbum()) ? ActionResult.NotFound : ActionResult.New;
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);

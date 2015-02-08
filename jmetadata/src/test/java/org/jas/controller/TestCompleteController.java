@@ -279,6 +279,7 @@ public class TestCompleteController {
 	public void shouldCompleteMetadata() throws Exception {
 		MusicBrainzTrack musicBrainzTrack = setExpectations();
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		when(musicBrainzFinder.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
@@ -316,7 +317,7 @@ public class TestCompleteController {
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 
 		verify(metadata, never()).setAlbum(album);
-		assertEquals(ActionResult.Not_Found, result);
+		assertEquals(ActionResult.NotFound, result);
 	}
 	
 	@Test
@@ -362,11 +363,26 @@ public class TestCompleteController {
 	}
 	
 	@Test
-	public void shouldReturnMetadataCompleteIfHasAlbum() throws Exception {
+	public void shouldReturnMetadataCompleteAlbumIfHasAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn(album);
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		musicBrainzTrack.setAlbum(album);
+		when(musicBrainzFinder.getByAlbum(title, album)).thenReturn(musicBrainzTrack);
+		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
-		assertEquals(ActionResult.Complete, result);
+		assertEquals(ActionResult.New, result);
+	}
+	
+	@Test
+	public void shouldReturnNotFoundIfNoHasAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn(album);
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		when(musicBrainzFinder.getByAlbum(title, album)).thenReturn(musicBrainzTrack);
+		
+		ActionResult result = controller.completeAlbumMetadata(metadata);
+		
+		assertEquals(ActionResult.NotFound, result);
 	}
 	
 	@Test
