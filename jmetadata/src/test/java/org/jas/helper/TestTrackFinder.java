@@ -238,9 +238,10 @@ public class TestTrackFinder {
 	@Mock
 	private Track track;
 
-	private String artistname = "Sander Van Doorn";
-	private String trackname = "The Bottle Hymn 2.0";
+	private String artist = "Sander Van Doorn";
+	private String title = "The Bottle Hymn 2.0";
 	private String album = "The Bottle Hymn 2.0 EP";
+	
 	private List<Track> trackList= new ArrayList<Track>();
 	
 	@Before
@@ -251,7 +252,7 @@ public class TestTrackFinder {
 	
 	@Test
 	public void shouldNotFindAnyAlbum() throws Exception {
-		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
+		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
 		
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
 		assertEquals(ZERO, result.getTrackNumber());
@@ -262,7 +263,7 @@ public class TestTrackFinder {
 		String expectedTrack = "2";
 		setTrackHelperExpectations();
 
-		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
+		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
 		
 		verifyTrackHelperExpectations(expectedTrack, result);
 	}
@@ -273,7 +274,7 @@ public class TestTrackFinder {
 		setTrackHelperExpectations();
 		when(trackHelper.getArtist(track)).thenReturn("sander van doorn");
 
-		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
+		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
 		
 		verifyTrackHelperExpectations(expectedTrack, result);
 	}
@@ -288,8 +289,8 @@ public class TestTrackFinder {
 	
 
 	private void setTrackHelperExpectations() throws ServerUnavailableException {
-		when(trackHelper.findByTitle(trackname)).thenReturn(trackList);
-		when(trackHelper.getArtist(track)).thenReturn(artistname);
+		when(trackHelper.findByTitle(title)).thenReturn(trackList);
+		when(trackHelper.getArtist(track)).thenReturn(artist);
 		when(trackHelper.getTrackNumber(track)).thenReturn("1");
 		when(trackHelper.getAlbum(track)).thenReturn(album);
 		when(trackHelper.getTotalTrackNumber(track)).thenReturn(Integer.valueOf(TOTAL_TRACKS));

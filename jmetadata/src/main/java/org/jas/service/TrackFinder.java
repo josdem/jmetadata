@@ -226,6 +226,7 @@ public class TrackFinder implements MusicBrainzFinder {
 
 	@Autowired
 	private TrackHelper trackHelper;
+
 	private List<Track> trackList;
 
 	@Override
@@ -233,23 +234,12 @@ public class TrackFinder implements MusicBrainzFinder {
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
 		String album = StringUtils.EMPTY;
 		trackList = trackHelper.findByTitle(trackname);
-		if (!trackList.isEmpty()) {
-			for (Track track : trackList) {
-				String artistFromMusicBrainz = trackHelper.getArtist(track);
-				if (artist.equalsIgnoreCase(artistFromMusicBrainz)) {
-					String trackNumberAsString = trackHelper.getTrackNumber(track);
-					Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
-					album = trackHelper.getAlbum(track);
-					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
-					String cdNumber = trackHelper.getCdNumber(track);
-					String totalCds = trackHelper.getTotalCds(track);
-					musicBrainzTrack.setAlbum(album);
-					musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
-					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
-					musicBrainzTrack.setCdNumber(cdNumber);
-					musicBrainzTrack.setTotalCds(totalCds);
-					break;
-				}
+		for (Track track : trackList) {
+			String artistFromMusicBrainz = trackHelper.getArtist(track);
+			if (artist.equalsIgnoreCase(artistFromMusicBrainz)) {
+				album = trackHelper.getAlbum(track);
+				setMusicBrainzValues(musicBrainzTrack, album, track);
+				break;
 			}
 		}
 		return musicBrainzTrack;
@@ -262,19 +252,21 @@ public class TrackFinder implements MusicBrainzFinder {
 		if (!trackList.isEmpty()) {
 			for (Track track : trackList) {
 				Release release = trackHelper.findAlbumByTrack(track, album);
-				if(release != null){
-					musicBrainzTrack.setAlbum(album);
-					String trackNumberAsString = trackHelper.getTrackNumber(release);
-					Integer trackNumber = Integer.parseInt(trackNumberAsString) + 1;
-					musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
-					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(release));
-					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
-					musicBrainzTrack.setCdNumber(trackHelper.getCdNumber(track));
-					musicBrainzTrack.setTotalCds(trackHelper.getTotalCds(track));
+				if (release != null) {
+					setMusicBrainzValues(musicBrainzTrack, album, track);
 				}
 				break;
 			}
 		}
 		return musicBrainzTrack;
 	}
+	
+	private void setMusicBrainzValues(MusicBrainzTrack musicBrainzTrack, String album, Track track) throws ServerUnavailableException {
+		musicBrainzTrack.setAlbum(album);
+		musicBrainzTrack.setTrackNumber(String.valueOf(Integer.parseInt(trackHelper.getTrackNumber(track)) + 1));
+		musicBrainzTrack.setTotalTrackNumber(String.valueOf(trackHelper.getTotalTrackNumber(track)));
+		musicBrainzTrack.setCdNumber(trackHelper.getCdNumber(track));
+		musicBrainzTrack.setTotalCds(trackHelper.getTotalCds(track));
+	}
+	
 }
