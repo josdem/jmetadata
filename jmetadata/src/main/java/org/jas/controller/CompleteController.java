@@ -207,7 +207,6 @@ package org.jas.controller;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
@@ -243,30 +242,33 @@ public class CompleteController {
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
-			log.info("trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle() + " - " + metadata.getAlbum());
+			log.info("Trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle() + " - " + metadata.getAlbum());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
 				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getAlbum(metadata.getArtist(), metadata.getTitle());
-				log.info("musicBrainzTrack: " + ToStringBuilder.reflectionToString(musicBrainzTrack));
-				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
-					log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
-					metadata.setAlbum(musicBrainzTrack.getAlbum());
-					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
-					metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
-					metadata.setCdNumber(musicBrainzTrack.getCdNumber());
-					metadata.setTotalCds(musicBrainzTrack.getTotalCds());
-					return ActionResult.New;
-				} else {
-					log.info("There is no need to find an album for track: " + metadata.getTitle());
-					return ActionResult.NotFound;
-				}
+				return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: " + metadata.getAlbum() + " I'll try to complete information using MusicBrainz");
 				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
-				return StringUtils.isEmpty(musicBrainzTrack.getAlbum()) ? ActionResult.NotFound : ActionResult.New;
+				return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
 			return ActionResult.Error;
+		}
+	}
+	
+	private ActionResult compareTwoObjectsToFindNewData(Metadata metadata, MusicBrainzTrack musicBrainzTrack) {
+		if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
+			log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
+			metadata.setAlbum(musicBrainzTrack.getAlbum());
+			metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
+			metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
+			metadata.setCdNumber(musicBrainzTrack.getCdNumber());
+			metadata.setTotalCds(musicBrainzTrack.getTotalCds());
+			return ActionResult.New;
+		} else {
+			log.info("There is no need to find an album for track: " + metadata.getTitle());
+			return ActionResult.NotFound;
 		}
 	}
 
