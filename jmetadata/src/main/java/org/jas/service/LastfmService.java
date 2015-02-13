@@ -214,6 +214,11 @@ import org.jas.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @understands A class who completes metadata using LastFM service
+ */
+
 @Service
 public class LastfmService {
 	

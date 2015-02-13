@@ -224,15 +224,23 @@ import org.springframework.stereotype.Service;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @understands A class who evaluates metadata and decides if LastFM can help to complete information
+ */
+
 @Service
 public class CompleteService {
-	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
-	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
-	private Log log = LogFactory.getLog(this.getClass());
-	private Album info;
 	
 	@Autowired
+	private LastFMAlbumHelper helper;
+	@Autowired
 	private ImageService imageService;
+
+	private Album info;
+	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
+
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public boolean canLastFMHelpToComplete(Metadata metadata) {
 		String artist = metadata.getArtist();

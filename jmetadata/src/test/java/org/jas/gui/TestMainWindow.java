@@ -760,7 +760,8 @@ public class TestMainWindow {
 
 		window.button(EXPORT_BUTTON_NAME).click();
 
-		verify(fileChooserHelper).getDirectory();
+
+
 		verify(viewEngine).request(eq(Actions.EXPORT), isA(ExportPackage.class), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.Exported);

@@ -213,9 +213,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.Auth;
 import org.jas.model.GenreTypes;
+import org.springframework.stereotype.Component;
 
 import de.umass.lastfm.Album;
 
+@Component
 public class LastFMAlbumHelper {
 	private Log log = LogFactory.getLog(this.getClass());
 
