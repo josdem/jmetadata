@@ -211,7 +211,6 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -476,19 +475,6 @@ public class TestMainWindow {
 		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
 		assertTrue(mainWindow.getOpenButton().isEnabled());
 		assertTrue(mainWindow.getDescriptionTable().isEnabled());
-	}
-
-	@Test
-	public void shouldKnowWhenRowChanged() throws Exception {
-		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
-
-		mainWindow.getDescriptionTable().setEnabled(true);
-		window.robot.doubleClick(mainWindow.getDescriptionTable());
-		window.robot.enterText(ALBUM);
-		mainWindow.tableLoaded = true;
-		window.robot.pressKey(KeyEvent.VK_ENTER);
-
-		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
