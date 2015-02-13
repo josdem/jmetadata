@@ -223,7 +223,7 @@ import org.springframework.stereotype.Service;
 public class LastfmService {
 	
 	@Autowired
-	private CompleteService completeService;
+	private LastFMCompleteService completeService;
 	
 	private Log log = LogFactory.getLog(this.getClass());
 

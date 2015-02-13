@@ -222,7 +222,7 @@ import org.jas.action.ActionResult;
 import org.jas.helper.LastFMAlbumHelper;
 import org.jas.model.LastfmAlbum;
 import org.jas.model.Metadata;
-import org.jas.service.CompleteService;
+import org.jas.service.LastFMCompleteService;
 import org.jas.service.ImageService;
 import org.junit.Before;
 import org.junit.Test;
@@ -236,7 +236,7 @@ import de.umass.lastfm.ImageSize;
 
 public class TestCompleteService {
 	@InjectMocks
-	private CompleteService completeService = new CompleteService();
+	private LastFMCompleteService completeService = new LastFMCompleteService();
 	@Mock
 	private Metadata metadata;
 	@Mock

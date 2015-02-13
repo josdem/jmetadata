@@ -216,7 +216,7 @@ import java.net.MalformedURLException;
 import org.jas.action.ActionResult;
 import org.jas.model.LastfmAlbum;
 import org.jas.model.Metadata;
-import org.jas.service.CompleteService;
+import org.jas.service.LastFMCompleteService;
 import org.jas.service.LastfmService;
 import org.junit.Before;
 import org.junit.Test;
@@ -234,7 +234,7 @@ public class TestLastfmService {
 	@Mock
 	private Image imageIcon;
 	@Mock
-	private CompleteService completeService;
+	private LastFMCompleteService completeService;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
 

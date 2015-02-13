@@ -217,6 +217,11 @@ import org.springframework.stereotype.Component;
 
 import de.umass.lastfm.Album;
 
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @understands A class who gets album information from LastFM
+ */
+
 @Component
 public class LastFMAlbumHelper {
 	private Log log = LogFactory.getLog(this.getClass());

@@ -230,14 +230,13 @@ import de.umass.lastfm.ImageSize;
  */
 
 @Service
-public class CompleteService {
+public class LastFMCompleteService {
 	
 	@Autowired
-	private LastFMAlbumHelper helper;
+	private LastFMAlbumHelper lastfmHelper;
 	@Autowired
 	private ImageService imageService;
 
-	private Album info;
 	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
 
 	private Log log = LogFactory.getLog(this.getClass());
@@ -247,9 +246,9 @@ public class CompleteService {
 		String album = metadata.getAlbum();
 
 		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
-			info = cachedAlbums.get(metadata.getAlbum());
+			Album info = cachedAlbums.get(metadata.getAlbum());
 			if(info==null){
-				info = helper.getAlbum(artist, album);
+				info = lastfmHelper.getAlbum(artist, album);
 				if(info!=null){
 					String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
 					if(!StringUtils.isEmpty(imageUrl)){
@@ -301,10 +300,8 @@ public class CompleteService {
 		Album album = cachedAlbums.get(metadata.getAlbum());
 		String genre = StringUtils.EMPTY;
 		if(album != null){
-			genre = helper.getGenre(album);
-		} else {
-			genre = helper.getGenre(info);
-		}
+			genre = lastfmHelper.getGenre(album);
+		} 
 		if(!StringUtils.isEmpty(genre)){
 			log.info("Genre from lastFM: " + genre);
 			lastfmAlbum.setGenre(genre);
@@ -321,12 +318,10 @@ public class CompleteService {
 		Album album = cachedAlbums.get(metadata.getAlbum());
 		if(album != null) {
 			release = album.getReleaseDate();
-		} else {
-			release = info.getReleaseDate();
-		}
+		} 
 		if(release != null){
 			log.info("Year date format: " + release);
-			lastfmAlbum.setYear(helper.getYear(release));
+			lastfmAlbum.setYear(lastfmHelper.getYear(release));
 			log.info("Year metadata format: " + lastfmAlbum.getYear());
 		} else {
 			lastfmAlbum.setYear(StringUtils.EMPTY);
