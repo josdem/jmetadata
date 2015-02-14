@@ -406,6 +406,7 @@ public class TestMetadataService {
 	}
 	
 	@Test (expected=TooMuchFilesException.class)
+	@SuppressWarnings("unchecked")
 	public void shouldNotExtractWhenTooMuchFiles() throws Exception {
 		List<File> fileList = Mockito.mock(ArrayList.class);
 		when(fileList.size()).thenReturn(51);
