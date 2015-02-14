@@ -479,10 +479,10 @@ public class MainWindow extends JFrame {
 	}
 	
 	@EventMethod(Events.TOO_MUCH_FILES_LOADED)
-	void onTooMuchFilesLoaded(String path) {
+	void onTooMuchFilesLoaded(String maxFiles) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ApplicationState.TOO_MUCH_FILES_LOADED);
-		sb.append(path);
+		sb.append(maxFiles);
 		dialogHelper.showMessageDialog(this, sb.toString());
 		getOpenButton().setEnabled(true);
 	}

@@ -207,6 +207,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JFileChooser;
 
@@ -243,6 +244,9 @@ public class MetadataController {
 	private ControlEngineConfigurator configurator;
 	@Autowired
 	private MetadataService metadataExtractor;
+	@Autowired 
+	private Properties properties;
+	
 	private List<Metadata> metadataList;
 
 	@ActionMethod(Actions.GET_METADATA)
@@ -284,7 +288,8 @@ public class MetadataController {
 					handleException(e);
 				} catch (TooMuchFilesException e) {
 					log.error(e, e);
-					configurator.getControlEngine().fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<Integer>(51));
+					String maxFilesAllowed = properties.getProperty("max.files.allowed");
+					configurator.getControlEngine().fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<String>(maxFilesAllowed));
 				}
 			} else {
 				configurator.getControlEngine().fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<String>(root.toString()));
