@@ -25,6 +25,9 @@ public interface Events {
 	String MUSIC_DIRECTORY_NOT_EXIST = "musicDirectoryNotExist";
 	EventId<ValueEvent<String>> DIRECTORY_NOT_EXIST = ev(MUSIC_DIRECTORY_NOT_EXIST);
 	
+	String TOO_MUCH_FILES_LOADED = "tooMuchFilesLoaded";
+	EventId<ValueEvent<Integer>> MUCH_FILES_LOADED = ev(TOO_MUCH_FILES_LOADED);
+	
 	String MUSIC_DIRECTORY_SELECTED_CANCEL = "musicDirectorySelectedCancel";
 	EventId<EmptyEvent> DIRECTORY_SELECTED_CANCEL = ev(MUSIC_DIRECTORY_SELECTED_CANCEL);
 	

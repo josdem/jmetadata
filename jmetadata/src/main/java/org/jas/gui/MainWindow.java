@@ -476,7 +476,16 @@ public class MainWindow extends JFrame {
 		sb.append(path);
 		dialogHelper.showMessageDialog(this, sb.toString());
 		getOpenButton().setEnabled(true);
-	}	
+	}
+	
+	@EventMethod(Events.TOO_MUCH_FILES_LOADED)
+	void onTooMuchFilesLoaded(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ApplicationState.TOO_MUCH_FILES_LOADED);
+		sb.append(path);
+		dialogHelper.showMessageDialog(this, sb.toString());
+		getOpenButton().setEnabled(true);
+	}
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
 	void onMusicDirectorySelectedCancel() {

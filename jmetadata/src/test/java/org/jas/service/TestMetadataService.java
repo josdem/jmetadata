@@ -212,6 +212,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.asmatron.messengine.ControlEngine;
@@ -269,6 +270,10 @@ public class TestMetadataService {
 	private File checkStyleFile;
 	@Mock
 	private File file;
+	@Mock
+	private Properties properties;
+	
+	private Integer maxFilesAllowed = 50;
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
 	private List<File> fileList = new ArrayList<File>();
@@ -281,6 +286,7 @@ public class TestMetadataService {
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		when(properties.getProperty("max.files.allowed")).thenReturn(maxFilesAllowed.toString());
 	}
 
 	@Test
@@ -409,7 +415,8 @@ public class TestMetadataService {
 	@SuppressWarnings("unchecked")
 	public void shouldNotExtractWhenTooMuchFiles() throws Exception {
 		List<File> fileList = Mockito.mock(ArrayList.class);
-		when(fileList.size()).thenReturn(51);
+
+		when(fileList.size()).thenReturn(maxFilesAllowed + 1);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		
 		metadataService.extractMetadata(root);

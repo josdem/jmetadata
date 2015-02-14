@@ -259,4 +259,5 @@ public interface ApplicationState {
 	static final String DIRECTORY_EMPTY = "I could not find any mp3 or mp4 audio file in the directory";
 	static final String DIRECTORY_NOT_FOUND = "I could not find that directory to scan: ";
 	static final String FILE_NOT_FOUND = "I could not find this file: ";
+	static final String TOO_MUCH_FILES_LOADED = "Too much files loaded";
 }

@@ -283,7 +283,8 @@ public class MetadataController {
 					sendLoadedEvent(metadataList);
 					handleException(e);
 				} catch (TooMuchFilesException e) {
-					handleException(e);
+					log.error(e, e);
+					configurator.getControlEngine().fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<Integer>(51));
 				}
 			} else {
 				configurator.getControlEngine().fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<String>(root.toString()));

@@ -207,6 +207,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -245,6 +246,8 @@ public class MetadataService {
 	private MetadataReader mp3Reader;
 	@Autowired
 	private MetadataReader mp4Reader;
+	@Autowired
+	private Properties properties;
 	
 	private List<Metadata> metadataList;
 	private Set<File> filesWithoutMinimumMetadata;
@@ -256,7 +259,7 @@ public class MetadataService {
 		metadataList = new ArrayList<Metadata>();
 		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
 		List<File> fileList = fileUtils.getFileList(root);
-		if(fileList.size() > 50){
+		if(fileList.size() > Integer.parseInt(properties.getProperty("max.files.allowed"))){
 			throw new TooMuchFilesException(fileList.size());
 		}
 		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
