@@ -218,6 +218,7 @@ import org.asmatron.messengine.event.ValueEvent;
 import org.jas.action.Actions;
 import org.jas.event.Events;
 import org.jas.exception.InvalidId3VersionException;
+import org.jas.exception.TooMuchFilesException;
 import org.jas.metadata.MetadataException;
 import org.jas.model.Metadata;
 import org.jas.model.Model;
@@ -235,7 +236,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class MetadataController {
-	private JFileChooser fileChooser = new JFileChooser();
+	
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
@@ -246,6 +247,7 @@ public class MetadataController {
 
 	@ActionMethod(Actions.GET_METADATA)
 	public void getMetadata() {
+		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int selection = fileChooser.showOpenDialog(null);
 		if (selection == JFileChooser.APPROVE_OPTION) {
@@ -279,6 +281,8 @@ public class MetadataController {
 					handleException(e);
 				} catch (IllegalArgumentException e) {
 					sendLoadedEvent(metadataList);
+					handleException(e);
+				} catch (TooMuchFilesException e) {
 					handleException(e);
 				}
 			} else {

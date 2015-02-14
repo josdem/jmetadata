@@ -206,8 +206,6 @@ package org.jas.controller;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -223,6 +221,7 @@ import org.asmatron.messengine.event.ValueEvent;
 import org.jas.controller.MetadataController;
 import org.jas.event.Events;
 import org.jas.exception.InvalidId3VersionException;
+import org.jas.exception.TooMuchFilesException;
 import org.jas.metadata.MetadataException;
 import org.jas.model.Metadata;
 import org.jas.model.Model;
@@ -335,7 +334,7 @@ public class TestMetadataController {
 	}
 
 	private void setFileChooserExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
-			InvalidId3VersionException, MetadataException {
+			InvalidId3VersionException, MetadataException, TooMuchFilesException {
 		when(root.exists()).thenReturn(true);
 		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
 		when(fileChooser.getSelectedFile()).thenReturn(root);

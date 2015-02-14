@@ -214,6 +214,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jas.exception.InvalidId3VersionException;
+import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataReader;
@@ -228,7 +229,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @understands A class who know how extract metadata from files using a root directory
+ * @understands A class who knows how extract metadata from files using a root directory
  */
 
 @Service
@@ -251,10 +252,13 @@ public class MetadataService {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
+	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException, TooMuchFilesException {
 		metadataList = new ArrayList<Metadata>();
 		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
 		List<File> fileList = fileUtils.getFileList(root);
+		if(fileList.size() > 50){
+			throw new TooMuchFilesException(fileList.size());
+		}
 		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
 		return getMetadataList(fileList);
 	}

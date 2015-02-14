@@ -217,6 +217,7 @@ import java.util.Set;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jas.exception.InvalidId3VersionException;
+import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.Mp3Reader;
@@ -233,6 +234,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 public class TestMetadataService {
@@ -279,7 +281,6 @@ public class TestMetadataService {
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
-		fileList = new ArrayList<File>();
 	}
 
 	@Test
@@ -402,6 +403,15 @@ public class TestMetadataService {
 		addMetadatas();
 		
 		assertFalse(metadataService.isSameAlbum(metadatas));
+	}
+	
+	@Test (expected=TooMuchFilesException.class)
+	public void shouldNotExtractWhenTooMuchFiles() throws Exception {
+		List<File> fileList = Mockito.mock(ArrayList.class);
+		when(fileList.size()).thenReturn(51);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
+		
+		metadataService.extractMetadata(root);
 	}
 	
 }
