@@ -1,5 +1,6 @@
-jmetadata/.classpath
-jmetadata/.gitignore
-jmetadata/.project
-jmetadata/.settings/
-jmetadata/lastFm.log
+.classpath
+.gitignore
+.project
+.settings
+lastFm.log
+target
