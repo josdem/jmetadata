@@ -1,3 +1,19 @@
+/*
+   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.jas.laf.painter;
 
 import java.awt.Color;
@@ -32,7 +48,7 @@ public class ProgressBarPainter extends SynthPainter {
 		g2.setPaint(slider.isEnabled() ? getPurpleProgressGradientPaint() : getGrayProgressGradientPaint());
 		g2.fill(getProgressPath(slider));
 		g2.setPaint(slider.isEnabled() ? getBrightInPurpleProgressGradientPaint() : getBrightInGrayProgressGradientPaint());
-		g2.fill(getBrightInProgressPath(slider));			
+		g2.fill(getBrightInProgressPath(slider));
 	}
 
 	private int getProgressFromSlider(JSlider progressSlider) {
@@ -69,7 +85,7 @@ public class ProgressBarPainter extends SynthPainter {
 		double sliderHeight = slider.getHeight();
 		double gap = 2.5;
 		double border = 1.00;
-		
+
 		gp2.moveTo(sliderWidth-border, sliderHeight/2);
 		gp2.curveTo(sliderWidth-border, sliderHeight-gap, sliderWidth-gap, sliderHeight-border, sliderWidth-2*gap, sliderHeight-border);
 		gp2.lineTo(2*gap, sliderHeight-border);
@@ -153,9 +169,9 @@ public class ProgressBarPainter extends SynthPainter {
 		LinearGradientPaint gradientPaint = new LinearGradientPaint(44.25f, 6.33f, 44.25f, 0.50f, fractions, colors);
 		return gradientPaint;
 	}
-	
+
 	private LinearGradientPaint getDisabledBorderGradientPaint() {
-		float fractions[] = {0.000f, 0.0553f, 0.1111f, 0.1673f, 0.2240f, 0.2814f, 0.3393f, 0.3979f, 0.4573f, 0.5176f, 0.5789f, 
+		float fractions[] = {0.000f, 0.0553f, 0.1111f, 0.1673f, 0.2240f, 0.2814f, 0.3393f, 0.3979f, 0.4573f, 0.5176f, 0.5789f,
 				 0.6414f, 0.7055f, 0.7715f, 0.8402f, 0.9133f, 1.000f };
 
 		Color colors[] = { Color.WHITE, new Color(0xfb, 0xfb, 0xfb), new Color(0xf8, 0xf8, 0xf8), new Color(0xf4, 0xf4, 0xf4),
@@ -167,9 +183,9 @@ public class ProgressBarPainter extends SynthPainter {
 		LinearGradientPaint gradientPaint = new LinearGradientPaint(70.00f, 11.95f, 70.00f, -8.46f, fractions, colors);
 		return gradientPaint;
 	}
-	
+
 	private LinearGradientPaint getGrayProgressGradientPaint() {
-	  float fractions[] = {0.000f, 0.0418f, 0.0845f, 0.1283f, 0.1732f, 0.2194f, 0.2671f, 0.3164f, 0.3676f, 0.4210f, 0.4771f, 0.5365f, 
+	  float fractions[] = {0.000f, 0.0418f, 0.0845f, 0.1283f, 0.1732f, 0.2194f, 0.2671f, 0.3164f, 0.3676f, 0.4210f, 0.4771f, 0.5365f,
 	    0.6001f, 0.6694f, 0.7471f, 0.8401f, 1.000f };
 
 	  Color colors[] = { new Color(0xf0, 0xf0, 0xf0), new Color(0xea, 0xea, 0xea), new Color(0xe4, 0xe4, 0xe4), new Color(0xdf, 0xdf, 0xdf),
@@ -181,8 +197,8 @@ public class ProgressBarPainter extends SynthPainter {
 	  LinearGradientPaint gradientPaint = new LinearGradientPaint(70.00f, 10.31f, 70.00f, 1.43f, fractions, colors);
 	  return gradientPaint;
 	 }
-	
-	
+
+
 	private LinearGradientPaint getBrightInGrayProgressGradientPaint() {
 	  float fractions[] = {0.160f, 0.479f, 0.877f };
 
@@ -190,5 +206,5 @@ public class ProgressBarPainter extends SynthPainter {
 	  LinearGradientPaint gradientPaint = new LinearGradientPaint(70.00f, 6.33f, 70.00f, 0.50f, fractions, colors);
 	  return gradientPaint;
 	 }
-	
+
 }
