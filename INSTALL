@@ -3,7 +3,7 @@
 *  UBUNTU INSTALLER *
 *********************
 
-1. Create the following file system structure: 
+1. Create the following file system structure:
 
 debian-DEBIAN-control
 		 -usr-bin-JMetadata
@@ -12,7 +12,7 @@ debian-DEBIAN-control
 		 	 	   -jmetadata-jmetadata.png
 		 	 	   -doc-jmetadata-copyright
 		 	 	   					   -changelog.Debian.gz
-		 	 	   
+
 2. In debian directory level type the command below
 dpkg --build debian
 
@@ -42,12 +42,12 @@ JMetadata (1.0.0)
     - Beta was released
 
  -- Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>  Mon, 2 Sep 2013 21:43:36 +1000
- 
- 
+
+
  *********************
  *     copyright     *
  *********************
- 
+
 This package was debianized by Jose Luis De la Cruz <joseluis.delacruz@gmail.com> on
 Mon, 29 Apr 2013 22:05:54 +0100.
 
@@ -72,7 +72,7 @@ limitations under the License.
 
 [Desktop Entry]
 Encoding=UTF-8
-Name=JAudioScrobbler
+Name=JMetadata
 Comment=Complete their metadata with MusicBrainz, LastFM or manually
 Exec=/usr/bin/JMetadata
 Icon=/usr/share/jmetadata/jmetadata.png
@@ -80,15 +80,15 @@ Terminal=false
 Type=Application
 Categories=GNOME;Application;Music
 StartupNotify=true
- 
+
 --------------------------------------------------------------------------------
 *********************
 * WINDOWS INSTALLER *
 *********************
-JSmooth 
+JSmooth
 1. Install JSmooth http://jsmooth.sourceforge.net/
 2. Skeleton: Windowed Wrapper
-3. Executable: 
+3. Executable:
 Executable Binary > JAudioScrobbler.exe
 Executable Icon > jas.png
 4. Application:
