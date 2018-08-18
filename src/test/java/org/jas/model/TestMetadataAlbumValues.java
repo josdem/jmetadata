@@ -1,3 +1,19 @@
+/*
+   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.jas.model;
 
 import static org.junit.Assert.*;
@@ -19,15 +35,15 @@ public class TestMetadataAlbumValues {
 	private static final String CDS = "1";
 
 	private MetadataAlbumValues metadataAlbumValues = new MetadataAlbumValues();
-	
+
 	@Mock
 	private Image coverArt;
-	
+
 	@Before
 	public void setup() throws Exception {
-		
+
 	}
-	
+
 	@Test
 	public void shouldCreateAMetadataAlbumValues() throws Exception {
 		metadataAlbumValues.setArtist(ARTIST);
@@ -38,7 +54,7 @@ public class TestMetadataAlbumValues {
 		metadataAlbumValues.setCd(CD);
 		metadataAlbumValues.setCds(CDS);
 		metadataAlbumValues.setCoverart(coverArt);
-		
+
 		assertEquals(ARTIST, metadataAlbumValues.getArtist());
 		assertEquals(ALBUM, metadataAlbumValues.getAlbum());
 		assertEquals(GENRE, metadataAlbumValues.getGenre());
@@ -48,5 +64,5 @@ public class TestMetadataAlbumValues {
 		assertEquals(CDS, metadataAlbumValues.getCds());
 		assertEquals(coverArt, metadataAlbumValues.getCoverArt());
 	}
-	
+
 }
