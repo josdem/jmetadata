@@ -19,6 +19,17 @@
       </properties>
     </profile>
     <profile>
+      <id>mac</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <distribution.descriptor>src/main/os/mac/assemble/distribution.xml</distribution.descriptor>
+      </properties>
+    </profile>
+    <profile>
       <id>windows</id>
       <activation>
         <os>
