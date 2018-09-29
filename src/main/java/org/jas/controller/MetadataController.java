@@ -56,7 +56,7 @@ public class MetadataController {
 	@Autowired
 	private ControlEngineConfigurator configurator;
 	@Autowired
-	private MetadataService metadataExtractor;
+	private MetadataService metadataService;
 	@Autowired
 	private Properties properties;
 
@@ -73,7 +73,7 @@ public class MetadataController {
 			if(root.exists()){
 				configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 				try {
-					metadataList = metadataExtractor.extractMetadata(root);
+					metadataList = metadataService.extractMetadata(root);
 					if(metadataList.isEmpty()){
 						configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
 					}  else {
