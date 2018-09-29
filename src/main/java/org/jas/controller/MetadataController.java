@@ -54,11 +54,11 @@ public class MetadataController {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
-	private ControlEngineConfigurator configurator;
-	@Autowired
-	private MetadataService metadataService;
-	@Autowired
 	private Properties properties;
+  @Autowired
+	private MetadataService metadataService;
+  @Autowired
+	private ControlEngineConfigurator configurator;
 
 	private List<Metadata> metadataList;
 
