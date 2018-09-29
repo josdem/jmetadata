@@ -20,13 +20,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jas.model.ExportPackage;
-import org.jas.model.Metadata;
-import org.jas.service.MetadataService;
-import org.jas.util.ImageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+
+import org.jas.model.Metadata;
+import org.jas.util.ImageUtils;
+import org.jas.model.ExportPackage;
+import org.jas.service.MetadataService;
 
 @Service
 public class ImageExporter {
@@ -36,7 +39,7 @@ public class ImageExporter {
 
 	private ImageUtils imageUtils = new ImageUtils();
 
-	public void export(ExportPackage exportPackage) throws IOException {
+	public void export(ExportPackage exportPackage) throws IOException, CannotReadException {
 		List<Metadata> metadataList = exportPackage.getMetadataList();
 		if(metadataList.get(0).getCoverArt() == null){
 			return;
