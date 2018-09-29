@@ -21,17 +21,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+
+import org.jas.model.Metadata;
+import org.jas.util.FileUtils;
 import org.jas.ApplicationState;
 import org.jas.model.ExportPackage;
-import org.jas.model.Metadata;
-import org.jas.service.FormatterService;
 import org.jas.service.MetadataService;
-import org.jas.util.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.jas.service.FormatterService;
+import org.jas.metadata.MetadataException;
 
 @Service
 public class MetadataExporter {
@@ -50,7 +57,7 @@ public class MetadataExporter {
 	@Autowired
 	private FormatterService formatter;
 
-	public void export(ExportPackage exportPackage) throws IOException {
+	public void export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);
 		log.info("Exporting metadata to: " + file.getAbsolutePath());
 		OutputStream writer = outputStreamWriter.getWriter(file);

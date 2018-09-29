@@ -17,11 +17,11 @@
 package org.jas.service.impl;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +29,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 
 import org.jas.model.Model;
@@ -39,7 +43,9 @@ import org.jas.helper.MetadataHelper;
 import org.jas.service.ExtractService;
 import org.jas.service.MetadataService;
 import org.jas.metadata.MetadataReader;
+import org.jas.metadata.MetadataException;
 import org.jas.exception.TooMuchFilesException;
+import org.jas.exception.InvalidId3VersionException;
 
 /**
 * @understands A class who knows how extract metadata from files using a root directory
@@ -67,7 +73,7 @@ public class MetadataServiceImpl implements MetadataService {
 
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public List<Metadata> extractMetadata(File root) throws InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException {
+	public List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException {
 		metadataList = new ArrayList<Metadata>();
 		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
 		List<File> fileList = fileUtils.getFileList(root);
@@ -78,7 +84,7 @@ public class MetadataServiceImpl implements MetadataService {
 		return getMetadataList(fileList);
 	}
 
-	private List<Metadata> getMetadataList(List<File> fileList) throws CannotReadException {
+	private List<Metadata> getMetadataList(List<File> fileList) throws IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
 		for (File file : fileList) {
 			log.info("Reading file: " + file.getName());
 			Metadata metadata = null;

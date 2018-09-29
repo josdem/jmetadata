@@ -23,11 +23,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 
 import org.jas.model.Metadata;
 import org.jas.action.ActionResult;
 import org.jas.model.ExportPackage;
+import org.jas.metadata.MetadataException;
 
 @Service
 public class ExporterHelper {
@@ -37,7 +40,7 @@ public class ExporterHelper {
 	@Autowired
 	private MetadataExporter metadataExporter;
 
-	public ActionResult export(ExportPackage exportPackage) throws IOException, CannotReadException {
+	public ActionResult export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		List<Metadata> metadatas = exportPackage.getMetadataList();
 		for (Metadata metadata : metadatas) {
 			metadata.setOrderByFile(true);
@@ -48,4 +51,5 @@ public class ExporterHelper {
 		metadataExporter.export(exportPackage);
 		return ActionResult.Exported;
 	}
+
 }

@@ -17,14 +17,22 @@
 package org.jas.controller;
 
 import java.util.List;
+import java.io.IOException;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.asmatron.messengine.annotations.RequestMethod;
-import org.jas.action.ActionResult;
+
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+
 import org.jas.action.Actions;
 import org.jas.model.Metadata;
+import org.jas.action.ActionResult;
 import org.jas.service.DefaultService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.jas.metadata.MetadataException;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -38,7 +46,7 @@ public class DefaultController {
 	private DefaultService defaultService;
 
 	@RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
-	public synchronized ActionResult complete(List<Metadata> metadatas) {
+	public synchronized ActionResult complete(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		if (defaultService.isCompletable(metadatas) == true){
 			defaultService.complete(metadatas);
 			return ActionResult.New;

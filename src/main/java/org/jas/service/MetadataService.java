@@ -17,13 +17,18 @@
 package org.jas.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 
 import org.jas.model.Metadata;
+import org.jas.metadata.MetadataException;
 import org.jas.exception.TooMuchFilesException;
+import org.jas.exception.InvalidId3VersionException;
 
 /**
 * @understands A class who knows how extract metadata from files using a root directory
@@ -31,7 +36,7 @@ import org.jas.exception.TooMuchFilesException;
 
 public interface MetadataService {
 
-  List<Metadata> extractMetadata(File root) throws InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException;
-	boolean isSameAlbum(List<Metadata> metadatas) throws CannotReadException ;
+  List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException ;
+	boolean isSameAlbum(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException ;
 
 }
