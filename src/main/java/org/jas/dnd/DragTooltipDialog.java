@@ -292,7 +292,7 @@ public class DragTooltipDialog extends JDialog {
 		dynamicPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, realHeight));
 		dynamicPanel.setMinimumSize(new Dimension(0, realHeight));
 		dynamicPanel.setPreferredSize(new Dimension(100, realHeight));
-		dynamicPanel.setSize(new Dimension(100, realHeight))
+		dynamicPanel.setSize(new Dimension(100, realHeight));
 		if (type != null) {
 			dynamicPanel.add(getDynamicIcon(type), null);
 			JPanel spacer = new JPanel();

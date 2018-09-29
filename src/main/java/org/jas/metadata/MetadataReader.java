@@ -70,7 +70,7 @@ public abstract class MetadataReader {
 		}
 	}
 
-	private String getArtist()
+	private String getArtist(){
 		return tag.getFirst(FieldKey.ARTIST);
 	}
 
