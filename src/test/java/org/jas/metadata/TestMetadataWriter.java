@@ -190,7 +190,7 @@ public class TestMetadataWriter {
 
 	@Test
 	public void shouldNotWriteYearIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeYear(StringUtils.EMPTY))
+		assertFalse(metadataWriter.writeYear(StringUtils.EMPTY));
 	}
 
 	@Test
