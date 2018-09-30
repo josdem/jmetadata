@@ -39,12 +39,13 @@ public class TestScrobblerController {
 	private ScrobblerController controller = new ScrobblerController();
 
 	@Mock
-
 	private Metadata metadata;
 	@Mock
 	private ControlEngineConfigurator configurator;
 	@Mock
 	private ControlEngine controlEngine;
+  @Mock
+  private ScrobblerHelper scrobblerHelper;
 
 	@Before
 	public void setup() throws Exception {
