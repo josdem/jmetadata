@@ -63,6 +63,8 @@ public class TestFileUtils {
 		}
 
 		public String[] list() {
+      String[] fileList = {"fileNameOne", "fileNameTwo"};
+			return fileList;
 		}
 
 		public String getAbsolutePath() {
