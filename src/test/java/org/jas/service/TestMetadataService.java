@@ -39,6 +39,7 @@ import org.jas.metadata.Mp4Reader;
 import org.jas.model.Metadata;
 import org.jas.service.ExtractService;
 import org.jas.service.MetadataService;
+import org.jas.service.impl.MetadataServiceImpl;
 import org.jas.util.FileUtils;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -53,7 +54,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestMetadataService {
 	@InjectMocks
-	private MetadataService metadataService = new MetadataService();
+	private MetadataService metadataService = new MetadataServiceImpl();
 
 	@Mock
 	private FileUtils fileUtils;
@@ -74,7 +75,7 @@ public class TestMetadataService {
 	@Mock
 	private Metadata metadata;
 	@Mock
-	Metadata anotherMetadata;
+	private Metadata anotherMetadata;
 	@Mock
 	private Set<File> filesWithoutMinimumMetadata;
 	@Mock
