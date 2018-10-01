@@ -16,15 +16,15 @@
 
 package org.jas.collaborator;
 
-import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.Tag;
-import org.springframework.stereotype.Service;
+import org.jaudiotagger.audio.AudioHeader;
+import org.springframework.stereotype.Collaborator;
 
 /**
  * @understands A class who validates tag and header from mp3
 */
 
-@Service
+@Collaborator
 public class JAudioTaggerCollaborator {
 
 	public boolean isValid(Tag tag, AudioHeader header) {
