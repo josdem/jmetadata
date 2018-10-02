@@ -18,13 +18,14 @@ package org.jas.util;
 
 import java.lang.reflect.Method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MethodWrapper<T> {
-	private static final Log LOG = LogFactory.getLog(MethodWrapper.class);
 	private final Method method;
 	private final Class<?> returnType;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static MethodWrapperBuilderPhase1 forClass(String className) {
 		return new MethodWrapperBuilder(className);
@@ -76,7 +77,7 @@ public class MethodWrapper<T> {
 				}
 				return (X) method.invoke(object, param);
 			} catch (Exception e) {
-				LOG.error(e, new RuntimeException("The method has just exploded in your face", e));
+				log.error(e, new RuntimeException("The method has just exploded in your face", e));
 				return null;
 			}
 		}
@@ -109,7 +110,7 @@ public class MethodWrapper<T> {
 			try {
 				clazz = Class.forName(className);
 			} catch (ClassNotFoundException e) {
-				LOG.error(e, e);
+				log.error(e.getMessage(), e);
 				throw new RuntimeException(className + " does not exist");
 			}
 		}
@@ -133,9 +134,9 @@ public class MethodWrapper<T> {
 					return new MethodWrapper<T>(method, returnType).check();
 				}
 			} catch (SecurityException e) {
-				LOG.error(e, e);
+				log.error(e.getMessage(), e);
 			} catch (NoSuchMethodException e) {
-				LOG.error(e, e);
+				LOG.error(e.getMessage(), e);
 			}
 			throw new RuntimeException("Method " + methodName + " does not exist");
 		}
