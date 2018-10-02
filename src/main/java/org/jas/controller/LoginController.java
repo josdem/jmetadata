@@ -18,21 +18,23 @@ package org.jas.controller;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.asmatron.messengine.annotations.ActionMethod;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.event.ValueEvent;
-import org.jas.action.Actions;
-import org.jas.event.Events;
-import org.jas.helper.LastFMAuthenticator;
-import org.jas.model.Model;
-import org.jas.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import de.umass.lastfm.Session;
 
+import org.asmatron.messengine.event.ValueEvent;
+import org.asmatron.messengine.annotations.ActionMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+
+import org.jas.model.User;
+import org.jas.model.Model;
+import org.jas.event.Events;
+import org.jas.action.Actions;
+import org.jas.helper.LastFMAuthenticator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @understands A class who control Login process
@@ -41,7 +43,7 @@ import de.umass.lastfm.Session;
 @Controller
 public class LoginController {
 	private LastFMAuthenticator lastfmAuthenticator = new LastFMAuthenticator();
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ControlEngineConfigurator configurator;
@@ -60,7 +62,7 @@ public class LoginController {
 				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 			}
 		} catch (IOException ioe) {
-			log.error(ioe, ioe);
+			log.error(ioe.getMessage(), ioe);
 			configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 		}
 	}

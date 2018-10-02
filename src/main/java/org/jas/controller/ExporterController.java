@@ -30,10 +30,11 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 public class ExporterController {
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ExporterHelper exporterHelper;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMethod(Actions.EXPORT_METADATA)
 	public ActionResult sendMetadata(ExportPackage exportPackage) throws CannotReadException, TagException, ReadOnlyFileException, MetadataException {
