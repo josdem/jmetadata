@@ -24,25 +24,29 @@ import java.util.Properties;
 
 import javax.swing.JFileChooser;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+
+import org.asmatron.messengine.event.ValueEvent;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.event.ValueEvent;
-import org.jas.action.Actions;
-import org.jas.event.Events;
-import org.jas.exception.InvalidId3VersionException;
-import org.jas.exception.TooMuchFilesException;
-import org.jas.metadata.MetadataException;
-import org.jas.model.Metadata;
+
 import org.jas.model.Model;
+import org.jas.event.Events;
+import org.jas.action.Actions;
+import org.jas.model.Metadata;
 import org.jas.service.MetadataService;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.jas.metadata.MetadataException;
+import org.jas.exception.TooMuchFilesException;
+import org.jas.exception.InvalidId3VersionException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @understands A class who knows how to load metadata from files
@@ -50,8 +54,6 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class MetadataController {
-
-	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private Properties properties;
@@ -61,6 +63,7 @@ public class MetadataController {
 	private ControlEngineConfigurator configurator;
 
 	private List<Metadata> metadataList;
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@ActionMethod(Actions.GET_METADATA)
 	public void getMetadata() {
@@ -100,7 +103,7 @@ public class MetadataController {
 					sendLoadedEvent(metadataList);
 					handleException(e);
 				} catch (TooMuchFilesException e) {
-					log.error(e, e);
+					log.error(e.getMessage(), e);
 					String maxFilesAllowed = properties.getProperty("max.files.allowed");
 					configurator.getControlEngine().fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<String>(maxFilesAllowed));
 				}
@@ -119,7 +122,7 @@ public class MetadataController {
 	}
 
 	private void handleException(Exception e) {
-		log.error(e, e);
+		log.error(e.getMessage(), e);
 		configurator.getControlEngine().fireEvent(Events.OPEN);
 	}
 }
