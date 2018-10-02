@@ -21,13 +21,16 @@ import org.jas.model.ExportPackage;
 import org.jas.helper.ExporterHelper;
 import org.jas.metadata.MetadataException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * @understands A class who manage export metadata to file
 */
 
 @Controller
 public class ExporterController {
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ExporterHelper exporterHelper;
@@ -37,7 +40,7 @@ public class ExporterController {
 		try {
 			return exporterHelper.export(exportPackage);
 		} catch (IOException ioe) {
-			log.error(ioe, ioe);
+			log.error(ioe.getMessage(), ioe);
 		}
 		return ActionResult.Error;
 	}
