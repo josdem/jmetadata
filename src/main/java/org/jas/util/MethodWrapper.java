@@ -25,7 +25,7 @@ public class MethodWrapper<T> {
 	private final Method method;
 	private final Class<?> returnType;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+  private static final Logger log = LoggerFactory.getLogger(MethodWrapper.class);
 
 	public static MethodWrapperBuilderPhase1 forClass(String className) {
 		return new MethodWrapperBuilder(className);
@@ -48,7 +48,7 @@ public class MethodWrapper<T> {
 		try {
 			return Class.forName(string);
 		} catch (ClassNotFoundException e) {
-			LOG.error(e, e);
+			log.error(e.getMessage(), e);
 		}
 		return null;
 	}
@@ -77,7 +77,7 @@ public class MethodWrapper<T> {
 				}
 				return (X) method.invoke(object, param);
 			} catch (Exception e) {
-				log.error(e, new RuntimeException("The method has just exploded in your face", e));
+				log.error(e.getMessage(), new RuntimeException("The method has just exploded in your face"));
 				return null;
 			}
 		}
@@ -136,7 +136,7 @@ public class MethodWrapper<T> {
 			} catch (SecurityException e) {
 				log.error(e.getMessage(), e);
 			} catch (NoSuchMethodException e) {
-				LOG.error(e.getMessage(), e);
+				log.error(e.getMessage(), e);
 			}
 			throw new RuntimeException("Method " + methodName + " does not exist");
 		}

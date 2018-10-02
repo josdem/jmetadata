@@ -25,20 +25,22 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @understands A class who knows how to resize an image
  */
 
 public class ImageUtils {
-	private Log log = LogFactory.getLog(this.getClass());
 	private ImageService imageHelper = new ImageService();
 	private FileUtils fileUtils = new FileUtils();
 	private static final int THREE_HUNDRED = 300;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Image resize(Image image, int width, int height) {
 		BufferedImage bufferedImage = (BufferedImage) image;

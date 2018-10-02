@@ -219,15 +219,15 @@ import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class FileDragSource implements DragGestureListener, DragSourceListener {
 
-	private static final Log LOG = LogFactory.getLog(FileDragSource.class);
-	
-	private DragSource dragSource;
+  private DragSource dragSource;
 	private FileSelection fileSelection;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static void addDragSource(Component c, FileSelection modelSelection) {
 		DragSource dragSource = new DragSource();
@@ -251,7 +251,7 @@ public final class FileDragSource implements DragGestureListener, DragSourceList
 			try {
 				dragSource.startDrag(dge, DragSource.DefaultCopyDrop, t, this);
 			} catch (InvalidDnDOperationException e) {
-				LOG.error(e, e);
+				log.error(e.getMessage(), e);
 			}
 		}
 	}
