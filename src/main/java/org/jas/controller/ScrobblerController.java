@@ -20,16 +20,19 @@ import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.jas.action.ActionResult;
-import org.jas.action.Actions;
-import org.jas.helper.ScrobblerHelper;
+
 import org.jas.model.Metadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.jas.action.Actions;
+import org.jas.action.ActionResult;
+import org.jas.helper.ScrobblerHelper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @understands A class who manage ALL scrobbler actions
@@ -37,12 +40,13 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class ScrobblerController {
-	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private ScrobblerHelper scrobblerHelper;
 	@Autowired
 	private ControlEngineConfigurator configurator;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@PostConstruct
 	public void setup() {
@@ -55,9 +59,9 @@ public class ScrobblerController {
 			log.info("Sending scrobbling for: " + metadata.getTitle());
 			return scrobblerHelper.send(metadata);
 		} catch (IOException ioe) {
-			log.error(ioe, ioe);
+			log.error(ioe.getMessage(), ioe);
 		} catch (InterruptedException ine) {
-			log.error(ine, ine);
+			log.error(ine.getMessage(), ine);
 		}
 		return ActionResult.Error;
 	}
