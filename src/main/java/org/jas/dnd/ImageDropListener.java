@@ -19,29 +19,29 @@ package org.jas.dnd;
 import java.awt.Image;
 import java.awt.Point;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jas.gui.ImagePanel;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observable;
 import org.jas.observer.ObserverCollection;
-import org.jas.util.FileSystemValidatorLight;
 import org.jas.util.Picture;
+import org.jas.util.FileSystemValidatorLight;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImageDropListener implements DropListener {
+  private final ImagePanel imagePanel;
 	private static final Class<?>[] classes = new Class<?>[] { Picture.class };
+	private final Observable<ObservValue<ImagePanel>> nombre = new Observable<ObservValue<ImagePanel>>();
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public Class<?>[] handledTypes() {
 		return classes;
 	}
 
-	private final ImagePanel imagePanel;
-	private final Observable<ObservValue<ImagePanel>> nombre = new Observable<ObservValue<ImagePanel>>();
-
-	private Log log = LogFactory.getLog(getClass());
-
-	public ImageDropListener(ImagePanel imagePanel) {
+  public ImageDropListener(ImagePanel imagePanel) {
 		this.imagePanel = imagePanel;
 	}
 

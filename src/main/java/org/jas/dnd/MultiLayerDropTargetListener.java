@@ -26,11 +26,12 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
+import org.jas.observer.ObservValue;
 import org.springframework.stereotype.Service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class MultiLayerDropTargetListener extends DropTargetAdapter implements Observer<ObservValue<Component>> {
@@ -46,7 +47,7 @@ public class MultiLayerDropTargetListener extends DropTargetAdapter implements O
 
 	private DragAndDropAction currentAction;
 
-	private Log log = LogFactory.getLog(getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public MultiLayerDropTargetListener() {
 		this.draggedObjectFactory = new DraggedObjectFactory();
