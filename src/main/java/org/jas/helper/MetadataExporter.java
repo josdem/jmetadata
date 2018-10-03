@@ -21,9 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +38,9 @@ import org.jas.service.MetadataService;
 import org.jas.service.FormatterService;
 import org.jas.metadata.MetadataException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class MetadataExporter {
 	private static final String NEW_LINE = "\n";
@@ -50,12 +51,13 @@ public class MetadataExporter {
 	private static final String BY = " by ";
 	private FileUtils fileUtils = new FileUtils();
 	private OutStreamWriter  outputStreamWriter = new OutStreamWriter();
-	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private MetadataService metadataService;
 	@Autowired
 	private FormatterService formatter;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);

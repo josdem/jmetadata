@@ -1,8 +1,24 @@
+/*
+   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package org.jas.helper;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -11,20 +27,22 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.ControlEngine;
-import org.jas.action.ActionResult;
-import org.jas.model.Metadata;
-import org.jas.model.Model;
-import org.jas.model.User;
+
 import org.springframework.stereotype.Service;
 
 import de.umass.lastfm.Session;
 import de.umass.lastfm.scrobble.ScrobbleResult;
 
+import org.jas.model.User;
+import org.jas.model.Model;
+import org.jas.model.Metadata;
+import org.jas.action.ActionResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
-* @author josdem (joseluis.delacruz@gmail.com)
 * @understands A class who knows how to send scrobblings
 */
 
@@ -38,8 +56,8 @@ public class ScrobblerHelper {
 	private ScheduledExecutorService  scheduler = Executors.newSingleThreadScheduledExecutor();
 	private static final int DELTA = 120;
 
-	private Log log = LogFactory.getLog(this.getClass());
 	private ControlEngine controlEngine;
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private ActionResult scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);
@@ -53,7 +71,7 @@ public class ScrobblerHelper {
 				ScheduledFuture<ActionResult> future = scheduler.schedule(new ScrobbleTask(metadata, currentUser.getSession()), REQUEST_PERIOD, TimeUnit.MICROSECONDS);
 				return future.get();
 			} catch (ExecutionException eex) {
-				log.error(eex, eex);
+				log.error(eex.getMessage(), eex);
 				return ActionResult.Error;
 			}
 		} else {
