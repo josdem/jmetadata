@@ -18,23 +18,26 @@ package org.jas.controller;
 
 import java.io.File;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.asmatron.messengine.annotations.RequestMethod;
-import org.jas.action.ActionResult;
-import org.jas.action.Actions;
-import org.jas.metadata.MetadataException;
-import org.jas.metadata.MetadataWriter;
-import org.jas.model.CoverArt;
-import org.jas.model.Metadata;
-import org.jas.model.MusicBrainzTrack;
-import org.jas.service.LastfmService;
-import org.jas.service.MusicBrainzFinder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.apache.commons.lang3.StringUtils;
+import org.asmatron.messengine.annotations.RequestMethod;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
+
+import org.jas.model.Metadata;
+import org.jas.model.CoverArt;
+import org.jas.model.MusicBrainzTrack;
+import org.jas.action.Actions;
+import org.jas.action.ActionResult;
+import org.jas.metadata.MetadataException;
+import org.jas.metadata.MetadataWriter;
+import org.jas.service.LastfmService;
+import org.jas.service.MusicBrainzFinder;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -43,8 +46,9 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 @Controller
 public class CompleteController {
-	private Log log = LogFactory.getLog(this.getClass());
 	private MetadataWriter metadataWriter = new MetadataWriter();
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private LastfmService lastfmService;
@@ -64,7 +68,7 @@ public class CompleteController {
 				return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
 			}
 		} catch (ServerUnavailableException sue) {
-			log.error(sue, sue);
+			log.error(sue.getMessage(), sue);
 			return ActionResult.Error;
 		}
 	}
@@ -115,7 +119,7 @@ public class CompleteController {
 			}
 			return ActionResult.Updated;
 		} catch (MetadataException mde) {
-			log.error(mde, mde);
+			log.error(mde.getMessage(), mde);
 			return ActionResult.Error;
 		}
 	}
