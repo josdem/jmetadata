@@ -16,28 +16,28 @@
 
 package org.jas.helper;
 
-import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Collection;
+import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.Auth;
-import org.jas.model.GenreTypes;
 import org.springframework.stereotype.Component;
-
+import org.apache.commons.lang3.StringUtils;
 import de.umass.lastfm.Album;
 
+import org.jas.Auth;
+import org.jas.model.GenreTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who gets album information from LastFM
 */
 
 @Component
 public class LastFMAlbumHelper {
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Album getAlbum(String artist, String album) {
 		return Album.getInfo(artist, album, Auth.KEY);
