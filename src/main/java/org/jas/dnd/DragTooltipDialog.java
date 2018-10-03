@@ -36,16 +36,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.jas.util.FileSystemValidatorLight;
 import org.jas.util.Picture;
+import org.jas.util.FileSystemValidatorLight;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DragTooltipDialog extends JDialog {
 	private static final String DRAG_DIALOG_NAME = "dragDialog";
 
-	private static final Log log = LogFactory.getLog(DragTooltipDialog.class);
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private static final Rectangle DRAG_ICON_BOUNDS = new Rectangle(1, 1, 18, 18);
 	private static final int DEFAULT_MIN_FONT_WIDTH = 4;

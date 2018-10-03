@@ -19,13 +19,13 @@ package org.jas.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Observable<T extends ObserveObject> implements ObserverCollection<T> {
-	private static final Log log = LogFactory.getLog(Observable.class);
+	private List<Observer<T>> observers = new ArrayList<Observer<T>>();
 
-	List<Observer<T>> observers = new ArrayList<Observer<T>>();
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public boolean fire(T param) {
 		if (param == null) {
@@ -38,7 +38,7 @@ public class Observable<T extends ObserveObject> implements ObserverCollection<T
 				listener.observe(param);
 			} catch (Exception e) {
 				ok = false;
-				log.error(e, e);
+				log.error(e.getMessage(), e);
 			}
 		}
 		return ok;
