@@ -16,59 +16,50 @@
 
 package org.jas.metadata;
 
-import java.awt.Image;
 import java.io.File;
+import java.awt.Image;
 import java.io.IOException;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
-import org.jas.event.Events;
-import org.jas.model.Metadata;
-import org.jaudiotagger.audio.AudioHeader;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.FieldKey;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.jas.event.Events;
+import org.jas.model.Metadata;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
-* @author josdem (joseluis.delacruz@gmail.com)
 * @undestands A class who gather all common methods getting Metadata
 */
 
 @Service
 public abstract class MetadataReader {
 	private static final String NULL = "null";
-	protected Tag tag;
+
+  protected Tag tag;
 	protected AudioHeader header;
-	protected Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	protected ControlEngineConfigurator configurator;
 
+  protected Logger log = LoggerFactory.getLogger(this.getClass());
+
 	public abstract String getGenre();
 	public abstract Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException;
-
-	public MetadataReader() {
-		turnOffLogMessages();
-	}
-
-	private void turnOffLogMessages() {
-		Handler[] handlers = Logger.getLogger("").getHandlers();
-		for (int index = 0; index < handlers.length; index++) {
-			handlers[index].setLevel(Level.OFF);
-		}
-	}
 
 	private String getArtist(){
 		return tag.getFirst(FieldKey.ARTIST);
