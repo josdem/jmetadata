@@ -16,11 +16,11 @@
 
 package org.jas.model;
 
-import java.awt.Image;
 import java.io.File;
+import java.awt.Image;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Metadata implements Comparable<Metadata>{
 	private String title;
@@ -37,9 +37,10 @@ public class Metadata implements Comparable<Metadata>{
 	private String totalCds;
 	private String year;
 	private CoverArt newCoverArt;
-	private Log log = LogFactory.getLog(this.getClass());
 	private boolean metadataFromFile;
-	private boolean orderByFile=false;
+	private boolean orderByFile = false;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public File getFile() {
 		return file;

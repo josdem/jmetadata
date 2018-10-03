@@ -65,12 +65,14 @@ import javax.swing.table.TableModel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.jas.ApplicationState;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
@@ -92,7 +94,9 @@ import org.jas.model.User;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
 import org.jas.util.ImageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @understands A principal JAudioScrobbler principal window
@@ -199,7 +203,7 @@ public class MainWindow extends JFrame {
 	@Autowired
 	private ControlEngineConfigurator controlEngineConfigurator;
 
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public MainWindow() {
 		super(ApplicationState.APPLICATION_NAME);
@@ -393,7 +397,7 @@ public class MainWindow extends JFrame {
 		String cds = metadataValues.getCds();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-		log.info(metadataWithAlbum.size());
+		log.info("Album size: " + metadataWithAlbum.size());
 		for (int i = 0; i < model.getRowCount(); i++) {
 			Metadata metadata = metadatas.get(i);
 			if (!StringUtils.isEmpty(artist)) {
