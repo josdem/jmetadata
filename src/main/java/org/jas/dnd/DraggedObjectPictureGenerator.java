@@ -16,18 +16,19 @@
 
 package org.jas.dnd;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.util.List;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jas.util.Picture;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DraggedObjectPictureGenerator extends DraggedObjectFileSystemGenerator {
 
-	private static final Log LOG = LogFactory.getLog(DraggedObjectPictureGenerator.class);
+  private static final Logger log = LoggerFactory.getLogger(DraggedObjectPictureGenerator.class);
 
 	@Override
 	public DraggedObject get(Transferable transferable) {
@@ -43,7 +44,7 @@ public class DraggedObjectPictureGenerator extends DraggedObjectFileSystemGenera
 					Object draggedObject = new Picture(files.get(0));
 					return new SimpleDraggedObject(draggedObject);
 				} catch (Exception e) {
-					LOG.error(e, e);
+					log.error(e.getMessage(), e);
 				}
 			}
 		}

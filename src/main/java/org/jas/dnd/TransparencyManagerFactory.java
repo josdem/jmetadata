@@ -16,12 +16,13 @@
 
 package org.jas.dnd;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TransparencyManagerFactory {
-	private static final Log LOG = LogFactory.getLog(TransparencyManagerFactory.class);
 	private static TransparencyManager manager;
+
+  private static final Logger log = LoggerFactory.getLogger(TransparencyManagerFactory.class);
 
 	public static TransparencyManager getManager() {
 		if (manager != null) {
@@ -31,7 +32,7 @@ public class TransparencyManagerFactory {
 			manager = new Jdk6u10TransparencyManager();
 			return manager;
 		} catch (Throwable t) {
-			LOG.error("Unexpected exception during TransparencyManager instantiation.", t);
+			log.error("Unexpected exception during TransparencyManager instantiation.", t);
 		}
 		manager = new NullTransparencyManager();
 		return manager;
