@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DnDListenerCollection<T extends DragAndDropListener> {
-	private final static Log log = LogFactory.getLog(DnDListenerCollection.class);
 	private Map<Component, List<T>> listeners = new HashMap<Component, List<T>>();
+  private static final Logger log = LoggerFactory.getLogger(DnDListenerCollection.class);
 
 	public void put(Component component, T listener) {
 		List<T> listeners = null;
