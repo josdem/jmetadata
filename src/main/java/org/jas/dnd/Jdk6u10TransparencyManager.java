@@ -16,28 +16,29 @@
 
 package org.jas.dnd;
 
+import java.awt.Shape;
+import java.awt.Window;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Shape;
-import java.awt.Window;
 
 import javax.swing.JComponent;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jas.util.MethodWrapper;
 
-public class Jdk6u10TransparencyManager implements TransparencyManager {
-	private static final Log log = LogFactory.getLog(Jdk6u10TransparencyManager.class);
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-	private MethodWrapper<Boolean> isTranslucencySupportedMethod;
-	private MethodWrapper<Boolean> isTranslucencyCapableMethod;
-	private MethodWrapper<Void> setWindowShapeMethod;
+public class Jdk6u10TransparencyManager implements TransparencyManager {
+
+  private MethodWrapper<Void> setWindowShapeMethod;
 	private MethodWrapper<Void> setWindowOpacityMethod;
 	private MethodWrapper<Void> setWindowOpaqueMethod;
+	private MethodWrapper<Boolean> isTranslucencyCapableMethod;
+  private MethodWrapper<Boolean> isTranslucencySupportedMethod;
+
+  private static final Logger log = LoggerFactory.getLogger(Jdk6u10TransparencyManager.class);
 
 	public Jdk6u10TransparencyManager() {
 		Class<?> translucencyClass = MethodWrapper.getClass("com.sun.awt.AWTUtilities$Translucency");
