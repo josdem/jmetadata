@@ -19,13 +19,15 @@ package org.jas.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.action.ActionResult;
-import org.jas.model.LastfmAlbum;
-import org.jas.model.Metadata;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.jas.model.Metadata;
+import org.jas.model.LastfmAlbum;
+import org.jas.action.ActionResult;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -38,7 +40,7 @@ public class LastfmService {
 	@Autowired
 	private LastFMCompleteService completeService;
 
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {
@@ -49,10 +51,10 @@ public class LastfmService {
 				return ActionResult.Complete;
 			}
 		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
+			log.error(mfe.getMessage(), mfe);
 			return ActionResult.Error;
 		} catch (IOException ioe) {
-			log.error(ioe, ioe);
+			log.error(ioe.getMessage(), ioe);
 			return ActionResult.Error;
 		}
 	}

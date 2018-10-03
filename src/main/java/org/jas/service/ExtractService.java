@@ -17,18 +17,20 @@
 package org.jas.service;
 
 import java.io.File;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import java.util.NoSuchElementException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.model.Metadata;
 import org.springframework.stereotype.Service;
+
+import org.jas.model.Metadata;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ExtractService {
 
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Metadata extractFromFileName(File file) {
 		String titleComplete = file.getName();
