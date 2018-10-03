@@ -19,9 +19,7 @@ package org.jas.service;
 import java.util.List;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +30,9 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jas.model.Metadata;
 import org.jas.metadata.MetadataException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class DefaultService {
 
@@ -40,7 +41,8 @@ public class DefaultService {
 
 	@Autowired
 	private MetadataService metadataService;
-	private Log log = LogFactory.getLog(getClass());
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		return (metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)) ? false : isSomethingMissing(metadatas);

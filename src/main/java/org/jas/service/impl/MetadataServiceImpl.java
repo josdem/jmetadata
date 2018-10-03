@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,6 +44,9 @@ import org.jas.metadata.MetadataReader;
 import org.jas.metadata.MetadataException;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.exception.InvalidId3VersionException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * @understands A class who knows how extract metadata from files using a root directory
@@ -71,7 +72,7 @@ public class MetadataServiceImpl implements MetadataService {
 	private Set<File> filesWithoutMinimumMetadata;
 	private FileUtils fileUtils = new FileUtils();
 
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException {
 		metadataList = new ArrayList<Metadata>();

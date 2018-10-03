@@ -23,19 +23,21 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.action.ActionResult;
-import org.jas.helper.LastFMAlbumHelper;
+
 import org.jas.model.CoverArt;
 import org.jas.model.CoverArtType;
 import org.jas.model.LastfmAlbum;
 import org.jas.model.Metadata;
+import org.jas.action.ActionResult;
+import org.jas.helper.LastFMAlbumHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -50,9 +52,9 @@ public class LastFMCompleteService {
 	@Autowired
 	private ImageService imageService;
 
-	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
+  private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
 
-	private Log log = LogFactory.getLog(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public boolean canLastFMHelpToComplete(Metadata metadata) {
 		String artist = metadata.getArtist();
