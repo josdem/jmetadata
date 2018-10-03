@@ -28,17 +28,18 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Image portrait;
 
-	private Log log = LogFactory.getLog(getClass());
+  private Image portrait;
 	private double arcHeight;
 	private double arcWidth;
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public ImagePanel() {
 	}
