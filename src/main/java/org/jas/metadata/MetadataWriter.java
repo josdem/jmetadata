@@ -16,30 +16,33 @@
 
 package org.jas.metadata;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.awt.Image;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.helper.ArtworkHelper;
-import org.jas.helper.AudioFileHelper;
-import org.jas.util.ImageUtils;
+
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.KeyNotFoundException;
+
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldDataInvalidException;
-import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.KeyNotFoundException;
-import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.datatype.Artwork;
+
+import org.jas.util.ImageUtils;
+import org.jas.helper.ArtworkHelper;
+import org.jas.helper.AudioFileHelper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
-* @author josdem (joseluis.delacruz@gmail.com)
 * @understands A class who knows how to write metadata in a audio file
 */
 
@@ -49,22 +52,23 @@ public class MetadataWriter {
 	private AudioFileHelper audioFileIOHelper = new AudioFileHelper();
 	private ImageUtils imageUtils = new ImageUtils();
 	private ArtworkHelper artworkHelper = new ArtworkHelper();
-	private Log log = LogFactory.getLog(this.getClass());
+
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void setFile(File file) {
 		try {
 			audioFile = audioFileIOHelper.read(file);
 			tag = audioFile.getTag();
 		} catch (CannotReadException nre) {
-			log.error(nre, nre);
+			log.error(nre.getMessage(), nre);
 		} catch (IOException ioe) {
-			log.error(ioe, ioe);
+			log.error(ioe.getMessage(), ioe);
 		} catch (TagException tae) {
-			log.error(tae, tae);
+			log.error(tae.getMessage(), tae);
 		} catch (ReadOnlyFileException roe) {
-			log.error(roe, roe);
+			log.error(roe.getMessage(), roe);
 		} catch (InvalidAudioFrameException iae) {
-			log.error(iae, iae);
+			log.error(iae.getMessage(), iae);
 		}
 	}
 
@@ -73,11 +77,11 @@ public class MetadataWriter {
 			tag.setField(FieldKey.ARTIST, artist);
 			audioFile.commit();
 		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
+			log.error(kne.getMessage(), kne);
 		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
+			log.error(fie.getMessage(), fie);
 		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
+			log.error(nwe.getMessage(), nwe);
 		}
 	}
 
@@ -86,11 +90,11 @@ public class MetadataWriter {
 			tag.setField(FieldKey.TITLE, trackName);
 			audioFile.commit();
 		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
+			log.error(kne.getMessage(), kne);
 		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
+			log.error(fie.getMessage(), fie);
 		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
+			log.error(nwe.getMessage(), nwe);
 		}
 	}
 
