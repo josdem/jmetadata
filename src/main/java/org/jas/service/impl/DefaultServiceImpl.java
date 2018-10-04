@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package org.jas.service;
+package org.jas.service.impl;
 
 import java.util.List;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class DefaultService {
+public class DefaultServiceImpl implements DefaultService {
 
 	private static final String CD_NUMBER = "1";
 	private static final String TOTAL_CD_NUMBER = "1";
