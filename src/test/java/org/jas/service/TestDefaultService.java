@@ -24,15 +24,19 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jas.model.Metadata;
-import org.jas.service.DefaultService;
-import org.jas.service.MetadataService;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.Before;
+
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+
+import org.apache.commons.lang3.StringUtils;
+
+import org.jas.model.Metadata;
+import org.jas.service.MetadataService;
+import org.jas.service.DefaultService;
+import org.jas.service.impl.DefaultServiceImpl;
 
 public class TestDefaultService {
 
@@ -43,7 +47,7 @@ public class TestDefaultService {
 	private static final String TOTAL_CD_NUMBER = "1";
 
 	@InjectMocks
-	private DefaultService defaultService = new DefaultService();
+	private DefaultService defaultService = new DefaultServiceImpl();
 
 	@Mock
 	private Metadata metadata_one;
@@ -73,7 +77,6 @@ public class TestDefaultService {
 		setTracknumberExpectations();
 
 		defaultService.complete(metadatas);
-
 
 		verify(metadata_one).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_one).setCdNumber(CD_NUMBER);

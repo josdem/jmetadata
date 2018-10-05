@@ -28,6 +28,8 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 
 import org.jas.model.Metadata;
+import org.jas.service.DefaultService;
+import org.jas.service.MetadataService;
 import org.jas.metadata.MetadataException;
 
 import org.slf4j.Logger;

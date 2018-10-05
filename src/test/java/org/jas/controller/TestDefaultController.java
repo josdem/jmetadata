@@ -20,26 +20,28 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
-import org.jas.action.ActionResult;
-import org.jas.controller.DefaultController;
-import org.jas.model.Metadata;
-import org.jas.service.DefaultService;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.Before;
+
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+
+import org.jas.model.Metadata;
+import org.jas.action.ActionResult;
+import org.jas.service.DefaultService;
+import org.jas.controller.DefaultController;
 
 public class TestDefaultController {
 
 	@InjectMocks
 	private DefaultController defaultController = new DefaultController();
 
-	@Mock
+	private List<Metadata> metadatas = new ArrayList<Metadata>();
+  @Mock
 	private DefaultService defaultService;
-	@Mock
-	private List<Metadata> metadatas;
 
 	@Before
 	public void setup() throws Exception {
