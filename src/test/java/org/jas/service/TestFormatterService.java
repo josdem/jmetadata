@@ -18,15 +18,18 @@ package org.jas.service;
 
 import static org.junit.Assert.*;
 
+import org.junit.Test;
+import org.junit.Before;
+
 import org.apache.commons.lang3.StringUtils;
+
 import org.jas.model.Metadata;
 import org.jas.service.FormatterService;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.jas.service.impl.FormatterServiceImpl;
 
 public class TestFormatterService {
-	private FormatterService formatter = new FormatterService();
+	private FormatterService formatter = new FormatterServiceImpl();
+
 	private String badFormatA = "¿Cu&aacute;ndo?";
 	private String badFormatAExpected = "¿Cuándo?";
 	private String badFormatE = "¿Qu&eacute;?";
