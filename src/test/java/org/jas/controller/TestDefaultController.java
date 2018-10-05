@@ -39,9 +39,10 @@ public class TestDefaultController {
 	@InjectMocks
 	private DefaultController defaultController = new DefaultController();
 
-	private List<Metadata> metadatas = new ArrayList<Metadata>();
   @Mock
 	private DefaultService defaultService;
+
+  private List<Metadata> metadatas = new ArrayList<Metadata>();
 
 	@Before
 	public void setup() throws Exception {
