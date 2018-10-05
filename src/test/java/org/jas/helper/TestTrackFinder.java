@@ -16,25 +16,29 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+
+import org.junit.Test;
+import org.junit.Before;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.TrackHelper;
-import org.jas.model.MusicBrainzTrack;
-import org.jas.service.TrackFinder;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
+
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Track;
+
+import org.jas.helper.TrackHelper;
+import org.jas.service.MusicBrainzFinder;
+import org.jas.service.impl.MusicBrainzFinderImpl;
+import org.jas.model.MusicBrainzTrack;
 
 public class TestTrackFinder {
 	private static final String TOTAL_TRACKS = "10";
@@ -43,7 +47,7 @@ public class TestTrackFinder {
 	private static final String TOTAL_CDS = "2";
 
 	@InjectMocks
-	private TrackFinder trackFinder = new TrackFinder();
+	private MusicBrainzFinder trackFinder = new MusicBrainzFinderImpl();
 
 	@Mock
 	private TrackHelper trackHelper;

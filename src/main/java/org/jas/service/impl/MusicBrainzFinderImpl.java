@@ -14,19 +14,22 @@
    limitations under the License.
 */
 
-package org.jas.service;
+package org.jas.service.impl;
 
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.slychief.javamusicbrainz.entities.Track;
+import com.slychief.javamusicbrainz.entities.Release;
+import com.slychief.javamusicbrainz.ServerUnavailableException;
+
 import org.jas.helper.TrackHelper;
 import org.jas.model.MusicBrainzTrack;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.slychief.javamusicbrainz.ServerUnavailableException;
-import com.slychief.javamusicbrainz.entities.Release;
-import com.slychief.javamusicbrainz.entities.Track;
+import org.jas.service.MusicBrainzFinder;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -35,7 +38,7 @@ import com.slychief.javamusicbrainz.entities.Track;
  */
 
 @Service
-public class TrackFinder implements MusicBrainzFinder {
+public class MusicBrainzFinderImpl implements MusicBrainzFinder {
 
 	@Autowired
 	private TrackHelper trackHelper;
