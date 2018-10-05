@@ -26,20 +26,23 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.jas.action.ActionResult;
-import org.jas.model.LastfmAlbum;
-import org.jas.model.Metadata;
-import org.jas.service.LastFMCompleteService;
-import org.jas.service.LastfmService;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.Before;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import org.jas.model.Metadata;
+import org.jas.model.LastfmAlbum;
+import org.jas.action.ActionResult;
+import org.jas.service.LastfmService;
+import org.jas.service.impl.LastfmServiceImpl;
+import org.jas.service.LastFMCompleteService;
+
 public class TestLastfmService {
-	@InjectMocks
-	private LastfmService coverArtService = new LastfmService();
+
+  @InjectMocks
+	private LastfmService lastfmService = new LastfmServiceImpl();
 
 	@Mock
 	private Metadata metadata;
@@ -64,7 +67,7 @@ public class TestLastfmService {
 		when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
 		when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 
 		verify(completeService).isSomethingNew(lastfmAlbum, metadata);
 		assertEquals(ActionResult.New, result);
@@ -74,7 +77,7 @@ public class TestLastfmService {
 	public void shouldNotCompleteLastfmCoverArtMetadataDueToMetadataComplete() throws Exception {
 		when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(false);
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 		assertEquals(ActionResult.Complete, result);
 	}
 
@@ -83,7 +86,7 @@ public class TestLastfmService {
 		setCompleteHelperExpectations();
 		when(metadata.getGenre()).thenReturn(genre );
 
-		coverArtService.completeLastFM(metadata);
+		lastfmService.completeLastFM(metadata);
 
 		verify(metadata, never()).setGenre(isA(String.class));
 	}
@@ -93,7 +96,7 @@ public class TestLastfmService {
 		setCompleteHelperExpectations();
 		when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Complete);
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 		assertEquals(ActionResult.Complete, result);
 	}
 
@@ -102,7 +105,7 @@ public class TestLastfmService {
 		setCompleteHelperExpectations();
 		when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 
 		assertEquals(ActionResult.New, result);
 	}
@@ -117,7 +120,7 @@ public class TestLastfmService {
 	public void shouldCatchMalformedURLException() throws Exception {
 		when(completeService.getLastFM(metadata)).thenThrow(new MalformedURLException());
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 
 		assertEquals(ActionResult.Error, result);
 	}
@@ -126,7 +129,7 @@ public class TestLastfmService {
 	public void shouldCatchIOException() throws Exception {
 		when(completeService.getLastFM(metadata)).thenThrow(new IOException());
 
-		ActionResult result = coverArtService.completeLastFM(metadata);
+		ActionResult result = lastfmService.completeLastFM(metadata);
 
 		assertEquals(ActionResult.Error, result);
 	}

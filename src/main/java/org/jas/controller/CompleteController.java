@@ -40,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who control the MusicBrainz service
  */
 

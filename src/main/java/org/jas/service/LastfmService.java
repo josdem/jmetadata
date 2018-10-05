@@ -16,46 +16,9 @@
 
 package org.jas.service;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.jas.model.Metadata;
-import org.jas.model.LastfmAlbum;
 import org.jas.action.ActionResult;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who completes metadata using LastFM service
- */
-
-@Service
-public class LastfmService {
-
-	@Autowired
-	private LastFMCompleteService completeService;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
-
-	public synchronized ActionResult completeLastFM(Metadata metadata) {
-		try {
-			if (completeService.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
-				return completeService.isSomethingNew(lastfmAlbum, metadata);
-			} else {
-				return ActionResult.Complete;
-			}
-		} catch (MalformedURLException mfe) {
-			log.error(mfe.getMessage(), mfe);
-			return ActionResult.Error;
-		} catch (IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
-			return ActionResult.Error;
-		}
-	}
+public interface LastfmService {
+	ActionResult completeLastFM(Metadata metadata);
 }
