@@ -21,25 +21,31 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
-import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.ApplicationState;
-import org.jas.service.ImageService;
-import org.junit.Before;
+
 import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.Before;
+
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import org.jas.ApplicationState;
+import org.jas.service.ImageService;
+
 public class TestImageUtils {
-	private static final Integer THREE_HUNDRED = 300;
+
+  private static final Integer THREE_HUNDRED = 300;
+
 	@InjectMocks
 	private ImageUtils imageUtils = new ImageUtils();
+
 	@Mock
-	private ImageService imageHelper;
+	private ImageService imageService;
 	@Mock
 	private Image image;
 	@Mock
@@ -59,20 +65,20 @@ public class TestImageUtils {
 
 	@Test
 	public void shouldSaveCoverArtToFile() throws Exception {
-		when(imageHelper.createTempFile(StringUtils.EMPTY)).thenReturn(file);
+		when(imageService.createTempFile(StringUtils.EMPTY)).thenReturn(file);
 		when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
 
 		imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY);
 
-		verify(imageHelper).createTempFile(StringUtils.EMPTY);
-		verify(imageHelper).write(image, file);
+		verify(imageService).createTempFile(StringUtils.EMPTY);
+		verify(imageService).write(image, file);
 	}
 
 	@Test
 	public void shouldNotSaveCoverArtIfNoImage() throws Exception {
 		imageUtils.saveCoverArtToFile(null, StringUtils.EMPTY);
 
-		verify(imageHelper, never()).createTempFile(StringUtils.EMPTY);
+		verify(imageService, never()).createTempFile(StringUtils.EMPTY);
 	}
 
 	@Test

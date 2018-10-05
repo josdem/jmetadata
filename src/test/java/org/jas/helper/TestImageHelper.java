@@ -19,16 +19,17 @@ package org.jas.helper;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-
+import org.junit.Test;
 import org.apache.commons.lang3.StringUtils;
+
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
-import org.junit.Test;
+import org.jas.service.impl.ImageServiceImpl;
 
 public class TestImageHelper {
 
 	private static final String PREFIX = "PREFIX";
-	private ImageService imageService = new ImageService();
+	private ImageService imageService = new ImageServiceImpl();
 
 	@Test
 	public void shouldCreateTempFile() throws Exception {

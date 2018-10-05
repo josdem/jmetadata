@@ -16,32 +16,14 @@
 
 package org.jas.service;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jas.ApplicationState;
-import org.springframework.stereotype.Service;
-
-@Service
-public class ImageService {
-
-	public File createTempFile(String prefix) throws IOException {
-		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
-	}
-
-	public void write(Image bufferedImage, File file) throws IOException {
-		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
-	}
-
-	public Image readImage(String imageURL) throws MalformedURLException, IOException {
-		return ImageIO.read(new URL(imageURL));
-	}
-
+public interface ImageService {
+	File createTempFile(String prefix) throws IOException;
+	void write(Image bufferedImage, File file) throws IOException;
+	Image readImage(String imageURL) throws MalformedURLException, IOException;
 }
+

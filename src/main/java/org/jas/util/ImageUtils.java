@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
+import org.jas.service.impl.ImageServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,8 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ImageUtils {
-	private ImageService imageHelper = new ImageService();
+	private ImageService imageService = new ImageServiceImpl();
+
 	private FileUtils fileUtils = new FileUtils();
 	private static final int THREE_HUNDRED = 300;
 
@@ -61,7 +63,7 @@ public class ImageUtils {
 	}
 
 	private void write(Image bufferedImage, File file) throws IOException {
-		imageHelper.write(bufferedImage, file);
+		imageService.write(bufferedImage, file);
 	}
 
 	public File saveCoverArtToFile(Image image, File root, String prefix) throws IOException {
@@ -77,7 +79,7 @@ public class ImageUtils {
 		if(image == null){
 			return null;
 		}
-		File file = imageHelper.createTempFile(prefix);
+		File file = imageService.createTempFile(prefix);
 		saveImage(image, file);
 		return file;
 	}
