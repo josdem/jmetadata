@@ -20,28 +20,32 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.awt.Image;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.action.ActionResult;
-import org.jas.helper.LastFMAlbumHelper;
-import org.jas.model.LastfmAlbum;
-import org.jas.model.Metadata;
-import org.jas.service.LastFMCompleteService;
-import org.jas.service.ImageService;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+
+import org.jas.model.Metadata;
+import org.jas.model.LastfmAlbum;
+import org.jas.action.ActionResult;
+import org.jas.helper.LastFMAlbumHelper;
+import org.jas.service.ImageService;
+import org.jas.service.LastFMCompleteService;
+import org.jas.service.impl.LastFMCompleteServiceImpl;
 
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
@@ -50,7 +54,7 @@ import de.umass.lastfm.ImageSize;
 public class TestLastFMCompleteService {
 
 	@InjectMocks
-	private LastFMCompleteService completeService = new LastFMCompleteService();
+	private LastFMCompleteService completeService = new LastFMCompleteServiceImpl();
 	@Mock
 	private Metadata metadata;
 	@Mock
