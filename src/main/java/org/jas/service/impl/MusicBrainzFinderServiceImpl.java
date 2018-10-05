@@ -29,16 +29,14 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 import org.jas.helper.TrackHelper;
 import org.jas.model.MusicBrainzTrack;
-import org.jas.service.MusicBrainzFinder;
+import org.jas.service.MusicBrainzFinderService;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who knows how to get Album and track number using
- *              MusicBrainz
+ * @understands A class who knows how to get Album and track number using MusicBrainz
  */
 
 @Service
-public class MusicBrainzFinderImpl implements MusicBrainzFinder {
+public class MusicBrainzFinderServiceImpl implements MusicBrainzFinderService {
 
 	@Autowired
 	private TrackHelper trackHelper;

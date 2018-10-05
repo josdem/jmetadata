@@ -36,18 +36,18 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Track;
 
 import org.jas.helper.TrackHelper;
-import org.jas.service.MusicBrainzFinder;
-import org.jas.service.impl.MusicBrainzFinderImpl;
 import org.jas.model.MusicBrainzTrack;
+import org.jas.service.MusicBrainzFinderService;
+import org.jas.service.impl.MusicBrainzFinderServiceImpl;
 
-public class TestTrackFinder {
+public class TestMusicBrainzFinderService {
 	private static final String TOTAL_TRACKS = "10";
 	private static final Object ZERO = "0";
 	private static final String CD_NUMBER = "1";
 	private static final String TOTAL_CDS = "2";
 
 	@InjectMocks
-	private MusicBrainzFinder trackFinder = new MusicBrainzFinderImpl();
+	private MusicBrainzFinderService musicBrainzFinderService = new MusicBrainzFinderServiceImpl();
 
 	@Mock
 	private TrackHelper trackHelper;
@@ -68,7 +68,7 @@ public class TestTrackFinder {
 
 	@Test
 	public void shouldNotFindAnyAlbum() throws Exception {
-		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
+		MusicBrainzTrack result = musicBrainzFinderService.getAlbum(artist, title);
 
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
 		assertEquals(ZERO, result.getTrackNumber());
@@ -79,7 +79,7 @@ public class TestTrackFinder {
 		String expectedTrack = "2";
 		setTrackHelperExpectations();
 
-		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
+		MusicBrainzTrack result = musicBrainzFinderService.getAlbum(artist, title);
 
 		verifyTrackHelperExpectations(expectedTrack, result);
 	}
@@ -90,7 +90,7 @@ public class TestTrackFinder {
 		setTrackHelperExpectations();
 		when(trackHelper.getArtist(track)).thenReturn("sander van doorn");
 
-		MusicBrainzTrack result = trackFinder.getAlbum(artist, title);
+		MusicBrainzTrack result = musicBrainzFinderService.getAlbum(artist, title);
 
 		verifyTrackHelperExpectations(expectedTrack, result);
 	}
