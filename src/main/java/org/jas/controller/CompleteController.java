@@ -34,7 +34,7 @@ import org.jas.action.ActionResult;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.service.LastfmService;
-import org.jas.service.MusicBrainzFinder;
+import org.jas.service.MusicBrainzFinderService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,18 +52,18 @@ public class CompleteController {
 	@Autowired
 	private LastfmService lastfmService;
 	@Autowired
-	private MusicBrainzFinder musicBrainzFinder;
+	private MusicBrainzFinderService musicBrainzFinderService;
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
 			log.info("Trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle() + " - " + metadata.getAlbum());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
-				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getAlbum(metadata.getArtist(), metadata.getTitle());
+				MusicBrainzTrack musicBrainzTrack = musicBrainzFinderService.getAlbum(metadata.getArtist(), metadata.getTitle());
 				return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: " + metadata.getAlbum() + " I'll try to complete information using MusicBrainz");
-				MusicBrainzTrack musicBrainzTrack = musicBrainzFinder.getByAlbum(metadata.getTitle(), metadata.getAlbum());
+				MusicBrainzTrack musicBrainzTrack = musicBrainzFinderService.getByAlbum(metadata.getTitle(), metadata.getAlbum());
 				return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
 			}
 		} catch (ServerUnavailableException sue) {
