@@ -153,6 +153,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjtools</artifactId>
+      <version>1.9.1</version>
+    </dependency>
+    <dependency>
       <groupId>de.umass.lastfm</groupId>
       <artifactId>lastfm_bindings</artifactId>
       <version>0.1.0</version>
