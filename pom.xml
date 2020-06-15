@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jas</groupId>
   <artifactId>jmetadata</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>jmetadata</name>
   <description>This project is based on last.fm API bindings for Java &amp; MusicBrainz our goal is create a complete stand alone that keep a good Metadata Quality &amp; Music Taste Analyzer. </description>
   <profiles>

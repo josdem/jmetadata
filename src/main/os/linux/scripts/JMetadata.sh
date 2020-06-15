@@ -42,7 +42,7 @@ else
    export JAVA="$JAVA_HOME/bin/java"
 
    if [ -e $JAVA ]; then
-     echo "Using $JAVA_HOME/bin/java to launch all.com Client"
+     echo "Using $JAVA_HOME/bin/java to launch client"
      echo "`$JAVA_HOME/bin/java -version`"
      $JAVA_HOME/bin/java $ALL_CLIENT_LAUNCHER
   else
