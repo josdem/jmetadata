@@ -2,7 +2,9 @@
 .gitignore
 .project
 .settings
+.idea
 lastFm.log
 target
+jmetadata.iml
 **swp
 **swo
