@@ -5,13 +5,54 @@
 
 1. Create the following file system structure:
 
-debian-DEBIAN-control
-		 -usr-bin-JMetadata
-		 	 -lib-JMetadata-*.jar
-		 	 -share-applications-jmetadata.desktop
-		 	 	   -jmetadata-jmetadata.png
-		 	 	   -doc-jmetadata-copyright
-		 	 	   					   -changelog.Debian.gz
+debian
+├── DEBIAN
+│   └── control
+└── usr
+    ├── bin
+    │   └── JMetadata
+    ├── changelog.Debian.gz
+    ├── lib
+    │   └── JMetadata
+    │				├── activation-1.1.jar
+    │				├── aopalliance-1.0.jar
+    │				├── cal10n-api-0.7.4.jar
+    │				├── commons-lang3-3.0.1.jar
+    │				├── commons-logging-1.1.1.jar
+    │				├── fest-assert-1.2.jar
+    │				├── fest-reflect-1.2.jar
+    │				├── fest-swing-1.2.jar
+    │				├── fest-util-1.1.2.jar
+    │				├── jaudiotagger-2.0.4-SNAPSHOT.jar
+    │				├── javamusicbrainz-1.0.jar
+    │				├── jaxb-api-2.3.0.jar
+    │				├── jcip-annotations-1.0.jar
+    │				├── jmetadata-0.0.1-SNAPSHOT.jar
+    │				├── jms-1.1.jar
+    │				├── lastfm_bindings-0.1.0.jar
+    │				├── log4j-1.2.15.jar
+    │				├── mail-1.4.jar
+    │				├── messengine-0.1.0.jar
+    │				├── mockito-all-1.8.5.jar
+    │				├── slf4j-api-1.6.1.jar
+    │				├── slf4j-ext-1.6.1.jar
+    │				├── slf4j-jcl-1.6.1.jar
+    │				├── spring-aop-3.0.4.RELEASE.jar
+    │				├── spring-asm-3.0.4.RELEASE.jar
+    │				├── spring-beans-3.0.4.RELEASE.jar
+    │				├── spring-context-3.0.4.RELEASE.jar
+    │				├── spring-context-support-3.0.4.RELEASE.jar
+    │				├── spring-core-3.0.4.RELEASE.jar
+    │				├── spring-expression-3.0.4.RELEASE.jar
+    │				└── spring-test-3.0.4.RELEASE.jar
+    └── share
+        ├── applications
+        │		└── jmetadata.desktop
+        ├── doc
+        │		└── jmetadata
+        │				└── copyright
+        └── jmetadata
+            └── jmetadata.png
 
 2. In debian directory level type the command below
 dpkg --build debian
