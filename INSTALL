@@ -11,7 +11,6 @@ debian
 └── usr
     ├── bin
     │   └── JMetadata
-    ├── changelog.Debian.gz
     ├── lib
     │   └── JMetadata
     │				├── activation-1.1.jar
@@ -51,13 +50,14 @@ debian
         ├── doc
         │		└── jmetadata
         │				└── copyright
+        |				└── changelog.Debian.gz
         └── jmetadata
             └── jmetadata.png
 
 2. In debian directory level type the command below
 dpkg --build debian
 
-3. mv debian.deb JMetadata_Installer.deb
+3. mv debian.deb JMetadata.deb
 
 
 *********************
@@ -69,9 +69,8 @@ Version: 1.0.0
 Section: java
 Priority: optional
 Architecture: all
-Maintainer: Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>
+Maintainer: Jose Morales <contact@josdem.io>
 Description: Complete their metadata with MusicBrainz, LastFM or manually
- .
 
 ***********************
 *  changelog.Debian   *
@@ -80,19 +79,19 @@ Description: Complete their metadata with MusicBrainz, LastFM or manually
 JMetadata (1.0.0)
 
   * New upstream release
-    - Beta was released
+  - Beta was released
 
- -- Jose Luis De la Cruz Morales <joseluis.delacruz@gmail.com>  Mon, 2 Sep 2013 21:43:36 +1000
+ -- Jose Morales <contact@josdem.io>  Fri, 1 Nov 2024 06:50:36 +1000
 
 
  *********************
  *     copyright     *
  *********************
 
-This package was debianized by Jose Luis De la Cruz <joseluis.delacruz@gmail.com> on
-Mon, 29 Apr 2013 22:05:54 +0100.
+This package was debianized by Jose Morales <contact@josdem.io> on
+Fri, 01 Nov 2024 05:05:54 +0100.
 
-Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2024 Jose Morales contact@josdem.io
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
