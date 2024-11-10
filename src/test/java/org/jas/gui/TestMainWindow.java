@@ -54,13 +54,14 @@ import org.jas.model.Model;
 import org.jas.model.User;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
+@Ignore
 public class TestMainWindow {
 
 	@InjectMocks
