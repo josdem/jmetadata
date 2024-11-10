@@ -21,7 +21,7 @@ buildClassPath() {
         #return $class_path
 }
 
-export JAR_DIR="/usr/lib/JMetadata"
+export JAR_DIR="`pwd`/System/Jar"
 export LIB_PATH="`pwd`/System/Lib"
 
 export CP="./System:`buildClassPath $JAR_DIR`"
