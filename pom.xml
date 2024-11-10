@@ -91,13 +91,16 @@
     </plugins>
   </build>
   <properties>
-    <spring.version>4.3.19.RELEASE</spring.version>
-    <junit.version>4.12</junit.version>
+    <spring.version>6.1.14</spring.version>
+    <junit.version>4.13.2</junit.version>
+    <slf4j.version>2.0.16</slf4j.version>
+    <commons-lang3.version>3.17.0</commons-lang3.version>
   </properties>
   <repositories>
     <repository>
-      <id>jaudiotagger repo</id>
-      <url>http://download.java.net/maven/2/</url>
+      <id>central</id>
+      <name>Maven Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
     </repository>
   </repositories>
   <dependencies>
@@ -115,7 +118,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.25</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.jms</groupId>
@@ -125,7 +128,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.8.1</version>
+      <version>${commons-lang3.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
