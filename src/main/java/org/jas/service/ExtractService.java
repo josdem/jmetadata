@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,44 +16,13 @@
 
 package org.jas.service;
 
-import java.io.File;
-import java.util.StringTokenizer;
-import java.util.NoSuchElementException;
-
+import org.jas.model.Metadata;
 import org.springframework.stereotype.Service;
 
-import org.jas.model.Metadata;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
 
 @Service
-public class ExtractService {
+public interface ExtractService {
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
-
-	public Metadata extractFromFileName(File file) {
-		String titleComplete = file.getName();
-		Metadata metadata = new Metadata();
-		metadata.setFile(file);
-		try{
-			StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
-			String artist = stringTokenizer.nextToken();
-			String title = removeExtension(stringTokenizer.nextToken());
-			metadata.setArtist(artist);
-			metadata.setTitle(title);
-		} catch (NoSuchElementException nue){
-			String uniqueName = removeExtension(titleComplete);
-			metadata.setArtist(uniqueName);
-			metadata.setTitle(uniqueName);
-			log.info(titleComplete + " has no slash format");
-		}
-		metadata.setMetadataFromFile(true);
-		return metadata;
-	}
-
-	private String removeExtension(String name) {
-		int extensionIndex = name.lastIndexOf(".");
-		return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
-	}
+    Metadata extractFromFileName(File file);
 }
