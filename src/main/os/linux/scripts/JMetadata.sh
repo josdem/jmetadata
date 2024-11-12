@@ -26,14 +26,14 @@ export LIB_PATH="`pwd`/System/Lib"
 
 export CP="./System:`buildClassPath $JAR_DIR`"
 
-export ALL_CLIENT_LAUNCHER="-Xmx1024m -Xms128m -Djava.library.path=$LIB_PATH -Djna.library.path=$LIB_PATH -cp $CP org.jas.Launcher"
+export JMETADATA_CLIENT="-Xmx1024m -Xms128m -Djava.library.path=$LIB_PATH -Djna.library.path=$LIB_PATH -cp $CP org.jas.Launcher"
 
 if [ ! -n "$JAVA_HOME" ]; then
    echo "Please set JAVA_HOME environment variable to point to a supported Java Virtual Machine home directory"
    if [ -n `which java` ]; then
       echo "Using `which java` to launch JMetadata"
       echo "`java -version`"
-      java $ALL_CLIENT_LAUNCHER
+      java $JMETADATA_CLIENT
    else
       echo "No Java Virtual Machine Found in $PATH"
    fi
@@ -44,7 +44,7 @@ else
    if [ -e $JAVA ]; then
      echo "Using $JAVA_HOME/bin/java to launch JMetadata"
      echo "`$JAVA_HOME/bin/java -version`"
-     $JAVA_HOME/bin/java $ALL_CLIENT_LAUNCHER
+     $JAVA_HOME/bin/java $JMETADATA_CLIENT
   else
      echo "No Java Virtual Machine found, please install a supported Java Virtual Machine or configure the JAVA_HOME environment variable properly"
   fi

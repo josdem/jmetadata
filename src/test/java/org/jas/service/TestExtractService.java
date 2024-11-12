@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,52 +16,55 @@
 
 package org.jas.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-
 import org.jas.model.Metadata;
+import org.jas.service.impl.ExtractServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
 public class TestExtractService {
 
-	@InjectMocks
-	private ExtractService extractService = new ExtractService();
+    public static final String EXPECTED_ARTIST = "Jennifer Lopez";
 
-	@Mock
-	private File file;
+    @InjectMocks
+    private ExtractService extractService = new ExtractServiceImpl();
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Mock
+    private File file;
 
-	@Test
-	public void shouldExtractMetadataFromFileWhenDash() throws Exception {
-		String filename = "jenifer lopez - 9A - 112.mp3";
-		when(file.getName()).thenReturn(filename);
+    @Before
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-		Metadata result = extractService.extractFromFileName(file);
+    @Test
+    public void shouldExtractMetadataFromFileWhenDash() {
+        String filename = "Jennifer Lopez - 9A - 112.mp3";
+        when(file.getName()).thenReturn(filename);
 
-		assertEquals("jenifer lopez ", result.getArtist());
-		assertEquals(" 9A ", result.getTitle());
-	}
+        Metadata result = extractService.extractFromFileName(file);
 
-	@Test
-	public void shouldExtractMetadataFromFileWhenNoDash() throws Exception {
-		String expectedName = "jenifer lopez";
-		String filename = "jenifer lopez.mp3";
-		when(file.getName()).thenReturn(filename);
+        assertEquals(EXPECTED_ARTIST, result.getArtist());
+        assertEquals("9A", result.getTitle());
+    }
 
-		Metadata result = extractService.extractFromFileName(file);
+    @Test
+    public void shouldExtractMetadataFromFileWhenNoDash() {
+        String expectedName = EXPECTED_ARTIST;
+        String filename = "Jennifer Lopez.mp3";
+        when(file.getName()).thenReturn(filename);
 
-		assertEquals(expectedName, result.getArtist());
-		assertEquals(expectedName, result.getTitle());
-	}
+        Metadata result = extractService.extractFromFileName(file);
+
+        assertEquals(expectedName, result.getArtist());
+        assertEquals(expectedName, result.getTitle());
+    }
 
 }

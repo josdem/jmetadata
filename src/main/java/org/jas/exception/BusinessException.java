@@ -14,15 +14,17 @@
    limitations under the License.
 */
 
-package org.jas.service;
+package org.jas.exception;
 
-import org.jas.model.Metadata;
-import org.springframework.stereotype.Service;
+public class BusinessException extends RuntimeException {
 
-import java.io.File;
+  public BusinessException(String message){
+    super(message);
+  }
 
-@Service
-public interface ExtractService {
+  public BusinessException(String message, Throwable cause){
+    super(message, cause);
+  }
 
-    Metadata extractFromFileName(File file);
 }
+
