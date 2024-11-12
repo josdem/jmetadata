@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package org.jas.aop;
+package org.jas.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -29,11 +29,11 @@ import org.slf4j.LoggerFactory;
 @Component
 public class AfterThrowingAdvice {
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
   @AfterThrowing(pointcut = "execution(* org.jas.service..**.*(..))", throwing = "ex")
   public void doRecoveryActions(RuntimeException ex){
-    log.info("Wrapping exception: " + ex);
+    log.info("Wrapping exception: {}", String.valueOf(ex));
     throw new BusinessException(ex.getMessage(), ex);
   }
 

@@ -97,6 +97,7 @@
     <mockito.version>3.12.4</mockito.version>
     <mockito-all.version>1.10.19</mockito-all.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
+    <aspectj.version>1.9.22.1</aspectj.version>
   </properties>
   <repositories>
     <repository>
@@ -179,7 +180,7 @@
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjtools</artifactId>
-      <version>1.9.1</version>
+      <version>${aspectj.version}</version>
     </dependency>
     <dependency>
       <groupId>de.umass.lastfm</groupId>
