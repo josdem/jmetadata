@@ -17,7 +17,7 @@
 	</fileSets>
 	<files>
 		<file>
-			<source>target/jmetadata-0.0.1-SNAPSHOT.jar</source>
+			<source>target/jmetadata-${version}.jar</source>
 			<outputDirectory>/System/Jar</outputDirectory>
 		</file>
 		<file>

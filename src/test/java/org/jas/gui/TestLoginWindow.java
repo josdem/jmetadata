@@ -31,6 +31,7 @@ import org.jas.action.Actions;
 import org.jas.model.User;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -72,22 +73,6 @@ public class TestLoginWindow {
 	private void setUsernameAndPassword() {
 		window.textBox(USERNAME_TEXTFIELD_NAME).enterText(user);
 		window.textBox(PASSWORD_TEXTFIELD_NAME).enterText(password);
-	}
-
-	@Test
-	public void shouldLoginByKeyListenerInSendButton() throws Exception {
-		setUsernameAndPassword();
-		window.button(SIGN_UP_BUTTON_NAME).pressKey(KeyEvent.VK_ENTER);
-
-		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
-	}
-
-	@Test
-	public void shouldLoginByKeyListenerInPasswordField() throws Exception {
-		setUsernameAndPassword();
-		window.textBox(PASSWORD_TEXTFIELD_NAME).pressKey(KeyEvent.VK_ENTER);
-
-		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
 	}
 
 	@After

@@ -31,7 +31,7 @@ export JMETADATA_CLIENT="-Xmx1024m -Xms128m -Djava.library.path=$LIB_PATH -Djna.
 if [ ! -n "$JAVA_HOME" ]; then
    echo "Please set JAVA_HOME environment variable to point to a supported Java Virtual Machine home directory"
    if [ -n `which java` ]; then
-      echo "Using `which java` to launch all.com Client"
+      echo "Using `which java` to launch client"
       echo "`java -version`"
       java $JMETADATA_CLIENT
    else
