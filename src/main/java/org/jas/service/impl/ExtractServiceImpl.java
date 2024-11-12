@@ -37,15 +37,15 @@ public class ExtractServiceImpl implements ExtractService {
         metadata.setFile(file);
         try {
             StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
-            String artist = stringTokenizer.nextToken();
-            String title = removeExtension(stringTokenizer.nextToken());
+            String artist = stringTokenizer.nextToken().trim();
+            String title = removeExtension(stringTokenizer.nextToken().trim());
             metadata.setArtist(artist);
             metadata.setTitle(title);
         } catch (NoSuchElementException nue) {
             String uniqueName = removeExtension(titleComplete);
             metadata.setArtist(uniqueName);
             metadata.setTitle(uniqueName);
-            log.info(titleComplete, "{} has no slash format");
+            log.info(titleComplete, "{} has no next token");
         }
         metadata.setMetadataFromFile(true);
         return metadata;

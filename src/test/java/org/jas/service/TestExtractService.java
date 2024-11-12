@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ import static org.mockito.Mockito.when;
 
 public class TestExtractService {
 
+    public static final String EXPECTED_ARTIST = "Jennifer Lopez";
+
     @InjectMocks
     private ExtractService extractService = new ExtractServiceImpl();
 
@@ -43,20 +45,20 @@ public class TestExtractService {
     }
 
     @Test
-    public void shouldExtractMetadataFromFileWhenDash() throws Exception {
-        String filename = "jenifer lopez - 9A - 112.mp3";
+    public void shouldExtractMetadataFromFileWhenDash() {
+        String filename = "Jennifer Lopez - 9A - 112.mp3";
         when(file.getName()).thenReturn(filename);
 
         Metadata result = extractService.extractFromFileName(file);
 
-        assertEquals("jenifer lopez ", result.getArtist());
-        assertEquals(" 9A ", result.getTitle());
+        assertEquals(EXPECTED_ARTIST, result.getArtist());
+        assertEquals("9A", result.getTitle());
     }
 
     @Test
-    public void shouldExtractMetadataFromFileWhenNoDash() throws Exception {
-        String expectedName = "jenifer lopez";
-        String filename = "jenifer lopez.mp3";
+    public void shouldExtractMetadataFromFileWhenNoDash() {
+        String expectedName = EXPECTED_ARTIST;
+        String filename = "Jennifer Lopez.mp3";
         when(file.getName()).thenReturn(filename);
 
         Metadata result = extractService.extractFromFileName(file);
