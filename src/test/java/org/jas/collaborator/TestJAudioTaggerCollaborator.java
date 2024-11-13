@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,48 +16,57 @@
 
 package org.jas.collaborator;
 
-
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.Tag;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestJAudioTaggerCollaborator {
+class TestJAudioTaggerCollaborator {
 
-	@InjectMocks
-	private JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Mock
-	private Tag tag;
-	@Mock
-	private AudioHeader header;
+    @InjectMocks
+    private final JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();
 
-	@BeforeEach
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Mock
+    private Tag tag;
+    @Mock
+    private AudioHeader header;
 
-	@Test
-	public void shouldValidateTagAndHeader() throws Exception {
-		assertTrue(jAudioTaggerCollaborator.isValid(tag, header));
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldDetectInvalidTag() throws Exception {
-		tag = null;
-		assertFalse(jAudioTaggerCollaborator.isValid(tag, header));
-	}
+    @Test
+    @DisplayName("validating tag and header")
+    public void shouldValidateTagAndHeader(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        assertTrue(jAudioTaggerCollaborator.isValid(tag, header));
+    }
 
-	@Test
-	public void shouldDetectInvalidHeader() throws Exception {
-		header = null;
-		assertFalse(jAudioTaggerCollaborator.isValid(tag, header));
-	}
+    @Test
+    @DisplayName("detecting invalid tag")
+    public void shouldDetectInvalidTag(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        assertFalse(jAudioTaggerCollaborator.isValid(null, header));
+    }
+
+    @Test
+    @DisplayName("detecting invalid header")
+    public void shouldDetectInvalidHeader(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        assertFalse(jAudioTaggerCollaborator.isValid(tag, null));
+    }
 
 }

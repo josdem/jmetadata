@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,19 +16,15 @@
 
 package org.jas.collaborator;
 
-import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.tag.Tag;
 import org.springframework.stereotype.Component;
-
-/**
- * @understands A class who validates tag and header from mp3
-*/
 
 @Component
 public class JAudioTaggerCollaborator {
 
-	public boolean isValid(Tag tag, AudioHeader header) {
-		return tag != null && header!= null ? true : false;
-	}
+    public boolean isValid(Tag tag, AudioHeader header) {
+        return tag != null && header != null;
+    }
 
 }
