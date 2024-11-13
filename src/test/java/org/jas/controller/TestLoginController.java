@@ -32,8 +32,8 @@ import org.jas.event.Events;
 import org.jas.helper.LastFMAuthenticator;
 import org.jas.model.Model;
 import org.jas.model.User;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -57,7 +57,7 @@ public class TestLoginController {
 	private String password = "password";
 	private User credentials;
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);

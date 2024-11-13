@@ -16,57 +16,57 @@
 
 package org.jas.model;
 
-import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.model.GenreTypes;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class TestGenreTypes {
+class TestGenreTypes {
 
-	@Test
-	public void shouldGetMinimalAsGenre() throws Exception {
-		int minimalCode = 152;
-		assertEquals("Minimal", GenreTypes.getGenreByCode(minimalCode));
-	}
+    @Test
+    public void shouldGetMinimalAsGenre() throws Exception {
+        int minimalCode = 152;
+        assertEquals("Minimal", GenreTypes.getGenreByCode(minimalCode));
+    }
 
-	@Test
-	public void shouldGetHouseAsGenre() throws Exception {
-		int houseCode = 35;
-		assertEquals("House", GenreTypes.getGenreByCode(houseCode));
-	}
+    @Test
+    public void shouldGetHouseAsGenre() throws Exception {
+        int houseCode = 35;
+        assertEquals("House", GenreTypes.getGenreByCode(houseCode));
+    }
 
-	@Test
-	public void shouldReturnEmptyStringIfNoGenre() throws Exception {
-		int unknownCode = 500;
-		assertEquals(StringUtils.EMPTY, GenreTypes.getGenreByCode(unknownCode));
-	}
+    @Test
+    public void shouldReturnEmptyStringIfNoGenre() throws Exception {
+        int unknownCode = 500;
+        assertEquals(StringUtils.EMPTY, GenreTypes.getGenreByCode(unknownCode));
+    }
 
-	@Test
-	public void shouldGetGenreByCode() throws Exception {
-		int genreAsCode = 18;
-		String genre = "Techno";
+    @Test
+    public void shouldGetGenreByCode() throws Exception {
+        int genreAsCode = 18;
+        String genre = "Techno";
 
-		String result = GenreTypes.getGenreByCode(genreAsCode);
-		assertEquals(genre, result);
-	}
+        String result = GenreTypes.getGenreByCode(genreAsCode);
+        assertEquals(genre, result);
+    }
 
-	@Test
-	public void shouldGetCodeByGenre() throws Exception {
-		int genreAsCode = 18;
-		String genre = "Techno";
+    @Test
+    public void shouldGetCodeByGenre() throws Exception {
+        int genreAsCode = 18;
+        String genre = "Techno";
 
-		GenreTypes genreType = GenreTypes.getGenreByName(genre);
-		assertEquals(genreAsCode, genreType.getCode());
-	}
+        GenreTypes genreType = GenreTypes.getGenreByName(genre);
+        assertEquals(genreAsCode, genreType.getCode());
+    }
 
-	@Test
-	public void shouldGetUnknownCodeByGenre() throws Exception {
-		int genreAsCode = 148;
-		String genre = "Minimal Techno";
+    @Test
+    public void shouldGetUnknownCodeByGenre() throws Exception {
+        int genreAsCode = 148;
+        String genre = "Minimal Techno";
 
-		GenreTypes genreType = GenreTypes.getGenreByName(genre);
-		assertEquals(genreAsCode, genreType.getCode());
-	}
+        GenreTypes genreType = GenreTypes.getGenreByName(genre);
+        assertEquals(genreAsCode, genreType.getCode());
+    }
 }

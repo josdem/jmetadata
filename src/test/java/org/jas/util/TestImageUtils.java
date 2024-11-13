@@ -16,87 +16,82 @@
 
 package org.jas.util;
 
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
-
 import org.apache.commons.lang3.StringUtils;
-
-import org.junit.Test;
-import org.junit.Before;
-
-import org.mockito.Mock;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.io.File;
+
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.*;
 
 public class TestImageUtils {
 
-  private static final Integer THREE_HUNDRED = 300;
+    private static final Integer THREE_HUNDRED = 300;
 
-	@InjectMocks
-	private ImageUtils imageUtils = new ImageUtils();
+    @InjectMocks
+    private ImageUtils imageUtils = new ImageUtils();
 
-	@Mock
-	private ImageService imageService;
-	@Mock
-	private Image image;
-	@Mock
-	private File file;
-	@Mock
-	private FileUtils fileUtils;
-	@Mock
-	private File root;
+    @Mock
+    private ImageService imageService;
+    @Mock
+    private Image image;
+    @Mock
+    private File file;
+    @Mock
+    private FileUtils fileUtils;
+    @Mock
+    private File root;
 
-	private String prefix = "MIRI_";
-	private String path = "PATH";
+    private String prefix = "MIRI_";
+    private String path = "PATH";
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldSaveCoverArtToFile() throws Exception {
-		when(imageService.createTempFile(StringUtils.EMPTY)).thenReturn(file);
-		when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
+    @Test
+    public void shouldSaveCoverArtToFile() throws Exception {
+        when(imageService.createTempFile(StringUtils.EMPTY)).thenReturn(file);
+        when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
 
-		imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY);
+        imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY);
 
-		verify(imageService).createTempFile(StringUtils.EMPTY);
-		verify(imageService).write(image, file);
-	}
+        verify(imageService).createTempFile(StringUtils.EMPTY);
+        verify(imageService).write(image, file);
+    }
 
-	@Test
-	public void shouldNotSaveCoverArtIfNoImage() throws Exception {
-		imageUtils.saveCoverArtToFile(null, StringUtils.EMPTY);
+    @Test
+    public void shouldNotSaveCoverArtIfNoImage() throws Exception {
+        imageUtils.saveCoverArtToFile(null, StringUtils.EMPTY);
 
-		verify(imageService, never()).createTempFile(StringUtils.EMPTY);
-	}
+        verify(imageService, never()).createTempFile(StringUtils.EMPTY);
+    }
 
-	@Test
-	public void shouldNotSaveCoverArtIfRootAndNoImage() throws Exception {
-		imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
+    @Test
+    public void shouldNotSaveCoverArtIfRootAndNoImage() throws Exception {
+        imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
 
-		verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
-	}
+        verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
+    }
 
-	@Test
-	public void shouldSaveImageToFile() throws Exception {
-		when(fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT)).thenReturn(file);
-		when(file.getAbsolutePath()).thenReturn(path);
-		when(image.getHeight(isA(ImageObserver.class))).thenReturn(THREE_HUNDRED);
+    @Test
+    public void shouldSaveImageToFile() throws Exception {
+        when(fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT)).thenReturn(file);
+        when(file.getAbsolutePath()).thenReturn(path);
+        when(image.getHeight(isA(ImageObserver.class))).thenReturn(THREE_HUNDRED);
 
-		imageUtils.saveCoverArtToFile(image, root, prefix);
+        imageUtils.saveCoverArtToFile(image, root, prefix);
 
-		verify(fileUtils).createFile(root, prefix, ApplicationState.IMAGE_EXT);
-	}
+        verify(fileUtils).createFile(root, prefix, ApplicationState.IMAGE_EXT);
+    }
 
 }

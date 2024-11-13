@@ -16,24 +16,24 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.assertNotNull;
+
+import org.jaudiotagger.audio.AudioFile;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import org.jas.helper.AudioFileHelper;
-import org.jaudiotagger.audio.AudioFile;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestAudioFileHelper {
 
-	private AudioFileHelper audioFileHelper = new AudioFileHelper();
+    private final AudioFileHelper audioFileHelper = new AudioFileHelper();
 
-	private File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+    private final File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
 
-	@Test
-	public void shouldRead() throws Exception {
-		AudioFile read = audioFileHelper.read(pepeGarden);
-		assertNotNull(read);
-	}
+    @Test
+    public void shouldRead() throws Exception {
+        AudioFile read = audioFileHelper.read(pepeGarden);
+        assertNotNull(read);
+    }
 
 }

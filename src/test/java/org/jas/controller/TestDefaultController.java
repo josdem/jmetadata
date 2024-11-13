@@ -16,55 +16,53 @@
 
 package org.jas.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import org.junit.Test;
-import org.junit.Before;
-
-import org.mockito.Mock;
+import org.jas.action.ActionResult;
+import org.jas.model.Metadata;
+import org.jas.service.DefaultService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import org.jas.model.Metadata;
-import org.jas.action.ActionResult;
-import org.jas.service.DefaultService;
-import org.jas.controller.DefaultController;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TestDefaultController {
 
-	@InjectMocks
-	private DefaultController defaultController = new DefaultController();
+    @InjectMocks
+    private DefaultController defaultController = new DefaultController();
 
-  @Mock
-	private DefaultService defaultService;
+    @Mock
+    private DefaultService defaultService;
 
-  private List<Metadata> metadatas = new ArrayList<Metadata>();
+    private List<Metadata> metadatas = new ArrayList<Metadata>();
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldCompleteTracksTotal() throws Exception {
-		when(defaultService.isCompletable(metadatas)).thenReturn(true);
+    @Test
+    public void shouldCompleteTracksTotal() throws Exception {
+        when(defaultService.isCompletable(metadatas)).thenReturn(true);
 
-		ActionResult result = defaultController.complete(metadatas);
+        ActionResult result = defaultController.complete(metadatas);
 
-		verify(defaultService).complete(metadatas);
-		assertEquals(ActionResult.New, result);
-	}
+        verify(defaultService).complete(metadatas);
+        assertEquals(ActionResult.New, result);
+    }
 
-	@Test
-	public void shouldNotCompleteTracksTotal() throws Exception {
-		when(defaultService.isCompletable(metadatas)).thenReturn(false);
+    @Test
+    public void shouldNotCompleteTracksTotal() throws Exception {
+        when(defaultService.isCompletable(metadatas)).thenReturn(false);
 
-		ActionResult result = defaultController.complete(metadatas);
+        ActionResult result = defaultController.complete(metadatas);
 
-		assertEquals(ActionResult.Complete, result);
-	}
+        assertEquals(ActionResult.Complete, result);
+    }
 }

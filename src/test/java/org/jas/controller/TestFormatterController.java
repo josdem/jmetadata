@@ -16,18 +16,19 @@
 
 package org.jas.controller;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import org.jas.action.ActionResult;
 import org.jas.controller.FormatterController;
 import org.jas.model.Metadata;
 import org.jas.service.FormatterService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class TestFormatterController {
 
@@ -39,7 +40,7 @@ public class TestFormatterController {
 	@Mock
 	private Metadata metadata;
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 	}

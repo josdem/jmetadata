@@ -16,99 +16,95 @@
 
 package org.jas.helper;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.awt.Image;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.ImageExporter;
 import org.jas.model.ExportPackage;
 import org.jas.model.Metadata;
 import org.jas.service.MetadataService;
 import org.jas.util.ImageUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 public class TestImageExporter {
-	@InjectMocks
-	private ImageExporter imageExporter = new ImageExporter();
+    @InjectMocks
+    private ImageExporter imageExporter = new ImageExporter();
 
-	@Mock
-	private ImageUtils imageUtils;
-	@Mock
-	private Metadata metadata;
-	@Mock
-	private Image coverArt;
-	@Mock
-	private MetadataService metadataService;
+    @Mock
+    private ImageUtils imageUtils;
+    @Mock
+    private Metadata metadata;
+    @Mock
+    private Image coverArt;
+    @Mock
+    private MetadataService metadataService;
 
-	private String album = "Bliksem";
-	private String artist = "Sander van Doorn";
-	private String title = "Bliksem";
+    private String album = "Bliksem";
+    private String artist = "Sander van Doorn";
+    private String title = "Bliksem";
 
-	private List<Metadata> metadatas = new ArrayList<Metadata>();
-	private ExportPackage exportPackage;
-	@Mock
-	private File root;
+    private List<Metadata> metadatas = new ArrayList<Metadata>();
+    private ExportPackage exportPackage;
+    @Mock
+    private File root;
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(metadata.getAlbum()).thenReturn(album);
-		when(metadata.getArtist()).thenReturn(artist);
-		when(metadata.getTitle()).thenReturn(title);
-		metadatas.add(metadata);
-		exportPackage = new ExportPackage(root, metadatas);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(metadata.getAlbum()).thenReturn(album);
+        when(metadata.getArtist()).thenReturn(artist);
+        when(metadata.getTitle()).thenReturn(title);
+        metadatas.add(metadata);
+        exportPackage = new ExportPackage(root, metadatas);
+    }
 
-	@Test
-	public void shouldExportASingleImage() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
-	}
+    @Test
+    public void shouldExportASingleImage() throws Exception {
+        when(metadata.getCoverArt()).thenReturn(coverArt);
+        when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+        imageExporter.export(exportPackage);
+        verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    }
 
-	@Test
-	public void shouldExportASingleImageWhenSameAlbum() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		metadatas.add(metadata);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
-	}
+    @Test
+    public void shouldExportASingleImageWhenSameAlbum() throws Exception {
+        when(metadata.getCoverArt()).thenReturn(coverArt);
+        when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+        metadatas.add(metadata);
+        imageExporter.export(exportPackage);
+        verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    }
 
-	@Test
-	public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		Metadata metadata = setSecondMetadataExpectations();
-		metadatas.add(metadata);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn" + "-" + "Bliksem");
-		verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA" + "-" + "Blue Skies (Andy Tau Remix)");
-	}
+    @Test
+    public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
+        when(metadata.getCoverArt()).thenReturn(coverArt);
+        Metadata metadata = setSecondMetadataExpectations();
+        metadatas.add(metadata);
+        imageExporter.export(exportPackage);
+        verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn" + "-" + "Bliksem");
+        verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA" + "-" + "Blue Skies (Andy Tau Remix)");
+    }
 
-	private Metadata setSecondMetadataExpectations() {
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getAlbum()).thenReturn("Blue Skies");
-		when(metadata.getArtist()).thenReturn("ATA");
-		when(metadata.getTitle()).thenReturn("Blue Skies (Andy Tau Remix)");
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		return metadata;
-	}
+    private Metadata setSecondMetadataExpectations() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getAlbum()).thenReturn("Blue Skies");
+        when(metadata.getArtist()).thenReturn("ATA");
+        when(metadata.getTitle()).thenReturn("Blue Skies (Andy Tau Remix)");
+        when(metadata.getCoverArt()).thenReturn(coverArt);
+        return metadata;
+    }
 
-	@Test
-	public void shouldNotExportIfNoImage() throws Exception {
-		imageExporter.export(exportPackage);
-		verify(imageUtils, never()).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
-	}
+    @Test
+    public void shouldNotExportIfNoImage() throws Exception {
+        imageExporter.export(exportPackage);
+        verify(imageUtils, never()).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    }
 }

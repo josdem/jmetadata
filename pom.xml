@@ -98,6 +98,7 @@
     <mockito-all.version>1.10.19</mockito-all.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <aspectj.version>1.9.22.1</aspectj.version>
+    <junit5.version>5.11.3</junit5.version>
   </properties>
   <repositories>
     <repository>
@@ -140,9 +141,15 @@
       <version>${commons-lang3.version}</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit5.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit5.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

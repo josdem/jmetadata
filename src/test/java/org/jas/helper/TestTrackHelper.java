@@ -16,26 +16,21 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jas.helper.TrackHelper;
-import org.junit.Before;
-import org.junit.Test;
+import com.slychief.javamusicbrainz.entities.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.slychief.javamusicbrainz.entities.Artist;
-import com.slychief.javamusicbrainz.entities.Release;
-import com.slychief.javamusicbrainz.entities.ReleaseList;
-import com.slychief.javamusicbrainz.entities.Track;
-import com.slychief.javamusicbrainz.entities.TrackList;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TestTrackHelper {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+class TestTrackHelper {
+
 	@InjectMocks
 	private TrackHelper trackHelper = new TrackHelper();
 
@@ -54,15 +49,11 @@ public class TestTrackHelper {
 	private Artist artist;
 
 	private List<Release> releases;
-	private String trackNumber = "3";
-	private int totalTracks = 10;
 
-	private String album = "Indigo (Original Mix)";
-	private String artistName = "Activa Pres Solar Movement";
-	private static final String ONE = "1";
+    private static final String ONE = "1";
 	private static final String ID = "35188948-6b68-2113-a75e-f4ead4fd2047";
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		releases = new ArrayList<Release>();
@@ -72,7 +63,8 @@ public class TestTrackHelper {
 	public void shouldGetTrackNumber() throws Exception {
 		setReleaseExpectations();
 		when(release.getTrackList()).thenReturn(trackList);
-		when(trackList.getOffset()).thenReturn(trackNumber);
+        String trackNumber = "3";
+        when(trackList.getOffset()).thenReturn(trackNumber);
 
 		assertEquals (trackNumber, trackHelper.getTrackNumber(track));
 
@@ -82,7 +74,8 @@ public class TestTrackHelper {
 	public void shouldGetTotalNumbers() throws Exception {
 		setReleaseExpectations();
 		when(release.getTracks()).thenReturn(tracks);
-		when(tracks.size()).thenReturn(totalTracks);
+        int totalTracks = 10;
+        when(tracks.size()).thenReturn(totalTracks);
 
 		assertEquals(totalTracks, trackHelper.getTotalTrackNumber(track));
 	}
@@ -95,7 +88,8 @@ public class TestTrackHelper {
 	@Test
 	public void shouldGetAlbum() throws Exception {
 		setReleaseExpectations();
-		when(release.getTitle()).thenReturn(album);
+        String album = "Indigo (Original Mix)";
+        when(release.getTitle()).thenReturn(album);
 
 		assertEquals(album, trackHelper.getAlbum(track));
 	}
@@ -103,7 +97,8 @@ public class TestTrackHelper {
 	@Test
 	public void shouldGetArtist() throws Exception {
 		when(track.getArtist()).thenReturn(artist);
-		when(artist.getName()).thenReturn(artistName);
+        String artistName = "Activa Pres Solar Movement";
+        when(artist.getName()).thenReturn(artistName);
 
 		assertEquals(artistName, trackHelper.getArtist(track));
 	}

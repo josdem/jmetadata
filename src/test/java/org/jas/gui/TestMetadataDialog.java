@@ -16,118 +16,114 @@
 
 package org.jas.gui;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.fest.swing.fixture.FrameFixture;
 import org.jas.event.Events;
-import org.jas.gui.MainWindow;
-import org.jas.gui.MetadataDialog;
 import org.jas.helper.MetadataHelper;
 import org.jas.model.Metadata;
 import org.jas.model.MetadataAlbumValues;
 import org.jas.model.Model;
 import org.jas.util.Environment;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestMetadataDialog {
-	private static final int HEIGHT = 450;
-	private static final int WIDTH = 400;
-	private static final String ARTIST = "Armin Van Buuren";
-	private static final String ALBUM = "Mirage";
-	private static final String GENRE = "Trance";
-	private static final String YEAR = "2010";
-	private static final String TRACKS = "16";
-	private static final String CD = "1";
-	private static final String CDS = "1";
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-	private static final String ARTIST_INPUT = "artistTextField";
-	private static final String ALBUM_INPUT = "albumTextField";
-	private static final String GENRE_INPUT = "genreTextField";
-	private static final String YEAR_INPUT = "yearTextField";
-	private static final String TRACKS_INPUT = "tracksTextField";
-	private static final String CD_INPUT = "cdTextField";
-	private static final String CDS_INPUT = "cdsTextField";
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-	private static final String APPLY_BUTTON_NAME = "buttonApply";
+class TestMetadataDialog {
+    private static final int HEIGHT = 450;
+    private static final int WIDTH = 400;
+    private static final String ARTIST = "Armin Van Buuren";
+    private static final String ALBUM = "Mirage";
+    private static final String GENRE = "Trance";
+    private static final String YEAR = "2010";
+    private static final String TRACKS = "16";
+    private static final String CD = "1";
+    private static final String CDS = "1";
 
-	@Mock
-	private ControlEngineConfigurator controlEngineConfigurator;
-	@Mock
-	private ControlEngine controlEngine;
-	@Mock
-	private MetadataHelper metadataHelper;
-	@Mock
-	private MetadataAlbumValues metadataAlbumValues;
-	@Mock
-	private Metadata metadata;
+    private static final String ARTIST_INPUT = "artistTextField";
+    private static final String ALBUM_INPUT = "albumTextField";
+    private static final String GENRE_INPUT = "genreTextField";
+    private static final String YEAR_INPUT = "yearTextField";
+    private static final String TRACKS_INPUT = "tracksTextField";
+    private static final String CD_INPUT = "cdTextField";
+    private static final String CDS_INPUT = "cdsTextField";
 
-	private String message = "message";
-	private FrameFixture window;
-	private MetadataDialog metadataDialog;
-	private JFrame frame = new JFrame();
-	private MainWindow mainWindow = new MainWindow();
-	private List<Metadata> metadatas = new ArrayList<Metadata>();
+    private static final String APPLY_BUTTON_NAME = "buttonApply";
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
-	}
+    @Mock
+    private ControlEngineConfigurator controlEngineConfigurator;
+    @Mock
+    private ControlEngine controlEngine;
+    @Mock
+    private MetadataHelper metadataHelper;
+    @Mock
+    private MetadataAlbumValues metadataAlbumValues;
+    @Mock
+    private Metadata metadata;
 
-	@Test
-	public void shouldSetAlbumValues() throws Exception {
-		//Avoid running in Linux since is not working properly
-		if(!Environment.isLinux()){
-			metadatas.add(metadata);
-			when(metadataHelper.createMetadataAlbumVaues()).thenReturn(metadataAlbumValues);
-			when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
+    private FrameFixture window;
+    private final JFrame frame = new JFrame();
+    private final MainWindow mainWindow = new MainWindow();
+    private final List<Metadata> metadatas = new ArrayList<>();
 
-			metadataDialog = new MetadataDialog(mainWindow, controlEngineConfigurator, message);
-			metadataDialog.setMetadataHelper(metadataHelper);
-			frame.add(metadataDialog.getContentPane());
-			window = new FrameFixture(frame);
-			window.show();
-			window.resizeTo(new Dimension(WIDTH,HEIGHT));
-			window.textBox(ARTIST_INPUT).enterText(ARTIST);
-			window.textBox(ALBUM_INPUT).enterText(ALBUM);
-			window.textBox(GENRE_INPUT).enterText(GENRE);
-			window.textBox(YEAR_INPUT).enterText(YEAR);
-			window.textBox(TRACKS_INPUT).enterText(TRACKS);
-			window.textBox(CD_INPUT).enterText(CD);
-			window.textBox(CDS_INPUT).enterText(CDS);
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
+    }
 
-			window.button(APPLY_BUTTON_NAME).click();
+    @Test
+    public void shouldSetAlbumValues() throws Exception {
+        //Avoid running in Linux since is not working properly
+        if (!Environment.isLinux()) {
+            metadatas.add(metadata);
+            when(metadataHelper.createMetadataAlbumVaues()).thenReturn(metadataAlbumValues);
+            when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 
-			verify(metadataAlbumValues).setArtist(ARTIST);
-			verify(metadataAlbumValues).setAlbum(ALBUM);
-			verify(metadataAlbumValues).setGenre(GENRE);
-			verify(metadataAlbumValues).setYear(YEAR);
-			verify(metadataAlbumValues).setTracks(TRACKS);
-			verify(metadataAlbumValues).setCd(CD);
-			verify(metadataAlbumValues).setCds(CDS);
-			verify(controlEngine).fireEvent(Events.READY_TO_APPLY, new ValueEvent<MetadataAlbumValues>(metadataAlbumValues));
-		}
-	}
+            String message = "message";
+            MetadataDialog metadataDialog = new MetadataDialog(mainWindow, controlEngineConfigurator, message);
+            metadataDialog.setMetadataHelper(metadataHelper);
+            frame.add(metadataDialog.getContentPane());
+            window = new FrameFixture(frame);
+            window.show();
+            window.resizeTo(new Dimension(WIDTH, HEIGHT));
+            window.textBox(ARTIST_INPUT).enterText(ARTIST);
+            window.textBox(ALBUM_INPUT).enterText(ALBUM);
+            window.textBox(GENRE_INPUT).enterText(GENRE);
+            window.textBox(YEAR_INPUT).enterText(YEAR);
+            window.textBox(TRACKS_INPUT).enterText(TRACKS);
+            window.textBox(CD_INPUT).enterText(CD);
+            window.textBox(CDS_INPUT).enterText(CDS);
 
-	@After
-	public void tearDown() throws Exception {
-		if(!Environment.isLinux()){
-			window.cleanUp();
-		}
-	}
+            window.button(APPLY_BUTTON_NAME).click();
+
+            verify(metadataAlbumValues).setArtist(ARTIST);
+            verify(metadataAlbumValues).setAlbum(ALBUM);
+            verify(metadataAlbumValues).setGenre(GENRE);
+            verify(metadataAlbumValues).setYear(YEAR);
+            verify(metadataAlbumValues).setTracks(TRACKS);
+            verify(metadataAlbumValues).setCd(CD);
+            verify(metadataAlbumValues).setCds(CDS);
+            verify(controlEngine).fireEvent(Events.READY_TO_APPLY, new ValueEvent<MetadataAlbumValues>(metadataAlbumValues));
+        }
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        if (!Environment.isLinux()) {
+            window.cleanUp();
+        }
+    }
 
 }

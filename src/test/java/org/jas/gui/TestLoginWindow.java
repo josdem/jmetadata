@@ -16,67 +16,65 @@
 
 package org.jas.gui;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-
 import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.fest.swing.fixture.FrameFixture;
 import org.jas.action.Actions;
 import org.jas.model.User;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
+
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class TestLoginWindow {
-	@InjectMocks
-	private LoginWindow loginWindow = new LoginWindow();
+    @InjectMocks
+    private LoginWindow loginWindow = new LoginWindow();
 
-	private static final String USERNAME_TEXTFIELD_NAME = "loginTextField";
-	private static final String PASSWORD_TEXTFIELD_NAME = "passwordLoginField";
-	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLogin";
-	private static final Dimension FRAME_DIMENSION = new Dimension(390, 180);
-	private FrameFixture window;
-	private String user = "josdem";
-	private String password = "password";
+    private static final String USERNAME_TEXTFIELD_NAME = "loginTextField";
+    private static final String PASSWORD_TEXTFIELD_NAME = "passwordLoginField";
+    private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLogin";
+    private static final Dimension FRAME_DIMENSION = new Dimension(390, 180);
+    private FrameFixture window;
+    private String user = "josdem";
+    private String password = "password";
 
-	@Mock
-	private ViewEngineConfigurator configurator;
-	@Mock
-	private ViewEngine viewEngine;
+    @Mock
+    private ViewEngineConfigurator configurator;
+    @Mock
+    private ViewEngine viewEngine;
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(configurator.getViewEngine()).thenReturn(viewEngine);
-		window = new FrameFixture(loginWindow.getFrame());
-		window.show(FRAME_DIMENSION);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(configurator.getViewEngine()).thenReturn(viewEngine);
+        window = new FrameFixture(loginWindow.getFrame());
+        window.show(FRAME_DIMENSION);
+    }
 
-	@Test
-	public void shouldLoginByActionListener() throws Exception {
-		setUsernameAndPassword();
-		window.button(SIGN_UP_BUTTON_NAME).click();
+    @Test
+    public void shouldLoginByActionListener() {
+        setUsernameAndPassword();
+        window.button(SIGN_UP_BUTTON_NAME).click();
 
-		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
-	}
+        verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
+    }
 
-	private void setUsernameAndPassword() {
-		window.textBox(USERNAME_TEXTFIELD_NAME).enterText(user);
-		window.textBox(PASSWORD_TEXTFIELD_NAME).enterText(password);
-	}
+    private void setUsernameAndPassword() {
+        window.textBox(USERNAME_TEXTFIELD_NAME).enterText(user);
+        window.textBox(PASSWORD_TEXTFIELD_NAME).enterText(password);
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		window.cleanUp();
-	}
+    @AfterEach
+    public void tearDown() throws Exception {
+        window.cleanUp();
+    }
 }

@@ -16,39 +16,37 @@
 
 package org.jas.helper;
 
-import org.jas.helper.ExporterHelper;
-import org.jas.helper.ImageExporter;
-import org.jas.helper.MetadataExporter;
 import org.jas.model.ExportPackage;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Mockito.verify;
+
 public class TestExporterHelper {
-	@InjectMocks
-	private ExporterHelper exporterHelper = new ExporterHelper();
+    @InjectMocks
+    private ExporterHelper exporterHelper = new ExporterHelper();
 
-	@Mock
-	private ImageExporter imageExporter;
-	@Mock
-	private MetadataExporter metadataExporter;
-	@Mock
-	private ExportPackage exportPackage;
+    @Mock
+    private ImageExporter imageExporter;
+    @Mock
+    private MetadataExporter metadataExporter;
+    @Mock
+    private ExportPackage exportPackage;
 
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldExportImage() throws Exception {
-		exporterHelper.export(exportPackage);
-		Mockito.verify(imageExporter).export(exportPackage);
-		Mockito.verify(metadataExporter).export(exportPackage);
-	}
+    @Test
+    public void shouldExportImage() throws Exception {
+        exporterHelper.export(exportPackage);
+        verify(imageExporter).export(exportPackage);
+        verify(metadataExporter).export(exportPackage);
+    }
 
 }
