@@ -16,37 +16,37 @@
 
 package org.jas.model;
 
-import static org.junit.Assert.assertEquals;
 
-import java.awt.Image;
-
-import org.jas.model.LastfmAlbum;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
 
-public class TestLastfmAlbum {
-	@Mock
-	private Image imageIcon;
-	private String year = "2011";
-	private String genre = "Minimal Techno";
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+class TestLastfmAlbum {
 
-	@Test
-	public void shouldCreateALastfmAlbum() throws Exception {
-		LastfmAlbum lastfmAlbum = new LastfmAlbum();
-		lastfmAlbum.setYear(year);
-		lastfmAlbum.setGenre(genre );
-		lastfmAlbum.setImageIcon(imageIcon);
+    @Mock
+    private Image imageIcon;
 
-		assertEquals(year, lastfmAlbum.getYear());
-		assertEquals(genre, lastfmAlbum.getGenre());
-		assertEquals(imageIcon, lastfmAlbum.getImageIcon());
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void shouldCreateALastfmAlbum() throws Exception {
+        final String year = "2011";
+        final String genre = "Minimal Techno";
+        LastfmAlbum lastfmAlbum = new LastfmAlbum();
+        lastfmAlbum.setYear(year);
+        lastfmAlbum.setGenre(genre);
+        lastfmAlbum.setImageIcon(imageIcon);
+
+        assertEquals(year, lastfmAlbum.getYear());
+        assertEquals(genre, lastfmAlbum.getGenre());
+        assertEquals(imageIcon, lastfmAlbum.getImageIcon());
+    }
 }

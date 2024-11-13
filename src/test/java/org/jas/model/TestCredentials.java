@@ -16,21 +16,20 @@
 
 package org.jas.model;
 
-import static org.junit.Assert.assertEquals;
 
-import org.jas.model.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestCredentials {
-	private User credentials;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	@Test
-	public void shouldCreateCredentials() throws Exception {
-		String username = "josdem";
-		String password = "password";
-		credentials = new User(username, password);
+class TestCredentials {
 
-		assertEquals(username, credentials.getUsername());
-		assertEquals(password, credentials.getPassword());
-	}
+    @Test
+    public void shouldCreateCredentials() throws Exception {
+        String username = "josdem";
+        String password = "password";
+        User credentials = new User(username, password);
+
+        assertEquals(username, credentials.getUsername());
+        assertEquals(password, credentials.getPassword());
+    }
 }

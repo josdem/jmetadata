@@ -16,20 +16,20 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.assertNotNull;
 
-import org.jas.helper.ArtworkHelper;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestArtworkHelper {
 
-	private ArtworkHelper artworkHelper = new ArtworkHelper();
+    private final ArtworkHelper artworkHelper = new ArtworkHelper();
 
-	@Test
-	public void shouldCreateAnArtWork() throws Exception {
-		Artwork artwork = artworkHelper.createArtwork();
-		assertNotNull(artwork);
-	}
+    @Test
+    public void shouldCreateAnArtWork() throws Exception {
+        Artwork artwork = artworkHelper.createArtwork();
+        assertNotNull(artwork);
+    }
 
 }

@@ -16,19 +16,19 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.*;
 
-import org.jas.helper.DateHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestDateHelper {
 
-	private DateHelper dateHelper = new DateHelper();
+    private final DateHelper dateHelper = new DateHelper();
 
-	@Test
-	public void shouldGetTimestamp() throws Exception {
-		long timestamp = dateHelper.getTimestamp();
-		assertTrue(timestamp > 0);
-	}
+    @Test
+    public void shouldGetTimestamp() throws Exception {
+        long timestamp = dateHelper.getTimestamp();
+        assertTrue(timestamp > 0);
+    }
 
 }

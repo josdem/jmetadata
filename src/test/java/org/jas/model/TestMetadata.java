@@ -16,161 +16,161 @@
 
 package org.jas.model;
 
-import static org.junit.Assert.assertEquals;
 
-import java.awt.Image;
-import java.io.File;
-
-import org.jas.model.CoverArt;
-import org.jas.model.Metadata;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
+import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class TestMetadata {
-	private Metadata metadata = new Metadata();
 
-	@Mock
-	private Image artwork;
-	@Mock
-	private File file;
-	@Mock
-	private CoverArt coverArt;
+    private final Metadata metadata = new Metadata();
 
-	private static final String title = "Reverie (Dash Berlin Remix)";
-	private static final String artist = "First State feat. Sarah Howells";
-	private static final String album = "Reverie";
-	private static final String genre = "Vocal Trance";
-	private static final String trackNumber = "2";
-	private static final String totalTracks = "5";
-	private static final int length = 697;
-	private static final int bitRate = 320;
-	private static final String cdNumber = "1";
-	private static final String totalCds = "1";
-	private static final String year = "2011";
-	private static final boolean metadataFromFile = true;
+    @Mock
+    private Image artwork;
+    @Mock
+    private File file;
+    @Mock
+    private CoverArt coverArt;
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    private static final String title = "Reverie (Dash Berlin Remix)";
+    private static final String artist = "First State feat. Sarah Howells";
+    private static final String album = "Reverie";
+    private static final String genre = "Vocal Trance";
+    private static final String trackNumber = "2";
+    private static final String totalTracks = "5";
+    private static final int length = 697;
+    private static final int bitRate = 320;
+    private static final String cdNumber = "1";
+    private static final String totalCds = "1";
+    private static final String year = "2011";
+    private static final boolean metadataFromFile = true;
 
-	@Test
-	public void shouldGetTitle() throws Exception {
-		metadata.setTitle(title );
-		assertEquals(title, metadata.getTitle());
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldGetArtist() throws Exception {
-		metadata.setArtist(artist);
-		assertEquals(artist, metadata.getArtist());
-	}
+    @Test
+    public void shouldGetTitle() throws Exception {
+        metadata.setTitle(title);
+        assertEquals(title, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldGetAlbum() throws Exception {
-		metadata.setAlbum(album );
-		assertEquals(album, metadata.getAlbum());
-	}
+    @Test
+    public void shouldGetArtist() throws Exception {
+        metadata.setArtist(artist);
+        assertEquals(artist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldGetGenre() throws Exception {
-		metadata.setGenre(genre);
-		assertEquals(genre, metadata.getGenre());
-	}
+    @Test
+    public void shouldGetAlbum() throws Exception {
+        metadata.setAlbum(album);
+        assertEquals(album, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldGetTrackNumber() throws Exception {
-		metadata.setTrackNumber(trackNumber);
-		assertEquals(trackNumber, metadata.getTrackNumber());
-	}
+    @Test
+    public void shouldGetGenre() throws Exception {
+        metadata.setGenre(genre);
+        assertEquals(genre, metadata.getGenre());
+    }
 
-	@Test
-	public void shouldGetTotalTracks() throws Exception {
-		metadata.setTotalTracks(totalTracks);
-		assertEquals(totalTracks, metadata.getTotalTracks());
-	}
+    @Test
+    public void shouldGetTrackNumber() throws Exception {
+        metadata.setTrackNumber(trackNumber);
+        assertEquals(trackNumber, metadata.getTrackNumber());
+    }
 
-	@Test
-	public void shouldGetArtWork() throws Exception {
-		metadata.setCoverArt(artwork);
-		assertEquals(artwork, metadata.getCoverArt());
-	}
+    @Test
+    public void shouldGetTotalTracks() throws Exception {
+        metadata.setTotalTracks(totalTracks);
+        assertEquals(totalTracks, metadata.getTotalTracks());
+    }
 
-	@Test
-	public void shouldGetLength() throws Exception {
-		metadata.setLenght(length);
-		assertEquals(length, metadata.getLength());
-	}
+    @Test
+    public void shouldGetArtWork() throws Exception {
+        metadata.setCoverArt(artwork);
+        assertEquals(artwork, metadata.getCoverArt());
+    }
 
-	@Test
-	public void shouldGetBitRate() throws Exception {
-		metadata.setBitRate(bitRate);
-		assertEquals(bitRate, metadata.getBitRate());
-	}
+    @Test
+    public void shouldGetLength() throws Exception {
+        metadata.setLenght(length);
+        assertEquals(length, metadata.getLength());
+    }
 
-	@Test
-	public void shouldGetFile() throws Exception {
-		metadata.setFile(file);
-		assertEquals(file, metadata.getFile());
-	}
+    @Test
+    public void shouldGetBitRate() throws Exception {
+        metadata.setBitRate(bitRate);
+        assertEquals(bitRate, metadata.getBitRate());
+    }
 
-	@Test
-	public void shouldGetCdNumber() throws Exception {
-		metadata.setCdNumber(cdNumber);
-		assertEquals(cdNumber, metadata.getCdNumber());
-	}
+    @Test
+    public void shouldGetFile() throws Exception {
+        metadata.setFile(file);
+        assertEquals(file, metadata.getFile());
+    }
 
-	@Test
-	public void shouldGetTotalCds() throws Exception {
-		metadata.setTotalCds(totalCds);
-		assertEquals(totalCds, metadata.getTotalCds());
-	}
+    @Test
+    public void shouldGetCdNumber() throws Exception {
+        metadata.setCdNumber(cdNumber);
+        assertEquals(cdNumber, metadata.getCdNumber());
+    }
 
-	@Test
-	public void shouldGetYear() throws Exception {
-		metadata.setYear(year);
-		assertEquals(year, metadata.getYear());
-	}
+    @Test
+    public void shouldGetTotalCds() throws Exception {
+        metadata.setTotalCds(totalCds);
+        assertEquals(totalCds, metadata.getTotalCds());
+    }
 
-	@Test
-	public void shouldGetNewCoverArt() throws Exception {
-		metadata.setNewCoverArt(coverArt);
-		assertEquals(coverArt, metadata.getNewCoverArt());
-	}
+    @Test
+    public void shouldGetYear() throws Exception {
+        metadata.setYear(year);
+        assertEquals(year, metadata.getYear());
+    }
 
-	@Test
-	public void shouldDetectPreviousMetadata() throws Exception {
-		Metadata previousMetadata = new Metadata();
-		previousMetadata.setTrackNumber("1");
+    @Test
+    public void shouldGetNewCoverArt() throws Exception {
+        metadata.setNewCoverArt(coverArt);
+        assertEquals(coverArt, metadata.getNewCoverArt());
+    }
 
-		metadata.setTrackNumber(trackNumber);
-		assertEquals(1, metadata.compareTo(previousMetadata));
-	}
+    @Test
+    public void shouldDetectPreviousMetadata() throws Exception {
+        Metadata previousMetadata = new Metadata();
+        previousMetadata.setTrackNumber("1");
 
-	@Test
-	public void shouldDetectNextMetadata() throws Exception {
-		Metadata nextMetadata = new Metadata();
-		nextMetadata.setTrackNumber("3");
+        metadata.setTrackNumber(trackNumber);
+        assertEquals(1, metadata.compareTo(previousMetadata));
+    }
 
-		metadata.setTrackNumber(trackNumber);
-		assertEquals(-1, metadata.compareTo(nextMetadata));
-	}
+    @Test
+    public void shouldDetectNextMetadata() throws Exception {
+        Metadata nextMetadata = new Metadata();
+        nextMetadata.setTrackNumber("3");
 
-	@Test
-	public void shouldRespondAtErrorInTrackNumber() throws Exception {
-		Metadata rareMetadata = new Metadata();
-		rareMetadata.setTrackNumber("somethingWrong");
+        metadata.setTrackNumber(trackNumber);
+        assertEquals(-1, metadata.compareTo(nextMetadata));
+    }
 
-		metadata.setTrackNumber(trackNumber);
-		assertEquals(0, metadata.compareTo(rareMetadata));
-	}
+    @Test
+    public void shouldRespondAtErrorInTrackNumber() throws Exception {
+        Metadata rareMetadata = new Metadata();
+        rareMetadata.setTrackNumber("somethingWrong");
 
-	@Test
-	public void shouldKnowIfMetadataIsFromFile() throws Exception {
-		metadata.setMetadataFromFile(metadataFromFile);
-		assertEquals(metadataFromFile, metadata.isMetadataFromFile());
-	}
+        metadata.setTrackNumber(trackNumber);
+        assertEquals(0, metadata.compareTo(rareMetadata));
+    }
+
+    @Test
+    public void shouldKnowIfMetadataIsFromFile() throws Exception {
+        metadata.setMetadataFromFile(metadataFromFile);
+        assertEquals(metadataFromFile, metadata.isMetadataFromFile());
+    }
 }

@@ -16,713 +16,711 @@
 
 package org.jas.service;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.Before;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.jas.model.Metadata;
-import org.jas.service.FormatterService;
 import org.jas.service.impl.FormatterServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestFormatterService {
-	private FormatterService formatter = new FormatterServiceImpl();
+    private final FormatterService formatter = new FormatterServiceImpl();
 
-	private String badFormatA = "¿Cu&aacute;ndo?";
-	private String badFormatAExpected = "¿Cuándo?";
-	private String badFormatE = "¿Qu&eacute;?";
-	private String badFormatEExpected = "¿Qué?";
-	private String badFormatI = "m&iacute;";
-	private String badFormatIExpected = "mí";
-	private String badFormatO = "¿C&oacute;mo?";
-	private String bFormatOExpected = "¿Cómo?";
-	private String badFormatU = "t&uacute;";
-	private String badFormatUExpected = "tú";
-	private String badFormatAcute = "What&acute;s The Time";
-	private String badFormatAcuteExpected = "What's The Time";
-	private String artist = "angel tears";
-	private String expectedArtist = "Angel Tears";
-	private String title = "legends of the fall";
-	private String expectedTitle = "Legends Of The Fall";
-	private String album = "vision";
-	private String expectedAlbum = "Vision";
-	private Metadata metadata = new Metadata();
+    private final String badFormatA = "¿Cu&aacute;ndo?";
+    private final String badFormatAExpected = "¿Cuándo?";
+    private final String badFormatE = "¿Qu&eacute;?";
+    private final String badFormatEExpected = "¿Qué?";
+    private final String badFormatI = "m&iacute;";
+    private final String badFormatIExpected = "mí";
+    private final String badFormatO = "¿C&oacute;mo?";
+    private final String bFormatOExpected = "¿Cómo?";
+    private final String badFormatU = "t&uacute;";
+    private final String badFormatUExpected = "tú";
+    private final String badFormatAcute = "What&acute;s The Time";
+    private final String badFormatAcuteExpected = "What's The Time";
+    private final String artist = "angel tears";
+    private final String expectedArtist = "Angel Tears";
+    private final String title = "legends of the fall";
+    private final String expectedTitle = "Legends Of The Fall";
+    private final String album = "vision";
+    private final String expectedAlbum = "Vision";
 
+    private final Metadata metadata = new Metadata();
 
-	@Before
-	public void setup() throws Exception {
-		metadata.setArtist(artist);
-		metadata.setTitle(title);
-		metadata.setAlbum(album);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        metadata.setArtist(artist);
+        metadata.setTitle(title);
+        metadata.setAlbum(album);
+    }
 
-	@Test
-	public void shouldDetectAaccentMarkTitle() throws Exception {
-		metadata.setTitle(badFormatA);
+    @Test
+    public void shouldDetectAaccentMarkTitle() throws Exception {
+        metadata.setTitle(badFormatA);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectEaccentMarkTitle() throws Exception {
-		metadata.setTitle(badFormatE);
+    @Test
+    public void shouldDetectEaccentMarkTitle() throws Exception {
+        metadata.setTitle(badFormatE);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatEExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatEExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectIaccentMarkTitle() throws Exception {
-		metadata.setTitle(badFormatI);
+    @Test
+    public void shouldDetectIaccentMarkTitle() throws Exception {
+        metadata.setTitle(badFormatI);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatIExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatIExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectOaccentMarkTitle() throws Exception {
-		metadata.setTitle(badFormatO);
+    @Test
+    public void shouldDetectOaccentMarkTitle() throws Exception {
+        metadata.setTitle(badFormatO);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(bFormatOExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(bFormatOExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectUaccentMarkTitle() throws Exception {
-		metadata.setTitle(badFormatU);
+    @Test
+    public void shouldDetectUaccentMarkTitle() throws Exception {
+        metadata.setTitle(badFormatU);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatUExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatUExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectAaccentMarkArtist() throws Exception {
-		metadata.setArtist(badFormatA);
+    @Test
+    public void shouldDetectAaccentMarkArtist() throws Exception {
+        metadata.setArtist(badFormatA);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAExpected , metadata.getArtist());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAExpected, metadata.getArtist());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectEaccentMarkArtist() throws Exception {
-		metadata.setArtist(badFormatE);
+    @Test
+    public void shouldDetectEaccentMarkArtist() throws Exception {
+        metadata.setArtist(badFormatE);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatEExpected , metadata.getArtist());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatEExpected, metadata.getArtist());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectIaccentMarkArtist() throws Exception {
-		metadata.setArtist(badFormatI);
+    @Test
+    public void shouldDetectIaccentMarkArtist() throws Exception {
+        metadata.setArtist(badFormatI);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatIExpected , metadata.getArtist());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatIExpected, metadata.getArtist());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectOaccentMarkArtist() throws Exception {
-		metadata.setArtist(badFormatO);
+    @Test
+    public void shouldDetectOaccentMarkArtist() throws Exception {
+        metadata.setArtist(badFormatO);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(bFormatOExpected , metadata.getArtist());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(bFormatOExpected, metadata.getArtist());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectUaccentMarkArtist() throws Exception {
-		metadata.setArtist(badFormatU);
+    @Test
+    public void shouldDetectUaccentMarkArtist() throws Exception {
+        metadata.setArtist(badFormatU);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatUExpected , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatUExpected, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectAaccentMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatA);
+    @Test
+    public void shouldDetectAaccentMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatA);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldFormatTitleWhenNull() throws Exception {
-		metadata.setArtist(badFormatA);
-		metadata.setTitle(null);
-		metadata.setAlbum(badFormatE);
+    @Test
+    public void shouldFormatTitleWhenNull() throws Exception {
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(null);
+        metadata.setAlbum(badFormatE);
 
-		assertTrue(formatter.wasFormatted(metadata));
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+    }
 
-	@Test
-	public void shouldFormatTitleWhenEmpty() throws Exception {
-		metadata.setArtist(badFormatA);
-		metadata.setTitle(StringUtils.EMPTY);
-		metadata.setAlbum(badFormatE);
+    @Test
+    public void shouldFormatTitleWhenEmpty() throws Exception {
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(StringUtils.EMPTY);
+        metadata.setAlbum(badFormatE);
 
-		assertTrue(formatter.wasFormatted(metadata));
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+    }
 
-	@Test
-	public void shouldFormatAlbumWhenNull() throws Exception {
-		metadata.setArtist(badFormatA);
-		metadata.setTitle(badFormatE);
-		metadata.setAlbum(null);
+    @Test
+    public void shouldFormatAlbumWhenNull() throws Exception {
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(badFormatE);
+        metadata.setAlbum(null);
 
-		assertTrue(formatter.wasFormatted(metadata));
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+    }
 
-	@Test
-	public void shouldFormatAlbumWhenEmpty() throws Exception {
-		metadata.setArtist(badFormatA);
-		metadata.setTitle(badFormatE);
-		metadata.setAlbum(StringUtils.EMPTY);
+    @Test
+    public void shouldFormatAlbumWhenEmpty() throws Exception {
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(badFormatE);
+        metadata.setAlbum(StringUtils.EMPTY);
 
-		assertTrue(formatter.wasFormatted(metadata));
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+    }
 
-	@Test
-	public void shouldDetectEaccentMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatE);
+    @Test
+    public void shouldDetectEaccentMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatE);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatEExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatEExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectIaccentMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatI);
+    @Test
+    public void shouldDetectIaccentMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatI);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatIExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatIExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectOaccentMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatO);
+    @Test
+    public void shouldDetectOaccentMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatO);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(bFormatOExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(bFormatOExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectUaccentMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatU);
+    @Test
+    public void shouldDetectUaccentMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatU);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatUExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatUExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldCapitalizeTitle() throws Exception {
-		metadata.setTitle(title);
+    @Test
+    public void shouldCapitalizeTitle() throws Exception {
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCapitalizeArtist() throws Exception {
-		metadata.setArtist(artist);
+    @Test
+    public void shouldCapitalizeArtist() throws Exception {
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldCapitalizeAlbum() throws Exception {
-		metadata.setAlbum(album);
+    @Test
+    public void shouldCapitalizeAlbum() throws Exception {
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
-		metadata.setAlbum(album.toUpperCase());
+    @Test
+    public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
+        metadata.setAlbum(album.toUpperCase());
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldCapitalizeTitleWhenUppercase() throws Exception {
-		metadata.setTitle(title.toUpperCase());
+    @Test
+    public void shouldCapitalizeTitleWhenUppercase() throws Exception {
+        metadata.setTitle(title.toUpperCase());
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCapitalizeArtistWhenUppercase() throws Exception {
-		metadata.setArtist(artist.toUpperCase());
+    @Test
+    public void shouldCapitalizeArtistWhenUppercase() throws Exception {
+        metadata.setArtist(artist.toUpperCase());
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldCapitalizeArtistWhenDash() throws Exception {
-		String artist = "de-pazz";
-		String artistExpected = "De-pazz";
+    @Test
+    public void shouldCapitalizeArtistWhenDash() throws Exception {
+        String artist = "de-pazz";
+        String artistExpected = "De-pazz";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(artistExpected , metadata.getArtist());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(artistExpected, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldCapitalizeTitleWhenDash() throws Exception {
-		String title = "blue-eyed";
-		String titleExpected = "Blue-eyed";
+    @Test
+    public void shouldCapitalizeTitleWhenDash() throws Exception {
+        String title = "blue-eyed";
+        String titleExpected = "Blue-eyed";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(titleExpected , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(titleExpected, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCapitalizeAlbumWhenDash() throws Exception {
-		String album = "blue-eyed";
-		String albumExpected = "Blue-eyed";
+    @Test
+    public void shouldCapitalizeAlbumWhenDash() throws Exception {
+        String album = "blue-eyed";
+        String albumExpected = "Blue-eyed";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(albumExpected , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(albumExpected, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldGetDuration() throws Exception {
-		int lenght = 397;
-		String expectedDuration = "6:37";
-		assertEquals(expectedDuration, formatter.getDuration(lenght));
-	}
+    @Test
+    public void shouldGetDuration() throws Exception {
+        int lenght = 397;
+        String expectedDuration = "6:37";
+        assertEquals(expectedDuration, formatter.getDuration(lenght));
+    }
 
-	@Test
-	public void shouldDetectAcuteMarkTitle() throws Exception {
-		metadata.setTitle(badFormatAcute);
+    @Test
+    public void shouldDetectAcuteMarkTitle() throws Exception {
+        metadata.setTitle(badFormatAcute);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAcuteExpected , metadata.getTitle());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAcuteExpected, metadata.getTitle());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectAcuteMarkArtist() throws Exception {
-		metadata.setArtist(badFormatAcute);
+    @Test
+    public void shouldDetectAcuteMarkArtist() throws Exception {
+        metadata.setArtist(badFormatAcute);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAcuteExpected , metadata.getArtist());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAcuteExpected, metadata.getArtist());
 
-	}
+    }
 
-	@Test
-	public void shouldDetectAcuteMarkAlbum() throws Exception {
-		metadata.setAlbum(badFormatAcute);
+    @Test
+    public void shouldDetectAcuteMarkAlbum() throws Exception {
+        metadata.setAlbum(badFormatAcute);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(badFormatAcuteExpected , metadata.getAlbum());
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(badFormatAcuteExpected, metadata.getAlbum());
 
-	}
+    }
 
-	@Test
-	public void shouldCamelizeWhenParenthesis() throws Exception {
-		String title = "as the rush comes (chillout mix)";
-		String expectedTitle = "As The Rush Comes (chillout Mix)";
+    @Test
+    public void shouldCamelizeWhenParenthesis() throws Exception {
+        String title = "as the rush comes (chillout mix)";
+        String expectedTitle = "As The Rush Comes (chillout Mix)";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCamelizeWhenNumbers() throws Exception {
-		String title = "rabbit in your headlights (3d mix)";
-		String expectedTitle = "Rabbit In Your Headlights (3d Mix)";
+    @Test
+    public void shouldCamelizeWhenNumbers() throws Exception {
+        String title = "rabbit in your headlights (3d mix)";
+        String expectedTitle = "Rabbit In Your Headlights (3d Mix)";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCamelizeWhenApostrophe() throws Exception {
-		String title = "jesu, joy of man's desiring";
-		String expectedTitle = "Jesu, Joy Of Man's Desiring";
+    @Test
+    public void shouldCamelizeWhenApostrophe() throws Exception {
+        String title = "jesu, joy of man's desiring";
+        String expectedTitle = "Jesu, Joy Of Man's Desiring";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetecteGraveAccent() throws Exception {
-		String title = "Lumi&egrave;res De Skye";
-		String expectedTitle = "Lumières De Skye";
+    @Test
+    public void shouldDetecteGraveAccent() throws Exception {
+        String title = "Lumi&egrave;res De Skye";
+        String expectedTitle = "Lumières De Skye";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetecteEAcuteAccent() throws Exception {
-		String title = "Le Vent d'&Eacute;cosse";
-		String expectedTitle = "Le Vent d'Écosse";
+    @Test
+    public void shouldDetecteEAcuteAccent() throws Exception {
+        String title = "Le Vent d'&Eacute;cosse";
+        String expectedTitle = "Le Vent d'Écosse";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetecteCircumflexAccent() throws Exception {
-		String title = "Entre-Nous... La f&ecirc;te";
-		String expectedTitle = "Entre-Nous... La fête";
+    @Test
+    public void shouldDetecteCircumflexAccent() throws Exception {
+        String title = "Entre-Nous... La f&ecirc;te";
+        String expectedTitle = "Entre-Nous... La fête";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCamelizeWhenI() throws Exception {
-		String title = "barakaya (part I)";
-		String expectedTitle = "Barakaya (part I)";
+    @Test
+    public void shouldCamelizeWhenI() throws Exception {
+        String title = "barakaya (part I)";
+        String expectedTitle = "Barakaya (part I)";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldCamelizeWhenAmpersand() throws Exception {
-		String title = "paco fernandez & neve";
-		String expectedTitle = "Paco Fernandez & Neve";
+    @Test
+    public void shouldCamelizeWhenAmpersand() throws Exception {
+        String title = "paco fernandez & neve";
+        String expectedTitle = "Paco Fernandez & Neve";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasCamelized(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasCamelized(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldNotReturnNew() throws Exception {
-		String artist = "Youth Blood Martydparty Master Edit";
-		String title = "6a";
-		String album = StringUtils.EMPTY;
+    @Test
+    public void shouldNotReturnNew() throws Exception {
+        String artist = "Youth Blood Martydparty Master Edit";
+        String title = "6a";
+        String album = StringUtils.EMPTY;
 
-		metadata.setArtist(artist);
-		metadata.setTitle(title);
-		metadata.setAlbum(album);
+        metadata.setArtist(artist);
+        metadata.setTitle(title);
+        metadata.setAlbum(album);
 
-		assertFalse(formatter.wasCamelized(metadata));
-		assertFalse(formatter.wasFormatted(metadata));
-	}
+        assertFalse(formatter.wasCamelized(metadata));
+        assertFalse(formatter.wasFormatted(metadata));
+    }
 
-	@Test
-	public void shouldDetectUFormatInTitle() throws Exception {
-		String title = "Bl&uuml;chel & von Deylen";
-		String expectedTitle = "Blüchel & von Deylen";
+    @Test
+    public void shouldDetectUFormatInTitle() throws Exception {
+        String title = "Bl&uuml;chel & von Deylen";
+        String expectedTitle = "Blüchel & von Deylen";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectUFormatInArtist() throws Exception {
-		String artist = "Bl&uuml;chel & von Deylen";
-		String expectedArtist = "Blüchel & von Deylen";
+    @Test
+    public void shouldDetectUFormatInArtist() throws Exception {
+        String artist = "Bl&uuml;chel & von Deylen";
+        String expectedArtist = "Blüchel & von Deylen";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectUFormatInAlbum() throws Exception {
-		String album = "Bl&uuml;chel & von Deylen";
-		String expectedAlbum = "Blüchel & von Deylen";
+    @Test
+    public void shouldDetectUFormatInAlbum() throws Exception {
+        String album = "Bl&uuml;chel & von Deylen";
+        String expectedAlbum = "Blüchel & von Deylen";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldDetectOFormatInTitle() throws Exception {
-		String title = "Pop&ouml;s";
-		String expectedTitle = "Popös";
+    @Test
+    public void shouldDetectOFormatInTitle() throws Exception {
+        String title = "Pop&ouml;s";
+        String expectedTitle = "Popös";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectOFormatInArtist() throws Exception {
-		String artist = "Pop&ouml;s";
-		String expectedArtist = "Popös";
+    @Test
+    public void shouldDetectOFormatInArtist() throws Exception {
+        String artist = "Pop&ouml;s";
+        String expectedArtist = "Popös";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectOFormatInAlbum() throws Exception {
-		String album = "Pop&ouml;s";
-		String expectedAlbum = "Popös";
+    @Test
+    public void shouldDetectOFormatInAlbum() throws Exception {
+        String album = "Pop&ouml;s";
+        String expectedAlbum = "Popös";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldDetectAGraveFormatInTitle() throws Exception {
-		String title = "Déj&agrave; Vu";
-		String expectedTitle = "Déjà Vu";
+    @Test
+    public void shouldDetectAGraveFormatInTitle() throws Exception {
+        String title = "Déj&agrave; Vu";
+        String expectedTitle = "Déjà Vu";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectAGraveFormatInArtist() throws Exception {
-		String artist = "Déj&agrave; Vu";
-		String expectedArtist = "Déjà Vu";
+    @Test
+    public void shouldDetectAGraveFormatInArtist() throws Exception {
+        String artist = "Déj&agrave; Vu";
+        String expectedArtist = "Déjà Vu";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectAGraveFormatInAlbum() throws Exception {
-		String album = "Déj&agrave; Vu";
-		String expectedAlbum = "Déjà Vu";
+    @Test
+    public void shouldDetectAGraveFormatInAlbum() throws Exception {
+        String album = "Déj&agrave; Vu";
+        String expectedAlbum = "Déjà Vu";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldDetectDegreeFormatInTitle() throws Exception {
-		String title = "Beatniks&deg;";
-		String expectedTitle = "Beatniks°";
+    @Test
+    public void shouldDetectDegreeFormatInTitle() throws Exception {
+        String title = "Beatniks&deg;";
+        String expectedTitle = "Beatniks°";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectDegreeFormatInArtist() throws Exception {
-		String artist = "Beatniks&deg;";
-		String expectedArtist = "Beatniks°";
+    @Test
+    public void shouldDetectDegreeFormatInArtist() throws Exception {
+        String artist = "Beatniks&deg;";
+        String expectedArtist = "Beatniks°";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectDegreeFormatInAlbum() throws Exception {
-		String album = "Beatniks&deg;";
-		String expectedAlbum = "Beatniks°";
+    @Test
+    public void shouldDetectDegreeFormatInAlbum() throws Exception {
+        String album = "Beatniks&deg;";
+        String expectedAlbum = "Beatniks°";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldDetectNtildeInTitle() throws Exception {
-		String title = "Ni&ntilde;a";
-		String expectedTitle = "Niña";
+    @Test
+    public void shouldDetectNtildeInTitle() throws Exception {
+        String title = "Ni&ntilde;a";
+        String expectedTitle = "Niña";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectNtildeInArtist() throws Exception {
-		String artist = "Ni&ntilde;a";
-		String expectedArtist = "Niña";
+    @Test
+    public void shouldDetectNtildeInArtist() throws Exception {
+        String artist = "Ni&ntilde;a";
+        String expectedArtist = "Niña";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectNtildeInAlbum() throws Exception {
-		String album = "Ni&ntilde;a";
-		String expectedAlbum = "Niña";
+    @Test
+    public void shouldDetectNtildeInAlbum() throws Exception {
+        String album = "Ni&ntilde;a";
+        String expectedAlbum = "Niña";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldDetectAUmlautMarkInTitle() throws Exception {
-		String title = "J&auml;hdytin";
-		String expectedTitle = "Jähdytin";
+    @Test
+    public void shouldDetectAUmlautMarkInTitle() throws Exception {
+        String title = "J&auml;hdytin";
+        String expectedTitle = "Jähdytin";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectAUmlautMarkInArtist() throws Exception {
-		String artist = "J&auml;hdytin";
-		String expectedArtist = "Jähdytin";
+    @Test
+    public void shouldDetectAUmlautMarkInArtist() throws Exception {
+        String artist = "J&auml;hdytin";
+        String expectedArtist = "Jähdytin";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectAUmlautMarkInAlbum() throws Exception {
-		String album = "J&auml;hdytin";
-		String expectedAlbum = "Jähdytin";
+    @Test
+    public void shouldDetectAUmlautMarkInAlbum() throws Exception {
+        String album = "J&auml;hdytin";
+        String expectedAlbum = "Jähdytin";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
-	@Test
-	public void shouldBeAnalyzable() throws Exception {
-		String title = "Beatniks";
-		String artist = "Jaytin";
-		String album = "Nina";
+    @Test
+    public void shouldBeAnalyzable() throws Exception {
+        String title = "Beatniks";
+        String artist = "Jaytin";
+        String album = "Nina";
 
-		metadata.setTitle(title);
-		metadata.setArtist(artist);
-		metadata.setAlbum(album);
+        metadata.setTitle(title);
+        metadata.setArtist(artist);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.isAnalyzable(metadata));
-	}
+        assertTrue(formatter.isAnalyzable(metadata));
+    }
 
-	@Test
-	public void shouldNotBeAnalyzableDueToAlbum() throws Exception {
-		String title = "Beatniks";
-		String artist = "Jaytin";
+    @Test
+    public void shouldNotBeAnalyzableDueToAlbum() throws Exception {
+        String title = "Beatniks";
+        String artist = "Jaytin";
 
-		metadata.setTitle(title);
-		metadata.setArtist(artist);
-		metadata.setAlbum(null);
+        metadata.setTitle(title);
+        metadata.setArtist(artist);
+        metadata.setAlbum(null);
 
-		assertFalse(formatter.isAnalyzable(metadata));
-	}
+        assertFalse(formatter.isAnalyzable(metadata));
+    }
 
-	@Test
-	public void shouldNotBeAnalyzableDueToArtist() throws Exception {
-		String title = "Beatniks";
-		String album = "Nina";
+    @Test
+    public void shouldNotBeAnalyzableDueToArtist() throws Exception {
+        String title = "Beatniks";
+        String album = "Nina";
 
-		metadata.setTitle(title);
-		metadata.setArtist(null);
-		metadata.setAlbum(album);
+        metadata.setTitle(title);
+        metadata.setArtist(null);
+        metadata.setAlbum(album);
 
-		assertFalse(formatter.isAnalyzable(metadata));
-	}
+        assertFalse(formatter.isAnalyzable(metadata));
+    }
 
-	@Test
-	public void shouldNotBeAnalyzableDueToTitle() throws Exception {
-		String artist = "Jaytin";
-		String album = "Nina";
+    @Test
+    public void shouldNotBeAnalyzableDueToTitle() throws Exception {
+        String artist = "Jaytin";
+        String album = "Nina";
 
-		metadata.setTitle(null);
-		metadata.setArtist(artist);
-		metadata.setAlbum(album);
+        metadata.setTitle(null);
+        metadata.setArtist(artist);
+        metadata.setAlbum(album);
 
-		assertFalse(formatter.isAnalyzable(metadata));
-	}
+        assertFalse(formatter.isAnalyzable(metadata));
+    }
 
-	@Test
-	public void shouldDetectUcircInTitle() throws Exception {
-		String title = "J&auml;hdytin";
-		String expectedTitle = "Jähdytin";
+    @Test
+    public void shouldDetectUcircInTitle() throws Exception {
+        String title = "J&auml;hdytin";
+        String expectedTitle = "Jähdytin";
 
-		metadata.setTitle(title);
+        metadata.setTitle(title);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedTitle, metadata.getTitle());
+    }
 
-	@Test
-	public void shouldDetectUcircInArtist() throws Exception {
-		String artist = "Aganj&ucirc;";
-		String expectedArtist = "Aganjû";
+    @Test
+    public void shouldDetectUcircInArtist() throws Exception {
+        String artist = "Aganj&ucirc;";
+        String expectedArtist = "Aganjû";
 
-		metadata.setArtist(artist);
+        metadata.setArtist(artist);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedArtist, metadata.getArtist());
+    }
 
-	@Test
-	public void shouldDetectAUcircInAlbum() throws Exception {
-		String album = "Aganj&ucirc;";
-		String expectedAlbum = "Aganjû";
+    @Test
+    public void shouldDetectAUcircInAlbum() throws Exception {
+        String album = "Aganj&ucirc;";
+        String expectedAlbum = "Aganjû";
 
-		metadata.setAlbum(album);
+        metadata.setAlbum(album);
 
-		assertTrue(formatter.wasFormatted(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
+        assertTrue(formatter.wasFormatted(metadata));
+        assertEquals(expectedAlbum, metadata.getAlbum());
+    }
 
 }

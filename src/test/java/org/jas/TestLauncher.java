@@ -16,35 +16,34 @@
 
 package org.jas;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.asmatron.messengine.engines.DefaultEngine;
-import org.jas.Launcher;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class TestLauncher {
-	@Mock
-	private DefaultEngine defaultEngine;
-	@Mock
-	private ConfigurableApplicationContext context;
+    @Mock
+    private DefaultEngine defaultEngine;
+    @Mock
+    private ConfigurableApplicationContext context;
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldInitialize() throws Exception {
-		when(context.getBean(DefaultEngine.class)).thenReturn(defaultEngine);
+    @Test
+    public void shouldInitialize() throws Exception {
+        when(context.getBean(DefaultEngine.class)).thenReturn(defaultEngine);
 
-		new Launcher(context);
+        new Launcher(context);
 
-		verify(context).getBean(DefaultEngine.class);
-		verify(defaultEngine).start();
-	}
+        verify(context).getBean(DefaultEngine.class);
+        verify(defaultEngine).start();
+    }
 }

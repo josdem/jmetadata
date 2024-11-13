@@ -16,7 +16,7 @@
 
 package org.jas.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
@@ -25,8 +25,8 @@ import org.jas.action.ActionResult;
 import org.jas.controller.ExporterController;
 import org.jas.helper.ExporterHelper;
 import org.jas.model.ExportPackage;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -41,7 +41,7 @@ public class TestExporterController {
 	@Mock
 	private ExporterHelper exporterHelper;
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 	}

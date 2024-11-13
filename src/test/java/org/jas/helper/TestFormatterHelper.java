@@ -16,20 +16,20 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.*;
 
-import org.jas.helper.FormatterHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestFormatterHelper {
 
-	private FormatterHelper helper = new FormatterHelper();
+    private final FormatterHelper helper = new FormatterHelper();
 
-	@Test
-	public void shouldFormatForComparison() throws Exception {
-		String word = "de - pazz";
-		String expectedWord = "depazz";
-		assertEquals(expectedWord, helper.getBasicFormat(word));
-	}
+    @Test
+    public void shouldFormatForComparison() throws Exception {
+        String word = "de - pazz";
+        String expectedWord = "depazz";
+        assertEquals(expectedWord, helper.getBasicFormat(word));
+    }
 
 }

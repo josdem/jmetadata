@@ -16,39 +16,39 @@
 
 package org.jas.model;
 
-import static org.junit.Assert.assertEquals;
 
-import org.jas.model.User;
-import org.junit.Before;
-import org.junit.Test;
+import de.umass.lastfm.Session;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Session;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class TestUser {
-	private User user;
-	private String username = "josdem";
-	private String password = "password";
-	@Mock
-	private Session session;
+class TestUser {
+    private User user;
+    private final String username = "josdem";
+    private final String password = "password";
 
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		user = new User(username, password);
-	}
+    @Mock
+    private Session session;
 
-	@Test
-	public void shouldGetUsernameAndPassword() throws Exception {
-		assertEquals(username, user.getUsername());
-		assertEquals(password, user.getPassword());
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        user = new User(username, password);
+    }
 
-	@Test
-	public void shouldGetSession() throws Exception {
-		user.setSession(session);
-		assertEquals(session, user.getSession());
-	}
+    @Test
+    public void shouldGetUsernameAndPassword() throws Exception {
+        assertEquals(username, user.getUsername());
+        assertEquals(password, user.getPassword());
+    }
+
+    @Test
+    public void shouldGetSession() throws Exception {
+        user.setSession(session);
+        assertEquals(session, user.getSession());
+    }
 }

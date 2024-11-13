@@ -16,80 +16,78 @@
 
 package org.jas.helper;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.when;
-
+import de.umass.lastfm.Session;
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.AuthenticatorHelper;
-import org.jas.helper.LastFMAuthenticator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Session;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
 /**
-* @author josdem (joseluis.delacruz@gmail.com)
-*/
+ * @author josdem (joseluis.delacruz@gmail.com)
+ */
 
-public class TestLastFMAuthenticator {
-	@InjectMocks
-	private LastFMAuthenticator controller = new LastFMAuthenticator();
+class TestLastFMAuthenticator {
 
-	@Mock
-	private AuthenticatorHelper authenticatorHelper;
-	@Mock
-	private Session session;
+    @InjectMocks
+    private final LastFMAuthenticator controller = new LastFMAuthenticator();
 
-	int result;
+    @Mock
+    private AuthenticatorHelper authenticatorHelper;
+    @Mock
+    private Session session;
 
-	@Before
-	public void initialize(){
-		MockitoAnnotations.initMocks(this);
-	}
+    int result;
 
-	@Test
-	public void shouldLogin() throws Exception {
-		String username = "josdem";
-		String password = "validPassword";
+    @BeforeEach
+    public void initialize() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-		when(authenticatorHelper.getSession(username, password)).thenReturn(session);
+    @Test
+    public void shouldLogin() throws Exception {
+        String username = "josdem";
+        String password = "validPassword";
 
-		assertNotNull(controller.login(username, password));
-	}
+        when(authenticatorHelper.getSession(username, password)).thenReturn(session);
 
-	@Test
-	public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
-		String username = StringUtils.EMPTY;
-		String password = StringUtils.EMPTY;
+        assertNotNull(controller.login(username, password));
+    }
 
-		assertNull(controller.login(username, password));
-	}
+    @Test
+    public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
+        String username = StringUtils.EMPTY;
+        String password = StringUtils.EMPTY;
 
-	@Test
-	public void shouldFailAtLoginIfNoUsername() throws Exception {
-		String username = StringUtils.EMPTY;
-		String password = "somePassword";
+        assertNull(controller.login(username, password));
+    }
 
-		assertNull(controller.login(username, password));
-	}
+    @Test
+    public void shouldFailAtLoginIfNoUsername() throws Exception {
+        String username = StringUtils.EMPTY;
+        String password = "somePassword";
 
-	@Test
-	public void shouldFailAtLoginIfNoPassword() throws Exception {
-		String username = "someUsername";
-		String password = StringUtils.EMPTY;
+        assertNull(controller.login(username, password));
+    }
 
-		assertNull(controller.login(username, password));
-	}
+    @Test
+    public void shouldFailAtLoginIfNoPassword() throws Exception {
+        String username = "someUsername";
+        String password = StringUtils.EMPTY;
 
-	@Test
-	public void shouldFailAtLogin() throws Exception {
-		String username = "josdem";
-		String password = "invalidPassword";
+        assertNull(controller.login(username, password));
+    }
 
-		assertNull(controller.login(username, password));
-	}
+    @Test
+    public void shouldFailAtLogin() throws Exception {
+        String username = "josdem";
+        String password = "invalidPassword";
+
+        assertNull(controller.login(username, password));
+    }
 }
