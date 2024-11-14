@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.jas'
+version = '1.0.3'
+
+ext {
+    junitVersion = '5.7.0'
+    commonsLangVersion = '3.12.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
