@@ -10,6 +10,7 @@ ext {
     audioTaggerVersion = '2.0.3'
     junitVersion = '5.7.0'
     slf4jVersion = '2.0.16'
+    aspectjVersion = '1.9.22.1'
     festSwingVersion = '1.2.1'
     javaXmlBindVersion = '2.3.1'
     commonsLangVersion = '3.12.0'
@@ -26,6 +27,7 @@ dependencies {
     implementation "org.springframework:spring-context:$springVersion"
     implementation "org.springframework:spring-aop:$springVersion"
     implementation "org.springframework:spring-test:$springVersion"
+    implementation "org.aspectj:aspectjtools:$aspectjVersion"
     implementation "org:jaudiotagger:$audioTaggerVersion"
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
