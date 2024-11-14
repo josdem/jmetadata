@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package org.jas.laf.painter;
+package org.jas.laf;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -24,18 +24,18 @@ import java.awt.LinearGradientPaint;
 import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthPainter;
 
-public class TableSearchSelectedHeaderPanelPainter extends SynthPainter {
-	private static final float[] FRACTIONS = { 0.294f, 0.4186f, 0.4858f, 0.5408f, 0.5892f, 0.6332f, 0.6739f, 0.7122f, 0.7485f, 0.7831f, 0.8162f, 0.8482f, 0.8790f, 0.9090f, 0.9380f, 0.9663f, 0.994f };
+public class TableSelectedHeaderPanelPainter extends SynthPainter {
+	private static final float[] FRACTIONS = { 0.261f, 0.3920f, 0.4625f, 0.5202f, 0.5709f, 0.6169f, 0.6596f, 0.6996f, 0.7376f, 0.7737f, 0.8084f, 0.8417f, 0.8740f, 0.9052f, 0.9355f, 0.9651f, 0.994f, };
 
-	private static final Color[] COLORS = { new Color(0x97, 0x5d, 0x8d), new Color(0x9a, 0x62, 0x8f), new Color(0x9e, 0x67, 0x92), new Color(0xa2, 0x6c, 0x94), new Color(0xa6, 0x71, 0x97),
-			new Color(0xaa, 0x76, 0x99), new Color(0xad, 0x7b, 0x9c), new Color(0xb1, 0x80, 0x9e), new Color(0xb5, 0x85, 0xa1), new Color(0xb9, 0x8a, 0xa4), new Color(0xbd, 0x8f, 0xa6),
-			new Color(0xc0, 0x94, 0xa9), new Color(0xc4, 0x99, 0xab), new Color(0xc8, 0x9e, 0xae), new Color(0xcc, 0xa3, 0xb0), new Color(0xd0, 0xa8, 0xb3), new Color(0xd4, 0xae, 0xb6) };
-	private Color shadowColor = new Color(0x97, 0x5d, 0x8d);
+	private static final Color[] COLORS = { new Color(0x50, 0x8c, 0xaa), new Color(0x55, 0x8f, 0xad), new Color(0x5a, 0x93, 0xb0), new Color(0x5f, 0x97, 0xb3), new Color(0x65, 0x9b, 0xb6),
+			new Color(0x6a, 0x9e, 0xb9), new Color(0x6f, 0xa2, 0xbc), new Color(0x75, 0xa6, 0xbf), new Color(0x7a, 0xaa, 0xc3), new Color(0x7f, 0xad, 0xc6), new Color(0x85, 0xb1, 0xc9),
+			new Color(0x8a, 0xb5, 0xcc), new Color(0x8f, 0xb9, 0xcf), new Color(0x95, 0xbc, 0xd2), new Color(0x9a, 0xc0, 0xd5), new Color(0x9f, 0xc4, 0xd8), new Color(0xa5, 0xc8, 0xdc) };
+	private Color shadowColor = new Color(0x50, 0x8c, 0xaa);
 	private Color gridColor = new Color(0x77, 0x77, 0x77);
 
 	@Override
 	public void paintPanelBackground(SynthContext context, Graphics g, int x, int y, int w, int h) {
-		LinearGradientPaint gradientPaint = new LinearGradientPaint(67.00f, 18.24f, 67.00f, -7.18f, FRACTIONS, COLORS);
+		LinearGradientPaint gradientPaint = new LinearGradientPaint(67.00f, 18.20f, 67.00f, -8.00f, FRACTIONS, COLORS);
 		((Graphics2D) g).setPaint(gradientPaint);
 		g.fillRect(x, y, w, h);
 		g.setColor(shadowColor);

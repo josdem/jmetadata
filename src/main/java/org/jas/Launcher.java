@@ -21,15 +21,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.jas.helper.ApplicationContextSingleton;
 import org.asmatron.messengine.engines.DefaultEngine;
+import org.jas.laf.HipecotechLookAndFeel;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who knows how to launch ALL the process
- */
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 
 public class Launcher {
 	private static final String HIPECOTECH_LNF = "org.jas.laf.HipecotechLookAndFeel";
@@ -41,18 +42,19 @@ public class Launcher {
 		defaultEngine.start();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, ParseException {
+
 		try {
+			HipecotechLookAndFeel hipecotechLookAndFeel = new HipecotechLookAndFeel();
+			File file = new File("src/main/resources/style/Hipecotech.xml");
+			hipecotechLookAndFeel.load(new FileInputStream(file), HipecotechLookAndFeel.class);
 			UIManager.setLookAndFeel(HIPECOTECH_LNF);
-		} catch (ClassNotFoundException e) {
-			log.error(e.getMessage(), e);
-		} catch (InstantiationException e) {
-			log.error(e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			log.error(e.getMessage(), e);
-		} catch (UnsupportedLookAndFeelException e) {
+		} catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
 			log.error(e.getMessage(), e);
 		}
+
+
 		new Launcher(ApplicationContextSingleton.getApplicationContext());
 	}
 }

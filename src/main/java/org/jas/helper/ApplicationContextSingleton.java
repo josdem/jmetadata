@@ -19,18 +19,16 @@ package org.jas.helper;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-
-/**
- * @understands a class who knows how to get the application context from spring
-*/
+import java.io.File;
 
 public class ApplicationContextSingleton {
-	private static ConfigurableApplicationContext applicationContext;
+    private static ConfigurableApplicationContext applicationContext;
 
-	public static ConfigurableApplicationContext getApplicationContext(){
-		if (applicationContext == null) {
-			applicationContext = new ClassPathXmlApplicationContext( "spring/applicationContext.xml" );
-		}
-		return applicationContext;
-	}
+    public static ConfigurableApplicationContext getApplicationContext() {
+        if (applicationContext == null) {
+            var configurationFile = new File("src/main/resources/spring/applicationContext.xml");
+            applicationContext = new ClassPathXmlApplicationContext("file:" + configurationFile.getAbsolutePath());
+        }
+        return applicationContext;
+    }
 }

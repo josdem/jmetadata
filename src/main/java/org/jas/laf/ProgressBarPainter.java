@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package org.jas.laf.painter;
+package org.jas.laf;
 
 import java.awt.Color;
 import java.awt.Graphics;

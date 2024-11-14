@@ -14,38 +14,34 @@
    limitations under the License.
 */
 
-package org.jas.laf.painter;
+package org.jas.laf;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 
 import javax.swing.JSlider;
 import javax.swing.plaf.synth.SynthContext;
+import javax.swing.plaf.synth.SynthPainter;
 
-public class DeviceProgressBarPainter extends ProgressBarPainter {
+public class ProgresSliderPainter extends SynthPainter {
+	Color color = new Color(0xaa, 0xaa, 0xaa);
 
 	@Override
 	public void paintSliderTrackBackground(SynthContext context, Graphics g, int x, int y, int w, int h, int orientation) {
-		Graphics2D g2 = (Graphics2D) g;
-		JSlider slider = (JSlider) context.getComponent();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setPaint(getBorderGradientPaint());
-		g2.fill(getBorderPath(slider));
-		g2.setColor(new Color(0xb9, 0xb9, 0xb9));
-		g2.fill(getBackgroundPath(slider));
+		JSlider progressSlider = (JSlider) context.getComponent();
+		double currentValue = progressSlider.getValue();
+		double maximun = progressSlider.getMaximum();
+		double minimum = progressSlider.getMinimum();
+		int fillValue = (int) (w * (currentValue - minimum) / (maximun - minimum));
+		//let painting the component fully
+		h -= 1;
+		g.setColor(color);
+		g.drawRoundRect(x, y, w, h, 4, 4);
+		g.fillRoundRect(x, y, fillValue, h, 4, 4);
 	}
 
 	@Override
 	public void paintSliderThumbBackground(SynthContext context, Graphics g, int x, int y, int w, int h, int orientation) {
-		Graphics2D g2 = (Graphics2D) g;
-		JSlider slider = (JSlider)context.getComponent();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setPaint(getPurpleProgressGradientPaint());
-		g2.fill(getProgressPath(slider));
-		g2.setPaint(getBrightInPurpleProgressGradientPaint());
-		g2.fill(getBrightInProgressPath(slider));
+		//do nothing, we don't want a thumb
 	}
-
 }
