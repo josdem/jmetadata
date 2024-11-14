@@ -1,10 +1,9 @@
 .classpath
 .gitignore
-.project
 .settings
 .idea
+.gradle
 lastFm.log
-target
+target/
+build/
 jmetadata.iml
-**swp
-**swo
