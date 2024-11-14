@@ -18,19 +18,22 @@ package org.jas.collaborator;
 
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.Tag;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestJAudioTaggerCollaborator {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -55,18 +58,16 @@ class TestJAudioTaggerCollaborator {
         assertTrue(jAudioTaggerCollaborator.isValid(tag, header));
     }
 
-    @Test
-    @DisplayName("detecting invalid tag")
-    public void shouldDetectInvalidTag(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        assertFalse(jAudioTaggerCollaborator.isValid(null, header));
+    @ParameterizedTest
+    @MethodSource("metadata")
+    @DisplayName("detecting invalid metadata")
+    public void shouldDetectInvalidTag(Tag tag, AudioHeader header) {
+        log.info("Running detecting invalid metadata");
+        assertFalse(jAudioTaggerCollaborator.isValid(tag, header));
     }
 
-    @Test
-    @DisplayName("detecting invalid header")
-    public void shouldDetectInvalidHeader(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        assertFalse(jAudioTaggerCollaborator.isValid(tag, null));
+    private Stream<Arguments> metadata() {
+        return Stream.of(Arguments.of(tag, null), Arguments.of(null, header));
     }
 
 }
