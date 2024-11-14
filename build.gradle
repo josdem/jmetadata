@@ -42,6 +42,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    implementation files('lib/JavaMusicbrainz.jar')
+    implementation files('lib/last.fm-bindings-0.1.0.jar')
 }
 
 test {
