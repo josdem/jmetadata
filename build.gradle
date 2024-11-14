@@ -8,6 +8,8 @@ version = '1.0.3'
 ext {
     junitVersion = '5.7.0'
     commonsLangVersion = '3.12.0'
+    mockitoVersion = '3.12.4'
+    mockitoAllVersion = '1.10.19'
 }
 
 repositories {
@@ -16,6 +18,8 @@ repositories {
 
 dependencies {
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-all:$mockitoAllVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
