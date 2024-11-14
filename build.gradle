@@ -1,12 +1,19 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'org.jas'
 version = '1.0.3'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 ext {
-    springVersion = '6.1.14'
     audioTaggerVersion = '2.0.3'
     junitVersion = '5.7.0'
     slf4jVersion = '2.0.16'
@@ -25,10 +32,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.springframework:spring-core:$springVersion"
-    implementation "org.springframework:spring-context:$springVersion"
-    implementation "org.springframework:spring-aop:$springVersion"
-    implementation "org.springframework:spring-test:$springVersion"
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation "org.aspectj:aspectjtools:$aspectjVersion"
     implementation "org:jaudiotagger:$audioTaggerVersion"
     implementation "org.asmatron:messengine:$messengineVersion"
