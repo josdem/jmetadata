@@ -95,7 +95,6 @@
     <junit.version>4.13.2</junit.version>
     <slf4j.version>2.0.16</slf4j.version>
     <mockito.version>3.12.4</mockito.version>
-    <mockito-all.version>1.10.19</mockito-all.version>
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <aspectj.version>1.9.22.1</aspectj.version>
     <junit5.version>5.11.3</junit5.version>
@@ -115,12 +114,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito-all.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org</groupId>
       <artifactId>jaudiotagger</artifactId>
       <version>2.0.3</version>
@@ -129,11 +122,6 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.jms</groupId>
-      <artifactId>jms</artifactId>
-      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
