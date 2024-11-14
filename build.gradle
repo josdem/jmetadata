@@ -6,10 +6,12 @@ group = 'org.jas'
 version = '1.0.3'
 
 ext {
+    springVersion = '6.1.14'
     audioTaggerVersion = '2.0.3'
     junitVersion = '5.7.0'
     slf4jVersion = '2.0.16'
     festSwingVersion = '1.2.1'
+    javaXmlBindVersion = '2.3.1'
     commonsLangVersion = '3.12.0'
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
@@ -20,9 +22,14 @@ repositories {
 }
 
 dependencies {
+    implementation "org.springframework:spring-core:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+    implementation "org.springframework:spring-aop:$springVersion"
+    implementation "org.springframework:spring-test:$springVersion"
     implementation "org:jaudiotagger:$audioTaggerVersion"
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "javax.xml.bind:jaxb-api:$javaXmlBindVersion"
     implementation "org.easytesting:fest-swing:$festSwingVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-all:$mockitoAllVersion"
