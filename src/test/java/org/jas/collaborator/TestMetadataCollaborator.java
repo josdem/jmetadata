@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class TestMetadataCollaborator {
@@ -89,14 +90,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty artist")
+    @DisplayName("not accepting null artist")
     public void shouldGetEmptyArtist(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getArtist()).thenReturn(null);
         when(metadataTwo.getArtist()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getArtist());
+        assertThrows(NullPointerException.class, metadataCollaborator::getArtist);
     }
 
     @Test
@@ -122,14 +123,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty album")
+    @DisplayName("note accepting null album")
     public void shouldGetEmptyAlbum(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getAlbum()).thenReturn(null);
         when(metadataTwo.getAlbum()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
+        assertThrows(NullPointerException.class, metadataCollaborator::getAlbum);
     }
 
     @Test
@@ -155,14 +156,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty genre")
+    @DisplayName("not accepting null genre")
     public void shouldGetEmptyGenre(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getGenre()).thenReturn(null);
         when(metadataTwo.getGenre()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getGenre());
+        assertThrows(NullPointerException.class, metadataCollaborator::getGenre);
     }
 
     @Test
@@ -188,14 +189,15 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty year")
+    @DisplayName("not accepting null year")
     public void shouldGetEmptyYear(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getYear()).thenReturn(null);
         when(metadataTwo.getYear()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
+        assertThrows(NullPointerException.class, metadataCollaborator::getYear);
+        ;
     }
 
     @Test
@@ -221,13 +223,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty total tracks")
+    @DisplayName("not accepting null total tracks")
     public void shouldGetEmptyTotalTracks(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getTotalTracks()).thenReturn(null);
         when(metadataTwo.getTotalTracks()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
+        assertThrows(NullPointerException.class, metadataCollaborator::getTotalTracks);
     }
 
     @Test
@@ -253,14 +256,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty cd number")
+    @DisplayName("not accepting null cd number")
     public void shouldGetEmptyCdNumber(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getCdNumber()).thenReturn(null);
         when(metadataTwo.getCdNumber()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getCdNumber());
+        assertThrows(NullPointerException.class, metadataCollaborator::getCdNumber);
     }
 
     @Test
@@ -286,14 +289,14 @@ class TestMetadataCollaborator {
     }
 
     @Test
-    @DisplayName("getting empty total cds")
+    @DisplayName("not accepting null total cds")
     public void shouldGetEmptyTotalCds(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         setMetadatasExpectations();
         when(metadataOne.getTotalCds()).thenReturn(null);
         when(metadataTwo.getTotalCds()).thenReturn(null);
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
+        assertThrows(NullPointerException.class, metadataCollaborator::getTotalCds);
     }
 
 }

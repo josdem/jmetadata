@@ -21,6 +21,7 @@ import org.jas.model.Metadata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MetadataCollaborator {
 
@@ -32,44 +33,44 @@ public class MetadataCollaborator {
 
     public String getArtist() {
         var artists = new ArrayList<>();
-        metadatas.forEach(metadata -> artists.add(metadata.getArtist()));
-        return artists.stream().distinct().count() <= 1 && metadatas.getFirst().getArtist() != null ? metadatas.getFirst().getArtist() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> artists.add(Objects.requireNonNull(metadata.getArtist(), "artist cannot be null")));
+        return artists.stream().distinct().count() <= 1 ? metadatas.getFirst().getArtist() : StringUtils.EMPTY;
     }
 
     public String getAlbum() {
         var albums = new ArrayList<>();
-        metadatas.forEach(metadata -> albums.add(metadata.getAlbum()));
-        return albums.stream().distinct().count() <= 1 && metadatas.getFirst().getAlbum() != null ? metadatas.getFirst().getAlbum() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> albums.add(Objects.requireNonNull(metadata.getAlbum(), "album cannot be null")));
+        return albums.stream().distinct().count() <= 1 ? metadatas.getFirst().getAlbum() : StringUtils.EMPTY;
     }
 
     public String getGenre() {
         var genres = new ArrayList<>();
-        metadatas.forEach(metadata -> genres.add(metadata.getGenre()));
-        return genres.stream().distinct().count() <= 1 && metadatas.getFirst().getGenre() != null ? metadatas.getFirst().getGenre() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> genres.add(Objects.requireNonNull(metadata.getGenre(), "genre cannot be null")));
+        return genres.stream().distinct().count() <= 1 ? metadatas.getFirst().getGenre() : StringUtils.EMPTY;
     }
 
     public String getYear() {
         var years = new ArrayList<>();
-        metadatas.forEach(metadata -> years.add(metadata.getYear()));
-        return years.stream().distinct().count() <= 1 && metadatas.getFirst().getYear() != null ? metadatas.getFirst().getYear() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> years.add(Objects.requireNonNull(metadata.getYear(), "year cannot be null")));
+        return years.stream().distinct().count() <= 1 ? metadatas.getFirst().getYear() : StringUtils.EMPTY;
     }
 
     public String getTotalTracks() {
         var tracks = new ArrayList<>();
-        metadatas.forEach(metadata -> tracks.add(metadata.getTotalTracks()));
-        return tracks.stream().distinct().count() <= 1 && metadatas.getFirst().getTotalTracks() != null ? metadatas.getFirst().getTotalTracks() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> tracks.add(Objects.requireNonNull(metadata.getTotalTracks(), "totalTracks cannot be null")));
+        return tracks.stream().distinct().count() <= 1 ? metadatas.getFirst().getTotalTracks() : StringUtils.EMPTY;
     }
 
     public String getTotalCds() {
         var cds = new ArrayList<>();
-        metadatas.forEach(metadata -> cds.add(metadata.getTotalCds()));
-        return cds.stream().distinct().count() <= 1 && metadatas.getFirst().getTotalCds() != null ? metadatas.getFirst().getTotalCds() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> cds.add(Objects.requireNonNull(metadata.getTotalCds(), "totalCds cannot be null")));
+        return cds.stream().distinct().count() <= 1 ? metadatas.getFirst().getTotalCds() : StringUtils.EMPTY;
     }
 
     public String getCdNumber() {
         var cdNumber = new ArrayList<>();
-        metadatas.forEach(metadata -> cdNumber.add(metadata.getCdNumber()));
-        return cdNumber.stream().distinct().count() <= 1 && metadatas.getFirst().getCdNumber() != null ? metadatas.getFirst().getCdNumber() : StringUtils.EMPTY;
+        metadatas.forEach(metadata -> cdNumber.add(Objects.requireNonNull(metadata.getCdNumber(), "cdNumber cannot be null")));
+        return cdNumber.stream().distinct().count() <= 1 ? metadatas.getFirst().getCdNumber() : StringUtils.EMPTY;
     }
 
 }
