@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,13 +20,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.helper.DateHelper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -41,8 +44,10 @@ public class TestFileUtils {
     @Mock
     private File file;
 
-    private long timestamp = 1332562352428L;
-    private File root = new File("src/test/resources/audio");
+    private final long timestamp = 1332562352428L;
+    private final File root = new File("src/test/resources/audio");
+
+    private final Logger log = Logger.getLogger(this.getClass().getName());
 
     @BeforeEach
     public void setup() throws Exception {
@@ -84,25 +89,33 @@ public class TestFileUtils {
     }
 
     @Test
-    public void shouldKnowIfIsMp3File() throws Exception {
+    @DisplayName("getting mp3 file")
+    public void shouldKnowIfIsMp3File(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         when(file.getPath()).thenReturn("somePath.mp3");
         assertTrue(fileUtils.isMp3File(file));
     }
 
     @Test
-    public void shouldKnowIfIsNotMp3File() throws Exception {
+    @DisplayName("not getting mp3 file")
+    public void shouldKnowIfIsNotMp3File(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         when(file.getPath()).thenReturn("somePath.wma");
         assertFalse(fileUtils.isMp3File(file));
     }
 
     @Test
-    public void shouldKnowIfIsMp4File() throws Exception {
+    @DisplayName("getting mp4 file")
+    public void shouldKnowIfIsMp4File(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         when(file.getPath()).thenReturn("somePath.m4a");
         assertTrue(fileUtils.isM4aFile(file));
     }
 
     @Test
-    public void shouldKnowIfIsNotMp4File() throws Exception {
+    @DisplayName("not getting mp4 file")
+    public void shouldKnowIfIsNotMp4File(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         when(file.getPath()).thenReturn("somePath.wma");
         assertFalse(fileUtils.isM4aFile(file));
     }
