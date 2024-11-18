@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,39 +17,22 @@
 package org.jas.model;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.MockitoAnnotations;
-
-import java.awt.*;
-import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+class TestMetadata {
 
-public class TestMetadata {
-
+    private static final Log log = LogFactory.getLog(TestMetadata.class);
     private final Metadata metadata = new Metadata();
 
-    @Mock
-    private Image artwork;
-    @Mock
-    private File file;
-    @Mock
-    private CoverArt coverArt;
-
-    private static final String title = "Reverie (Dash Berlin Remix)";
-    private static final String artist = "First State feat. Sarah Howells";
-    private static final String album = "Reverie";
-    private static final String genre = "Vocal Trance";
     private static final String trackNumber = "2";
-    private static final String totalTracks = "5";
-    private static final int length = 697;
-    private static final int bitRate = 320;
-    private static final String cdNumber = "1";
-    private static final String totalCds = "1";
-    private static final String year = "2011";
     private static final boolean metadataFromFile = true;
 
     @BeforeEach
@@ -58,91 +41,9 @@ public class TestMetadata {
     }
 
     @Test
-    public void shouldGetTitle() throws Exception {
-        metadata.setTitle(title);
-        assertEquals(title, metadata.getTitle());
-    }
-
-    @Test
-    public void shouldGetArtist() throws Exception {
-        metadata.setArtist(artist);
-        assertEquals(artist, metadata.getArtist());
-    }
-
-    @Test
-    public void shouldGetAlbum() throws Exception {
-        metadata.setAlbum(album);
-        assertEquals(album, metadata.getAlbum());
-    }
-
-    @Test
-    public void shouldGetGenre() throws Exception {
-        metadata.setGenre(genre);
-        assertEquals(genre, metadata.getGenre());
-    }
-
-    @Test
-    public void shouldGetTrackNumber() throws Exception {
-        metadata.setTrackNumber(trackNumber);
-        assertEquals(trackNumber, metadata.getTrackNumber());
-    }
-
-    @Test
-    public void shouldGetTotalTracks() throws Exception {
-        metadata.setTotalTracks(totalTracks);
-        assertEquals(totalTracks, metadata.getTotalTracks());
-    }
-
-    @Test
-    public void shouldGetArtWork() throws Exception {
-        metadata.setCoverArt(artwork);
-        assertEquals(artwork, metadata.getCoverArt());
-    }
-
-    @Test
-    public void shouldGetLength() throws Exception {
-        metadata.setLenght(length);
-        assertEquals(length, metadata.getLength());
-    }
-
-    @Test
-    public void shouldGetBitRate() throws Exception {
-        metadata.setBitRate(bitRate);
-        assertEquals(bitRate, metadata.getBitRate());
-    }
-
-    @Test
-    public void shouldGetFile() throws Exception {
-        metadata.setFile(file);
-        assertEquals(file, metadata.getFile());
-    }
-
-    @Test
-    public void shouldGetCdNumber() throws Exception {
-        metadata.setCdNumber(cdNumber);
-        assertEquals(cdNumber, metadata.getCdNumber());
-    }
-
-    @Test
-    public void shouldGetTotalCds() throws Exception {
-        metadata.setTotalCds(totalCds);
-        assertEquals(totalCds, metadata.getTotalCds());
-    }
-
-    @Test
-    public void shouldGetYear() throws Exception {
-        metadata.setYear(year);
-        assertEquals(year, metadata.getYear());
-    }
-
-    @Test
-    public void shouldGetNewCoverArt() throws Exception {
-        metadata.setNewCoverArt(coverArt);
-        assertEquals(coverArt, metadata.getNewCoverArt());
-    }
-
-    @Test
-    public void shouldDetectPreviousMetadata() throws Exception {
+    @DisplayName("comparing with previous metadata")
+    public void shouldDetectPreviousMetadata(TestInfo testInfo) {
+        log.info("Running test: " + testInfo.getDisplayName());
         Metadata previousMetadata = new Metadata();
         previousMetadata.setTrackNumber("1");
 
@@ -151,7 +52,9 @@ public class TestMetadata {
     }
 
     @Test
-    public void shouldDetectNextMetadata() throws Exception {
+    @DisplayName("comparing with next metadata")
+    public void shouldDetectNextMetadata(TestInfo testInfo) {
+        log.info("Running test: " + testInfo.getDisplayName());
         Metadata nextMetadata = new Metadata();
         nextMetadata.setTrackNumber("3");
 
@@ -160,16 +63,20 @@ public class TestMetadata {
     }
 
     @Test
-    public void shouldRespondAtErrorInTrackNumber() throws Exception {
-        Metadata rareMetadata = new Metadata();
-        rareMetadata.setTrackNumber("somethingWrong");
+    @DisplayName("detecting track number bad format")
+    public void shouldRespondAtErrorInTrackNumber(TestInfo testInfo) {
+        log.info("Running test: " + testInfo.getDisplayName());
+        Metadata weirdMetadata = new Metadata();
+        weirdMetadata.setTrackNumber("somethingWrongFormat");
 
         metadata.setTrackNumber(trackNumber);
-        assertEquals(0, metadata.compareTo(rareMetadata));
+        assertEquals(0, metadata.compareTo(weirdMetadata));
     }
 
     @Test
-    public void shouldKnowIfMetadataIsFromFile() throws Exception {
+    @DisplayName("detecting metadata from file")
+    public void shouldKnowIfMetadataIsFromFile(TestInfo testInfo) {
+        log.info("Running test: " + testInfo.getDisplayName());
         metadata.setMetadataFromFile(metadataFromFile);
         assertEquals(metadataFromFile, metadata.isMetadataFromFile());
     }

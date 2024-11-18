@@ -160,7 +160,7 @@ public abstract class MetadataReader {
 		metadata.setAlbum(getAlbum());
 		metadata.setGenre(getGenre());
 		metadata.setYear(getYear());
-		metadata.setLenght(getLength());
+		metadata.setLength(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setTotalTracks(getTotalTracks());
 		metadata.setCdNumber(getCdNumber());
