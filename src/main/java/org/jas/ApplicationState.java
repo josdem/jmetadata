@@ -56,7 +56,7 @@ public interface ApplicationState {
 	static final String APPLICATION_NAME = "JMetadata";
 	static final String IMAGE_EXT = "PNG";
 	static final String FILE_EXT = "txt";
-	static final String PREFIX = "JAS_";
+	static final String PREFIX = "JMetadata_";
 	static final String GETTING_ALBUM = "Getting Album from Musicbrainz";
 	static final String GETTING_LAST_FM = "Getting Last.fm Metadata";
 	static final String COMPLETE_DEFAULT_VALUES = "Completing default values";

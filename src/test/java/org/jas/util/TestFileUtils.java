@@ -18,7 +18,6 @@ package org.jas.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
-import org.jas.helper.DateHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,15 +35,14 @@ import static org.mockito.Mockito.when;
 
 public class TestFileUtils {
 
+    private static final String ONLY_DIGITS_REGEX = "[0-9]+";
+
     @InjectMocks
     private final FileUtils fileUtils = new FileUtils();
 
     @Mock
-    private DateHelper fileHelper;
-    @Mock
     private File file;
 
-    private final long timestamp = 1332562352428L;
     private final File root = new File("src/test/resources/audio");
 
     private final Logger log = Logger.getLogger(this.getClass().getName());
@@ -80,12 +78,11 @@ public class TestFileUtils {
     }
 
     @Test
-    public void shouldCreateFileForImage() throws Exception {
-        String expectedPath = "JAS_1332562352428.png";
-        when(fileHelper.getTimestamp()).thenReturn(timestamp);
+    @DisplayName("creating a temp file for image file")
+    public void shouldCreateFileForImage(TestInfo testInfo) throws Exception {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
-
-        assertEquals(expectedPath, result.getName());
+        assertTrue(result.getName().matches("JMetadata_" + ONLY_DIGITS_REGEX + ".png"));
     }
 
     @Test
@@ -128,22 +125,20 @@ public class TestFileUtils {
     }
 
     @Test
-    public void shouldCreateFileForFile() throws Exception {
-        String expectedPath = "JAS_1332562352428.txt";
-        when(fileHelper.getTimestamp()).thenReturn(timestamp);
+    @DisplayName("creating a temp file as text file")
+    public void shouldCreateFileForFile(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.FILE_EXT);
-
-        assertEquals(expectedPath, result.getName());
+        assertTrue(result.getName().matches("JMetadata_" + ONLY_DIGITS_REGEX + ".txt"));
     }
 
     @Test
-    public void shouldCreateFileForFileWithPrefix() throws Exception {
-        String expectedPath = "MIRI_1332562352428.txt";
+    @DisplayName("creating a temp file as text file with prefix")
+    public void shouldCreateFileForFileWithPrefix(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         String prefix = "MIRI_";
-        when(fileHelper.getTimestamp()).thenReturn(timestamp);
         File result = fileUtils.createFile(root, prefix, ApplicationState.FILE_EXT);
-
-        assertEquals(expectedPath, result.getName());
+        assertTrue(result.getName().matches(prefix + ONLY_DIGITS_REGEX + ".txt"));
     }
 
 }

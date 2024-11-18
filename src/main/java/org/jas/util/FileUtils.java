@@ -19,7 +19,6 @@ package org.jas.util;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.exception.InvalidId3VersionException;
-import org.jas.helper.DateHelper;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -27,12 +26,12 @@ import org.jaudiotagger.tag.TagException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
     private List<File> fileList;
-    private DateHelper fileHelper = new DateHelper();
 
     public List<File> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
         fileList = new ArrayList<File>();
@@ -65,11 +64,11 @@ public class FileUtils {
     }
 
     public File createFile(File root, String prefix, String ext) {
-        long timestamp = fileHelper.getTimestamp();
+        long timestamp = LocalDateTime.now().getNano();
         StringBuilder sb = new StringBuilder();
         sb.append(timestamp);
         sb.append(".");
         sb.append(ext.toLowerCase());
-        return (prefix == StringUtils.EMPTY) ? new File(root, ApplicationState.PREFIX + sb.toString()) : new File(root, prefix + sb.toString());
+        return (prefix.equals(StringUtils.EMPTY)) ? new File(root, ApplicationState.PREFIX + sb) : new File(root, prefix + sb);
     }
 }
