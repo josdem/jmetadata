@@ -25,15 +25,15 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.lang.NonNull;
 
 import java.io.File;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class TestFileUtils {
+class TestFileUtils {
 
     private static final String ONLY_DIGITS_REGEX = "[0-9]+";
 
@@ -53,35 +53,19 @@ public class TestFileUtils {
     }
 
     @Test
-    public void shouldScanADirectory() throws Exception {
-        File root = new MockFile("root");
-        List<File> fileList = fileUtils.getFileList(root);
+    @DisplayName("scanning a directory")
+    public void shouldScanADirectory(TestInfo testInfo) {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
+        var root = new MockFile("root");
+        var fileList = fileUtils.getFileList(root);
         assertEquals(2, fileList.size());
-    }
-
-    @SuppressWarnings("serial")
-    class MockFile extends File {
-        String path = "src\\test\\resources";
-
-        public MockFile(String pathname) {
-            super(pathname);
-        }
-
-        public String[] list() {
-            String[] fileList = {"fileNameOne", "fileNameTwo"};
-            return fileList;
-        }
-
-        public String getAbsolutePath() {
-            return path;
-        }
     }
 
     @Test
     @DisplayName("creating a temp file for image file")
     public void shouldCreateFileForImage(TestInfo testInfo) throws Exception {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
-        File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
+        var result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
         assertTrue(result.getName().matches("JMetadata_" + ONLY_DIGITS_REGEX + ".png"));
     }
 
@@ -141,6 +125,23 @@ public class TestFileUtils {
         String prefix = "MIRI_";
         File result = fileUtils.createFile(root, prefix, ApplicationState.FILE_EXT);
         assertTrue(result.getName().matches(prefix + ONLY_DIGITS_REGEX + ".txt"));
+    }
+
+    private static class MockFile extends File {
+        String path = "src\\test\\resources";
+
+        public MockFile(String pathname) {
+            super(pathname);
+        }
+
+        public String[] list() {
+            return new String[]{"fileNameOne", "fileNameTwo"};
+        }
+
+        @NonNull
+        public String getAbsolutePath() {
+            return path;
+        }
     }
 
 }

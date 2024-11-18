@@ -18,37 +18,34 @@ package org.jas.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
-import org.jas.exception.InvalidId3VersionException;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileUtils {
     private List<File> fileList;
 
-    public List<File> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
-        fileList = new ArrayList<File>();
+    public List<File> getFileList(File root) {
+        fileList = new ArrayList<>();
         scan(root);
         return fileList;
     }
 
-    private void scan(File root) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
-        String[] listFiles = root.list();
-        for (int i = 0; i < listFiles.length; i++) {
-            File file = new File(root.getAbsolutePath() + File.separator + listFiles[i]);
-            if (file.isDirectory()) {
-                scan(file);
+    private void scan(File root) {
+        var listFiles = root.list();
+        assert listFiles != null;
+        Arrays.stream(listFiles).forEach(file -> {
+            var inode = new File(root.getAbsolutePath() + File.separator + file);
+            if (inode.isDirectory()) {
+                scan(inode);
             } else {
-                fileList.add(file);
+                fileList.add(inode);
             }
-        }
+        });
     }
 
     public boolean isMp3File(File file) {
