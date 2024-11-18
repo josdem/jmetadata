@@ -118,7 +118,9 @@ public class TestFileUtils {
     }
 
     @Test
-    public void shouldCreateTempfile() throws Exception {
+    @DisplayName("creating a temp file")
+    public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
+        log.info(() -> "Running test: " + testInfo.getDisplayName());
         File tempFile = fileUtils.createTempFile();
         assertTrue(tempFile.getName().startsWith(ApplicationState.PREFIX));
         assertTrue(tempFile.getName().endsWith(ApplicationState.FILE_EXT));
