@@ -64,9 +64,41 @@ class TestDefaultService {
     }
 
     @Test
-    @DisplayName("validating we can complete metadata due to we have more than one track")
+    @DisplayName("validating we can complete metadata due to we do not have total tracks")
     public void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
         log.info("Running test: {}" + testInfo.getDisplayName());
+        when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
+        when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
+        when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        when(metadata_two.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        setTracksNumberExpectations();
+        when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+
+        assertTrue(defaultService.isCompletable(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating we can complete metadata due to we do not have cd number")
+    public void shouldCompleteCdNumber(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
+        when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+        when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+        when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        when(metadata_two.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        setTracksNumberExpectations();
+        when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+
+        assertTrue(defaultService.isCompletable(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating we can complete metadata due to we do not have total cds")
+    public void shouldCompleteTotalCds(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
+        when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+        when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+        when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
+        when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
         setTracksNumberExpectations();
         when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 
@@ -79,6 +111,12 @@ class TestDefaultService {
         log.info("Running test: {}" + testInfo.getDisplayName());
         var metadatas = new ArrayList<Metadata>();
 
+        when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
+        when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
+        when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        when(metadata_two.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+        when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+        when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
         when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
         metadatas.add(metadata_one);
 
@@ -125,7 +163,7 @@ class TestDefaultService {
     }
 
     @Test
-    public void shouldNotCompleteWhenNoTracknumber() throws Exception {
+    public void shouldNotCompleteWhenNoTrackNumber() {
         when(metadata_one.getTotalTracks()).thenReturn(StringUtils.EMPTY);
         metadatas.add(metadata_one);
         defaultService.complete(metadatas);
