@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,72 +16,69 @@
 
 package org.jas.service.impl;
 
-import java.util.List;
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-
+import org.jas.metadata.MetadataException;
 import org.jas.model.Metadata;
 import org.jas.service.DefaultService;
 import org.jas.service.MetadataService;
-import org.jas.metadata.MetadataException;
-
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class DefaultServiceImpl implements DefaultService {
 
-	private static final String CD_NUMBER = "1";
-	private static final String TOTAL_CD_NUMBER = "1";
+    private static final String CD_NUMBER = "1";
+    private static final String TOTAL_CD_NUMBER = "1";
 
-	@Autowired
-	private MetadataService metadataService;
+    @Autowired
+    private MetadataService metadataService;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public Boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-		return (metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)) ? false : isSomethingMissing(metadatas);
-	}
+    public boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
+        return metadatas.size() >= 2 && metadataService.isSameAlbum(metadatas) && isSomethingMissing(metadatas);
+    }
 
-	public void complete(List<Metadata> metadatas){
-		String title = StringUtils.EMPTY;
-		try{
-			for (Metadata metadata : metadatas) {
-				title = metadata.getTitle();
-				metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
-				metadata.setCdNumber(CD_NUMBER);
-				metadata.setTotalCds(TOTAL_CD_NUMBER);
-			}
-		} catch (NumberFormatException nfe){
-			log.warn("NumberFormatException caused by track: " + title + " - "  + nfe.getMessage());
-		}
-	}
+    public void complete(List<Metadata> metadatas) {
+        String title = StringUtils.EMPTY;
+        try {
+            for (Metadata metadata : metadatas) {
+                title = metadata.getTitle();
+                metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
+                metadata.setCdNumber(CD_NUMBER);
+                metadata.setTotalCds(TOTAL_CD_NUMBER);
+            }
+        } catch (NumberFormatException nfe) {
+            log.warn("NumberFormatException caused by track: " + title + " - " + nfe.getMessage());
+        }
+    }
 
-	private boolean isSomethingMissing(List<Metadata> metadatas) {
-		for (Metadata metadata : metadatas) {
-			if(StringUtils.isEmpty(metadata.getTotalTracks()) || StringUtils.isEmpty(metadata.getCdNumber()) || StringUtils.isEmpty(metadata.getTotalCds())){
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean isSomethingMissing(List<Metadata> metadatas) {
+        for (Metadata metadata : metadatas) {
+            if (StringUtils.isEmpty(metadata.getTotalTracks()) || StringUtils.isEmpty(metadata.getCdNumber()) || StringUtils.isEmpty(metadata.getTotalCds())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private int getTotalTracks(List<Metadata> metadatas) {
-		int biggerTrackNumber = 0;
-		for (Metadata metadata : metadatas) {
-			Integer metadataTrackNumber = Integer.valueOf(metadata.getTrackNumber());
-			if(metadataTrackNumber > biggerTrackNumber){
-				biggerTrackNumber = metadataTrackNumber;
-			}
-		}
-		return biggerTrackNumber;
-	}
+    private int getTotalTracks(List<Metadata> metadatas) {
+        int biggerTrackNumber = 0;
+        for (Metadata metadata : metadatas) {
+            Integer metadataTrackNumber = Integer.valueOf(metadata.getTrackNumber());
+            if (metadataTrackNumber > biggerTrackNumber) {
+                biggerTrackNumber = metadataTrackNumber;
+            }
+        }
+        return biggerTrackNumber;
+    }
 
 }

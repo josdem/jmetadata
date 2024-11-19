@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,10 +17,14 @@
 package org.jas.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jas.model.Metadata;
 import org.jas.service.impl.DefaultServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -30,18 +34,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class TestDefaultService {
+class TestDefaultService {
 
     private static final String TOTAL_TRACKS = "2";
     private static final String TRACK_NUMBER_METADATA_ONE = "1";
-    private static final String TRACK_NUMBER_METADATA_TWO = TOTAL_TRACKS;
     private static final String CD_NUMBER = "1";
     private static final String TOTAL_CD_NUMBER = "1";
+    private static final Log log = LogFactory.getLog(TestDefaultService.class);
 
     @InjectMocks
-    private DefaultService defaultService = new DefaultServiceImpl();
+    private final DefaultService defaultService = new DefaultServiceImpl();
 
     @Mock
     private Metadata metadata_one;
@@ -50,7 +56,7 @@ public class TestDefaultService {
     @Mock
     private MetadataService metadataService;
 
-    private List<Metadata> metadatas = new ArrayList<Metadata>();
+    private final List<Metadata> metadatas = new ArrayList<>();
 
     @BeforeEach
     public void setup() throws Exception {
@@ -58,17 +64,35 @@ public class TestDefaultService {
     }
 
     @Test
-    public void shouldCompleteTotalTracks() throws Exception {
-        setTracknumberExpectations();
+    @DisplayName("validating we can complete metadata due to we have more than one track")
+    public void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
+        setTracksNumberExpectations();
         when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 
         assertTrue(defaultService.isCompletable(metadatas));
     }
 
     @Test
+    @DisplayName("validating we can not complete metadata due to we have one track")
+    public void shouldNotCompleteIfSingleTrack(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
+        var metadatas = new ArrayList<Metadata>();
+
+        when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+        metadatas.add(metadata_one);
+
+        defaultService.isCompletable(metadatas);
+
+        verify(metadata_one, never()).setTotalTracks(TOTAL_TRACKS);
+        verify(metadata_one, never()).setCdNumber(CD_NUMBER);
+        verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
+    }
+
+    @Test
     public void shouldComplete() throws Exception {
         when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-        setTracknumberExpectations();
+        setTracksNumberExpectations();
 
         defaultService.complete(metadatas);
 
@@ -80,23 +104,11 @@ public class TestDefaultService {
         verify(metadata_two).setTotalCds(TOTAL_CD_NUMBER);
     }
 
-    private void setTracknumberExpectations() {
+    private void setTracksNumberExpectations() {
         when(metadata_one.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_ONE);
-        when(metadata_two.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_TWO);
+        when(metadata_two.getTrackNumber()).thenReturn(TOTAL_TRACKS);
         metadatas.add(metadata_one);
         metadatas.add(metadata_two);
-    }
-
-    @Test
-    public void shouldNotCompleteIfSingleTrack() throws Exception {
-        List<Metadata> metadatas = new ArrayList<Metadata>();
-        metadatas.add(metadata_one);
-
-        defaultService.isCompletable(metadatas);
-
-        verify(metadata_one, never()).setTotalTracks(TOTAL_TRACKS);
-        verify(metadata_one, never()).setCdNumber(CD_NUMBER);
-        verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
     }
 
     @Test

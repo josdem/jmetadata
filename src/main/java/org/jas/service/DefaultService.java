@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,18 +16,18 @@
 
 package org.jas.service;
 
-import java.util.List;
-import java.io.IOException;
-
-import org.jaudiotagger.tag.TagException;
+import org.jas.metadata.MetadataException;
+import org.jas.model.Metadata;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 
-import org.jas.model.Metadata;
-import org.jas.metadata.MetadataException;
+import java.io.IOException;
+import java.util.List;
 
 public interface DefaultService {
-  Boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException;
-  void complete(List<Metadata> metadatas);
+    boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException;
+
+    void complete(List<Metadata> metadatas);
 }
 
