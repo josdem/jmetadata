@@ -128,7 +128,9 @@ class TestDefaultService {
     }
 
     @Test
-    public void shouldComplete() throws Exception {
+    @DisplayName("completing metadata")
+    public void shouldComplete(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
         when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
         setTracksNumberExpectations();
 
@@ -142,15 +144,10 @@ class TestDefaultService {
         verify(metadata_two).setTotalCds(TOTAL_CD_NUMBER);
     }
 
-    private void setTracksNumberExpectations() {
-        when(metadata_one.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_ONE);
-        when(metadata_two.getTrackNumber()).thenReturn(TOTAL_TRACKS);
-        metadatas.add(metadata_one);
-        metadatas.add(metadata_two);
-    }
-
     @Test
-    public void shouldNotCompleteMetadataWhenNoNecesary() throws Exception {
+    @DisplayName("validating we do not need to complete metadata")
+    public void shouldNotCompleteMetadataWhenNoNecessary(TestInfo testInfo) throws Exception {
+        log.info("Running test: {}" + testInfo.getDisplayName());
         when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
         when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
         when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
@@ -163,12 +160,26 @@ class TestDefaultService {
     }
 
     @Test
-    public void shouldNotCompleteWhenNoTrackNumber() {
-        when(metadata_one.getTotalTracks()).thenReturn(StringUtils.EMPTY);
+    @DisplayName("validating we cannot complete metadata due to not having track number")
+    public void shouldNotCompleteWhenNoTrackNumber(TestInfo testInfo) {
+        log.info("Running test: {}" + testInfo.getDisplayName());
+        when(metadata_one.getTrackNumber()).thenReturn(StringUtils.EMPTY);
+        when(metadata_two.getTrackNumber()).thenReturn(StringUtils.EMPTY);
         metadatas.add(metadata_one);
+        metadatas.add(metadata_two);
+
         defaultService.complete(metadatas);
+
         verify(metadata_one, never()).setCdNumber(CD_NUMBER);
         verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
+        verify(metadata_two, never()).setCdNumber(CD_NUMBER);
+        verify(metadata_two, never()).setTotalCds(TOTAL_CD_NUMBER);
     }
 
+    private void setTracksNumberExpectations() {
+        when(metadata_one.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_ONE);
+        when(metadata_two.getTrackNumber()).thenReturn(TOTAL_TRACKS);
+        metadatas.add(metadata_one);
+        metadatas.add(metadata_two);
+    }
 }

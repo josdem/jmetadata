@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class DefaultServiceImpl implements DefaultService {
@@ -49,17 +50,15 @@ public class DefaultServiceImpl implements DefaultService {
     }
 
     public void complete(List<Metadata> metadatas) {
-        String title = StringUtils.EMPTY;
-        try {
-            for (Metadata metadata : metadatas) {
-                title = metadata.getTitle();
+        metadatas.forEach(metadata -> {
+            try {
                 metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
                 metadata.setCdNumber(CD_NUMBER);
                 metadata.setTotalCds(TOTAL_CD_NUMBER);
+            } catch (NumberFormatException nfe) {
+                log.warn("NumberFormatException caused by track: {} - {}", metadata.getTitle(), nfe.getMessage());
             }
-        } catch (NumberFormatException nfe) {
-            log.warn("NumberFormatException caused by track: " + title + " - " + nfe.getMessage());
-        }
+        });
     }
 
     private boolean isSomethingMissing(List<Metadata> metadatas) {
@@ -68,14 +67,8 @@ public class DefaultServiceImpl implements DefaultService {
     }
 
     private int getTotalTracks(List<Metadata> metadatas) {
-        int biggerTrackNumber = 0;
-        for (Metadata metadata : metadatas) {
-            Integer metadataTrackNumber = Integer.valueOf(metadata.getTrackNumber());
-            if (metadataTrackNumber > biggerTrackNumber) {
-                biggerTrackNumber = metadataTrackNumber;
-            }
-        }
-        return biggerTrackNumber;
+        OptionalInt optionalInt = metadatas.stream().mapToInt(metadata -> Integer.parseInt(metadata.getTrackNumber())).max();
+        return optionalInt.isPresent() ? optionalInt.getAsInt() : 0;
     }
 
 }
