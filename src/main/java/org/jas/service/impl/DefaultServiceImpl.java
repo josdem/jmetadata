@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DefaultServiceImpl implements DefaultService {
@@ -62,12 +63,8 @@ public class DefaultServiceImpl implements DefaultService {
     }
 
     private boolean isSomethingMissing(List<Metadata> metadatas) {
-        for (Metadata metadata : metadatas) {
-            if (StringUtils.isEmpty(metadata.getTotalTracks()) || StringUtils.isEmpty(metadata.getCdNumber()) || StringUtils.isEmpty(metadata.getTotalCds())) {
-                return true;
-            }
-        }
-        return false;
+        Optional<Metadata> any = metadatas.stream().filter(metadata -> StringUtils.isEmpty(metadata.getTotalTracks()) || StringUtils.isEmpty(metadata.getCdNumber()) || StringUtils.isEmpty(metadata.getTotalCds())).findAny();
+        return any.isPresent();
     }
 
     private int getTotalTracks(List<Metadata> metadatas) {
