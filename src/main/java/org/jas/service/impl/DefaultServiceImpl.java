@@ -17,19 +17,14 @@
 package org.jas.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.metadata.MetadataException;
 import org.jas.model.Metadata;
 import org.jas.service.DefaultService;
 import org.jas.service.MetadataService;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -45,7 +40,7 @@ public class DefaultServiceImpl implements DefaultService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public boolean isCompletable(List<Metadata> metadatas) throws CannotReadException, TagException, ReadOnlyFileException, IOException, MetadataException {
+    public boolean isCompletable(List<Metadata> metadatas) {
         return metadatas.size() >= 2 && metadataService.isSameAlbum(metadatas) && isSomethingMissing(metadatas);
     }
 

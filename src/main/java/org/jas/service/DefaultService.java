@@ -16,17 +16,12 @@
 
 package org.jas.service;
 
-import org.jas.metadata.MetadataException;
 import org.jas.model.Metadata;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface DefaultService {
-    boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException;
+    boolean isCompletable(List<Metadata> metadatas);
 
     void complete(List<Metadata> metadatas);
 }
