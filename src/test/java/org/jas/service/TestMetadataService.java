@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.jas.service;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.jas.exception.InvalidId3VersionException;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
 import org.jas.metadata.MetadataException;
@@ -44,8 +43,14 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class TestMetadataService {
 
@@ -86,7 +91,7 @@ class TestMetadataService {
     private final Integer maxFilesAllowed = 50;
 
     private final List<Metadata> metadatas = new ArrayList<Metadata>();
-    private final List<File> fileList = new ArrayList<File>();
+    private final List<File> fileList = new ArrayList<>();
 
     private static final String ALBUM = "Lemon Flavored Kiss";
     private static final String MY_REMIXES = "My Remixes";
@@ -138,8 +143,7 @@ class TestMetadataService {
         when(mp4Reader.getMetadata(pepeGarden)).thenReturn(metadata);
     }
 
-    private void verifyExpectations(List<Metadata> metadatas, Metadata metadata) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException,
-            InvalidAudioFrameException, InvalidId3VersionException {
+    private void verifyExpectations(List<Metadata> metadatas, Metadata metadata) {
         assertEquals(1, metadatas.size());
         verify(fileUtils).getFileList(root);
         assertEquals("Jaytech", metadata.getArtist());
@@ -159,7 +163,7 @@ class TestMetadataService {
         assertEquals(1, metadatas.size());
     }
 
-    private void setFileListExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+    private void setFileListExpectations() {
         when(metadata.getArtist()).thenReturn("Jaytech");
         when(metadata.getTitle()).thenReturn("Pepe Garden (Original Mix)");
         fileList.add(pepeGarden);

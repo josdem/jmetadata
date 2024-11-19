@@ -18,6 +18,7 @@ package org.jas.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class FileUtils {
     private List<File> fileList;
 

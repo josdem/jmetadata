@@ -45,7 +45,7 @@ public class DefaultServiceImpl implements DefaultService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public boolean isCompletable(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
+    public boolean isCompletable(List<Metadata> metadatas) throws CannotReadException, TagException, ReadOnlyFileException, IOException, MetadataException {
         return metadatas.size() >= 2 && metadataService.isSameAlbum(metadatas) && isSomethingMissing(metadatas);
     }
 
