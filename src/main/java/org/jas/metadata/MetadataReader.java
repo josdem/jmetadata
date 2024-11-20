@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.event.ValueEvent;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 
+import org.jas.exception.MetadataException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;

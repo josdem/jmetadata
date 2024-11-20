@@ -24,6 +24,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jas.collaborator.JAudioTaggerCollaborator;
 import org.jas.event.Events;
+import org.jas.exception.MetadataException;
 import org.jas.helper.AudioFileHelper;
 import org.jas.helper.ReaderHelper;
 import org.jas.model.GenreTypes;

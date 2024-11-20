@@ -18,7 +18,7 @@ package org.jas.service;
 
 import org.jas.exception.InvalidId3VersionException;
 import org.jas.exception.TooMuchFilesException;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 import org.jas.model.Metadata;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;

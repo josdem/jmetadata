@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,9 +18,7 @@ package org.jas.exception;
 
 public class TooMuchFilesException extends Exception {
 
-	private Integer maxFiles;
-
-	private static final long serialVersionUID = -8819322710932071107L;
+	private final Integer maxFiles;
 
 	public TooMuchFilesException(Integer maxFiles) {
 		this.maxFiles = maxFiles;

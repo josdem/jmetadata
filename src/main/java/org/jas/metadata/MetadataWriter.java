@@ -22,6 +22,7 @@ import java.awt.Image;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.jas.exception.MetadataException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;

@@ -19,7 +19,7 @@ package org.jas.controller;
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;

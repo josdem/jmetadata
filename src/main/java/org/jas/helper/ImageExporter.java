@@ -33,7 +33,7 @@ import org.jas.model.Metadata;
 import org.jas.util.ImageUtils;
 import org.jas.model.ExportPackage;
 import org.jas.service.MetadataService;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 
 @Service
 public class ImageExporter {

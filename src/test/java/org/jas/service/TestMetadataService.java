@@ -21,7 +21,7 @@ import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 import org.jas.metadata.Mp3Reader;
 import org.jas.metadata.Mp4Reader;
 import org.jas.model.Metadata;

@@ -31,7 +31,7 @@ import org.jas.model.CoverArt;
 import org.jas.model.MusicBrainzTrack;
 import org.jas.action.Actions;
 import org.jas.action.ActionResult;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.service.LastfmService;
 import org.jas.service.MusicBrainzFinderService;

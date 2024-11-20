@@ -30,7 +30,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jas.model.Metadata;
 import org.jas.action.ActionResult;
 import org.jas.model.ExportPackage;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 
 @Service
 public class ExporterHelper {

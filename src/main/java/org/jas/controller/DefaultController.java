@@ -32,7 +32,7 @@ import org.jas.action.Actions;
 import org.jas.model.Metadata;
 import org.jas.action.ActionResult;
 import org.jas.service.DefaultService;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)

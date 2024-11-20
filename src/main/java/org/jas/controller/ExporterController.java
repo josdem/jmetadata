@@ -16,7 +16,7 @@ import org.jas.action.Actions;
 import org.jas.action.ActionResult;
 import org.jas.model.ExportPackage;
 import org.jas.helper.ExporterHelper;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

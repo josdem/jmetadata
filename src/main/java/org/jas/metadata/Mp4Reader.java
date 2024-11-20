@@ -19,6 +19,7 @@ package org.jas.metadata;
 import java.io.File;
 import java.io.IOException;
 
+import org.jas.exception.MetadataException;
 import org.jas.helper.AudioFileHelper;
 import org.jas.model.Metadata;
 import org.jaudiotagger.audio.AudioFile;

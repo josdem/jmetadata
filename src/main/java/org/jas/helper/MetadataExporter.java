@@ -36,7 +36,7 @@ import org.jas.ApplicationState;
 import org.jas.model.ExportPackage;
 import org.jas.service.MetadataService;
 import org.jas.service.FormatterService;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

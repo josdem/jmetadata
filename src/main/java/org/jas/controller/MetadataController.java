@@ -41,7 +41,7 @@ import org.jas.event.Events;
 import org.jas.action.Actions;
 import org.jas.model.Metadata;
 import org.jas.service.MetadataService;
-import org.jas.metadata.MetadataException;
+import org.jas.exception.MetadataException;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.exception.InvalidId3VersionException;
 

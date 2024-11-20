@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,17 +14,11 @@
    limitations under the License.
 */
 
-package org.jas.metadata;
-
-/**
-* @author joseluis.delacruz@gmail.com
-* @understands A class who represents exceptions from Metadata project
-*/
+package org.jas.exception;
 
 public class MetadataException extends Exception {
-	private static final long serialVersionUID = -1110345551784140359L;
 
-	public MetadataException(String message) {
-		super(message);
-	}
+    public MetadataException(String message) {
+        super(message);
+    }
 }
