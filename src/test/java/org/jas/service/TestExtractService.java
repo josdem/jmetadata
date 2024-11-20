@@ -19,17 +19,21 @@ package org.jas.service;
 import org.jas.model.Metadata;
 import org.jas.service.impl.ExtractServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class TestExtractService {
+class TestExtractService {
 
     public static final String EXPECTED_ARTIST = "Jennifer Lopez";
 
@@ -39,13 +43,17 @@ public class TestExtractService {
     @Mock
     private File file;
 
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
     @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void shouldExtractMetadataFromFileWhenDash() {
+    @DisplayName("Should extract metadata from file when dash")
+    public void shouldExtractMetadataFromFileWhenDash(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         String filename = "Jennifer Lopez - 9A - 112.mp3";
         when(file.getName()).thenReturn(filename);
 
@@ -56,7 +64,9 @@ public class TestExtractService {
     }
 
     @Test
-    public void shouldExtractMetadataFromFileWhenNoDash() {
+    @DisplayName("Should extract metadata from file when no dash")
+    public void shouldExtractMetadataFromFileWhenNoDash(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         String expectedName = EXPECTED_ARTIST;
         String filename = "Jennifer Lopez.mp3";
         when(file.getName()).thenReturn(filename);
