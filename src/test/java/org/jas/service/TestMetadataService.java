@@ -31,10 +31,14 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,7 +99,8 @@ class TestMetadataService {
 
     private static final String ALBUM = "Lemon Flavored Kiss";
     private static final String MY_REMIXES = "My Remixes";
-    private static final int FIRST_ELEMENT = 0;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {
@@ -105,37 +110,46 @@ class TestMetadataService {
     }
 
     @Test
-    public void shouldExtractMetadataWhenMp3() throws Exception {
+    @DisplayName("extracting metadata when mp3")
+    public void shouldExtractMetadataWhenMp3(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         setMp3Expectations();
         setFileListExpectations();
 
         List<Metadata> metadatas = metadataService.extractMetadata(root);
-        Metadata metadata = metadatas.get(FIRST_ELEMENT);
+        Metadata metadata = metadatas.getFirst();
 
         verifyExpectations(metadatas, metadata);
     }
 
     @Test
-    public void shouldExtractMetadataWhenMp4() throws Exception {
+    @DisplayName("extracting metadata when mp4")
+    public void shouldExtractMetadataWhenMp4(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         setMp4Expectations();
         setFileListExpectations();
 
         List<Metadata> metadatas = metadataService.extractMetadata(root);
-        Metadata metadata = metadatas.get(FIRST_ELEMENT);
+        Metadata metadata = metadatas.getFirst();
 
         verifyExpectations(metadatas, metadata);
     }
 
     @Test
-    public void shouldDetectANotValidAudioFile() throws Exception {
-        setMp4Expectations();
-        setFileListExpectations();
+    @DisplayName("extracting metadata when mp4")
+    public void shouldDetectANotValidAudioFile(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         fileList.add(checkStyleFile);
+        when(fileUtils.getFileList(root)).thenReturn(fileList);
 
         List<Metadata> metadatas = metadataService.extractMetadata(root);
-        Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
-        verifyExpectations(metadatas, metadata);
+        assertTrue(metadatas.isEmpty(), "should be empty due to not valid audio file");
+    }
+
+    private void setMp3Expectations() throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
+        when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
+        when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
     }
 
     private void setMp4Expectations() throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
@@ -168,11 +182,6 @@ class TestMetadataService {
         when(metadata.getTitle()).thenReturn("Pepe Garden (Original Mix)");
         fileList.add(pepeGarden);
         when(fileUtils.getFileList(root)).thenReturn(fileList);
-    }
-
-    private void setMp3Expectations() throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
-        when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
-        when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
     }
 
     @Test

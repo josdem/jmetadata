@@ -31,7 +31,7 @@ import java.util.List;
 
 public interface MetadataService {
 
-    List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException;
+    List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException;
 
     boolean isSameAlbum(List<Metadata> metadatas);
 

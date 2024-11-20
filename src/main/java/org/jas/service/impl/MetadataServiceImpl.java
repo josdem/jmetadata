@@ -66,7 +66,7 @@ public class MetadataServiceImpl implements MetadataService {
     private Set<File> filesWithoutMinimumMetadata;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public List<Metadata> extractMetadata(File root) throws IOException, TooMuchFilesException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException {
+    public List<Metadata> extractMetadata(File root) throws IOException, TooMuchFilesException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
         metadataList = new ArrayList<>();
         filesWithoutMinimumMetadata = metadataHelper.createHashSet();
         List<File> fileList = fileUtils.getFileList(root);
