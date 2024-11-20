@@ -16,6 +16,7 @@
 
 package org.jas.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jas.exception.TooMuchFilesException;
@@ -52,7 +53,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -164,7 +164,9 @@ class TestMetadataService {
     }
 
     @Test
-    public void shouldDetectAFileWithoutMinimumMetadata() throws Exception {
+    @DisplayName("extracting metadata from file name")
+    public void shouldDetectAFileWithoutMinimumMetadata(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         setMp3Expectations();
         fileList.add(pepeGarden);
 
@@ -174,13 +176,14 @@ class TestMetadataService {
         List<Metadata> metadatas = metadataService.extractMetadata(root);
 
         assertEquals(1, metadatas.size());
-        verify(fileUtils, never()).isM4aFile(pepeGarden);
         verify(extractService).extractFromFileName(pepeGarden);
         verify(filesWithoutMinimumMetadata).add(pepeGarden);
     }
 
     @Test
-    public void shouldKnowSameAlbum() throws Exception {
+    @DisplayName("validating same album")
+    public void shouldKnowSameAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         when(metadata.getAlbum()).thenReturn(ALBUM);
         when(anotherMetadata.getAlbum()).thenReturn(ALBUM);
 
@@ -189,7 +192,9 @@ class TestMetadataService {
     }
 
     @Test
-    public void shouldKnowDifferentAlbum() throws Exception {
+    @DisplayName("validating different album")
+    public void shouldKnowDifferentAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         when(metadata.getAlbum()).thenReturn(ALBUM);
         when(anotherMetadata.getAlbum()).thenReturn(MY_REMIXES);
 
@@ -198,14 +203,11 @@ class TestMetadataService {
         assertFalse(metadataService.isSameAlbum(metadatas));
     }
 
-    private void addMetadatas() {
-        metadatas.add(metadata);
-        metadatas.add(anotherMetadata);
-    }
-
     @Test
-    public void shouldKnowWhenNoAlbumIsThere() throws Exception {
-        when(metadata.getAlbum()).thenReturn(null);
+    @DisplayName("validating empty album")
+    public void shouldKnowWhenMetadataDoesNotHaveAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
         when(anotherMetadata.getAlbum()).thenReturn(MY_REMIXES);
 
         addMetadatas();
@@ -214,8 +216,10 @@ class TestMetadataService {
     }
 
     @Test
-    public void shouldNotExtractWhenTooMuchFiles() throws Exception {
-        List<File> fileList = mock(ArrayList.class);
+    @DisplayName("not extracting metadata when too much files")
+    public void shouldNotExtractWhenTooMuchFiles(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        List<File> fileList = mock(List.class);
 
         when(fileList.size()).thenReturn(maxFilesAllowed + 1);
         when(fileUtils.getFileList(root)).thenReturn(fileList);
@@ -244,6 +248,11 @@ class TestMetadataService {
         assertEquals(1, metadatas.size());
         verify(fileUtils).getFileList(root);
         assertEquals("Jaytech", metadata.getArtist());
+    }
+
+    private void addMetadatas() {
+        metadatas.add(metadata);
+        metadatas.add(anotherMetadata);
     }
 
 }

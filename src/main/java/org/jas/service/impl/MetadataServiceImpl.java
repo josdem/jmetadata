@@ -18,7 +18,6 @@ package org.jas.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.jas.exception.InvalidId3VersionException;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
 import org.jas.metadata.MetadataException;
@@ -41,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -70,6 +70,7 @@ public class MetadataServiceImpl implements MetadataService {
         metadataList = new ArrayList<>();
         filesWithoutMinimumMetadata = metadataHelper.createHashSet();
         List<File> fileList = fileUtils.getFileList(root);
+        log.info("properties: {}", properties.getProperty("max.files.allowed"));
         if (fileList.size() > Integer.parseInt(properties.getProperty("max.files.allowed"))) {
             throw new TooMuchFilesException(fileList.size());
         }
@@ -100,15 +101,9 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     public boolean isSameAlbum(List<Metadata> metadatas) {
-        for (int i = 0; i < metadatas.size() - 1; i++) {
-            if (metadatas.get(i).getAlbum() == null) {
-                return false;
-            }
-            if (!metadatas.get(i).getAlbum().equals(metadatas.get(i + 1).getAlbum())) {
-                return false;
-            }
-        }
-        return true;
+        var albums = new ArrayList<String>();
+        metadatas.forEach(metadata -> albums.add(Objects.requireNonNull(metadata.getAlbum(), "album cannot be null")));
+        return albums.stream().distinct().count() == 1;
     }
 
 }
