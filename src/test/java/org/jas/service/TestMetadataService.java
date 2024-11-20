@@ -136,7 +136,7 @@ class TestMetadataService {
     }
 
     @Test
-    @DisplayName("extracting metadata when mp4")
+    @DisplayName("not extracting metadata due to not having a valid audio file")
     public void shouldDetectANotValidAudioFile(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
         fileList.add(checkStyleFile);
@@ -147,24 +147,10 @@ class TestMetadataService {
         assertTrue(metadatas.isEmpty(), "should be empty due to not valid audio file");
     }
 
-    private void setMp3Expectations() throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
-        when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
-        when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
-    }
-
-    private void setMp4Expectations() throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-        when(fileUtils.isM4aFile(pepeGarden)).thenReturn(true);
-        when(mp4Reader.getMetadata(pepeGarden)).thenReturn(metadata);
-    }
-
-    private void verifyExpectations(List<Metadata> metadatas, Metadata metadata) {
-        assertEquals(1, metadatas.size());
-        verify(fileUtils).getFileList(root);
-        assertEquals("Jaytech", metadata.getArtist());
-    }
-
     @Test
-    public void shouldCleanMetadataList() throws Exception {
+    @DisplayName("cleaning metadata list")
+    public void shouldCleanMetadataList(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         setMp4Expectations();
         setFileListExpectations();
 
@@ -175,13 +161,6 @@ class TestMetadataService {
         metadatas = metadataService.extractMetadata(root);
 
         assertEquals(1, metadatas.size());
-    }
-
-    private void setFileListExpectations() {
-        when(metadata.getArtist()).thenReturn("Jaytech");
-        when(metadata.getTitle()).thenReturn("Pepe Garden (Original Mix)");
-        fileList.add(pepeGarden);
-        when(fileUtils.getFileList(root)).thenReturn(fileList);
     }
 
     @Test
@@ -242,6 +221,29 @@ class TestMetadataService {
         when(fileUtils.getFileList(root)).thenReturn(fileList);
 
         assertThrows(TooMuchFilesException.class, () -> metadataService.extractMetadata(root));
+    }
+
+    private void setMp3Expectations() throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
+        when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
+        when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
+    }
+
+    private void setMp4Expectations() throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
+        when(fileUtils.isM4aFile(pepeGarden)).thenReturn(true);
+        when(mp4Reader.getMetadata(pepeGarden)).thenReturn(metadata);
+    }
+
+    private void setFileListExpectations() {
+        when(metadata.getArtist()).thenReturn("Jaytech");
+        when(metadata.getTitle()).thenReturn("Pepe Garden (Original Mix)");
+        fileList.add(pepeGarden);
+        when(fileUtils.getFileList(root)).thenReturn(fileList);
+    }
+
+    private void verifyExpectations(List<Metadata> metadatas, Metadata metadata) {
+        assertEquals(1, metadatas.size());
+        verify(fileUtils).getFileList(root);
+        assertEquals("Jaytech", metadata.getArtist());
     }
 
 }

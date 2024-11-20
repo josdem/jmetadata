@@ -88,7 +88,7 @@ public class MetadataServiceImpl implements MetadataService {
             }
 
             if (metadata == null) {
-                log.info("{} is not a valid Audio File", file.getAbsoluteFile());
+                log.info("{} is not a valid audio File", file.getAbsoluteFile());
             } else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
                 metadataList.add(metadata);
             } else {
