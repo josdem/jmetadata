@@ -305,6 +305,7 @@ public class TestFormatterService {
     @Test
     @DisplayName("validating when title has a dash")
     public void shouldCapitalizeTitleWhenDash(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "blue-eyed";
         var titleExpected = "Blue-eyed";
 
@@ -328,7 +329,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAcuteMarkTitle() throws Exception {
+    @DisplayName("validating apostrophe in title")
+    public void shouldDetectAcuteMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatAcute);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -337,25 +340,29 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAcuteMarkArtist() throws Exception {
+    @DisplayName("validating apostrophe in artist")
+    public void shouldDetectAcuteMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatAcute);
 
         assertTrue(formatter.wasFormatted(metadata));
         assertEquals(badFormatAcuteExpected, metadata.getArtist());
-
     }
 
     @Test
-    public void shouldDetectAcuteMarkAlbum() throws Exception {
+    @DisplayName("validating apostrophe in album")
+    public void shouldDetectAcuteMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatAcute);
 
         assertTrue(formatter.wasFormatted(metadata));
         assertEquals(badFormatAcuteExpected, metadata.getAlbum());
-
     }
 
     @Test
-    public void shouldCamelizeWhenParenthesis() throws Exception {
+    @DisplayName("adding missing capital letters")
+    public void shouldAddCapitalLettersWhenParenthesis(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "as the rush comes (chillout mix)";
         var expectedTitle = "As The Rush Comes (chillout Mix)";
 
@@ -366,7 +373,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCamelizeWhenNumbers() throws Exception {
+    @DisplayName("adding missing capital letters")
+    public void shouldAddCapitalLettersWhenNumbers(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "rabbit in your headlights (3d mix)";
         var expectedTitle = "Rabbit In Your Headlights (3d Mix)";
 
@@ -377,7 +386,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCamelizeWhenApostrophe() throws Exception {
+    @DisplayName("adding missing capital letters when apostrophe")
+    public void shouldAddCapitalLettersWhenApostrophe(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "jesu, joy of man's desiring";
         var expectedTitle = "Jesu, Joy Of Man's Desiring";
 
@@ -388,9 +399,11 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetecteGraveAccent() throws Exception {
+    @DisplayName("validating grave accent")
+    public void shouldDetectGraveAccent(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Lumi&egrave;res De Skye";
-        var expectedTitle = "Lumières De Skye";
+        var expectedTitle = "Lumieres De Skye";
 
         metadata.setTitle(title);
 
@@ -399,7 +412,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetecteEAcuteAccent() throws Exception {
+    @DisplayName("validating e acute accent")
+    public void shouldDetectAcuteAccent(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Le Vent d'&Eacute;cosse";
         var expectedTitle = "Le Vent d'Écosse";
 
@@ -778,3 +793,4 @@ public class TestFormatterService {
         assertEquals(expectedDuration, formatter.getDuration(length));
     }
 }
+

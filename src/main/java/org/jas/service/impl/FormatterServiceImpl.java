@@ -40,7 +40,7 @@ public class FormatterServiceImpl implements FormatterService {
             return false;
         }
         String newTitle = metadata.getTitle().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
-                .replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
+                .replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "e").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
                 .replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
         if (!newTitle.equals(metadata.getTitle())) {
             metadata.setTitle(newTitle);
