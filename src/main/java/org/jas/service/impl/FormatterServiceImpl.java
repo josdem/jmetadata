@@ -41,7 +41,7 @@ public class FormatterServiceImpl implements FormatterService {
         }
         String newTitle = metadata.getTitle().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
                 .replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "e").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
-                .replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
+                .replace("&agrave;", "a").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
         if (!newTitle.equals(metadata.getTitle())) {
             metadata.setTitle(newTitle);
             return true;
@@ -55,7 +55,7 @@ public class FormatterServiceImpl implements FormatterService {
         }
         String newArtist = metadata.getArtist().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
                 .replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
-                .replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
+                .replace("&agrave;", "a").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
         if (!newArtist.equals(metadata.getArtist())) {
             metadata.setArtist(newArtist);
             return true;
@@ -69,7 +69,7 @@ public class FormatterServiceImpl implements FormatterService {
         }
         String newAlbum = metadata.getAlbum().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
                 .replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
-                .replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
+                .replace("&agrave;", "a").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä").replace("&ucirc;", "û");
         if (!newAlbum.equals(metadata.getAlbum())) {
             metadata.setAlbum(newAlbum);
             return true;

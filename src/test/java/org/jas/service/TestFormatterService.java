@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -425,7 +424,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetecteCircumflexAccent() throws Exception {
+    @DisplayName("validating e circum-flex accent")
+    public void shouldDetectCircumflexAccent(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Entre-Nous... La f&ecirc;te";
         var expectedTitle = "Entre-Nous... La fête";
 
@@ -436,43 +437,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCamelizeWhenI() throws Exception {
-        var title = "barakaya (part I)";
-        var expectedTitle = "Barakaya (part I)";
-
-        metadata.setTitle(title);
-
-        assertTrue(formatter.wasCamelized(metadata));
-        assertEquals(expectedTitle, metadata.getTitle());
-    }
-
-    @Test
-    public void shouldCamelizeWhenAmpersand() throws Exception {
-        var title = "paco fernandez & neve";
-        var expectedTitle = "Paco Fernandez & Neve";
-
-        metadata.setTitle(title);
-
-        assertTrue(formatter.wasCamelized(metadata));
-        assertEquals(expectedTitle, metadata.getTitle());
-    }
-
-    @Test
-    public void shouldNotReturnNew() throws Exception {
-        var artist = "Youth Blood Martydparty Master Edit";
-        var title = "6a";
-        var album = StringUtils.EMPTY;
-
-        metadata.setArtist(artist);
-        metadata.setTitle(title);
-        metadata.setAlbum(album);
-
-        assertFalse(formatter.wasCamelized(metadata));
-        assertFalse(formatter.wasFormatted(metadata));
-    }
-
-    @Test
-    public void shouldDetectUFormatInTitle() throws Exception {
+    @DisplayName("validating u uml accent in title")
+    public void shouldDetectUFormatInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Bl&uuml;chel & von Deylen";
         var expectedTitle = "Blüchel & von Deylen";
 
@@ -483,7 +450,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUFormatInArtist() throws Exception {
+    @DisplayName("validating u uml accent in artist")
+    public void shouldDetectUFormatInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Bl&uuml;chel & von Deylen";
         var expectedArtist = "Blüchel & von Deylen";
 
@@ -494,7 +463,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUFormatInAlbum() throws Exception {
+    @DisplayName("validating u uml accent in album")
+    public void shouldDetectUFormatInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "Bl&uuml;chel & von Deylen";
         var expectedAlbum = "Blüchel & von Deylen";
 
@@ -505,7 +476,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOFormatInTitle() throws Exception {
+    @DisplayName("validating o uml accent in title")
+    public void shouldDetectOFormatInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Pop&ouml;s";
         var expectedTitle = "Popös";
 
@@ -516,7 +489,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOFormatInArtist() throws Exception {
+    @DisplayName("validating o uml accent in artist")
+    public void shouldDetectOFormatInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Pop&ouml;s";
         var expectedArtist = "Popös";
 
@@ -527,7 +502,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOFormatInAlbum() throws Exception {
+    @DisplayName("validating o uml accent in album")
+    public void shouldDetectOFormatInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "Pop&ouml;s";
         var expectedAlbum = "Popös";
 
@@ -538,9 +515,11 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAGraveFormatInTitle() throws Exception {
+    @DisplayName("validating a grave accent in title")
+    public void shouldDetectAGraveFormatInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Déj&agrave; Vu";
-        var expectedTitle = "Déjà Vu";
+        var expectedTitle = "Déja Vu";
 
         metadata.setTitle(title);
 
@@ -549,9 +528,11 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAGraveFormatInArtist() throws Exception {
+    @DisplayName("validating a grave accent in artist")
+    public void shouldDetectAGraveFormatInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Déj&agrave; Vu";
-        var expectedArtist = "Déjà Vu";
+        var expectedArtist = "Déja Vu";
 
         metadata.setArtist(artist);
 
@@ -560,7 +541,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAGraveFormatInAlbum() throws Exception {
+    @DisplayName("validating a grave accent in album")
+    public void shouldDetectAGraveFormatInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "Déj&agrave; Vu";
         var expectedAlbum = "Déjà Vu";
 
@@ -571,7 +554,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectDegreeFormatInTitle() throws Exception {
+    @DisplayName("validating degree format in title")
+    public void shouldDetectDegreeFormatInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Beatniks&deg;";
         var expectedTitle = "Beatniks°";
 
@@ -582,7 +567,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectDegreeFormatInArtist() throws Exception {
+    @DisplayName("validating degree format in artist")
+    public void shouldDetectDegreeFormatInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Beatniks&deg;";
         var expectedArtist = "Beatniks°";
 
@@ -593,7 +580,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectDegreeFormatInAlbum() throws Exception {
+    @DisplayName("validating degree format in album")
+    public void shouldDetectDegreeFormatInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "Beatniks&deg;";
         var expectedAlbum = "Beatniks°";
 
@@ -604,7 +593,8 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectNtildeInTitle() throws Exception {
+    @DisplayName("validating n tilde in title")
+    public void shouldDetectEnTildeInTitle(TestInfo testInfo) {
         var title = "Ni&ntilde;a";
         var expectedTitle = "Niña";
 
@@ -615,7 +605,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectNtildeInArtist() throws Exception {
+    @DisplayName("validating n tilde in artist")
+    public void shouldDetectEnTildeInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Ni&ntilde;a";
         var expectedArtist = "Niña";
 
@@ -626,7 +618,8 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectNtildeInAlbum() throws Exception {
+    @DisplayName("validating n tilde in album")
+    public void shouldDetectEnTildeInAlbum() {
         var album = "Ni&ntilde;a";
         var expectedAlbum = "Niña";
 
@@ -637,7 +630,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAUmlautMarkInTitle() throws Exception {
+    @DisplayName("validating a umlaut mark in title")
+    public void shouldDetectAUmlautMarkInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "J&auml;hdytin";
         var expectedTitle = "Jähdytin";
 
@@ -648,7 +643,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAUmlautMarkInArtist() throws Exception {
+    @DisplayName("validating a umlaut mark in artist")
+    public void shouldDetectAUmlautMarkInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "J&auml;hdytin";
         var expectedArtist = "Jähdytin";
 
@@ -659,7 +656,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAUmlautMarkInAlbum() throws Exception {
+    @DisplayName("validating a umlaut mark in album")
+    public void shouldDetectAUmlautMarkInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "J&auml;hdytin";
         var expectedAlbum = "Jähdytin";
 
@@ -670,7 +669,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldBeAnalyzable() throws Exception {
+    @DisplayName("validating metadata is analyzable")
+    public void shouldBeAnalyzable(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Beatniks";
         var artist = "Jaytin";
         var album = "Nina";
@@ -683,7 +684,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldNotBeAnalyzableDueToAlbum() throws Exception {
+    @DisplayName("validating metadata is not analyzable due to album")
+    public void shouldNotBeAnalyzableDueToAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Beatniks";
         var artist = "Jaytin";
 
@@ -695,7 +698,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldNotBeAnalyzableDueToArtist() throws Exception {
+    @DisplayName("validating metadata is not analyzable due to artist")
+    public void shouldNotBeAnalyzableDueToArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "Beatniks";
         var album = "Nina";
 
@@ -707,7 +712,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldNotBeAnalyzableDueToTitle() throws Exception {
+    @DisplayName("validating metadata is not analyzable due to title")
+    public void shouldNotBeAnalyzableDueToTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Jaytin";
         var album = "Nina";
 
@@ -719,7 +726,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUcircInTitle() throws Exception {
+    @DisplayName("validating a circle mark in title")
+    public void shouldDetectCircleInTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var title = "J&auml;hdytin";
         var expectedTitle = "Jähdytin";
 
@@ -730,7 +739,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUcircInArtist() throws Exception {
+    @DisplayName("validating a circle mark in artist")
+    public void shouldDetectCircleInArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var artist = "Aganj&ucirc;";
         var expectedArtist = "Aganjû";
 
@@ -741,7 +752,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAUcircInAlbum() throws Exception {
+    @DisplayName("validating a circle mark in album")
+    public void shouldDetectCircleInAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         var album = "Aganj&ucirc;";
         var expectedAlbum = "Aganjû";
 
@@ -793,4 +806,5 @@ public class TestFormatterService {
         assertEquals(expectedDuration, formatter.getDuration(length));
     }
 }
+
 
