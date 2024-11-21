@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,9 +19,12 @@ package org.jas.service;
 import org.jas.model.Metadata;
 
 public interface FormatterService {
-	Boolean wasFormatted(Metadata metadata);
-	Boolean wasCamelized(Metadata metadata);
-	String getDuration(int length);
-	boolean isAnalyzable(Metadata metadata);
+    Boolean wasFormatted(Metadata metadata);
+
+    Boolean wasCamelized(Metadata metadata);
+
+    String getDuration(int length);
+
+    void isAnalyzable(Metadata metadata);
 }
 

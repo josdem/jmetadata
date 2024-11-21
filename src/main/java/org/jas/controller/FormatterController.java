@@ -27,16 +27,15 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class FormatterController {
 
-	@Autowired
-	private FormatterService formatterService;
+    @Autowired
+    private FormatterService formatterService;
 
-	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
-	public synchronized ActionResult format(Metadata metadata) {
-		Boolean analyzable = formatterService.isAnalyzable(metadata);
-		if (!analyzable) return ActionResult.Complete;
-		Boolean formatted = formatterService.wasFormatted(metadata);
-		Boolean capitalized = formatterService.wasCamelized(metadata);
-		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
-	}
+    @RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
+    public synchronized ActionResult format(Metadata metadata) {
+        formatterService.isAnalyzable(metadata);
+        Boolean formatted = formatterService.wasFormatted(metadata);
+        Boolean capitalized = formatterService.wasCamelized(metadata);
+        return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
+    }
 
 }

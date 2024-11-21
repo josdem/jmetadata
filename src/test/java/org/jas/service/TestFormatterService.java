@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,7 +23,11 @@ import org.jas.service.impl.FormatterServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestFormatterService {
     private final FormatterService formatter = new FormatterServiceImpl();
@@ -651,7 +655,7 @@ public class TestFormatterService {
         metadata.setArtist(artist);
         metadata.setAlbum(album);
 
-        assertTrue(formatter.isAnalyzable(metadata));
+        assertDoesNotThrow(() -> formatter.isAnalyzable(metadata));
     }
 
     @Test
@@ -663,7 +667,7 @@ public class TestFormatterService {
         metadata.setArtist(artist);
         metadata.setAlbum(null);
 
-        assertFalse(formatter.isAnalyzable(metadata));
+        assertThrows(NullPointerException.class, () -> formatter.isAnalyzable(metadata));
     }
 
     @Test
@@ -675,7 +679,7 @@ public class TestFormatterService {
         metadata.setArtist(null);
         metadata.setAlbum(album);
 
-        assertFalse(formatter.isAnalyzable(metadata));
+        assertThrows(NullPointerException.class, () -> formatter.isAnalyzable(metadata));
     }
 
     @Test
@@ -687,7 +691,7 @@ public class TestFormatterService {
         metadata.setArtist(artist);
         metadata.setAlbum(album);
 
-        assertFalse(formatter.isAnalyzable(metadata));
+        assertThrows(NullPointerException.class, () -> formatter.isAnalyzable(metadata));
     }
 
     @Test
