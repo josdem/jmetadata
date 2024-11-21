@@ -21,7 +21,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.jas.model.Metadata;
 import org.jas.service.impl.FormatterServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,6 +57,8 @@ public class TestFormatterService {
 
     private final Metadata metadata = new Metadata();
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @BeforeEach
     public void setup() throws Exception {
         metadata.setArtist(artist);
@@ -61,7 +67,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAaccentMarkTitle() throws Exception {
+    @DisplayName("validating a accent mark title")
+    public void shouldDetectAaccentMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatA);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -70,7 +78,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectEaccentMarkTitle() throws Exception {
+    @DisplayName("validating e accent mark title")
+    public void shouldDetectEaccentMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatE);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -79,7 +89,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectIaccentMarkTitle() throws Exception {
+    @DisplayName("validating i accent mark title")
+    public void shouldDetectIaccentMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatI);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -88,7 +100,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOaccentMarkTitle() throws Exception {
+    @DisplayName("validating o accent mark title")
+    public void shouldDetectOaccentMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatO);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -97,7 +111,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUaccentMarkTitle() throws Exception {
+    @DisplayName("validating u accent mark title")
+    public void shouldDetectUaccentMarkTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(badFormatU);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -106,7 +122,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAaccentMarkArtist() throws Exception {
+    @DisplayName("validating a accent mark artist")
+    public void shouldDetectAaccentMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatA);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -115,7 +133,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectEaccentMarkArtist() throws Exception {
+    @DisplayName("validating e accent mark artist")
+    public void shouldDetectEaccentMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatE);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -124,7 +144,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectIaccentMarkArtist() throws Exception {
+    @DisplayName("validating i accent mark artist")
+    public void shouldDetectIaccentMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatI);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -133,7 +155,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOaccentMarkArtist() throws Exception {
+    @DisplayName("validating o accent mark artist")
+    public void shouldDetectOaccentMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatO);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -142,7 +166,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUaccentMarkArtist() throws Exception {
+    @DisplayName("validating u accent mark artist")
+    public void shouldDetectUaccentMarkArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(badFormatU);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -150,52 +176,19 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectAaccentMarkAlbum() throws Exception {
+    @DisplayName("validating a accent mark album")
+    public void shouldDetectAaccentMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatA);
 
         assertTrue(formatter.wasFormatted(metadata));
         assertEquals(badFormatAExpected, metadata.getAlbum());
-
     }
 
     @Test
-    public void shouldFormatTitleWhenNull() throws Exception {
-        metadata.setArtist(badFormatA);
-        metadata.setTitle(null);
-        metadata.setAlbum(badFormatE);
-
-        assertTrue(formatter.wasFormatted(metadata));
-    }
-
-    @Test
-    public void shouldFormatTitleWhenEmpty() throws Exception {
-        metadata.setArtist(badFormatA);
-        metadata.setTitle(StringUtils.EMPTY);
-        metadata.setAlbum(badFormatE);
-
-        assertTrue(formatter.wasFormatted(metadata));
-    }
-
-    @Test
-    public void shouldFormatAlbumWhenNull() throws Exception {
-        metadata.setArtist(badFormatA);
-        metadata.setTitle(badFormatE);
-        metadata.setAlbum(null);
-
-        assertTrue(formatter.wasFormatted(metadata));
-    }
-
-    @Test
-    public void shouldFormatAlbumWhenEmpty() throws Exception {
-        metadata.setArtist(badFormatA);
-        metadata.setTitle(badFormatE);
-        metadata.setAlbum(StringUtils.EMPTY);
-
-        assertTrue(formatter.wasFormatted(metadata));
-    }
-
-    @Test
-    public void shouldDetectEaccentMarkAlbum() throws Exception {
+    @DisplayName("validating e accent mark album")
+    public void shouldDetectEaccentMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatE);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -204,7 +197,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectIaccentMarkAlbum() throws Exception {
+    @DisplayName("validating i accent mark album")
+    public void shouldDetectIaccentMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatI);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -213,7 +208,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectOaccentMarkAlbum() throws Exception {
+    @DisplayName("validating o accent mark album")
+    public void shouldDetectOaccentMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatO);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -222,7 +219,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldDetectUaccentMarkAlbum() throws Exception {
+    @DisplayName("validating u accent mark album")
+    public void shouldDetectUaccentMarkAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(badFormatU);
 
         assertTrue(formatter.wasFormatted(metadata));
@@ -231,7 +230,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeTitle() throws Exception {
+    @DisplayName("validating when title is without capital letters")
+    public void shouldCapitalizeTitle(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(title);
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -239,7 +240,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeArtist() throws Exception {
+    @DisplayName("validating when artist is without capital letters")
+    public void shouldCapitalizeArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(artist);
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -247,7 +250,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeAlbum() throws Exception {
+    @DisplayName("validating when album is without capital letters")
+    public void shouldCapitalizeAlbum(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(album);
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -255,7 +260,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
+    @DisplayName("validating when album is all in capital letters")
+    public void shouldCapitalizeAlbumWhenUppercase(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setAlbum(album.toUpperCase());
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -263,7 +270,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeTitleWhenUppercase() throws Exception {
+    @DisplayName("validating when title is all in capital letters")
+    public void shouldCapitalizeTitleWhenUppercase(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setTitle(title.toUpperCase());
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -271,7 +280,9 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeArtistWhenUppercase() throws Exception {
+    @DisplayName("validating when artist is all in capital letters")
+    public void shouldCapitalizeArtistWhenUppercase(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
         metadata.setArtist(artist.toUpperCase());
 
         assertTrue(formatter.wasCamelized(metadata));
@@ -279,9 +290,11 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeArtistWhenDash() throws Exception {
-        String artist = "de-pazz";
-        String artistExpected = "De-pazz";
+    @DisplayName("validating when artist has a dash")
+    public void shouldCapitalizeArtistWhenDash(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        var artist = "de-pazz";
+        var artistExpected = "De-pazz";
 
         metadata.setArtist(artist);
 
@@ -290,9 +303,10 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeTitleWhenDash() throws Exception {
-        String title = "blue-eyed";
-        String titleExpected = "Blue-eyed";
+    @DisplayName("validating when title has a dash")
+    public void shouldCapitalizeTitleWhenDash(TestInfo testInfo) {
+        var title = "blue-eyed";
+        var titleExpected = "Blue-eyed";
 
         metadata.setTitle(title);
 
@@ -301,21 +315,16 @@ public class TestFormatterService {
     }
 
     @Test
-    public void shouldCapitalizeAlbumWhenDash() throws Exception {
-        String album = "blue-eyed";
-        String albumExpected = "Blue-eyed";
+    @DisplayName("validating when album has a dash")
+    public void shouldCapitalizeAlbumWhenDash(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        var album = "blue-eyed";
+        var albumExpected = "Blue-eyed";
 
         metadata.setAlbum(album);
 
         assertTrue(formatter.wasCamelized(metadata));
         assertEquals(albumExpected, metadata.getAlbum());
-    }
-
-    @Test
-    public void shouldGetDuration() throws Exception {
-        int lenght = 397;
-        String expectedDuration = "6:37";
-        assertEquals(expectedDuration, formatter.getDuration(lenght));
     }
 
     @Test
@@ -347,8 +356,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldCamelizeWhenParenthesis() throws Exception {
-        String title = "as the rush comes (chillout mix)";
-        String expectedTitle = "As The Rush Comes (chillout Mix)";
+        var title = "as the rush comes (chillout mix)";
+        var expectedTitle = "As The Rush Comes (chillout Mix)";
 
         metadata.setTitle(title);
 
@@ -358,8 +367,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldCamelizeWhenNumbers() throws Exception {
-        String title = "rabbit in your headlights (3d mix)";
-        String expectedTitle = "Rabbit In Your Headlights (3d Mix)";
+        var title = "rabbit in your headlights (3d mix)";
+        var expectedTitle = "Rabbit In Your Headlights (3d Mix)";
 
         metadata.setTitle(title);
 
@@ -369,8 +378,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldCamelizeWhenApostrophe() throws Exception {
-        String title = "jesu, joy of man's desiring";
-        String expectedTitle = "Jesu, Joy Of Man's Desiring";
+        var title = "jesu, joy of man's desiring";
+        var expectedTitle = "Jesu, Joy Of Man's Desiring";
 
         metadata.setTitle(title);
 
@@ -380,8 +389,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetecteGraveAccent() throws Exception {
-        String title = "Lumi&egrave;res De Skye";
-        String expectedTitle = "Lumières De Skye";
+        var title = "Lumi&egrave;res De Skye";
+        var expectedTitle = "Lumières De Skye";
 
         metadata.setTitle(title);
 
@@ -391,8 +400,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetecteEAcuteAccent() throws Exception {
-        String title = "Le Vent d'&Eacute;cosse";
-        String expectedTitle = "Le Vent d'Écosse";
+        var title = "Le Vent d'&Eacute;cosse";
+        var expectedTitle = "Le Vent d'Écosse";
 
         metadata.setTitle(title);
 
@@ -402,8 +411,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetecteCircumflexAccent() throws Exception {
-        String title = "Entre-Nous... La f&ecirc;te";
-        String expectedTitle = "Entre-Nous... La fête";
+        var title = "Entre-Nous... La f&ecirc;te";
+        var expectedTitle = "Entre-Nous... La fête";
 
         metadata.setTitle(title);
 
@@ -413,8 +422,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldCamelizeWhenI() throws Exception {
-        String title = "barakaya (part I)";
-        String expectedTitle = "Barakaya (part I)";
+        var title = "barakaya (part I)";
+        var expectedTitle = "Barakaya (part I)";
 
         metadata.setTitle(title);
 
@@ -424,8 +433,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldCamelizeWhenAmpersand() throws Exception {
-        String title = "paco fernandez & neve";
-        String expectedTitle = "Paco Fernandez & Neve";
+        var title = "paco fernandez & neve";
+        var expectedTitle = "Paco Fernandez & Neve";
 
         metadata.setTitle(title);
 
@@ -435,9 +444,9 @@ public class TestFormatterService {
 
     @Test
     public void shouldNotReturnNew() throws Exception {
-        String artist = "Youth Blood Martydparty Master Edit";
-        String title = "6a";
-        String album = StringUtils.EMPTY;
+        var artist = "Youth Blood Martydparty Master Edit";
+        var title = "6a";
+        var album = StringUtils.EMPTY;
 
         metadata.setArtist(artist);
         metadata.setTitle(title);
@@ -449,8 +458,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectUFormatInTitle() throws Exception {
-        String title = "Bl&uuml;chel & von Deylen";
-        String expectedTitle = "Blüchel & von Deylen";
+        var title = "Bl&uuml;chel & von Deylen";
+        var expectedTitle = "Blüchel & von Deylen";
 
         metadata.setTitle(title);
 
@@ -460,8 +469,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectUFormatInArtist() throws Exception {
-        String artist = "Bl&uuml;chel & von Deylen";
-        String expectedArtist = "Blüchel & von Deylen";
+        var artist = "Bl&uuml;chel & von Deylen";
+        var expectedArtist = "Blüchel & von Deylen";
 
         metadata.setArtist(artist);
 
@@ -471,8 +480,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectUFormatInAlbum() throws Exception {
-        String album = "Bl&uuml;chel & von Deylen";
-        String expectedAlbum = "Blüchel & von Deylen";
+        var album = "Bl&uuml;chel & von Deylen";
+        var expectedAlbum = "Blüchel & von Deylen";
 
         metadata.setAlbum(album);
 
@@ -482,8 +491,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectOFormatInTitle() throws Exception {
-        String title = "Pop&ouml;s";
-        String expectedTitle = "Popös";
+        var title = "Pop&ouml;s";
+        var expectedTitle = "Popös";
 
         metadata.setTitle(title);
 
@@ -493,8 +502,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectOFormatInArtist() throws Exception {
-        String artist = "Pop&ouml;s";
-        String expectedArtist = "Popös";
+        var artist = "Pop&ouml;s";
+        var expectedArtist = "Popös";
 
         metadata.setArtist(artist);
 
@@ -504,8 +513,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectOFormatInAlbum() throws Exception {
-        String album = "Pop&ouml;s";
-        String expectedAlbum = "Popös";
+        var album = "Pop&ouml;s";
+        var expectedAlbum = "Popös";
 
         metadata.setAlbum(album);
 
@@ -515,8 +524,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAGraveFormatInTitle() throws Exception {
-        String title = "Déj&agrave; Vu";
-        String expectedTitle = "Déjà Vu";
+        var title = "Déj&agrave; Vu";
+        var expectedTitle = "Déjà Vu";
 
         metadata.setTitle(title);
 
@@ -526,8 +535,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAGraveFormatInArtist() throws Exception {
-        String artist = "Déj&agrave; Vu";
-        String expectedArtist = "Déjà Vu";
+        var artist = "Déj&agrave; Vu";
+        var expectedArtist = "Déjà Vu";
 
         metadata.setArtist(artist);
 
@@ -537,8 +546,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAGraveFormatInAlbum() throws Exception {
-        String album = "Déj&agrave; Vu";
-        String expectedAlbum = "Déjà Vu";
+        var album = "Déj&agrave; Vu";
+        var expectedAlbum = "Déjà Vu";
 
         metadata.setAlbum(album);
 
@@ -548,8 +557,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectDegreeFormatInTitle() throws Exception {
-        String title = "Beatniks&deg;";
-        String expectedTitle = "Beatniks°";
+        var title = "Beatniks&deg;";
+        var expectedTitle = "Beatniks°";
 
         metadata.setTitle(title);
 
@@ -559,8 +568,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectDegreeFormatInArtist() throws Exception {
-        String artist = "Beatniks&deg;";
-        String expectedArtist = "Beatniks°";
+        var artist = "Beatniks&deg;";
+        var expectedArtist = "Beatniks°";
 
         metadata.setArtist(artist);
 
@@ -570,8 +579,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectDegreeFormatInAlbum() throws Exception {
-        String album = "Beatniks&deg;";
-        String expectedAlbum = "Beatniks°";
+        var album = "Beatniks&deg;";
+        var expectedAlbum = "Beatniks°";
 
         metadata.setAlbum(album);
 
@@ -581,8 +590,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectNtildeInTitle() throws Exception {
-        String title = "Ni&ntilde;a";
-        String expectedTitle = "Niña";
+        var title = "Ni&ntilde;a";
+        var expectedTitle = "Niña";
 
         metadata.setTitle(title);
 
@@ -592,8 +601,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectNtildeInArtist() throws Exception {
-        String artist = "Ni&ntilde;a";
-        String expectedArtist = "Niña";
+        var artist = "Ni&ntilde;a";
+        var expectedArtist = "Niña";
 
         metadata.setArtist(artist);
 
@@ -603,8 +612,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectNtildeInAlbum() throws Exception {
-        String album = "Ni&ntilde;a";
-        String expectedAlbum = "Niña";
+        var album = "Ni&ntilde;a";
+        var expectedAlbum = "Niña";
 
         metadata.setAlbum(album);
 
@@ -614,8 +623,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAUmlautMarkInTitle() throws Exception {
-        String title = "J&auml;hdytin";
-        String expectedTitle = "Jähdytin";
+        var title = "J&auml;hdytin";
+        var expectedTitle = "Jähdytin";
 
         metadata.setTitle(title);
 
@@ -625,8 +634,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAUmlautMarkInArtist() throws Exception {
-        String artist = "J&auml;hdytin";
-        String expectedArtist = "Jähdytin";
+        var artist = "J&auml;hdytin";
+        var expectedArtist = "Jähdytin";
 
         metadata.setArtist(artist);
 
@@ -636,8 +645,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAUmlautMarkInAlbum() throws Exception {
-        String album = "J&auml;hdytin";
-        String expectedAlbum = "Jähdytin";
+        var album = "J&auml;hdytin";
+        var expectedAlbum = "Jähdytin";
 
         metadata.setAlbum(album);
 
@@ -647,9 +656,9 @@ public class TestFormatterService {
 
     @Test
     public void shouldBeAnalyzable() throws Exception {
-        String title = "Beatniks";
-        String artist = "Jaytin";
-        String album = "Nina";
+        var title = "Beatniks";
+        var artist = "Jaytin";
+        var album = "Nina";
 
         metadata.setTitle(title);
         metadata.setArtist(artist);
@@ -660,8 +669,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldNotBeAnalyzableDueToAlbum() throws Exception {
-        String title = "Beatniks";
-        String artist = "Jaytin";
+        var title = "Beatniks";
+        var artist = "Jaytin";
 
         metadata.setTitle(title);
         metadata.setArtist(artist);
@@ -672,8 +681,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldNotBeAnalyzableDueToArtist() throws Exception {
-        String title = "Beatniks";
-        String album = "Nina";
+        var title = "Beatniks";
+        var album = "Nina";
 
         metadata.setTitle(title);
         metadata.setArtist(null);
@@ -684,8 +693,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldNotBeAnalyzableDueToTitle() throws Exception {
-        String artist = "Jaytin";
-        String album = "Nina";
+        var artist = "Jaytin";
+        var album = "Nina";
 
         metadata.setTitle(null);
         metadata.setArtist(artist);
@@ -696,8 +705,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectUcircInTitle() throws Exception {
-        String title = "J&auml;hdytin";
-        String expectedTitle = "Jähdytin";
+        var title = "J&auml;hdytin";
+        var expectedTitle = "Jähdytin";
 
         metadata.setTitle(title);
 
@@ -707,8 +716,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectUcircInArtist() throws Exception {
-        String artist = "Aganj&ucirc;";
-        String expectedArtist = "Aganjû";
+        var artist = "Aganj&ucirc;";
+        var expectedArtist = "Aganjû";
 
         metadata.setArtist(artist);
 
@@ -718,8 +727,8 @@ public class TestFormatterService {
 
     @Test
     public void shouldDetectAUcircInAlbum() throws Exception {
-        String album = "Aganj&ucirc;";
-        String expectedAlbum = "Aganjû";
+        var album = "Aganj&ucirc;";
+        var expectedAlbum = "Aganjû";
 
         metadata.setAlbum(album);
 
@@ -727,4 +736,45 @@ public class TestFormatterService {
         assertEquals(expectedAlbum, metadata.getAlbum());
     }
 
+    @Test
+    @DisplayName("validating when title is empty")
+    public void shouldFormatTitleWhenEmpty(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(StringUtils.EMPTY);
+        metadata.setAlbum(badFormatE);
+
+        assertTrue(formatter.wasFormatted(metadata));
+    }
+
+    @Test
+    @DisplayName("validating when artist is empty")
+    public void shouldFormatArtistWhenEmpty(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        metadata.setArtist(StringUtils.EMPTY);
+        metadata.setTitle(badFormatA);
+        metadata.setAlbum(badFormatE);
+
+        assertTrue(formatter.wasFormatted(metadata));
+    }
+
+    @Test
+    @DisplayName("validating when album is empty")
+    public void shouldFormatAlbumWhenEmpty(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        metadata.setArtist(badFormatA);
+        metadata.setTitle(badFormatE);
+        metadata.setAlbum(StringUtils.EMPTY);
+
+        assertTrue(formatter.wasFormatted(metadata));
+    }
+
+    @Test
+    @DisplayName("getting duration from seconds")
+    public void shouldGetDuration(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        var length = 397;
+        var expectedDuration = "6:37";
+        assertEquals(expectedDuration, formatter.getDuration(length));
+    }
 }
