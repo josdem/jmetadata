@@ -16,34 +16,30 @@
 
 package org.jas.service.impl;
 
-import java.io.File;
-import java.net.URL;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import javax.imageio.ImageIO;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
+import org.springframework.stereotype.Service;
+
+import javax.imageio.ImageIO;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
-	public File createTempFile() throws IOException {
-		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
-	}
+    public File createTempFile() throws IOException {
+        return File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
+    }
 
-	public void write(Image bufferedImage, File file) throws IOException {
-		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
-	}
+    public void write(Image bufferedImage, File file) throws IOException {
+        ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
+    }
 
-	public Image readImage(String imageURL) throws MalformedURLException, IOException {
-		return ImageIO.read(new URL(imageURL));
-	}
+    public Image readImage(String imageURL) throws IOException {
+        return ImageIO.read(URI.create(imageURL).toURL());
+    }
 
 }

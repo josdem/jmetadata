@@ -102,7 +102,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
 		Album album = cachedAlbums.get(metadata.getAlbum());
 		if(album!=null){
 			imageURL = album.getImageURL(ImageSize.EXTRALARGE);
-			log.info("imageURL: " + imageURL + " from album: " + album.getName());
+            log.info("imageURL: {} from album: {}", imageURL, album.getName());
 		}
 		if (!StringUtils.isEmpty(imageURL)) {
 			Image image = imageService.readImage(imageURL);
@@ -120,7 +120,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
 			genre = lastfmHelper.getGenre(album);
 		}
 		if(!StringUtils.isEmpty(genre)){
-			log.info("Genre from lastFM: " + genre);
+            log.info("Genre from lastFM: {}", genre);
 			lastfmAlbum.setGenre(genre);
 		} else {
 			lastfmAlbum.setGenre(StringUtils.EMPTY);
