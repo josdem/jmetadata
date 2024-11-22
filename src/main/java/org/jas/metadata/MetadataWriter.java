@@ -149,7 +149,7 @@ public class MetadataWriter {
 
 	public boolean writeCoverArt(Image lastfmCoverArt) throws MetadataException {
 		try {
-			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt, StringUtils.EMPTY);
+			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt);
 			Artwork artwork = artworkHelper.createArtwork();
 			artwork.setFromFile(coverArtFile);
 			tag.setField(artwork);

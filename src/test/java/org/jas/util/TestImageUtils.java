@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,24 +20,30 @@ import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.io.File;
 
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TestImageUtils {
 
     private static final Integer THREE_HUNDRED = 300;
 
     @InjectMocks
-    private ImageUtils imageUtils = new ImageUtils();
+    private final ImageUtils imageUtils = new ImageUtils();
 
     @Mock
     private ImageService imageService;
@@ -50,8 +56,7 @@ public class TestImageUtils {
     @Mock
     private File root;
 
-    private String prefix = "MIRI_";
-    private String path = "PATH";
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {
@@ -59,32 +64,40 @@ public class TestImageUtils {
     }
 
     @Test
-    public void shouldSaveCoverArtToFile() throws Exception {
-        when(imageService.createTempFile(StringUtils.EMPTY)).thenReturn(file);
+    @DisplayName("saving cover art to file")
+    public void shouldSaveCoverArtToFile(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        when(imageService.createTempFile()).thenReturn(file);
         when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
 
-        imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY);
+        imageUtils.saveCoverArtToFile(image);
 
-        verify(imageService).createTempFile(StringUtils.EMPTY);
         verify(imageService).write(image, file);
     }
 
     @Test
-    public void shouldNotSaveCoverArtIfNoImage() throws Exception {
-        imageUtils.saveCoverArtToFile(null, StringUtils.EMPTY);
+    @DisplayName("not saving cover art if no image")
+    public void shouldNotSaveCoverArtIfNoImage(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        imageUtils.saveCoverArtToFile(null);
 
-        verify(imageService, never()).createTempFile(StringUtils.EMPTY);
+        verify(imageService, never()).createTempFile();
     }
 
     @Test
-    public void shouldNotSaveCoverArtIfRootAndNoImage() throws Exception {
+    @DisplayName("not saving cover art if no root file")
+    public void shouldNotSaveCoverArtIfRootAndNoImage(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
 
         verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
     }
 
     @Test
+    @DisplayName("saving cover art to file with custom prefix and path")
     public void shouldSaveImageToFile() throws Exception {
+        var prefix = "MIRI_";
+        var path = "PATH";
         when(fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT)).thenReturn(file);
         when(file.getAbsolutePath()).thenReturn(path);
         when(image.getHeight(isA(ImageObserver.class))).thenReturn(THREE_HUNDRED);

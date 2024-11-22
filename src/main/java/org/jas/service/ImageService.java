@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 public interface ImageService {
-	File createTempFile(String prefix) throws IOException;
+	File createTempFile() throws IOException;
 	void write(Image bufferedImage, File file) throws IOException;
 	Image readImage(String imageURL) throws MalformedURLException, IOException;
 }

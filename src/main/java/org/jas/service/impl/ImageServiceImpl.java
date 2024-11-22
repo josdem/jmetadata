@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ import org.jas.service.ImageService;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-	public File createTempFile(String prefix) throws IOException {
-		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
+	public File createTempFile() throws IOException {
+		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
 	}
 
 	public void write(Image bufferedImage, File file) throws IOException {

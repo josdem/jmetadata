@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2014 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,11 +17,14 @@
 package org.jas.helper;
 
 
-import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
 import org.jas.service.impl.ImageServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -29,21 +32,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestImageHelper {
 
-    private static final String PREFIX = "PREFIX";
     private final ImageService imageService = new ImageServiceImpl();
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Test
-    public void shouldCreateTempFile() throws Exception {
-        File tempFile = imageService.createTempFile(StringUtils.EMPTY);
+    @DisplayName("creating a temp file for cover art")
+    public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        File tempFile = imageService.createTempFile();
         assertTrue(tempFile.getName().contains(ApplicationState.PREFIX));
         assertTrue(tempFile.getName().contains(ApplicationState.IMAGE_EXT));
     }
-
-    @Test
-    public void shouldCreateTempFileWithCustomPrefix() throws Exception {
-        File tempFile = imageService.createTempFile(PREFIX);
-        assertTrue(tempFile.getName().contains(PREFIX));
-        assertTrue(tempFile.getName().contains(ApplicationState.IMAGE_EXT));
-    }
-
 }

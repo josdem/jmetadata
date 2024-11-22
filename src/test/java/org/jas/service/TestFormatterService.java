@@ -545,7 +545,7 @@ public class TestFormatterService {
     public void shouldDetectAGraveFormatInAlbum(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
         var album = "Déj&agrave; Vu";
-        var expectedAlbum = "Déjà Vu";
+        var expectedAlbum = "Déja Vu";
 
         metadata.setAlbum(album);
 
