@@ -625,7 +625,7 @@ public class MainWindow extends JFrame {
 
 	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
-			completeMetadataButton = new JButton(ActionResult.Ready.toString());
+			completeMetadataButton = new JButton(ActionResult.Complete.toString());
 			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
 			completeMetadataButton.setEnabled(false);
 			completeMetadataButton.setBounds(COMPLETE_BUTTON_BOUNDS);

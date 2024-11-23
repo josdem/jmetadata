@@ -17,5 +17,5 @@
 package org.jas.action;
 
 public enum ActionResult {
-	Ready, New, Error, Not_Scrobbleable, Sessionless, NotFound, Updated, NotLogged, Sent, Exported
+	Ready, New, Error, Not_Scrobbleable, Sessionless, NotFound, Updated, NotLogged, Sent, Exported, Complete
 }

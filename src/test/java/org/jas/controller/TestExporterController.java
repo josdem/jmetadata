@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,53 +16,63 @@
 
 package org.jas.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.io.IOException;
-
 import org.jas.action.ActionResult;
-import org.jas.controller.ExporterController;
 import org.jas.helper.ExporterHelper;
 import org.jas.model.ExportPackage;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class TestExporterController {
+import java.io.IOException;
 
-	@InjectMocks
-	private ExporterController exporterController = new ExporterController();
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-	@Mock
-	private ExportPackage exportPackage;
-	@Mock
-	private ExporterHelper exporterHelper;
+class TestExporterController {
 
-	@BeforeEach
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
+    @InjectMocks
+    private final ExporterController exporterController = new ExporterController();
 
-	@Test
-	public void shouldSendMetadata() throws Exception {
-		when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
+    @Mock
+    private ExportPackage exportPackage;
+    @Mock
+    private ExporterHelper exporterHelper;
 
-		ActionResult result = exporterController.sendMetadata(exportPackage);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-		verify(exporterHelper).export(exportPackage);
-		assertEquals(ActionResult.Exported, result);
-	}
+    @BeforeEach
+    public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void shouldReportErrorInSendingMetadata() throws Exception {
-		when(exporterHelper.export(exportPackage)).thenThrow(new IOException());
+    @Test
+    @DisplayName("sending metadata")
+    public void shouldSendMetadata(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
 
-		ActionResult result = exporterController.sendMetadata(exportPackage);
+        ActionResult result = exporterController.sendMetadata(exportPackage);
 
-		assertEquals(ActionResult.Error, result);
-	}
+        verify(exporterHelper).export(exportPackage);
+        assertEquals(ActionResult.Exported, result);
+    }
+
+    @Test
+    @DisplayName("reporting error in sending metadata")
+    public void shouldReportErrorInSendingMetadata(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        when(exporterHelper.export(exportPackage)).thenThrow(new IOException());
+
+        ActionResult result = exporterController.sendMetadata(exportPackage);
+
+        assertEquals(ActionResult.Error, result);
+    }
 
 }

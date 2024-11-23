@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class ExporterController {
     @Autowired
     private ExporterHelper exporterHelper;
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMethod(Actions.EXPORT_METADATA)
     public ActionResult sendMetadata(ExportPackage exportPackage) throws CannotReadException, TagException, ReadOnlyFileException, MetadataException {
@@ -46,8 +46,8 @@ public class ExporterController {
             return exporterHelper.export(exportPackage);
         } catch (IOException ioe) {
             log.error(ioe.getMessage(), ioe);
+            return ActionResult.Error;
         }
-        return ActionResult.Error;
     }
 
 }
