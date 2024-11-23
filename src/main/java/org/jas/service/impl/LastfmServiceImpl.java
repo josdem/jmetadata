@@ -49,7 +49,7 @@ public class LastfmServiceImpl implements LastfmService {
 				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
 				return completeService.isSomethingNew(lastfmAlbum, metadata);
 			} else {
-				return ActionResult.Complete;
+				return ActionResult.Ready;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe.getMessage(), mfe);

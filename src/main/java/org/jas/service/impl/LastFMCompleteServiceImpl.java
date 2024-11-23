@@ -147,7 +147,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
 
 	public ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
 		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
-			return ActionResult.Complete;
+			return ActionResult.Ready;
 		}
 		CoverArt coverArt = new CoverArt(lastfmAlbum.getImageIcon(), CoverArtType.LAST_FM);
 		metadata.setNewCoverArt(coverArt);

@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,10 +20,14 @@ import org.jas.action.ActionResult;
 import org.jas.model.Metadata;
 import org.jas.service.DefaultService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +36,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class TestDefaultController {
+class TestDefaultController {
 
     @InjectMocks
-    private DefaultController defaultController = new DefaultController();
+    private final DefaultController defaultController = new DefaultController();
 
     @Mock
     private DefaultService defaultService;
 
-    private List<Metadata> metadatas = new ArrayList<Metadata>();
+    private final List<Metadata> metadatas = new ArrayList<Metadata>();
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {
@@ -48,7 +54,9 @@ public class TestDefaultController {
     }
 
     @Test
-    public void shouldCompleteTracksTotal() throws Exception {
+    @DisplayName("completing total tracks")
+    public void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         when(defaultService.isCompletable(metadatas)).thenReturn(true);
 
         ActionResult result = defaultController.complete(metadatas);
@@ -58,11 +66,13 @@ public class TestDefaultController {
     }
 
     @Test
-    public void shouldNotCompleteTracksTotal() throws Exception {
+    @DisplayName("not completing total tracks")
+    public void shouldNotCompleteTotalTracks(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
         when(defaultService.isCompletable(metadatas)).thenReturn(false);
 
         ActionResult result = defaultController.complete(metadatas);
 
-        assertEquals(ActionResult.Complete, result);
+        assertEquals(ActionResult.Ready, result);
     }
 }

@@ -65,7 +65,7 @@ public class TestFormatterController {
         when(formatterService.wasFormatted(metadata)).thenReturn(false);
         when(formatterService.wasCamelized(metadata)).thenReturn(false);
         ActionResult result = formatterController.format(metadata);
-        assertEquals(ActionResult.Complete, result);
+        assertEquals(ActionResult.Ready, result);
     }
 
 }

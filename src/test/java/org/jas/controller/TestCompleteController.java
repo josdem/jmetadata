@@ -38,11 +38,11 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class TestCompleteController {
+class TestCompleteController {
     private static final String ERROR = "Error";
 
     @InjectMocks
-    private CompleteController controller = new CompleteController();
+    private final CompleteController controller = new CompleteController();
 
     @Mock
     private MetadataWriter metadataWriter;
@@ -81,7 +81,7 @@ public class TestCompleteController {
         when(metadata.getTotalCds()).thenReturn(totalCds);
         when(metadata.getYear()).thenReturn(year);
         when(metadata.getGenre()).thenReturn(genre);
-        when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
+        when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Ready);
     }
 
     @Test

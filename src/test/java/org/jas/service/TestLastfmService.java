@@ -73,7 +73,7 @@ public class TestLastfmService {
         when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(false);
 
         ActionResult result = lastfmService.completeLastFM(metadata);
-        assertEquals(ActionResult.Complete, result);
+        assertEquals(ActionResult.Ready, result);
     }
 
     @Test
@@ -89,10 +89,10 @@ public class TestLastfmService {
     @Test
     public void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
         setCompleteHelperExpectations();
-        when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Complete);
+        when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Ready);
 
         ActionResult result = lastfmService.completeLastFM(metadata);
-        assertEquals(ActionResult.Complete, result);
+        assertEquals(ActionResult.Ready, result);
     }
 
     @Test

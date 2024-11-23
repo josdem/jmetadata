@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,42 +16,34 @@
 
 package org.jas.controller;
 
-import java.util.List;
-import java.io.IOException;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.asmatron.messengine.annotations.RequestMethod;
-
-import org.jaudiotagger.tag.TagException;
+import org.jas.action.ActionResult;
+import org.jas.action.Actions;
+import org.jas.exception.MetadataException;
+import org.jas.model.Metadata;
+import org.jas.service.DefaultService;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import org.jas.action.Actions;
-import org.jas.model.Metadata;
-import org.jas.action.ActionResult;
-import org.jas.service.DefaultService;
-import org.jas.exception.MetadataException;
-
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who completes metadata based in a compilation or album
- */
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class DefaultController {
 
-	@Autowired
-	private DefaultService defaultService;
+    @Autowired
+    private DefaultService defaultService;
 
-	@RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
-	public synchronized ActionResult complete(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-		if (defaultService.isCompletable(metadatas) == true){
-			defaultService.complete(metadatas);
-			return ActionResult.New;
-		}
-		return ActionResult.Complete;
-	}
+    @RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
+    public synchronized ActionResult complete(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
+        if (defaultService.isCompletable(metadatas)) {
+            defaultService.complete(metadatas);
+            return ActionResult.New;
+        }
+        return ActionResult.Ready;
+    }
 
 }

@@ -201,7 +201,7 @@ public class TestLastFMCompleteService {
     @Test
     public void shouldDetectWhenNothingChanged() throws Exception {
         ActionResult actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
-        assertEquals(ActionResult.Complete, actionResult);
+        assertEquals(ActionResult.Ready, actionResult);
     }
 
     @Test
