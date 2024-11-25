@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,15 +16,16 @@
 
 package org.jas.helper;
 
-import org.jas.Auth;
-
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
+import org.jas.Auth;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AuthenticatorHelper {
 
-	public Session getSession(String username, String password) {
-		return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
-	}
+    public Session getSession(String username, String password) {
+        return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
+    }
 
 }

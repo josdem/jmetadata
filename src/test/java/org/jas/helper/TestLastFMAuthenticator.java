@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -28,14 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
-
 class TestLastFMAuthenticator {
 
     @InjectMocks
-    private final LastFMAuthenticator controller = new LastFMAuthenticator();
+    private final LastFMAuthenticator lastFMAuthenticator = new LastFMAuthenticator();
 
     @Mock
     private AuthenticatorHelper authenticatorHelper;
@@ -56,7 +52,7 @@ class TestLastFMAuthenticator {
 
         when(authenticatorHelper.getSession(username, password)).thenReturn(session);
 
-        assertNotNull(controller.login(username, password));
+        assertNotNull(lastFMAuthenticator.login(username, password));
     }
 
     @Test
@@ -64,7 +60,7 @@ class TestLastFMAuthenticator {
         String username = StringUtils.EMPTY;
         String password = StringUtils.EMPTY;
 
-        assertNull(controller.login(username, password));
+        assertNull(lastFMAuthenticator.login(username, password));
     }
 
     @Test
@@ -72,7 +68,7 @@ class TestLastFMAuthenticator {
         String username = StringUtils.EMPTY;
         String password = "somePassword";
 
-        assertNull(controller.login(username, password));
+        assertNull(lastFMAuthenticator.login(username, password));
     }
 
     @Test
@@ -80,7 +76,7 @@ class TestLastFMAuthenticator {
         String username = "someUsername";
         String password = StringUtils.EMPTY;
 
-        assertNull(controller.login(username, password));
+        assertNull(lastFMAuthenticator.login(username, password));
     }
 
     @Test
@@ -88,6 +84,6 @@ class TestLastFMAuthenticator {
         String username = "josdem";
         String password = "invalidPassword";
 
-        assertNull(controller.login(username, password));
+        assertNull(lastFMAuthenticator.login(username, password));
     }
 }
