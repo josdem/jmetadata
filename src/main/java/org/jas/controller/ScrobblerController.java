@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,54 +16,44 @@
 
 package org.jas.controller;
 
-import java.io.IOException;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-
-import org.jas.model.Metadata;
-import org.jas.action.Actions;
 import org.jas.action.ActionResult;
+import org.jas.action.Actions;
 import org.jas.helper.ScrobblerHelper;
-
+import org.jas.model.Metadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-/**
- * @understands A class who manage ALL scrobbler actions
-*/
+import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Controller
 public class ScrobblerController {
 
-	@Autowired
-	private ScrobblerHelper scrobblerHelper;
-	@Autowired
-	private ControlEngineConfigurator configurator;
+    @Autowired
+    private ScrobblerHelper scrobblerHelper;
+    @Autowired
+    private ControlEngineConfigurator configurator;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@PostConstruct
-	public void setup() {
-		scrobblerHelper.setControlEngine(configurator.getControlEngine());
-	}
+    @PostConstruct
+    public void setup() {
+        scrobblerHelper.setControlEngine(configurator.getControlEngine());
+    }
 
-	@RequestMethod(Actions.SEND_METADATA)
-	public ActionResult sendMetadata(Metadata metadata) {
-		try {
-			log.info("Sending scrobbling for: " + metadata.getTitle());
-			return scrobblerHelper.send(metadata);
-		} catch (IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
-		} catch (InterruptedException ine) {
-			log.error(ine.getMessage(), ine);
-		}
-		return ActionResult.Error;
-	}
+    @RequestMethod(Actions.SEND_METADATA)
+    public ActionResult sendMetadata(Metadata metadata) {
+        try {
+            log.info("Sending scrobbling for: {}", metadata.getTitle());
+            return scrobblerHelper.send(metadata);
+        } catch (IOException | InterruptedException ioe) {
+            log.error(ioe.getMessage(), ioe);
+            return ActionResult.Error;
+        }
+    }
 
 }
