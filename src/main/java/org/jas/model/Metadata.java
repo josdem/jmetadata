@@ -16,12 +16,16 @@
 
 package org.jas.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.Image;
 import java.io.File;
 
+@Getter
+@Setter
 public class Metadata implements Comparable<Metadata> {
     private String title;
     private String artist;
@@ -42,140 +46,12 @@ public class Metadata implements Comparable<Metadata> {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public File getFile() {
-        return file;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setBitRate(int bitRate) {
-        this.bitRate = bitRate;
-    }
-
-    public int getBitRate() {
-        return bitRate;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public String getTrackNumber() {
-        return trackNumber;
-    }
-
-    public void setTrackNumber(String trackNumber) {
-        this.trackNumber = trackNumber;
-    }
-
-    public String getTotalTracks() {
-        return totalTracks;
-    }
-
-    public void setTotalTracks(String totalTracks) {
-        this.totalTracks = totalTracks;
-    }
-
-    public void setCdNumber(String cdNumber) {
-        this.cdNumber = cdNumber;
-    }
-
-    public String getCdNumber() {
-        return cdNumber;
-    }
-
-    public void setTotalCds(String totalCds) {
-        this.totalCds = totalCds;
-    }
-
-    public String getTotalCds() {
-        return totalCds;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public Image getCoverArt() {
-        return coverArt;
-    }
-
-    public void setCoverArt(Image artwork) {
-        this.coverArt = artwork;
-    }
-
-    public void setNewCoverArt(CoverArt coverArt) {
-        this.newCoverArt = coverArt;
-    }
-
-    public CoverArt getNewCoverArt() {
-        return newCoverArt;
-    }
-
-    public boolean isMetadataFromFile() {
-        return metadataFromFile;
-    }
-
-    public void setMetadataFromFile(boolean metadataFromFile) {
-        this.metadataFromFile = metadataFromFile;
-    }
-
-    public boolean isOrderByFile() {
-        return orderByFile;
-    }
-
-    public void setOrderByFile(boolean orderByFile) {
-        this.orderByFile = orderByFile;
-    }
-
     public int compareTo(Metadata metadata) {
         if (metadata.isOrderByFile()) {
             return getFile().getName().compareTo(metadata.getFile().getName());
         }
         try {
-            int thisTrackNumber = Integer.parseInt(getTrackNumber());
+            var thisTrackNumber = Integer.parseInt(getTrackNumber());
             return Integer.compare(thisTrackNumber, Integer.parseInt(metadata.getTrackNumber()));
         } catch (NumberFormatException nfe) {
             log.info("Metadata : {} has an incorrect trackNumber: {}", metadata.getTitle(), nfe.getMessage());

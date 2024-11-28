@@ -796,7 +796,7 @@ public class MainWindow extends JFrame {
 		if (metadata.getNewCoverArt() != null) {
 			CoverArt coverArt = metadata.getNewCoverArt();
 			log.info("setting coverArt to: " + coverArt.getType());
-			ImageIcon imageIcon = new ImageIcon(coverArt.getImageIcon());
+			ImageIcon imageIcon = new ImageIcon(coverArt.getImage());
 			imagePanel.add(new JLabel(imageIcon));
 			String label = ApplicationState.COVER_ART_FROM_LASTFM;
 			if (coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)) {
@@ -1081,8 +1081,8 @@ public class MainWindow extends JFrame {
 	}
 
 	private class ExportWorker {
-		private List<Metadata> metadataList;
-		private ExportPackage exportPackage;
+		private final List<Metadata> metadataList;
+		private final ExportPackage exportPackage;
 
 		public ExportWorker(File root) {
 			metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);

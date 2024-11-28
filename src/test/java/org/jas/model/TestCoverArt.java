@@ -40,7 +40,7 @@ class TestCoverArt {
     @Test
     public void shouldCreateAnCoverArt() throws Exception {
         CoverArt coverArt = new CoverArt(imageIcon, CoverArtType.DRAG_AND_DROP);
-        assertEquals(imageIcon, coverArt.getImageIcon());
+        assertEquals(imageIcon, coverArt.getImage());
         assertEquals(CoverArtType.DRAG_AND_DROP, coverArt.getType());
     }
 

@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,34 +16,15 @@
 
 package org.jas.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.Image;
 
+@Getter
+@Setter
 public class LastfmAlbum {
-	private Image imageIcon;
-	private String year;
-	private String genre;
-
-	public Image getImageIcon() {
-		return imageIcon;
-	}
-
-	public void setImageIcon(Image imageIcon) {
-		this.imageIcon = imageIcon;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
+    private Image imageIcon;
+    private String year;
+    private String genre;
 }

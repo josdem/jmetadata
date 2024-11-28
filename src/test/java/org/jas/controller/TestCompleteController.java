@@ -150,7 +150,7 @@ class TestCompleteController {
     @Test
     public void shouldRemoveCoverArt() throws Exception {
         when(metadata.getNewCoverArt()).thenReturn(coverArt);
-        when(coverArt.getImageIcon()).thenReturn(imageIcon);
+        when(coverArt.getImage()).thenReturn(imageIcon);
 
         ActionResult result = controller.completeAlbum(metadata);
 

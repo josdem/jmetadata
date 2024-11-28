@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,30 +17,18 @@
 package org.jas.model;
 
 import de.umass.lastfm.Session;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class User {
-	private final String username;
-	private final String password;
-	private Session session;
+    private final String username;
+    private final String password;
+    private Session session;
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
-	public Session getSession() {
-		return session;
-	}
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

@@ -106,8 +106,8 @@ public class CompleteController {
                 log.info("trying to remove artwork");
                 boolean result = metadataWriter.removeCoverArt();
                 log.info("artwork deleted with result: {}", result);
-                metadataWriter.writeCoverArt(coverArtNew.getImageIcon());
-                metadata.setCoverArt(coverArtNew.getImageIcon());
+                metadataWriter.writeCoverArt(coverArtNew.getImage());
+                metadata.setCoverArt(coverArtNew.getImage());
             }
             return ActionResult.Updated;
         } catch (MetadataException mde) {

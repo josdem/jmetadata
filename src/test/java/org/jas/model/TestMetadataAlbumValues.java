@@ -47,7 +47,7 @@ public class TestMetadataAlbumValues {
         metadataAlbumValues.setTracks(TRACKS);
         metadataAlbumValues.setCd(CD);
         metadataAlbumValues.setCds(CDS);
-        metadataAlbumValues.setCoverart(coverArt);
+        metadataAlbumValues.setCoverArt(coverArt);
 
         assertEquals(ARTIST, metadataAlbumValues.getArtist());
         assertEquals(ALBUM, metadataAlbumValues.getAlbum());
