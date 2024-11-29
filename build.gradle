@@ -27,6 +27,12 @@ ext {
     mockitoAllVersion = '1.10.19'
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -41,10 +47,14 @@ dependencies {
     implementation "javax.xml.bind:jaxb-api:$javaXmlBindVersion"
     implementation "javax.annotation:javax.annotation-api:$javaAnnotationVersion"
     implementation "org.easytesting:fest-swing:$festSwingVersion"
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
     implementation files('lib/JavaMusicbrainz.jar')
     implementation files('lib/last.fm-bindings-0.1.0.jar')
 }

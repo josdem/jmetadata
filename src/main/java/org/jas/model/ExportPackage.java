@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,29 +16,18 @@
 
 package org.jas.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.File;
 import java.util.List;
 
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class ExportPackage {
-	private List<Metadata> metadataList;
-	private final File root;
-
-	public ExportPackage(File root, List<Metadata> metadataList) {
-		this.root = root;
-		this.metadataList = metadataList;
-	}
-
-	public File getRoot() {
-		return root;
-	}
-
-	public List<Metadata> getMetadataList() {
-		return metadataList;
-	}
-
-	public void setMetadataList(List<Metadata> metadatas) {
-		this.metadataList = metadatas;
-	}
-
+    private final File root;
+    private List<Metadata> metadataList;
 }

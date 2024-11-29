@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,80 +16,20 @@
 
 package org.jas.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.Image;
 
+@Getter
+@Setter
 public class MetadataAlbumValues {
-	private String genre;
-	private String album;
-	private String tracks;
-	private String cd;
-	private String cds;
-	private Image coverArt;
-	private String year;
-	private String artist;
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setAlbum(String album) {
-		this.album = album;
-	}
-
-	public String getAlbum() {
-		return album;
-	}
-
-	public void setTracks(String tracks) {
-		this.tracks = tracks;
-	}
-
-	public String getTracks() {
-		return tracks;
-	}
-
-	public void setCd(String cd) {
-		this.cd = cd;
-	}
-
-	public String getCd() {
-		return cd;
-	}
-
-	public void setCds(String cds) {
-		this.cds = cds;
-	}
-
-	public String getCds() {
-		return cds;
-	}
-
-	public void setCoverart(Image coverArt) {
-		this.coverArt = coverArt;
-	}
-
-	public Image getCoverArt() {
-		return coverArt;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-
-	public String getArtist() {
-		return artist;
-	}
-
+    private String genre;
+    private String album;
+    private String tracks;
+    private String cd;
+    private String cds;
+    private Image coverArt;
+    private String year;
+    private String artist;
 }

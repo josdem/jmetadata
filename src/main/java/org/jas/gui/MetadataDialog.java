@@ -382,7 +382,7 @@ public class MetadataDialog extends AllDialog {
 				public void actionPerformed(ActionEvent e) {
 					applyButton.setEnabled(false);
 					MetadataAlbumValues metadataValues = metadataHelper.createMetadataAlbumVaues();
-					metadataValues.setCoverart(coverArt);
+					metadataValues.setCoverArt(coverArt);
 					metadataValues.setArtist(getArtistTextField().getText());
 					metadataValues.setAlbum(getAlbumTextField().getText());
 					metadataValues.setGenre(getGenreTextField().getText());

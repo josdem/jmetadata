@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,23 +16,14 @@
 
 package org.jas.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.awt.Image;
 
+@Getter
+@AllArgsConstructor
 public class CoverArt {
-	private final Image image;
-	private final CoverArtType type;
-
-	public CoverArt(Image image, CoverArtType type){
-		this.image = image;
-		this.type = type;
-	}
-
-	public Image getImageIcon() {
-		return image;
-	}
-
-	public CoverArtType getType() {
-		return type;
-	}
-
+    private final Image image;
+    private final CoverArtType type;
 }
