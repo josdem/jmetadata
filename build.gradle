@@ -16,6 +16,7 @@ java {
 ext {
     audioTaggerVersion = '2.0.3'
     retrofitVersion = '2.11.0'
+    jacksonVersion = '2.17.0'
     junitVersion = '5.7.0'
     slf4jVersion = '2.0.16'
     aspectjVersion = '1.9.22.1'
@@ -45,6 +46,8 @@ dependencies {
     implementation "org.asmatron:messengine:$messengineVersion"
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
     implementation "javax.xml.bind:jaxb-api:$javaXmlBindVersion"
     implementation "javax.annotation:javax.annotation-api:$javaAnnotationVersion"
     implementation "org.easytesting:fest-swing:$festSwingVersion"

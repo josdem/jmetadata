@@ -22,18 +22,25 @@ import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
 import org.jas.exception.MetadataException;
+import org.jas.helper.RetrofitHelper;
 import org.jas.metadata.MetadataWriter;
+import org.jas.model.Category;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
 import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
 import org.jas.service.MusicBrainzFinderService;
+import org.jas.service.RestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import retrofit2.Response;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class CompleteController {
@@ -45,11 +52,27 @@ public class CompleteController {
     @Autowired
     private MusicBrainzFinderService musicBrainzFinderService;
 
+    private RestService restService;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @PostConstruct
+    void setup(){
+        restService = RetrofitHelper.getRetrofit().create(RestService.class);
+    }
 
     @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
     public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
         try {
+            log.info("Getting categories");
+            var response = restService.findByI18n("en");
+            Response<List<Category>> result = response.execute();
+            if (result.isSuccessful()) {
+                List<Category> categories = result.body();
+                categories.forEach(category -> log.info("Category: {}", category.getName()));
+            } else {
+                log.error("Error getting categories: {}", result.errorBody().string());
+            }
             log.info("Trying to complete metadata using MusicBrainz for: {} - {} - {}", metadata.getArtist(), metadata.getTitle(), metadata.getAlbum());
             if (StringUtils.isEmpty(metadata.getAlbum())) {
                 MusicBrainzTrack musicBrainzTrack = musicBrainzFinderService.getAlbum(metadata.getArtist(), metadata.getTitle());
@@ -62,6 +85,8 @@ public class CompleteController {
         } catch (ServerUnavailableException sue) {
             log.error(sue.getMessage(), sue);
             return ActionResult.Error;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
