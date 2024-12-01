@@ -40,7 +40,9 @@ import retrofit2.Response;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CompleteController {
@@ -54,40 +56,46 @@ public class CompleteController {
 
     private RestService restService;
 
+    private final Map<String, List<Category>> cache = new HashMap<>();
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
-    void setup(){
+    void setup() {
         restService = RetrofitHelper.getRetrofit().create(RestService.class);
     }
 
     @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
     public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
         try {
-            log.info("Getting categories");
-            var response = restService.findByI18n("en");
-            Response<List<Category>> result = response.execute();
-            if (result.isSuccessful()) {
-                List<Category> categories = result.body();
-                categories.forEach(category -> log.info("Category: {}", category.getName()));
-            } else {
-                log.error("Error getting categories: {}", result.errorBody().string());
-            }
             log.info("Trying to complete metadata using MusicBrainz for: {} - {} - {}", metadata.getArtist(), metadata.getTitle(), metadata.getAlbum());
             if (StringUtils.isEmpty(metadata.getAlbum())) {
                 MusicBrainzTrack musicBrainzTrack = musicBrainzFinderService.getAlbum(metadata.getArtist(), metadata.getTitle());
                 return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
             } else {
                 log.info("{} - {} has an album: {} I'll try to complete information using MusicBrainz", metadata.getArtist(), metadata.getTitle(), metadata.getAlbum());
-                MusicBrainzTrack musicBrainzTrack = musicBrainzFinderService.getByAlbum(metadata.getTitle(), metadata.getAlbum());
-                return compareTwoObjectsToFindNewData(metadata, musicBrainzTrack);
+
+                if (cache.get(metadata.getAlbum()) == null) {
+                    log.info("Getting categories");
+                    var response = restService.findByI18n("en");
+                    Response<List<Category>> result = response.execute();
+                    if (result.isSuccessful()) {
+                        List<Category> categories = result.body();
+                        cache.put(metadata.getAlbum(), categories);
+                        categories.forEach(category -> log.info("Category: {}", category.getName()));
+                    } else {
+                        log.error("Error getting categories: {}", result.errorBody().string());
+                    }
+                    return ActionResult.New;
+                }
             }
         } catch (ServerUnavailableException sue) {
             log.error(sue.getMessage(), sue);
             return ActionResult.Error;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return ActionResult.Error;
         }
+        return ActionResult.Complete;
     }
 
     private ActionResult compareTwoObjectsToFindNewData(Metadata metadata, MusicBrainzTrack musicBrainzTrack) {
