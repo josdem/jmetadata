@@ -79,7 +79,9 @@ public class CompleteController {
 
                 if (cache.get(metadata.getAlbum()) == null) {
                     log.info("Getting categories");
-                    var response = restService.getReleases(URLStringEncoder.encode(metadata.getAlbum() + "artist:" + metadata.getArtist()));
+                    String encoded = URLStringEncoder.encode(metadata.getAlbum() + "%20AND%20" + "artist:" + metadata.getArtist());
+                    log.info("Encoded: {}", encoded);
+                    var response = restService.getReleases(encoded);
                     Response<MusicBrainzResponse> result = response.execute();
                     if (result.isSuccessful()) {
                         MusicBrainzResponse musicBrainzResponse = result.body();
