@@ -16,27 +16,24 @@
 
 package org.jas.controller;
 
-import com.slychief.javamusicbrainz.ServerUnavailableException;
-import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
 import org.jas.exception.MetadataException;
 import org.jas.metadata.MetadataWriter;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
-import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
-import org.jas.service.MusicBrainzFinderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.awt.*;
+import java.awt.Image;
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class TestCompleteController {
     private static final String ERROR = "Error";
@@ -46,8 +43,6 @@ class TestCompleteController {
 
     @Mock
     private MetadataWriter metadataWriter;
-    @Mock
-    private MusicBrainzFinderService musicBrainzFinderService;
     @Mock
     private Metadata metadata;
     @Mock
@@ -82,50 +77,6 @@ class TestCompleteController {
         when(metadata.getYear()).thenReturn(year);
         when(metadata.getGenre()).thenReturn(genre);
         when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Ready);
-    }
-
-    @Test
-    public void shouldCompleteMetadata() throws Exception {
-        MusicBrainzTrack musicBrainzTrack = setExpectations();
-        when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
-        when(musicBrainzFinderService.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
-
-        ActionResult result = controller.completeAlbumMetadata(metadata);
-
-        verify(metadata).setAlbum(album);
-        verify(metadata).setTrackNumber(trackNumber);
-        verify(metadata).setTotalTracks(totalTracks);
-        assertEquals(ActionResult.New, result);
-    }
-
-    private MusicBrainzTrack setExpectations() {
-        MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-        musicBrainzTrack.setAlbum(album);
-        musicBrainzTrack.setTrackNumber(trackNumber);
-        musicBrainzTrack.setTotalTrackNumber(totalTracks);
-        return musicBrainzTrack;
-    }
-
-    @Test
-    public void shouldDetectAnErrorInService() throws Exception {
-        when(metadata.getAlbum()).thenReturn("");
-        when(musicBrainzFinderService.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
-
-        ActionResult result = controller.completeAlbumMetadata(metadata);
-
-        assertEquals(ActionResult.Error, result);
-    }
-
-    @Test
-    public void shouldNotFoundAlbum() throws Exception {
-        when(metadata.getAlbum()).thenReturn("");
-        MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-        when(musicBrainzFinderService.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
-
-        ActionResult result = controller.completeAlbumMetadata(metadata);
-
-        verify(metadata, never()).setAlbum(album);
-        assertEquals(ActionResult.NotFound, result);
     }
 
     @Test
@@ -168,29 +119,6 @@ class TestCompleteController {
         ActionResult result = controller.completeAlbum(metadata);
 
         assertEquals(ActionResult.Error, result);
-    }
-
-    @Test
-    public void shouldReturnMetadataCompleteAlbumIfHasAlbum() throws Exception {
-        when(metadata.getAlbum()).thenReturn(album);
-        MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-        musicBrainzTrack.setAlbum(album);
-        when(musicBrainzFinderService.getByAlbum(title, album)).thenReturn(musicBrainzTrack);
-
-        ActionResult result = controller.completeAlbumMetadata(metadata);
-
-        assertEquals(ActionResult.New, result);
-    }
-
-    @Test
-    public void shouldReturnNotFoundIfNoHasAlbum() throws Exception {
-        when(metadata.getAlbum()).thenReturn(album);
-        MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-        when(musicBrainzFinderService.getByAlbum(title, album)).thenReturn(musicBrainzTrack);
-
-        ActionResult result = controller.completeAlbumMetadata(metadata);
-
-        assertEquals(ActionResult.NotFound, result);
     }
 
     @Test

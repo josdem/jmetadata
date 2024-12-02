@@ -20,8 +20,6 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Track;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.model.MusicBrainzTrack;
-import org.jas.service.MusicBrainzFinderService;
-import org.jas.service.impl.MusicBrainzFinderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
