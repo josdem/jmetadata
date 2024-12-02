@@ -27,10 +27,12 @@ import org.jas.metadata.MetadataWriter;
 import org.jas.model.Category;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
+import org.jas.model.MusicBrainzResponse;
 import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
 import org.jas.service.MusicBrainzFinderService;
 import org.jas.service.RestService;
+import org.jas.util.URLStringEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class CompleteController {
 
     private RestService restService;
 
-    private final Map<String, List<Category>> cache = new HashMap<>();
+    private final Map<String, MusicBrainzResponse> cache = new HashMap<>();
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -77,12 +79,12 @@ public class CompleteController {
 
                 if (cache.get(metadata.getAlbum()) == null) {
                     log.info("Getting categories");
-                    var response = restService.findByI18n("en");
-                    Response<List<Category>> result = response.execute();
+                    var response = restService.getReleases(URLStringEncoder.encode(metadata.getAlbum() + "artist:" + metadata.getArtist()));
+                    Response<MusicBrainzResponse> result = response.execute();
                     if (result.isSuccessful()) {
-                        List<Category> categories = result.body();
-                        cache.put(metadata.getAlbum(), categories);
-                        categories.forEach(category -> log.info("Category: {}", category.getName()));
+                        MusicBrainzResponse musicBrainzResponse = result.body();
+                        cache.put(metadata.getAlbum(), musicBrainzResponse);
+                        log.info("MusicBrainzResponse: {}", musicBrainzResponse);
                     } else {
                         log.error("Error getting categories: {}", result.errorBody().string());
                     }

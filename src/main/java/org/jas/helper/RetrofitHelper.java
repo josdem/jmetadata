@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
-    private static final String BASE_URL = "https://fruitypedia.josdem.io/";
+    private static final String BASE_URL = "https://musicbrainz.org/ws/2/";
 
     public static Retrofit getRetrofit() {
         return new Retrofit.Builder()
