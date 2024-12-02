@@ -47,7 +47,6 @@ dependencies {
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
     implementation "javax.xml.bind:jaxb-api:$javaXmlBindVersion"
     implementation "javax.annotation:javax.annotation-api:$javaAnnotationVersion"
     implementation "org.easytesting:fest-swing:$festSwingVersion"

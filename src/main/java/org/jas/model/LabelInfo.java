@@ -16,12 +16,12 @@
 
 package org.jas.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
 public class LabelInfo {
-    @JsonProperty("catalog-number")
+    @SerializedName("catalog-number")
     private String catalogNumber;
     private Label label;
 }

@@ -1,16 +1,16 @@
 package org.jas.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
 public class ReleaseGroup {
     private String id;
-    @JsonProperty("type-id")
+    @SerializedName("type-id")
     private String typeId;
-    @JsonProperty("primary-type-id")
+    @SerializedName("primary-type-id")
     private String primaryTypeId;
     private String title;
-    @JsonProperty("primary-type")
+    @SerializedName("primary-type")
     private String primaryType;
 }

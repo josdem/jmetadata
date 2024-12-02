@@ -16,7 +16,7 @@
 
 package org.jas.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.util.List;
@@ -25,20 +25,20 @@ import java.util.List;
 public class Release {
     private String id;
     private int score;
-    @JsonProperty("status-id")
+    @SerializedName("status-id")
     private String statusId;
-    @JsonProperty("packaging-id")
+    @SerializedName("packaging-id")
     private String packagingId;
     private int count;
     private String title;
     private String status;
     private String disambiguation;
     private String packaging;
-    @JsonProperty("text-representation")
+    @SerializedName("text-representation")
     private TextRepresentation textRepresentation;
-    @JsonProperty("artist-credit")
+    @SerializedName("artist-credit")
     private List<ArtistCredit> artistCredit;
-    @JsonProperty("release-group")
+    @SerializedName("release-group")
     private ReleaseGroup releaseGroup;
     private String date;
     private String country;

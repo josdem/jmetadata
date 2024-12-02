@@ -16,14 +16,14 @@
 
 package org.jas.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
 public class Artist {
     private String id;
     private String name;
-    @JsonProperty("sort-name")
+    @SerializedName("sort-name")
     private String sortName;
     private String disambiguation;
 }

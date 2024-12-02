@@ -24,7 +24,6 @@ import org.jas.action.Actions;
 import org.jas.exception.MetadataException;
 import org.jas.helper.RetrofitHelper;
 import org.jas.metadata.MetadataWriter;
-import org.jas.model.Category;
 import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
 import org.jas.model.MusicBrainzResponse;
@@ -32,7 +31,6 @@ import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
 import org.jas.service.MusicBrainzFinderService;
 import org.jas.service.RestService;
-import org.jas.util.URLStringEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +41,6 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -79,9 +76,7 @@ public class CompleteController {
 
                 if (cache.get(metadata.getAlbum()) == null) {
                     log.info("Getting categories");
-                    String encoded = URLStringEncoder.encode(metadata.getAlbum() + "%20AND%20" + "artist:" + metadata.getArtist());
-                    log.info("Encoded: {}", encoded);
-                    var response = restService.getReleases(encoded);
+                    var response = restService.getReleases(metadata.getAlbum() + " AND " + "artist:" + metadata.getArtist());
                     Response<MusicBrainzResponse> result = response.execute();
                     if (result.isSuccessful()) {
                         MusicBrainzResponse musicBrainzResponse = result.body();

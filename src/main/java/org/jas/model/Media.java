@@ -16,14 +16,14 @@
 
 package org.jas.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
 public class Media {
     private String format;
-    @JsonProperty("disc-count")
+    @SerializedName("disc-count")
     private int discCount;
-    @JsonProperty("track-count")
+    @SerializedName("track-count")
     private int trackCount;
 }
