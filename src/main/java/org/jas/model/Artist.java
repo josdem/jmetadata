@@ -25,5 +25,4 @@ public class Artist {
     private String name;
     @SerializedName("sort-name")
     private String sortName;
-    private String disambiguation;
 }

@@ -27,23 +27,23 @@ public class Release {
     private int score;
     @SerializedName("status-id")
     private String statusId;
-    @SerializedName("packaging-id")
-    private String packagingId;
     private int count;
     private String title;
     private String status;
-    private String disambiguation;
-    private String packaging;
     @SerializedName("text-representation")
     private TextRepresentation textRepresentation;
     @SerializedName("artist-credit")
     private List<ArtistCredit> artistCredit;
+    @SerializedName("release-events")
+    private List<ReleaseEvent> releaseEvents;
     @SerializedName("release-group")
     private ReleaseGroup releaseGroup;
     private String date;
     private String country;
     private String barcode;
+    @SerializedName("label-info")
     private List<LabelInfo> labelInfo;
+    @SerializedName("track-count")
     private int trackCount;
     private List<Media> media;
 }
