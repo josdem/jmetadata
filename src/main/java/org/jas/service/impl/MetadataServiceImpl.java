@@ -103,7 +103,13 @@ public class MetadataServiceImpl implements MetadataService {
     public boolean isSameAlbum(List<Metadata> metadatas) {
         var albums = new ArrayList<String>();
         metadatas.forEach(metadata -> albums.add(Objects.requireNonNull(metadata.getAlbum(), "album cannot be null")));
-        return albums.stream().distinct().count() == 1;
+        return albums.stream().distinct().count() == 1 && !metadatas.getFirst().getAlbum().equals(StringUtils.EMPTY);
+    }
+
+    public boolean isSameArtist(List<Metadata> metadatas) {
+        var artists = new ArrayList<String>();
+        metadatas.forEach(metadata -> artists.add(Objects.requireNonNull(metadata.getArtist(), "artist cannot be null")));
+        return artists.stream().distinct().count() == 1 && !metadatas.getFirst().getArtist().equals(StringUtils.EMPTY);
     }
 
 }

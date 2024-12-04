@@ -66,7 +66,7 @@ public class CompleteController {
 
     @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
     public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadatas) {
-        if(!metadataService.isSameAlbum(metadatas)){
+        if(!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
             return ActionResult.Ready;
         }
         try {
