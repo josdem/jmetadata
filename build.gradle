@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'org.jas'
-version = '1.0.3'
+version = '1.0.4'
 
 java {
     toolchain {
@@ -15,6 +15,7 @@ java {
 
 ext {
     audioTaggerVersion = '2.0.3'
+    retrofitVersion = '2.11.0'
     junitVersion = '5.7.0'
     slf4jVersion = '2.0.16'
     aspectjVersion = '1.9.22.1'
@@ -43,7 +44,8 @@ dependencies {
     implementation "org:jaudiotagger:$audioTaggerVersion"
     implementation "org.asmatron:messengine:$messengineVersion"
     implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
-    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "javax.xml.bind:jaxb-api:$javaXmlBindVersion"
     implementation "javax.annotation:javax.annotation-api:$javaAnnotationVersion"
     implementation "org.easytesting:fest-swing:$festSwingVersion"

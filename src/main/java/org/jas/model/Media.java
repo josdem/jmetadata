@@ -14,15 +14,16 @@
    limitations under the License.
 */
 
-package org.jas.service;
+package org.jas.model;
 
-import org.jas.model.MusicBrainzTrack;
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
-import com.slychief.javamusicbrainz.ServerUnavailableException;
-
-public interface MusicBrainzFinderService {
-
-	public MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException;
-	public MusicBrainzTrack getByAlbum(String trackname, String album) throws ServerUnavailableException;
-
+@Data
+public class Media {
+    private String format;
+    @SerializedName("disc-count")
+    private int discCount;
+    @SerializedName("track-count")
+    private int trackCount;
 }

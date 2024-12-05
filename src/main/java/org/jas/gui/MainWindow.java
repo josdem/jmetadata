@@ -895,7 +895,7 @@ public class MainWindow extends JFrame {
 					log.info("setting applyButton to : " + !working);
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
-						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
+						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadataList, new ResponseCallback<ActionResult>() {
 
 							public void onResponse(ActionResult response) {
 								updateStatus(counter++, metadataList.size());

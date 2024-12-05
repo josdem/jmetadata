@@ -19,9 +19,9 @@ package org.jas.service;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.jas.exception.MetadataException;
 import org.jas.exception.TooMuchFilesException;
 import org.jas.helper.MetadataHelper;
-import org.jas.exception.MetadataException;
 import org.jas.metadata.Mp3Reader;
 import org.jas.metadata.Mp4Reader;
 import org.jas.model.Metadata;
@@ -99,6 +99,7 @@ class TestMetadataService {
 
     private static final String ALBUM = "Lemon Flavored Kiss";
     private static final String MY_REMIXES = "My Remixes";
+    private static final String ARTIST = "Raul Islas";
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -213,6 +214,63 @@ class TestMetadataService {
         addMetadatas();
 
         assertFalse(metadataService.isSameAlbum(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating not the same album if empty")
+    public void shouldKnowNotSameAlbumIfEmpty(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+        when(anotherMetadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+
+        addMetadatas();
+        assertFalse(metadataService.isSameAlbum(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating same artist")
+    public void shouldKnowSameArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getArtist()).thenReturn(ARTIST);
+        when(anotherMetadata.getArtist()).thenReturn(ARTIST);
+
+        addMetadatas();
+        assertTrue(metadataService.isSameArtist(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating different artist")
+    public void shouldKnowDifferentArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getArtist()).thenReturn(ARTIST);
+        when(anotherMetadata.getArtist()).thenReturn("Paul Van Dyk");
+
+        addMetadatas();
+
+        assertFalse(metadataService.isSameArtist(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating empty artist")
+    public void shouldKnowWhenMetadataDoesNotHaveArtist(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getArtist()).thenReturn(StringUtils.EMPTY);
+        when(anotherMetadata.getArtist()).thenReturn(ARTIST);
+
+        addMetadatas();
+
+        assertFalse(metadataService.isSameArtist(metadatas));
+    }
+
+    @Test
+    @DisplayName("validating not the same artist if empty")
+    public void shouldKnowNotSameArtistIfEmpty(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(metadata.getArtist()).thenReturn(StringUtils.EMPTY);
+        when(anotherMetadata.getArtist()).thenReturn(StringUtils.EMPTY);
+
+        addMetadatas();
+        assertFalse(metadataService.isSameArtist(metadatas));
     }
 
     @Test
