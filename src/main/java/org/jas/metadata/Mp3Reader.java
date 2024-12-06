@@ -81,8 +81,6 @@ public class Mp3Reader extends MetadataReader {
 			}
 			tag = audioFile.getTag();
 			header = audioFile.getAudioHeader();
-			log.info("tag: " + ToStringBuilder.reflectionToString(tag));
-			log.info("header: " + ToStringBuilder.reflectionToString(header));
 			if(jAudioTaggerCollaborator.isValid(tag, header)){
 				return generateMetadata(file);
 			}
