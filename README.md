@@ -20,5 +20,5 @@ It requires Java JDK 21.
 
 _"As we enjoy great advantages from inventions of others, we should be glad of an opportunity to serve others by any invention of ours; and this we should do freely and generously."_ ~ Benjamin Franklin
 
-[Installers](https://github.com/josdem/jmetadata/wiki/Downloads) | 
+[Install](https://github.com/josdem/jmetadata/wiki/Install) | 
 [Wiki](https://github.com/josdem/jmetadata/wiki)
