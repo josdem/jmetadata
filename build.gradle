@@ -1,16 +1,21 @@
 plugins {
     id 'java'
+    id 'application'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'org.jas'
-version = '1.0.4'
+version = '1.1.0'
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+application {
+    mainClass = 'org.jas.Launcher'
 }
 
 ext {
@@ -57,7 +62,6 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-    implementation files('lib/JavaMusicbrainz.jar')
     implementation files('lib/last.fm-bindings-0.1.0.jar')
 }
 
