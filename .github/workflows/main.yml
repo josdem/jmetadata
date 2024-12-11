@@ -18,18 +18,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'  
-          java-version: '21'     
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3q
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
+          java-version: '21'
+          cache: gradle
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
-
       - name: Build and Test
         run: ./gradlew test
