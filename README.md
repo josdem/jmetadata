@@ -36,7 +36,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Lemeri123"><img src="https://avatars.githubusercontent.com/u/132246079?v=4?s=100" width="100px;" alt="Lemeri123"/><br /><sub><b>Lemeri123</b></sub></a><br /><a href="#infra-Lemeri123" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Lemeri123"><img src="https://avatars.githubusercontent.com/u/132246079?v=4?s=100" width="100px;" alt="Lemeri123"/><br /><sub><b>Lemeri123</b></sub></a><br /><a href="#infra-Lemeri123" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/josdem/jmetadata/commits?author=Lemeri123" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
