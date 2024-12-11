@@ -23,18 +23,20 @@ import org.jas.service.impl.ImageServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 class TestImageHelper {
 
     private final ImageService imageService = new ImageServiceImpl();
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Test
     @DisplayName("creating a temp file for cover art")

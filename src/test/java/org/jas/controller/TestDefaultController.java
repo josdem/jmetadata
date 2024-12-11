@@ -26,8 +26,6 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +33,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 class TestDefaultController {
 
@@ -46,7 +48,6 @@ class TestDefaultController {
 
     private final List<Metadata> metadatas = new ArrayList<Metadata>();
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {

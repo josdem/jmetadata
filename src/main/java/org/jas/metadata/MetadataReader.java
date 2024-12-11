@@ -40,8 +40,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.jas.event.Events;
 import org.jas.model.Metadata;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 /**
 * @undestands A class who gather all common methods getting Metadata
@@ -57,7 +58,6 @@ public abstract class MetadataReader {
 	@Autowired
 	protected ControlEngineConfigurator configurator;
 
-  protected Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public abstract String getGenre();
 	public abstract Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException;

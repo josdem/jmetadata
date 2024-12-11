@@ -219,15 +219,15 @@ import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public final class FileDragSource implements DragGestureListener, DragSourceListener {
 
   private DragSource dragSource;
 	private FileSelection fileSelection;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static void addDragSource(Component c, FileSelection modelSelection) {
 		DragSource dragSource = new DragSource();

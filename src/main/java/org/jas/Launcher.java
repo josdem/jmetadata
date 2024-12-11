@@ -23,8 +23,10 @@ import org.jas.helper.ApplicationContextSingleton;
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -34,7 +36,6 @@ import org.slf4j.LoggerFactory;
 public class Launcher {
 	private static final String HIPECOTECH_LNF = "org.jas.laf.HipecotechLookAndFeel";
 
-  private static final Logger log = LoggerFactory.getLogger(Launcher.class);
 
 	public Launcher(ConfigurableApplicationContext applicationContext) {
 		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);

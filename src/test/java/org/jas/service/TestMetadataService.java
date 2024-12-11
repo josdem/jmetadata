@@ -38,8 +38,6 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +53,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 class TestMetadataService {
 
@@ -101,7 +103,6 @@ class TestMetadataService {
     private static final String MY_REMIXES = "My Remixes";
     private static final String ARTIST = "Raul Islas";
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {

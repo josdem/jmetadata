@@ -19,14 +19,15 @@ package org.jas.util;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
 import org.jas.service.impl.ImageServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public class ImageUtils {
     private ImageService imageService = new ImageServiceImpl();
@@ -34,7 +35,6 @@ public class ImageUtils {
     private FileUtils fileUtils = new FileUtils();
     private static final int THREE_HUNDRED = 300;
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public Image resize(Image image, int width, int height) {
         BufferedImage bufferedImage = (BufferedImage) image;

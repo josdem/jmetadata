@@ -39,8 +39,10 @@ import org.jas.helper.LastFMAlbumHelper;
 import org.jas.service.ImageService;
 import org.jas.service.LastFMCompleteService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 /**
  * @understands A class who evaluates metadata and decides if LastFM can help to complete information
@@ -56,7 +58,6 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
 
   private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public boolean canLastFMHelpToComplete(Metadata metadata) {
 		String artist = metadata.getArtist();

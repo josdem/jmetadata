@@ -23,11 +23,12 @@ import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 
 public class DragAndDropIterators {
-  private static final Logger log = LoggerFactory.getLogger(DragAndDropIterators.class);
 
 	public static DoInListeners<Void, DragOverListener> dragEnter(Point point, DraggedObject draggedObject, boolean validationResult,
 			Container currentFrame) {

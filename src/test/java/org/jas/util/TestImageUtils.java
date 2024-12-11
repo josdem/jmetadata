@@ -26,8 +26,6 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -37,6 +35,10 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 public class TestImageUtils {
 
@@ -56,7 +58,6 @@ public class TestImageUtils {
     @Mock
     private File root;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {

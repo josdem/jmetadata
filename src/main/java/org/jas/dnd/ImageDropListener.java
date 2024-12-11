@@ -26,15 +26,15 @@ import org.jas.observer.ObserverCollection;
 import org.jas.util.Picture;
 import org.jas.util.FileSystemValidatorLight;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public class ImageDropListener implements DropListener {
   private final ImagePanel imagePanel;
 	private static final Class<?>[] classes = new Class<?>[] { Picture.class };
 	private final Observable<ObservValue<ImagePanel>> nombre = new Observable<ObservValue<ImagePanel>>();
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public Class<?>[] handledTypes() {

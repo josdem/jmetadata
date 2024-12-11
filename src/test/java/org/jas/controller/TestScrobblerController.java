@@ -28,14 +28,16 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 class TestScrobblerController {
 
@@ -51,7 +53,6 @@ class TestScrobblerController {
     @Mock
     private ScrobblerHelper scrobblerHelper;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {

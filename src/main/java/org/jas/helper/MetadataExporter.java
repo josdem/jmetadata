@@ -38,8 +38,9 @@ import org.jas.service.MetadataService;
 import org.jas.service.FormatterService;
 import org.jas.exception.MetadataException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @Service
 public class MetadataExporter {
@@ -57,7 +58,6 @@ public class MetadataExporter {
 	@Autowired
 	private FormatterService formatter;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
 		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);

@@ -39,13 +39,14 @@ import javax.swing.JPanel;
 import org.jas.util.Picture;
 import org.jas.util.FileSystemValidatorLight;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public class DragTooltipDialog extends JDialog {
 	private static final String DRAG_DIALOG_NAME = "dragDialog";
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+
 
 	private static final Rectangle DRAG_ICON_BOUNDS = new Rectangle(1, 1, 18, 18);
 	private static final int DEFAULT_MIN_FONT_WIDTH = 4;
