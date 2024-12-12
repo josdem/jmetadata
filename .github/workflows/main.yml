@@ -25,10 +25,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb
 
-      - name: Set up Xvfb
-        run: |
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1024x768x24 &
-
-      - name: Run UI tests
-        run: xvfb-run ./gradlew test
+      - name: Setup xvfb and run tests
+        run: Xvfb :1 -screen 0 1600x1200x24 &
+      - run: ./gradlew test
+        env:
+          DISPLAY: :1
+      - name: Tear down xvfb
+        run: killall Xvfb
