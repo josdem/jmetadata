@@ -31,4 +31,4 @@ jobs:
           Xvfb :99 -screen 0 1024x768x24 &
 
       - name: Run UI tests
-        run: ./gradlew test
+        run: xvfb-run ./gradlew test
