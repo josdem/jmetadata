@@ -2,11 +2,9 @@ name: CI - Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+        branches: ["main"]
 
 jobs:
   build-and-test:
@@ -19,8 +17,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: 'temurin'  
+          java-version: '21'     
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
@@ -32,7 +30,6 @@ jobs:
 
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
-
       - name: Build and Test
         run: ./gradlew test
 
