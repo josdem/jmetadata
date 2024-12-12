@@ -30,8 +30,9 @@ import org.jas.observer.Observer;
 import org.jas.observer.ObservValue;
 import org.springframework.stereotype.Service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @Service
 public class MultiLayerDropTargetListener extends DropTargetAdapter implements Observer<ObservValue<Component>> {
@@ -47,7 +48,6 @@ public class MultiLayerDropTargetListener extends DropTargetAdapter implements O
 
 	private DragAndDropAction currentAction;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public MultiLayerDropTargetListener() {
 		this.draggedObjectFactory = new DraggedObjectFactory();

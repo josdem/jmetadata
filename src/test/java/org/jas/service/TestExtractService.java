@@ -25,13 +25,16 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 class TestExtractService {
 
@@ -42,8 +45,6 @@ class TestExtractService {
 
     @Mock
     private File file;
-
-    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {

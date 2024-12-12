@@ -40,8 +40,9 @@ import org.jas.util.ImageUtils;
 import org.jas.helper.ArtworkHelper;
 import org.jas.helper.AudioFileHelper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 /**
 * @understands A class who knows how to write metadata in a audio file
@@ -54,7 +55,6 @@ public class MetadataWriter {
 	private ImageUtils imageUtils = new ImageUtils();
 	private ArtworkHelper artworkHelper = new ArtworkHelper();
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public void setFile(File file) {
 		try {

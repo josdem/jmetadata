@@ -31,8 +31,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -42,8 +40,10 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-
+import lombok.extern.slf4j.Slf4j;
 @Controller
+
+@Slf4j
 public class MetadataController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class MetadataController {
 
     private List<Metadata> metadataList;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
     @ActionMethod(Actions.GET_METADATA)
     public void getMetadata() {

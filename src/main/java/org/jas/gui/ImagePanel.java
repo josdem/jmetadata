@@ -28,8 +28,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public final class ImagePanel extends JPanel {
 
@@ -39,7 +40,6 @@ public final class ImagePanel extends JPanel {
 	private double arcHeight;
 	private double arcWidth;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public ImagePanel() {
 	}

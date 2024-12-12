@@ -95,8 +95,9 @@ import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
 import org.jas.util.ImageUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 /**
  * @understands A principal JAudioScrobbler principal window
@@ -203,7 +204,6 @@ public class MainWindow extends JFrame {
 	@Autowired
 	private ControlEngineConfigurator controlEngineConfigurator;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public MainWindow() {
 		super(ApplicationState.APPLICATION_NAME);

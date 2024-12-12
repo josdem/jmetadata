@@ -27,8 +27,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JComponent;
 import org.jas.util.MethodWrapper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 public class Jdk6u10TransparencyManager implements TransparencyManager {
 
@@ -38,7 +39,6 @@ public class Jdk6u10TransparencyManager implements TransparencyManager {
 	private MethodWrapper<Boolean> isTranslucencyCapableMethod;
   private MethodWrapper<Boolean> isTranslucencySupportedMethod;
 
-  private static final Logger log = LoggerFactory.getLogger(Jdk6u10TransparencyManager.class);
 
 	public Jdk6u10TransparencyManager() {
 		Class<?> translucencyClass = MethodWrapper.getClass("com.sun.awt.AWTUtilities$Translucency");

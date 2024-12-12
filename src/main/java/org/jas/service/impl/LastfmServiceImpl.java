@@ -28,8 +28,10 @@ import org.jas.action.ActionResult;
 import org.jas.service.LastfmService;
 import org.jas.service.LastFMCompleteService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 /**
  * @understands A class who completes metadata using LastFM service
@@ -41,7 +43,6 @@ public class LastfmServiceImpl implements LastfmService {
 	@Autowired
 	private LastFMCompleteService completeService;
 
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {

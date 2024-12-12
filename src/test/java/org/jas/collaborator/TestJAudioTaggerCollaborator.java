@@ -25,18 +25,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestJAudioTaggerCollaborator {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @InjectMocks
     private final JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();

@@ -22,14 +22,14 @@ import org.jas.action.ActionResult;
 import org.jas.action.Actions;
 import org.jas.helper.ScrobblerHelper;
 import org.jas.model.Metadata;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
+@Slf4j
 @Controller
 public class ScrobblerController {
 
@@ -38,7 +38,7 @@ public class ScrobblerController {
     @Autowired
     private ControlEngineConfigurator configurator;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
     @PostConstruct
     public void setup() {

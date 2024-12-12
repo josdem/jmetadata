@@ -18,18 +18,19 @@ package org.jas.service.impl;
 
 import org.jas.model.Metadata;
 import org.jas.service.ExtractService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 @Service
 public class ExtractServiceImpl implements ExtractService {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public Metadata extractFromFileName(File file) {
         String titleComplete = file.getName();

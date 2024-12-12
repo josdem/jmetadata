@@ -18,14 +18,15 @@ package org.jas.util;
 
 import java.lang.reflect.Method;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 public class MethodWrapper<T> {
 	private final Method method;
 	private final Class<?> returnType;
 
-  private static final Logger log = LoggerFactory.getLogger(MethodWrapper.class);
 
 	public static MethodWrapperBuilderPhase1 forClass(String className) {
 		return new MethodWrapperBuilder(className);

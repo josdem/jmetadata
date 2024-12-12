@@ -28,8 +28,9 @@ import de.umass.lastfm.Album;
 import org.jas.Auth;
 import org.jas.model.GenreTypes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 /**
  * @understands A class who gets album information from LastFM
@@ -37,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class LastFMAlbumHelper {
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Album getAlbum(String artist, String album) {
 		return Album.getInfo(artist, album, Auth.KEY);

@@ -39,8 +39,9 @@ import org.jas.model.Model;
 import org.jas.model.Metadata;
 import org.jas.action.ActionResult;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 /**
 * @understands A class who knows how to send scrobblings
@@ -57,7 +58,6 @@ public class ScrobblerHelper {
 	private static final int DELTA = 120;
 
 	private ControlEngine controlEngine;
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private ActionResult scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);

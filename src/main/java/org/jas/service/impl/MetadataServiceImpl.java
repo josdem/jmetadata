@@ -31,8 +31,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +41,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 @Service
 public class MetadataServiceImpl implements MetadataService {
@@ -64,7 +66,6 @@ public class MetadataServiceImpl implements MetadataService {
 
     private List<Metadata> metadataList;
     private Set<File> filesWithoutMinimumMetadata;
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public List<Metadata> extractMetadata(File root) throws IOException, TooMuchFilesException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
         metadataList = new ArrayList<>();

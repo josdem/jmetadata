@@ -24,13 +24,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 public class TestFormatterService {
     private final FormatterService formatter = new FormatterServiceImpl();
@@ -55,8 +57,6 @@ public class TestFormatterService {
     private final String expectedAlbum = "Vision";
 
     private final Metadata metadata = new Metadata();
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @BeforeEach
     public void setup() throws Exception {
