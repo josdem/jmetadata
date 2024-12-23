@@ -32,8 +32,8 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
     targetDir = "src/main/java/org/jas"
-    lastFMKey = System.getenv("LASTFM_API_KEY")
-    lastFMSecret = System.getenv("LASTFM_API_SECRET")
+    lastFMKey = LASTFM_API_KEY
+    lastFMSecret = LASTFM_API_SECRET
 }
 
 configurations {
