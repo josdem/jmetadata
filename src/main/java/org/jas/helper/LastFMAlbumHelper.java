@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.text.SimpleDateFormat;
 
+import org.jas.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +46,9 @@ public class LastFMAlbumHelper {
 
     public Album getAlbum(String artist, String album) {
         String apiKey = lastFMConfig.getLastFMKey();
+        if(!apiKey.equals(Auth.KEY)){
+            throw new IllegalStateException("Environment variable 'LASTFM_API_KEY' is not valid");
+        }
         return Album.getInfo(artist, album, apiKey);
     }
 

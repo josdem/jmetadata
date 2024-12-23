@@ -18,6 +18,7 @@ package org.jas.helper;
 
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
+import org.jas.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +33,9 @@ public class AuthenticatorHelper {
     public Session getSession(String username, String password) {
         String apiKey = lastFMConfig.getLastFMKey();
         String apiSecret = lastFMConfig.getLastFMSecret();
+        if(!apiKey.equals(Auth.KEY) || !apiSecret.equals(Auth.SECRET)){
+            throw new IllegalStateException("Environment variable 'LASTFM_API_KEY' or 'LASTFM_API_SECRET' are not valid");
+        }
         return Authenticator.getMobileSession(username, password, apiKey, apiSecret);
     }
 }
