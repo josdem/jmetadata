@@ -27,45 +27,33 @@ import org.jas.model.LastfmAlbum;
 import org.jas.action.ActionResult;
 import org.jas.service.LastfmService;
 import org.jas.service.LastFMCompleteService;
-import org.jas.service.config.LastFMConfig;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @understands A class who completes metadata using LastFM service
- */
+@Slf4j
+@Service
+public class LastfmServiceImpl implements LastfmService {
 
- @Slf4j
- @Service
- public class LastfmServiceImpl implements LastfmService {
- 
-	 @Autowired
-	 private LastFMCompleteService completeService;
- 
-	 public synchronized ActionResult completeLastFM(Metadata metadata) {
-		 try {
-			 // Retrieve LastFM API Key and Secret from the environment
-			 String apiKey = LastFMConfig.getLastFMKey();
-			 String apiSecret = LastFMConfig.getLastFMSecret();
- 
-			 log.info("Using LastFM API Key: {}", apiKey); 
- 
-			 if (completeService.canLastFMHelpToComplete(metadata)) {
-				 LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
-				 return completeService.isSomethingNew(lastfmAlbum, metadata);
-			 } else {
-				 return ActionResult.Ready;
-			 }
-		 } catch (MalformedURLException mfe) {
-			 log.error("MalformedURLException: {}", mfe.getMessage(), mfe);
-			 return ActionResult.Error;
-		 } catch (IOException ioe) {
-			 log.error("IOException: {}", ioe.getMessage(), ioe);
-			 return ActionResult.Error;
-		 } catch (IllegalStateException ise) {
-			 log.error("Missing environment variables for LastFM API Key or Secret: {}", ise.getMessage());
-			 return ActionResult.Error;
-		 }
-	 }
- }
- 
+    @Autowired
+    private LastFMCompleteService completeService;
+
+    public synchronized ActionResult completeLastFM(Metadata metadata) {
+        try {
+            if (completeService.canLastFMHelpToComplete(metadata)) {
+                LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
+                return completeService.isSomethingNew(lastfmAlbum, metadata);
+            } else {
+                return ActionResult.Ready;
+            }
+        } catch (MalformedURLException mfe) {
+            log.error("MalformedURLException: {}", mfe.getMessage(), mfe);
+            return ActionResult.Error;
+        } catch (IOException ioe) {
+            log.error("IOException: {}", ioe.getMessage(), ioe);
+            return ActionResult.Error;
+        } catch (IllegalStateException ise) {
+            log.error("Missing environment variables for LastFM API Key or Secret: {}", ise.getMessage());
+            return ActionResult.Error;
+        }
+    }
+}

@@ -21,11 +21,12 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
 import de.umass.lastfm.Album;
 
-import org.jas.Auth;
+import org.jas.config.LastFMConfig;
 import org.jas.model.GenreTypes;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,32 +40,35 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LastFMAlbumHelper {
 
-	public Album getAlbum(String artist, String album) {
-		return Album.getInfo(artist, album, Auth.KEY);
-	}
+    @Autowired
+    private LastFMConfig lastFMConfig;
 
-	public String getYear(Date releaseDate) {
-		if(releaseDate == null){
-			return StringUtils.EMPTY;
-		}
-		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
-		String year = simpleDateformat.format(releaseDate);
-		log.info("Year: " + year);
-		return year;
-	}
+    public Album getAlbum(String artist, String album) {
+        String apiKey = lastFMConfig.getLastFMKey();
+        return Album.getInfo(artist, album, apiKey);
+    }
 
-	public String getGenre(Album album) {
-		Collection<String> tags = album.getTags();
-		Iterator<String> iterator = tags.iterator();
-		while(iterator.hasNext()){
-			String lastFmTag = (String) iterator.next().toLowerCase();
-			log.info("lastFmTag: " + lastFmTag);
-			if(GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN){
-				log.info("lastFmTag matched in GenreTypes: " + GenreTypes.getGenreByName(lastFmTag).getName());
-				return GenreTypes.getGenreByName(lastFmTag).getName();
-			}
-		}
-		return StringUtils.EMPTY;
-	}
+    public String getYear(Date releaseDate) {
+        if (releaseDate == null) {
+            return StringUtils.EMPTY;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+        String year = simpleDateFormat.format(releaseDate);
+        log.info("Year: {}", year);
+        return year;
+    }
 
+    public String getGenre(Album album) {
+        Collection<String> tags = album.getTags();
+        Iterator<String> iterator = tags.iterator();
+        while (iterator.hasNext()) {
+            String lastFmTag = iterator.next().toLowerCase();
+            log.info("lastFmTag: {}", lastFmTag);
+            if (GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN) {
+                log.info("lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
+                return GenreTypes.getGenreByName(lastFmTag).getName();
+            }
+        }
+        return StringUtils.EMPTY;
+    }
 }
