@@ -41,15 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LastFMAlbumHelper {
 
-    @Autowired
-    private LastFMConfig lastFMConfig;
-
     public Album getAlbum(String artist, String album) {
-        String apiKey = lastFMConfig.getLastFMKey();
-        if(!apiKey.equals(Auth.KEY)){
-            throw new IllegalStateException("Environment variable 'LASTFM_API_KEY' is not valid");
-        }
-        return Album.getInfo(artist, album, apiKey);
+        return Album.getInfo(artist, album, Auth.KEY);
     }
 
     public String getYear(Date releaseDate) {
