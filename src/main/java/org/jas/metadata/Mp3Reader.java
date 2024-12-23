@@ -1,6 +1,7 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2024 Jose Morales contact@josdem.io
 
+   Licensed under the Apache License, Version 2.0 (the "License");
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -16,11 +17,7 @@
 
 package org.jas.metadata;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jas.collaborator.JAudioTaggerCollaborator;
 import org.jas.event.Events;
@@ -42,60 +39,61 @@ import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
-* @undestands This class knows how to read metadata from a mp3 file
-*/
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+@Slf4j
 @Service
 public class Mp3Reader extends MetadataReader {
-	@Autowired
-	private AudioFileHelper audioFileHelper;
-	@Autowired
-	private ReaderHelper readerHelper;
-	@Autowired
-	private JAudioTaggerCollaborator jAudioTaggerCollaborator;
+    @Autowired
+    private AudioFileHelper audioFileHelper;
+    @Autowired
+    private ReaderHelper readerHelper;
+    @Autowired
+    private JAudioTaggerCollaborator jAudioTaggerCollaborator;
 
-	private AudioFile audioFile;
+    private AudioFile audioFile;
 
-	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
-		try{
-			audioFile = audioFileHelper.read(file);
-		} catch (InvalidAudioFrameException ina){
-			return null;
-		} catch (FileNotFoundException fnf){
-			log.error("File: " + file.getAbsolutePath() + " Not found");
-			configurator.getControlEngine().fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
-			return null;
-		}
-		if (audioFile instanceof MP3File) {
-			MP3File audioMP3 = (MP3File) audioFile;
-			if (!audioMP3.hasID3v2Tag()) {
-				AbstractID3v2Tag id3v2tag = new ID3v24Tag();
-				audioMP3.setID3v2TagOnly(id3v2tag);
-				try {
-					audioFile.commit();
-				} catch (CannotWriteException cwe) {
-					log.error("An error occurs when I tried to update to ID3 v2");
-					cwe.printStackTrace();
-				}
-			}
-			tag = audioFile.getTag();
-			header = audioFile.getAudioHeader();
-			if(jAudioTaggerCollaborator.isValid(tag, header)){
-				return generateMetadata(file);
-			}
-		}
-		return new Metadata();
-	}
+    public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
+        try {
+            audioFile = audioFileHelper.read(file);
+        } catch (InvalidAudioFrameException ina) {
+            return null;
+        } catch (FileNotFoundException fnf) {
+            log.error("File: " + file.getAbsolutePath() + " Not found");
+            configurator.getControlEngine().fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
+            return null;
+        }
+        if (audioFile instanceof MP3File) {
+            MP3File audioMP3 = (MP3File) audioFile;
+            if (!audioMP3.hasID3v2Tag()) {
+                AbstractID3v2Tag id3v2tag = new ID3v24Tag();
+                audioMP3.setID3v2TagOnly(id3v2tag);
+                try {
+                    audioFile.commit();
+                } catch (CannotWriteException cwe) {
+                    log.error("An error occurs when I tried to update to ID3 v2");
+                    cwe.printStackTrace();
+                }
+            }
+            tag = audioFile.getTag();
+            header = audioFile.getAudioHeader();
+            if (jAudioTaggerCollaborator.isValid(tag, header)) {
+                return generateMetadata(file);
+            }
+        }
+        return new Metadata();
+    }
 
-	@Override
-	public String getGenre() {
-		String tmpGenre = tag.getFirst(FieldKey.GENRE);
-		try {
-			int index = Integer.valueOf(tmpGenre);
-			return GenreTypes.getGenreByCode(index);
-		} catch (NumberFormatException nfe) {
-			return readerHelper.getGenre(tag, tmpGenre);
-		}
-	}
+    @Override
+    public String getGenre() {
+        String tmpGenre = tag.getFirst(FieldKey.GENRE);
+        try {
+            int index = Integer.valueOf(tmpGenre);
+            return GenreTypes.getGenreByCode(index);
+        } catch (NumberFormatException nfe) {
+            return readerHelper.getGenre(tag, tmpGenre);
+        }
+    }
 }
