@@ -37,6 +37,8 @@ jobs:
           DISPLAY: :1
       - name: Tear down xvfb
         run: killall Xvfb
+      - name: Setting LastFM API Key and Secret
+        run: ./gradlew settingCredentials
       - name: Packaging
         run: ./gradlew distZip
       - uses: actions/upload-artifact@v4
