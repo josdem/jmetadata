@@ -32,8 +32,6 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
     targetDir = "src/main/java/org/jas"
-    lastFMKey = LASTFM_API_KEY
-    lastFMSecret = LASTFM_API_SECRET
 }
 
 configurations {
@@ -73,6 +71,6 @@ test {
 }
 
 tasks.register('settingCredentials') {
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${lastFMKey}")
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_SECRET", value: "${lastFMSecret}")
+    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${LASTFM_API_KEY}")
+    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_SECRET", value: "${LASTFM_API_SECRET}")
 }
