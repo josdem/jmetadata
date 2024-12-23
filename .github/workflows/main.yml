@@ -37,3 +37,10 @@ jobs:
           DISPLAY: :1
       - name: Tear down xvfb
         run: killall Xvfb
+      - name: Packaging
+        run: ./gradlew distZip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jmetadata
+          path: build/distributions/
+          retention-days: 30
