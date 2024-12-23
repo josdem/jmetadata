@@ -31,34 +31,29 @@ import org.jas.service.LastFMCompleteService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-
-/**
- * @understands A class who completes metadata using LastFM service
- */
-
 @Service
 public class LastfmServiceImpl implements LastfmService {
 
-	@Autowired
-	private LastFMCompleteService completeService;
+    @Autowired
+    private LastFMCompleteService completeService;
 
-
-	public synchronized ActionResult completeLastFM(Metadata metadata) {
-		try {
-			if (completeService.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
-				return completeService.isSomethingNew(lastfmAlbum, metadata);
-			} else {
-				return ActionResult.Ready;
-			}
-		} catch (MalformedURLException mfe) {
-			log.error(mfe.getMessage(), mfe);
-			return ActionResult.Error;
-		} catch (IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
-			return ActionResult.Error;
-		}
-	}
-
+    public synchronized ActionResult completeLastFM(Metadata metadata) {
+        try {
+            if (completeService.canLastFMHelpToComplete(metadata)) {
+                LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
+                return completeService.isSomethingNew(lastfmAlbum, metadata);
+            } else {
+                return ActionResult.Ready;
+            }
+        } catch (MalformedURLException mfe) {
+            log.error("MalformedURLException: {}", mfe.getMessage(), mfe);
+            return ActionResult.Error;
+        } catch (IOException ioe) {
+            log.error("IOException: {}", ioe.getMessage(), ioe);
+            return ActionResult.Error;
+        } catch (IllegalStateException ise) {
+            log.error("Missing environment variables for LastFM API Key or Secret: {}", ise.getMessage());
+            return ActionResult.Error;
+        }
+    }
 }
