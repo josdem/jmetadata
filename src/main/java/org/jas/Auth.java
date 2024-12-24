@@ -17,6 +17,6 @@
 package org.jas;
 
 public interface Auth {
-	static final String KEY = "KEY";
-	static final String SECRET = "SECRET";
+	static final String KEY = "LASTFM_API_KEY";
+	static final String SECRET = "LASTFM_API_SECRET";
 }

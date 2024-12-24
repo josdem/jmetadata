@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.text.SimpleDateFormat;
 
+import org.jas.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
@@ -40,12 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LastFMAlbumHelper {
 
-    @Autowired
-    private LastFMConfig lastFMConfig;
-
     public Album getAlbum(String artist, String album) {
-        String apiKey = lastFMConfig.getLastFMKey();
-        return Album.getInfo(artist, album, apiKey);
+        return Album.getInfo(artist, album, Auth.KEY);
     }
 
     public String getYear(Date releaseDate) {

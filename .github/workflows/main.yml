@@ -37,3 +37,15 @@ jobs:
           DISPLAY: :1
       - name: Tear down xvfb
         run: killall Xvfb
+      - name: Setting LastFM API Key and Secret
+        run: |
+          echo "LASTFM_API_KEY=$LASTFM_API_KEY" >> gradle.properties
+          echo "LASTFM_API_SECRET=$LASTFM_API_SECRET" >> gradle.properties
+          ./gradlew settingCredentials
+      - name: Packaging
+        run: ./gradlew distZip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jmetadata
+          path: build/distributions/
+          retention-days: 30

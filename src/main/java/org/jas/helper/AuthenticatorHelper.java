@@ -18,20 +18,13 @@ package org.jas.helper;
 
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jas.Auth;
 import org.springframework.stereotype.Component;
-
-import org.jas.config.LastFMConfig;
 
 @Component
 public class AuthenticatorHelper {
 
-    @Autowired
-    private LastFMConfig lastFMConfig;
-
     public Session getSession(String username, String password) {
-        String apiKey = lastFMConfig.getLastFMKey();
-        String apiSecret = lastFMConfig.getLastFMSecret();
-        return Authenticator.getMobileSession(username, password, apiKey, apiSecret);
+        return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
     }
 }
