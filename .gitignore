@@ -7,3 +7,4 @@ lastFm.log
 target/
 build/
 jmetadata.iml
+gradle.properties
