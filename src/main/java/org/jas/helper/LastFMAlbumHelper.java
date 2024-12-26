@@ -16,28 +16,19 @@
 
 package org.jas.helper;
 
+import de.umass.lastfm.Album;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.jas.Auth;
+import org.jas.model.GenreTypes;
+import org.springframework.stereotype.Component;
+
+import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Collection;
-import java.text.SimpleDateFormat;
-
-import org.jas.Auth;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.apache.commons.lang3.StringUtils;
-import de.umass.lastfm.Album;
-
-import org.jas.config.LastFMConfig;
-import org.jas.model.GenreTypes;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-/**
- * @understands A class who gets album information from LastFM
-*/
-
 @Component
 public class LastFMAlbumHelper {
 
