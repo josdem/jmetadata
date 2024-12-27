@@ -26,40 +26,14 @@
 		<int>50</int>
 		<int>50</int>
 	</object>
-	<defaultsProperty key="Color.gray505050" type="idref"
-		value="gray505050" />
+	<defaultsProperty key="Color.gray505050" type="idref" value="gray505050" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="gray646464">
 		<int>64</int>
 		<int>64</int>
 		<int>64</int>
 	</object>
-	<defaultsProperty key="Color.gray646464" type="idref"
-		value="gray646464" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray727272">
-		<int>72</int>
-		<int>72</int>
-		<int>72</int>
-	</object>
-	<defaultsProperty key="Color.gray727272" type="idref"
-		value="gray727272" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray252_252_252">
-		<int>252</int>
-		<int>252</int>
-		<int>252</int>
-	</object>
-	<defaultsProperty key="Color.gray252_252_252" type="idref"
-		value="gray252_252_252" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray240_240_240">
-		<int>240</int>
-		<int>240</int>
-		<int>240</int>
-	</object>
-	<defaultsProperty key="Color.gray240_240_240" type="idref"
-		value="gray240_240_240" />
+	<defaultsProperty key="Color.gray646464" type="idref" value="gray646464" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="searchFontColor">
 		<int>50</int>
