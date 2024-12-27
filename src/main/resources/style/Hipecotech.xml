@@ -40,16 +40,14 @@
 		<int>15</int>
 		<int>50</int>
 	</object>
-	<defaultsProperty key="Search.fontColor" type="idref"
-		value="searchFontColor" />
+	<defaultsProperty key="Search.fontColor" type="idref" value="searchFontColor" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="tableGridColor">
 		<int>77</int>
 		<int>77</int>
 		<int>77</int>
 	</object>
-	<defaultsProperty key="Table.gridColor" type="idref"
-		value="tableGridColor" />
+	<defaultsProperty key="Table.gridColor" type="idref" value="tableGridColor" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="gray170_170_170">
 		<int>170</int>
