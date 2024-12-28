@@ -448,33 +448,11 @@
 		</state>
 	</style>
 	<bind style="dragPanelPermittedStyle" type="name" key="dragPermittedPanel" />
-	<style id="trackIconDragStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/dnd/drag-track.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="trackIconDragStyle" type="name" key="dragTrack" />
 
-	<style id="playlistIconDragStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/dnd/drag-playlist.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="playlistIconDragStyle" type="name" key="dragPlaylist" />
-	<style id="folderIconDragStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/dnd/drag-folder.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="folderIconDragStyle" type="name" key="dragFolder" />
 	<style id="dragDialogStyle">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state>
-			<imagePainter method="panelBackground" sourceInsets="9 9 7 7"
-				path="/images/dnd/drag-box.png" />
+			<imagePainter method="panelBackground" sourceInsets="9 9 7 7" path="/images/dnd/drag-box.png" />
 		</state>
 	</style>
 	<bind style="dragDialogStyle" type="name" key="dragDialog" />
@@ -482,8 +460,7 @@
 	<style id="dragContactDialogStyle">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state>
-			<imagePainter method="panelBackground" sourceInsets="6 6 6 6"
-				path="/images/dnd/drag-box.png" />
+			<imagePainter method="panelBackground" sourceInsets="6 6 6 6" path="/images/dnd/drag-box.png" />
 		</state>
 	</style>
 	<bind style="dragContactDialogStyle" type="name" key="dragContactDialog" />
@@ -533,20 +510,10 @@
 	</style>
 	<bind style="plainFont12Purple130_60_165Style" type="name" key="plainFont12Purple130_60_165" />
 
-	<style id="myMusicDnDPanelStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/dnd/myMusicDnDPanel.png" />
-		</state>
-	</style>
-	<bind style="myMusicDnDPanelStyle" type="name" key="myMusicDnDPanel" />
-	
 	<style id="bigDnDImageStyle">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/dnd/drag_300.png" />
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0" path="/images/dnd/drag_300.png" />
 		</state>
 	</style>
 	<bind style="bigDnDImageStyle" type="name" key="bigDnDImagePanel" />
@@ -554,11 +521,12 @@
 	<style id="smallDnDImageStyle">
 		<insets top="0" left="0" right="0" bottom="0" />
 		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/dnd/drag_150.png" />
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0" path="/images/dnd/drag_150.png" />
 		</state>
 	</style>
 	<bind style="smallDnDImageStyle" type="name" key="smallDnDImagePanel" />
+
+	<!-- HERE -->
 
 	<imageIcon id="myMusicDndArrow" path="/images/dnd/flechaMorada.png" />
 	<defaultsProperty key="icons.myMusicDndArrow" type="idref"
