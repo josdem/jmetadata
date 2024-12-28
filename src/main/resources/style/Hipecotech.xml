@@ -77,46 +77,6 @@
 	</object>
 	<defaultsProperty key="Color.blue175_205_225" type="idref" value="blue175_205_225" />
 
-	<object class="javax.swing.plaf.ColorUIResource" id="tableReferenceTrackForegroundColor">
-		<int>130</int>
-		<int>130</int>
-		<int>130</int>
-	</object>
-	<defaultsProperty key="Table.foregroundReferenceTrackColor"
-		type="idref" value="tableReferenceTrackForegroundColor" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="mailTableAlternateColor">
-		<int>240</int>
-		<int>239</int>
-		<int>239</int>
-	</object>
-	<defaultsProperty key="mailTable.alternateColor" type="idref"
-		value="mailTableAlternateColor" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="mailSelectedColor">
-		<int>200</int>
-		<int>200</int>
-		<int>200</int>
-	</object>
-	<defaultsProperty key="mailTable.selectedColor" type="idref"
-		value="mailSelectedColor" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="mailTableHeaderColor">
-		<int>224</int>
-		<int>224</int>
-		<int>224</int>
-	</object>
-	<defaultsProperty key="mailTable.headerColor" type="idref"
-		value="mailTableHeaderColor"></defaultsProperty>
-
-	<object class="javax.swing.plaf.ColorUIResource" id="mailTableBorderColor">
-		<int>149</int>
-		<int>149</int>
-		<int>149</int>
-	</object>
-	<defaultsProperty key="mailTable.borderColor" type="idref"
-		value="mailTableBorderColor" />
-
 	<object class="javax.swing.plaf.ColorUIResource" id="purple8233117">
 		<int>82</int>
 		<int>33</int>
