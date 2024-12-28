@@ -289,14 +289,6 @@
 	</style>
 	<bind style="List" type="region" key="List" />
 
-	<style id="boldItalicFont11Gray77_77_77Style">
-		<state>
-			<font name="Dialog" size="11" style="BOLD ITALIC" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME" key="boldItalicFont11Gray77_77_77" />
-
 	<style id="artistTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
