@@ -151,43 +151,6 @@
 	<defaultsProperty key="icons.createAccountBullet" type="idref" value="createAccountBullet" />
 	<defaultsProperty key="Tree.background" type="idref" value="treeBackgroundColor" />
 
-	<style id="boldItalicFont12Purple320f32Style">
-		<state>
-			<font name="Dialog" size="12" style="BOLD ITALIC" />
-			<color value="#320f32" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="boldItalicFont12Purple320f32Style" type="NAME" key="boldItalicFont12Purple320f32" />
-
-	<style id="tooltip" clone="defaultStyle">
-		<insets top="2" left="10" bottom="2" right="10" />
-		<state>
-			<font name="dialog" size="11" style="BOLD" />
-			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<imagePainter method="tooltipBackground" path="/images/tooltip/tooltip.png"
-				sourceInsets="5 10 5 10" />
-		</state>
-	</style>
-	<bind style="tooltip" type="region" key="ToolTip" />
-
-	<style id="backPanelStyle">
-		<opaque value="TRUE" />
-		<state>
-			<imagePainter method="RootPaneBackground" path="/images/dialog/BackPanel.png"
-				sourceInsets="25 25 14 14" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="backPanelStyle" type="name" key="RootPane" />
-
-	<style id="backgroundPanelStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="defaultBgDescPanel" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="backgroundPanelStyle" type="name" key="backgroundPanel" />
-
 	<style id="popUpMenuStyle">
 		<opaque value="TRUE"></opaque>
 		<font idref="defaultFont" />
