@@ -528,13 +528,6 @@
 
 	<!-- HERE -->
 
-	<imageIcon id="myMusicDndArrow" path="/images/dnd/flechaMorada.png" />
-	<defaultsProperty key="icons.myMusicDndArrow" type="idref"
-		value="myMusicDndArrow" />
-
-	<imageIcon id="myMusicDndArrowWhite" path="/images/dnd/flechaBlanca.png" />
-	<defaultsProperty key="icons.myMusicDndArrowWhite" type="idref" value="myMusicDndArrowWhite" />
-
 	<style id="headerBlackPanelStyle">
 		<state>
 			<color id="blackBg" value="BLACK" type="BACKGROUND" />
