@@ -526,8 +526,6 @@
 	</style>
 	<bind style="smallDnDImageStyle" type="name" key="smallDnDImagePanel" />
 
-	<!-- HERE -->
-
 	<style id="headerBlackPanelStyle">
 		<state>
 			<color id="blackBg" value="BLACK" type="BACKGROUND" />
@@ -599,20 +597,6 @@
 			value="highlightTreeNodeIcon" />
 	</style>
 
-	<style id="emailFontStyle">
-		<state>
-			<font name="Dialog" size="12" style="BOLD ITALIC" />
-		</state>
-	</style>
-	<bind style="emailFontStyle" type="name" key="emailFont" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="contactTreeHiglightFillColor">
-		<int>193</int>
-		<int>171</int>
-		<int>218</int>
-	</object>
-	<defaultsProperty key="contactTreeHiglightFillColor" type="idref" value="contactTreeHiglightFillColor" />
-
 	<!-- MAIN FRAME Buttons Styles -->
 	<!--style for the close window button -->
 	<style id="closeMainWindowStyle">
@@ -634,73 +618,8 @@
 		</state>
 	</style>
 	<bind style="closeMainWindowStyle" type="name" key="closeWindowButton" />
-	<!--end style for the close window button -->
 
-	<!--style for the maximize window button -->
-	<style id="maximizeMainWindowStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MaximizePressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MaximizeMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MaximizeDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/window/MaximizeNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="maximizeMainWindowStyle" type="name" key="maximizeWindowButton" />
-	<!--end style for the maximize window button -->
-
-	<!--style for the minimize window button -->
-	<style id="minimizeMainWindowStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MinimizePressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MinimizeMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/window/MinimizeDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/window/MinimizeNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="minimizeMainWindowStyle" type="name" key="minimizeWindowButton" />
-	<!--end style for the minimize window button -->
-
-	<!--style for the restore window button -->
-	<style id="restoreMainWindowStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/window/RestorePressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/window/RestoreMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/window/RestoreDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/window/RestoreNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="restoreMainWindowStyle" type="name" key="restoreWindowButton" />
-	<!--end style for the minimize window button -->
+	<!-- HERE -->
 
 	<style id="backgroundContentPaneStyle">
 		<state>
