@@ -226,7 +226,6 @@
 	</style>
 	<bind style="scrollBarThumbStyle" type="REGION" key="ScrollBarThumb" />
 
-
 	<!-- Define BackGround from Scrollbar -->
 	<style id="scrollbarTrackStyle">
 		<state>
@@ -247,110 +246,6 @@
 		<property key="ScrollBar.squareButtons" type="Boolean" value="true" />
 	</style>
 	<bind style="scrollBarStyle" type="REGION" key="ScrollBar" />
-
-	<style id="List">
-		<insets top="0" left="5" bottom="0" right="0" />
-		<property key="List.rendererUseUIBorder" type="boolean"
-			value="true" />
-		<property key="List.rendererUseListColors" type="boolean"
-			value="true" />
-		<state value="SELECTED">
-			<color type="TEXT_FOREGROUND" value="#000000" />
-			<color type="TEXT_BACKGROUND" value="#CCCCCC" />
-		</state>
-		<state value="ENABLED">
-			<color type="BACKGROUND" value="#FFFFFF" />
-		</state>
-		<state value="DISABLED">
-			<color type="BACKGROUND" value="#EEE0D0" />
-		</state>
-	</style>
-	<bind style="List" type="region" key="List" />
-
-	<style id="boldItalicFont11Gray77_77_77Style">
-		<state>
-			<font name="Dialog" size="11" style="BOLD ITALIC" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME" key="boldItalicFont11Gray77_77_77" />
-
-	<style id="artistTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="artistTextFieldStyle" type="name" key="artistTextField" />
-
-	<style id="albumTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="albumTextFieldStyle" type="name" key="albumTextField" />
-
-	<style id="genreTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="genreTextFieldStyle" type="name" key="genreTextField" />
-
-	<style id="yearTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="yearTextFieldStyle" type="name" key="yearTextField" />
-
-	<style id="tracksTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="tracksTextFieldStyle" type="name" key="tracksTextField" />
-
-	<style id="cdTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="cdTextFieldStyle" type="name" key="cdTextField" />
-
-	<style id="cdsTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="cdsTextFieldStyle" type="name" key="cdsTextField" />
 
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
