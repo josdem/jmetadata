@@ -247,11 +247,6 @@
 	</style>
 	<bind style="scrollBarStyle" type="REGION" key="ScrollBar" />
 
-	<style id="infoAlertIcon">
-		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
-		<defaultsProperty key="Info.alertIcon" type="idref" value="alertIcon" />
-	</style>
-
 	<style id="menuBarStyle">
 		<insets top="0" left="16" bottom="0" right="0" />
 		<state>
@@ -260,15 +255,6 @@
 		</state>
 	</style>
 	<bind style="menuBarStyle" type="REGION" key="menuBar" />
-
-	<style id="loginMenuBarStyle">
-		<insets top="0" left="16" bottom="0" right="0" />
-		<state>
-			<imagePainter method="menuBarBackground"
-				path="/images/menu/loginMenuBarBackground.png" sourceInsets="1 13 0 13" />
-		</state>
-	</style>
-	<bind style="loginMenuBarStyle" type="NAME" key="loginMenuBar" />
 
 	<style id="menuParentStyle">
 		<state value="SELECTED">
@@ -285,6 +271,8 @@
 		</state>
 	</style>
 	<bind style="menuParentStyle" type="NAME" key="parentMenu" />
+
+	<!-- HERE -->
 
 	<style id="menuItemStyle">
 		<state value="MOUSE_OVER">
