@@ -49,61 +49,33 @@
 	</object>
 	<defaultsProperty key="Table.gridColor" type="idref" value="tableGridColor" />
 
-	<object class="javax.swing.plaf.ColorUIResource" id="gray170_170_170">
-		<int>170</int>
-		<int>170</int>
-		<int>170</int>
-	</object>
-	<defaultsProperty key="Color.gray170_170_170" type="idref"
-		value="gray170_170_170" />
-
 	<object class="javax.swing.plaf.ColorUIResource" id="grid150_150_150">
 		<int>150</int>
 		<int>150</int>
 		<int>150</int>
 	</object>
-	<defaultsProperty key="Color.grid150_150_150" type="idref"
-		value="grid150_150_150" />
+	<defaultsProperty key="Color.grid150_150_150" type="idref" value="grid150_150_150" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="clearGray245_245_245">
 		<int>245</int>
 		<int>245</int>
 		<int>245</int>
 	</object>
-	<defaultsProperty key="Color.clearGray245_245_245"
-		type="idref" value="clearGray245_245_245" />
+	<defaultsProperty key="Color.clearGray245_245_245" type="idref" value="clearGray245_245_245" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="white255_255_255">
 		<int>255</int>
 		<int>255</int>
 		<int>255</int>
 	</object>
-	<defaultsProperty key="Color.white255_255_255" type="idref"
-		value="white255_255_255" />
+	<defaultsProperty key="Color.white255_255_255" type="idref" value="white255_255_255" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="blue175_205_225">
 		<int>175</int>
 		<int>205</int>
 		<int>225</int>
 	</object>
-	<defaultsProperty key="Color.blue175_205_225" type="idref"
-		value="blue175_205_225" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray77_77_77">
-		<int>77</int>
-		<int>77</int>
-		<int>77</int>
-	</object>
-	<defaultsProperty key="Color.gray77_77_77" type="idref"
-		value="gray77_77_77" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray210_210_210">
-		<int>210</int>
-		<int>210</int>
-		<int>210</int>
-	</object>
-	<defaultsProperty key="Color.gray210_210_210" type="idref"
-		value="gray210_210_210" />
+	<defaultsProperty key="Color.blue175_205_225" type="idref" value="blue175_205_225" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="tableReferenceTrackForegroundColor">
 		<int>130</int>
