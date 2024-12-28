@@ -426,37 +426,6 @@
 	</style>
 	<bind style="menuItemStyle" type="REGION" key="menuItem" />
 
-	<style id="menuAcceleratorStyle">
-		<state value="MOUSE_OVER">
-			<font name="Dialog" size="10" style="BOLD" />
-			<color value="WHITE" type="TEXT_FOREGROUND" />
-		</state>
-		<state value="DISABLED">
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="GRAY" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<insets top="5" left="0" bottom="5" right="8"></insets>
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="BLACK" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="menuAcceleratorStyle" type="REGION" key="MenuItemAccelerator" />
-
-	<style id="progresSliderStyle">
-		<property key="Slider.thumbWidth" type="Integer" value="6" />
-		<property key="Slider.thumbHeight" type="Integer" value="6" />
-		<property key="Slider.trackBorder" type="Integer" value="0" />
-		<property key="Slider.paintValue" type="Boolean" value="false" />
-		<insets top="1" left="1" right="1" bottom="1" />
-		<state>
-			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgresSliderPainter" />
-			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
-			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
-		</state>
-	</style>
-	<bind style="progresSliderStyle" type="name" key="progresSlider" />
-
 	<style id="dragIconNotAllowedStyle">
 		<!-- opaque value="FALSE" /> -->
 		<state>
