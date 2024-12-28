@@ -103,16 +103,7 @@
 		<int>240</int>
 		<int>240</int>
 	</object>
-	<defaultsProperty key="Color.240_240_240" type="idref"
-		value="color_240_240_240" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="purple12040140">
-		<int>120</int>
-		<int>40</int>
-		<int>140</int>
-	</object>
-	<defaultsProperty key="Color.purple12040140" type="idref"
-		value="purple12040140" />
+	<defaultsProperty key="Color.240_240_240" type="idref" value="color_240_240_240" />
 
 
 	<object class="javax.swing.plaf.ColorUIResource" id="gray909090">
@@ -120,72 +111,35 @@
 		<int>90</int>
 		<int>90</int>
 	</object>
-	<defaultsProperty key="Color.gray909090" type="idref"
-		value="gray909090" />
+	<defaultsProperty key="Color.gray909090" type="idref" value="gray909090" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="color_51_17_41">
 		<int>51</int>
 		<int>17</int>
 		<int>41</int>
 	</object>
-	<defaultsProperty key="Color.color_51_17_41" type="idref"
-		value="color_51_17_41" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="purple662D91">
-		<int>102</int>
-		<int>45</int>
-		<int>145</int>
-	</object>
-	<defaultsProperty key="Color.purple662D91" type="idref"
-		value="purple662D91" />
+	<defaultsProperty key="Color.color_51_17_41" type="idref" value="color_51_17_41" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="purple12040140">
 		<int>120</int>
 		<int>40</int>
 		<int>140</int>
 	</object>
-	<defaultsProperty key="Color.purple12040140" type="idref"
-		value="purple12040140" />
+	<defaultsProperty key="Color.purple12040140" type="idref" value="purple12040140" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="purple8030110">
 		<int>80</int>
 		<int>30</int>
 		<int>110</int>
 	</object>
-	<defaultsProperty key="Color.purple8030110" type="idref"
-		value="purple8030110" />
+	<defaultsProperty key="Color.purple8030110" type="idref" value="purple8030110" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="black515151">
 		<int>51</int>
 		<int>51</int>
 		<int>51</int>
 	</object>
-	<defaultsProperty key="Color.black515151" type="idref"
-		value="black515151" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="blue160200240">
-		<int>160</int>
-		<int>200</int>
-		<int>240</int>
-	</object>
-	<defaultsProperty key="Color.blue160200240" type="idref"
-		value="blue160200240" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="gray190_190_190">
-		<int>190</int>
-		<int>190</int>
-		<int>190</int>
-	</object>
-	<defaultsProperty key="Color.gray190_190_190" type="idref"
-		value="gray190_190_190" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="purple149_128_174">
-		<int>149</int>
-		<int>128</int>
-		<int>174</int>
-	</object>
-	<defaultsProperty key="Color.purple149_128_174" type="idref"
-		value="purple149_128_174" />
+	<defaultsProperty key="Color.black515151" type="idref" value="black515151" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="treeBackgroundColor">
 		<int>235</int>
@@ -193,11 +147,8 @@
 		<int>245</int>
 	</object>
 
+	<defaultsProperty key="icons.createAccountBullet" type="idref" value="createAccountBullet" />
 	<imageIcon id="createAccountBullet" path="/images/login/createAccountBullet.png" />
-
-	<defaultsProperty key="icons.createAccountBullet"
-		type="idref" value="createAccountBullet" />
-
 	<imageIcon id="loaderAnimationFrame1" path="/images/loader/loader0001.png" />
 	<imageIcon id="loaderAnimationFrame2" path="/images/loader/loader0002.png" />
 	<imageIcon id="loaderAnimationFrame3" path="/images/loader/loader0003.png" />
