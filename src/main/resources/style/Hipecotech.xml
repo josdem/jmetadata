@@ -619,12 +619,9 @@
 	</style>
 	<bind style="closeMainWindowStyle" type="name" key="closeWindowButton" />
 
-	<!-- HERE -->
-
 	<style id="backgroundContentPaneStyle">
 		<state>
-			<imagePainter method="panelBackground" path="/colors/color_777777.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="panelBackground" path="/colors/color_777777.png" sourceInsets="0 0 0 0" />
 		</state>
 	</style>
 	<bind style="backgroundContentPaneStyle" type="name" key="backgroundContentPane" />
@@ -698,77 +695,11 @@
 	</style>
 	<bind style="buttonStyle" type="name" key="button[A-Za-z0-9]+" />
 
-	<style id="privacyTextAreaStyle">
-		<font name="Dialog" size="10" style="PLAIN" />
-		<state>
-			<imagePainter method="textAreaBackground" path="/colors/color_E5E5E4.png"
-				sourceInsets="0 0 0 0" />
-			<imagePainter method="panelBackground" path="/colors/color_E5E5E4.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="privacyTextAreaStyle" type="name" key="privacyTextArea" />
 
-	<style id="privacyLabelStyle">
-		<state value="MOUSE_OVER">
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="#969696" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="privacyLabelStyle" type="name" key="privacyLabel" />
 
-	<style id="plainFont10Gray77_77_77Style">
-		<state>
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="plainFont10Gray77_77_77Style" type="name"
-		key="plainFont10Gray77_77_77" />
 
-	<style id="boldFont14Gray77_77_77Style">
-		<state>
-			<font name="Dialog" size="14" style="PLAIN" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="boldFont14Gray77_77_77Style" type="name"
-		key="boldFont14Gray77_77_77" />
 
-	<style id="boldFont11Gray77_77_77Style">
-		<state>
-			<font name="Dialog" size="11" style="BOLD" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="boldFont11Gray77_77_77Style" type="name"
-		key="boldFont11Gray77_77_77" />
 
-	<style id="plainFont11_50_15_50Style">
-		<state>
-			<font name="Dialog" size="11" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" idref="searchFontColor" />
-		</state>
-	</style>
-	<bind style="plainFont11_50_15_50Style" type="name" key="plainFont11_50_15_50" />
-
-	<object class="javax.swing.plaf.ColorUIResource" id="newAccountTextForegroundColor">
-		<int>77</int>
-		<int>77</int>
-		<int>77</int>
-	</object>
-	<defaultsProperty key="newAccount.textForegroundColor" type="idref" value="newAccountTextForegroundColor" />
-
-	<style id="plainFont12Gray51_51_51Style">
-		<font name="Dialog" size="12" style="PLAIN" />
-		<color type="TEXT_FOREGROUND" value="#333333" />
-		<opaque value="FALSE" />
-	</style>
-	<bind style="plainFont12Gray51_51_51Style" type="name" key="plainFont12Gray51_51_51" />
 
 	<style id="roundedBlackTransparentBackgroundLabelStyle">
 		<insets top="5" left="5" right="5" bottom="5" />
