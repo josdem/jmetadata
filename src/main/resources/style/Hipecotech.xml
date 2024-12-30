@@ -536,7 +536,7 @@
 
 	<style id="TableHeaderStyle">
 		<state>
-			<object id="tableHeaderPanelPainter" class="org.jas.laf.painter.TableHeaderPanelPainter" />
+			<object id="tableHeaderPanelPainter" class="com.josdem.jmetadata.laf.painter.TableHeaderPanelPainter" />
 			<imagePainter method="panelBackground" idref="tableHeaderPanelPainter" />
 		</state>
 	</style>
@@ -729,7 +729,7 @@
 		<property key="Slider.trackBorder" type="Integer" value="0" />
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
-			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBigBarPainter" />
+			<object id="progresSliderPainter" class="com.josdem.jmetadata.laf.painter.ProgressBigBarPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
