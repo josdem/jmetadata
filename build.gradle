@@ -15,7 +15,7 @@ java {
 }
 
 application {
-    mainClass = 'org.jas.Launcher'
+    mainClass = 'com.josdem.jmetadata.Launcher'
 }
 
 ext {
@@ -31,7 +31,7 @@ ext {
     commonsLangVersion = '3.12.0'
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
-    targetDir = "src/main/java/org/jas"
+    targetDir = "src/main/java/com/josdem/jmetadata"
 }
 
 configurations {
