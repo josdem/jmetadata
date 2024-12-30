@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class AfterThrowingAdvice {
 
-  @AfterThrowing(pointcut = "execution(* org.jas.service..**.*(..))", throwing = "ex")
+  @AfterThrowing(pointcut = "execution(* com.josdem.jmetadata.service..**.*(..))", throwing = "ex")
   public void doRecoveryActions(RuntimeException ex){
     log.info("Wrapping exception: {}", String.valueOf(ex));
     throw new BusinessException(ex.getMessage(), ex);
