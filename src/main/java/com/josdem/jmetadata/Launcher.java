@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 public class Launcher {
-	private static final String HIPECOTECH_LNF = "org.jas.laf.HipecotechLookAndFeel";
+	private static final String HIPECOTECH_LNF = "com.josdem.jmetadata.laf.HipecotechLookAndFeel";
 
 
 	public Launcher(ConfigurableApplicationContext applicationContext) {
