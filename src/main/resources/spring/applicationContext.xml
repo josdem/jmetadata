@@ -21,7 +21,7 @@
 		<constructor-arg ref="applicationEngine" />
 	</bean>
 	
-	<bean id="loginWindow" class="org.jas.gui.LoginWindow" />
-	<bean id="mainWindow" class="org.jas.gui.MainWindow" />
+	<bean id="loginWindow" class="com.josdem.jmetadata.gui.LoginWindow" />
+	<bean id="mainWindow" class="com.josdem.jmetadata.gui.MainWindow" />
 	
 </beans>
