@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.service;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
@@ -32,14 +33,17 @@ import org.mockito.MockitoAnnotations;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @Slf4j
 public class MusicBrainzServiceTest {
+
+    private final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";
 
     @InjectMocks
     private final MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
@@ -47,31 +51,43 @@ public class MusicBrainzServiceTest {
     @Mock
     private RestService restService;
 
+    @Mock
+    private Call<Album> call;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
+        MusicBrainzResponse musicBrainzResponse = getExpectedResponse();
+        ApplicationState.cache.put("Night Life", musicBrainzResponse);
     }
 
     @Test
     @DisplayName("getting release id by name")
     void shouldGetReleaseIdByName(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
-        var albumId = "b04558a9-b69c-45bd-a6f4-d65706067780";
         var expectedAlbum = new Album();
-        expectedAlbum.setId(albumId);
-        var musicBrainzResponse = getExpectedResponse(albumId);
-        ApplicationState.cache.put("Night Life", musicBrainzResponse);
-        var call = mock(Call.class);
+        expectedAlbum.setId(ALBUM_ID);
         when(call.execute()).thenReturn(Response.success(expectedAlbum));
-        when(restService.getRelease(albumId)).thenReturn(call);
+        when(restService.getRelease(ALBUM_ID)).thenReturn(call);
+
         var result = musicBrainzService.getAlbumByName("Night Life");
-        assertEquals(albumId, result.getId());
+        assertEquals(ALBUM_ID, result.getId());
     }
 
-    private MusicBrainzResponse getExpectedResponse(String expectedId) {
+    @Test
+    @DisplayName("not getting release id by name due to exception")
+    void shouldNotGetReleaseIdByNameDueToException(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        when(call.execute()).thenThrow(new IOException("Error"));
+        when(restService.getRelease(ALBUM_ID)).thenReturn(call);
+
+        assertThrows(BusinessException.class, () -> musicBrainzService.getAlbumByName("Night Life"));
+    }
+
+    private MusicBrainzResponse getExpectedResponse() {
         var musicBrainzResponse = new MusicBrainzResponse();
         Release release = new Release();
-        release.setId(expectedId);
+        release.setId(ALBUM_ID);
         var releases = List.of(release);
         musicBrainzResponse.setReleases(releases);
         return musicBrainzResponse;
