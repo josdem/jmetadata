@@ -61,4 +61,6 @@ public interface ApplicationConstants {
 	String DIRECTORY_NOT_FOUND = "I could not find that directory to scan: ";
 	String FILE_NOT_FOUND = "I could not find this file: ";
 	String TOO_MUCH_FILES_LOADED = "Too much files loaded, maximum allowed: ";
+	String MEDIA_TYPE = "application/json";
+	String USER_AGENT = "JMetadata/1.1.0 (contact@josdem.io)";
 }

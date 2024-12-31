@@ -16,32 +16,56 @@
 
 package com.josdem.jmetadata.service;
 
+import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl;
 import com.josdem.jmetadata.util.ApplicationState;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 public class MusicBrainzServiceTest {
+
+    @InjectMocks
     private final MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
+
+    @Mock
+    private RestService restService;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     @DisplayName("getting release id by name")
-    void shouldGetReleaseIdByName(TestInfo testInfo) {
+    void shouldGetReleaseIdByName(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
-        var expectedId = "b04558a9-b69c-45bd-a6f4-d65706067780";
-        var musicBrainzResponse = getExpectedResponse(expectedId);
+        var albumId = "b04558a9-b69c-45bd-a6f4-d65706067780";
+        var expectedAlbum = new Album();
+        expectedAlbum.setId(albumId);
+        var musicBrainzResponse = getExpectedResponse(albumId);
         ApplicationState.cache.put("Night Life", musicBrainzResponse);
+        var call = mock(Call.class);
+        when(call.execute()).thenReturn(Response.success(expectedAlbum));
+        when(restService.getRelease(albumId)).thenReturn(call);
         var result = musicBrainzService.getAlbumByName("Night Life");
-        assertEquals(expectedId, result.getId());
+        assertEquals(albumId, result.getId());
     }
 
     private MusicBrainzResponse getExpectedResponse(String expectedId) {
