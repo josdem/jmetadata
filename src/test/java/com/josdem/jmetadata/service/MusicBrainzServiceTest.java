@@ -43,7 +43,8 @@ import static org.mockito.Mockito.when;
 @Slf4j
 public class MusicBrainzServiceTest {
 
-    private final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";
+    private static final String ALBUM_NAME = "Night Life";
+    private static final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";
 
     @InjectMocks
     private final MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
@@ -70,7 +71,7 @@ public class MusicBrainzServiceTest {
         when(call.execute()).thenReturn(Response.success(expectedAlbum));
         when(restService.getRelease(ALBUM_ID)).thenReturn(call);
 
-        var result = musicBrainzService.getAlbumByName("Night Life");
+        var result = musicBrainzService.getAlbumByName(ALBUM_NAME);
         assertEquals(ALBUM_ID, result.getId());
     }
 
@@ -81,7 +82,7 @@ public class MusicBrainzServiceTest {
         when(call.execute()).thenThrow(new IOException("Error"));
         when(restService.getRelease(ALBUM_ID)).thenReturn(call);
 
-        assertThrows(BusinessException.class, () -> musicBrainzService.getAlbumByName("Night Life"));
+        assertThrows(BusinessException.class, () -> musicBrainzService.getAlbumByName(ALBUM_NAME));
     }
 
     private MusicBrainzResponse getExpectedResponse() {
