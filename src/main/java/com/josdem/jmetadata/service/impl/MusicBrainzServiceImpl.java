@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
-  public Album getAlbumById(String id) {
+  public Album getAlbumByName(String name) {
     log.info("Getting release");
     return new Album();
   }
