@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.util;
 
 import org.apache.commons.lang3.StringUtils;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -91,7 +91,7 @@ public class TestImageUtils {
         log.info(testInfo.getDisplayName());
         imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
 
-        verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
+        verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationConstants.IMAGE_EXT);
     }
 
     @Test
@@ -99,13 +99,13 @@ public class TestImageUtils {
     public void shouldSaveImageToFile() throws Exception {
         var prefix = "MIRI_";
         var path = "PATH";
-        when(fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT)).thenReturn(file);
+        when(fileUtils.createFile(root, prefix, ApplicationConstants.IMAGE_EXT)).thenReturn(file);
         when(file.getAbsolutePath()).thenReturn(path);
         when(image.getHeight(isA(ImageObserver.class))).thenReturn(THREE_HUNDRED);
 
         imageUtils.saveCoverArtToFile(image, root, prefix);
 
-        verify(fileUtils).createFile(root, prefix, ApplicationState.IMAGE_EXT);
+        verify(fileUtils).createFile(root, prefix, ApplicationConstants.IMAGE_EXT);
     }
 
 }

@@ -66,7 +66,7 @@ import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.dnd.ImageDropListener;
@@ -199,14 +199,14 @@ public class MainWindow extends JFrame {
 
 
 	public MainWindow() {
-		super(ApplicationState.APPLICATION_NAME);
+		super(ApplicationConstants.APPLICATION_NAME);
 		initialize();
 		getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 	}
 
 	private void initialize() {
 		registerKeyStrokeAction();
-		this.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
+		this.setBounds(0, 0, ApplicationConstants.WIDTH, ApplicationConstants.HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setJMenuBar(getMenubar());
@@ -227,12 +227,12 @@ public class MainWindow extends JFrame {
 				Image image = value.getImage();
 				List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 				Metadata metadata = metadatas.get(selectedRow);
-				CoverArt coverArt = new CoverArt(imageUtils.resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED), CoverArtType.DRAG_AND_DROP);
+				CoverArt coverArt = new CoverArt(imageUtils.resize(image, ApplicationConstants.THREE_HUNDRED, ApplicationConstants.THREE_HUNDRED), CoverArtType.DRAG_AND_DROP);
 				metadata.setNewCoverArt(coverArt);
 				log.info("sertting image to the row: " + selectedRow);
 				updateImage(selectedRow);
 				metadataWithAlbum.add(metadata);
-				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
+				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationConstants.STATUS_COLUMN);
 				getApplyButton().setEnabled(!working);
 				log.info("setting applyButton to : " + !working);
 			}
@@ -243,7 +243,7 @@ public class MainWindow extends JFrame {
 	@EventMethod(Events.USER_LOGGED)
 	void onUserLogged(User currentUser) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(ApplicationState.LOGGED_AS);
+		sb.append(ApplicationConstants.LOGGED_AS);
 		sb.append(currentUser.getUsername());
 		getLoginLabel().setText(sb.toString());
 		getSendButton().setEnabled(true);
@@ -253,21 +253,21 @@ public class MainWindow extends JFrame {
 	void onCovertArtFailed(String title) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(title);
-		sb.append(ApplicationState.CORRUPTED_METADATA_LABEL);
+		sb.append(ApplicationConstants.CORRUPTED_METADATA_LABEL);
 		dialogHelper.showMessageDialog(this, sb.toString());
 	}
 
 	@EventMethod(Events.LOAD_FILE_FAILED)
 	void onLoadFileFailed(String fileName) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(ApplicationState.FILE_NOT_FOUND);
+		sb.append(ApplicationConstants.FILE_NOT_FOUND);
 		sb.append(fileName);
 		dialogHelper.showMessageDialog(this, sb.toString());
 	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
 	void onUserLoginFailed() {
-		getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
+		getLoginLabel().setText(ApplicationConstants.LOGIN_FAIL);
 	}
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED)
@@ -276,13 +276,13 @@ public class MainWindow extends JFrame {
 		deleteALLRows(descriptionTable);
 		metadataWithAlbum.clear();
 		getDirectoryField().setText(path);
-		getLabel().setText(ApplicationState.WORKING);
+		getLabel().setText(ApplicationConstants.WORKING);
 	}
 
 	@EventMethod(Events.MUSIC_DIRECTORY_NOT_EXIST)
 	void onMusicDirectoryNotExist(String path) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(ApplicationState.DIRECTORY_NOT_FOUND);
+		sb.append(ApplicationConstants.DIRECTORY_NOT_FOUND);
 		sb.append(path);
 		dialogHelper.showMessageDialog(this, sb.toString());
 		getOpenButton().setEnabled(true);
@@ -291,7 +291,7 @@ public class MainWindow extends JFrame {
 	@EventMethod(Events.TOO_MUCH_FILES_LOADED)
 	void onTooMuchFilesLoaded(String maxFiles) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(ApplicationState.TOO_MUCH_FILES_LOADED);
+		sb.append(ApplicationConstants.TOO_MUCH_FILES_LOADED);
 		sb.append(maxFiles);
 		dialogHelper.showMessageDialog(this, sb.toString());
 		getOpenButton().setEnabled(true);
@@ -311,7 +311,7 @@ public class MainWindow extends JFrame {
 		getCompleteMetadataButton().setEnabled(true);
 		getExportButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
-		getLabel().setText(ApplicationState.DONE);
+		getLabel().setText(ApplicationConstants.DONE);
 	}
 
 	@EventMethod(Events.TRACKS_LOADED)
@@ -327,15 +327,15 @@ public class MainWindow extends JFrame {
 			if (filesWithoutMinimumMetadata.size() == 1) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(file.getName());
-				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+				sb.append(ApplicationConstants.METADATA_FROM_FILE_LABEL);
 				dialogHelper.showMessageDialog(this, sb.toString());
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
 				StringBuilder sb = new StringBuilder();
 				sb.append(file.getName());
-				sb.append(ApplicationState.AND_ANOTHER);
+				sb.append(ApplicationConstants.AND_ANOTHER);
 				sb.append(otherFiles);
-				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+				sb.append(ApplicationConstants.METADATA_FROM_FILE_LABEL);
 				dialogHelper.showMessageDialog(this, sb.toString());
 			}
 		}
@@ -349,7 +349,7 @@ public class MainWindow extends JFrame {
 
 	@EventMethod(Events.DIRECTORY_EMPTY_EVENT)
 	void onDirectoryEmpty() {
-		dialogHelper.showMessageDialog(this, ApplicationState.DIRECTORY_EMPTY);
+		dialogHelper.showMessageDialog(this, ApplicationConstants.DIRECTORY_EMPTY);
 		resetStatus();
 	}
 
@@ -360,21 +360,21 @@ public class MainWindow extends JFrame {
 		for (Metadata metadata : metadatas) {
 			int row = descriptionTable.getRowCount();
 			model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
-			descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
-			descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
-			descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
-			descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
-			descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
-			descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationConstants.ARTIST_COLUMN);
+			descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationConstants.TITLE_COLUMN);
+			descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationConstants.ALBUM_COLUMN);
+			descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationConstants.GENRE_COLUMN);
+			descriptionTable.setValueAt(metadata.getYear(), row, ApplicationConstants.YEAR_COLUMN);
+			descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationConstants.TRACK_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationConstants.CD_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN);
 			if(metadata.isMetadataFromFile()){
-				descriptionTable.setValueAt(ApplicationState.NEW , row, ApplicationState.STATUS_COLUMN);
+				descriptionTable.setValueAt(ApplicationConstants.NEW , row, ApplicationConstants.STATUS_COLUMN);
 				metadataWithAlbum.add(metadata);
 				getApplyButton().setEnabled(true);
 			} else {
-				descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
+				descriptionTable.setValueAt(ApplicationConstants.READY, row, ApplicationConstants.STATUS_COLUMN);
 			}
 		}
 	}
@@ -394,32 +394,32 @@ public class MainWindow extends JFrame {
 		for (int i = 0; i < model.getRowCount(); i++) {
 			Metadata metadata = metadatas.get(i);
 			if (!StringUtils.isEmpty(artist)) {
-				getDescriptionTable().getModel().setValueAt(artist, i, ApplicationState.ARTIST_COLUMN);
+				getDescriptionTable().getModel().setValueAt(artist, i, ApplicationConstants.ARTIST_COLUMN);
 			}
 			if (!StringUtils.isEmpty(album)) {
-				getDescriptionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
+				getDescriptionTable().getModel().setValueAt(album, i, ApplicationConstants.ALBUM_COLUMN);
 			}
 			if (!StringUtils.isEmpty(genre)) {
-				getDescriptionTable().getModel().setValueAt(genre, i, ApplicationState.GENRE_COLUMN);
+				getDescriptionTable().getModel().setValueAt(genre, i, ApplicationConstants.GENRE_COLUMN);
 			}
 			if (!StringUtils.isEmpty(year)) {
-				getDescriptionTable().getModel().setValueAt(year, i, ApplicationState.YEAR_COLUMN);
+				getDescriptionTable().getModel().setValueAt(year, i, ApplicationConstants.YEAR_COLUMN);
 			}
 			if (!StringUtils.isEmpty(tracks)) {
-				getDescriptionTable().getModel().setValueAt(tracks, i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+				getDescriptionTable().getModel().setValueAt(tracks, i, ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN);
 			}
 			if (!StringUtils.isEmpty(cd)) {
-				getDescriptionTable().getModel().setValueAt(cd, i, ApplicationState.CD_NUMBER_COLUMN);
+				getDescriptionTable().getModel().setValueAt(cd, i, ApplicationConstants.CD_NUMBER_COLUMN);
 			}
 			if (!StringUtils.isEmpty(cds)) {
-				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN);
 			}
 			if (metadataValues.getCoverArt() != null) {
 				log.info("coverArt detected for: " + metadata.getTitle());
 				CoverArt coverArt = new CoverArt(metadataValues.getCoverArt(), CoverArtType.DRAG_AND_DROP);
 				metadata.setNewCoverArt(coverArt);
 				metadataWithAlbum.add(metadata);
-				getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+				getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationConstants.STATUS_COLUMN);
 				if (i == selectedRow) {
 					updateImage(i);
 				}
@@ -438,7 +438,7 @@ public class MainWindow extends JFrame {
 
 	@EventMethod(Events.OPEN_ERROR)
 	void onOpenError() {
-		getLabel().setText(ApplicationState.OPEN_ERROR);
+		getLabel().setText(ApplicationConstants.OPEN_ERROR);
 	}
 
 	private JMenuBar getMenubar() {
@@ -633,7 +633,7 @@ public class MainWindow extends JFrame {
 				private void resetStatus() {
 					metadataWithAlbum.clear();
 					for (int i = 0; i < getDescriptionTable().getModel().getRowCount(); i++) {
-						getDescriptionTable().getModel().setValueAt(ApplicationState.READY, i, ApplicationState.STATUS_COLUMN);
+						getDescriptionTable().getModel().setValueAt(ApplicationConstants.READY, i, ApplicationConstants.STATUS_COLUMN);
 					}
 				}
 			});
@@ -643,7 +643,7 @@ public class MainWindow extends JFrame {
 
 	public JButton getApplyButton() {
 		if (applyButton == null) {
-			applyButton = new JButton(ApplicationState.APPLY);
+			applyButton = new JButton(ApplicationConstants.APPLY);
 			applyButton.setName(APPLY_BUTTON_NAME);
 			applyButton.setEnabled(false);
 			applyButton.setBounds(APPLY_BUTTON_BOUNDS);
@@ -661,7 +661,7 @@ public class MainWindow extends JFrame {
 
 	public JButton getExportButton() {
 		if (exportButton == null) {
-			exportButton = new JButton(ApplicationState.EXPORT);
+			exportButton = new JButton(ApplicationConstants.EXPORT);
 			exportButton.setName(EXPORT_BUTTON_NAME);
 			exportButton.setEnabled(false);
 			exportButton.setBounds(EXPORT_BUTTON_BOUNDS);
@@ -754,7 +754,7 @@ public class MainWindow extends JFrame {
 			descriptionTable.getModel().addTableModelListener(new TableModelListener() {
 
 				public void tableChanged(TableModelEvent e) {
-					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != ApplicationState.STATUS_COLUMN) {
+					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != ApplicationConstants.STATUS_COLUMN) {
 						int column = e.getColumn();
 						int row = e.getFirstRow();
 						String value = getDescriptionTable().getModel().getValueAt(row, column).toString();
@@ -764,7 +764,7 @@ public class MainWindow extends JFrame {
 						metadataAdapter.update(metadata, column, value);
 						metadataWithAlbum.add(metadata);
 
-						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
+						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationConstants.STATUS_COLUMN);
 
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 						getApplyButton().setEnabled(!working);
@@ -791,21 +791,21 @@ public class MainWindow extends JFrame {
 			log.info("setting coverArt to: " + coverArt.getType());
 			ImageIcon imageIcon = new ImageIcon(coverArt.getImage());
 			imagePanel.add(new JLabel(imageIcon));
-			String label = ApplicationState.COVER_ART_FROM_LASTFM;
+			String label = ApplicationConstants.COVER_ART_FROM_LASTFM;
 			if (coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)) {
-				label = ApplicationState.COVER_ART_FROM_DRAG_AND_DROP;
+				label = ApplicationConstants.COVER_ART_FROM_DRAG_AND_DROP;
 			}
 			imageLabel.setText(label);
 		} else if (metadata.getCoverArt() != null) {
 			if(imageUtils.is300Image(metadata.getCoverArt())){
 				imagePanel.add(new JLabel(new ImageIcon(metadata.getCoverArt())));
 			} else {
-				Image resize = imageUtils.resize(metadata.getCoverArt(), ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+				Image resize = imageUtils.resize(metadata.getCoverArt(), ApplicationConstants.THREE_HUNDRED, ApplicationConstants.THREE_HUNDRED);
 				imagePanel.add(new JLabel(new ImageIcon(resize)));
 			}
-			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
+			imageLabel.setText(ApplicationConstants.COVER_ART_FROM_FILE);
 		} else {
-			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
+			imageLabel.setText(ApplicationConstants.COVER_ART_DEFAULT);
 		}
 		imagePanel.invalidate();
 		imagePanel.revalidate();
@@ -822,7 +822,7 @@ public class MainWindow extends JFrame {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				protected Boolean doInBackground() throws Exception {
-					getLabel().setText(ApplicationState.WRITING_METADATA);
+					getLabel().setText(ApplicationConstants.WRITING_METADATA);
 					counter = 0;
 					working = true;
 					log.info("Starting to write...");
@@ -836,7 +836,7 @@ public class MainWindow extends JFrame {
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								updateStatus(counter++, metadataWithAlbum.size());
-								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationConstants.STATUS_COLUMN);
 								if (metadata.getCoverArt() != null && selectedRow == getRow(metadata)) {
 									log.info("setting image to row: " + selectedRow);
 									updateImage(selectedRow);
@@ -879,7 +879,7 @@ public class MainWindow extends JFrame {
 
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
-					getLabel().setText(ApplicationState.GETTING_ALBUM);
+					getLabel().setText(ApplicationConstants.GETTING_ALBUM);
 					counter = 0;
 					working = true;
 					log.info("Start to work...");
@@ -895,20 +895,20 @@ public class MainWindow extends JFrame {
 								log.info("response in getting from MusicBrainz album " + metadata.getTitle() + ": " + response);
 								if (response.equals(ActionResult.New)) {
 									metadataWithAlbum.add(metadata);
-									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
-									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-									getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
-									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationConstants.ALBUM_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationConstants.TRACK_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationConstants.CD_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN);
 								}
-								getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(response, i, ApplicationConstants.STATUS_COLUMN);
 								if (counter >= metadataList.size()) {
 									getFormatterData();
 								}
 							}
 
 							private void getFormatterData() {
-								getLabel().setText(ApplicationState.GETTING_FORMATTER);
+								getLabel().setText(ApplicationConstants.GETTING_FORMATTER);
 								counter = 0;
 								log.info("Formating for " + metadataList.size() + " files");
 								for (final Metadata metadata : metadataList) {
@@ -921,11 +921,11 @@ public class MainWindow extends JFrame {
 											log.info("response in getFormatterData for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
-												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationConstants.ARTIST_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationConstants.TITLE_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationConstants.ALBUM_COLUMN);
+											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationConstants.STATUS_COLUMN).equals(ActionResult.New)) {
+												getDescriptionTable().getModel().setValueAt(response, i, ApplicationConstants.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {
 												getLastfmData();
@@ -937,7 +937,7 @@ public class MainWindow extends JFrame {
 							}
 
 							private void completeValuesForAlbum() {
-								getLabel().setText(ApplicationState.COMPLETE_DEFAULT_VALUES);
+								getLabel().setText(ApplicationConstants.COMPLETE_DEFAULT_VALUES);
 								counter = 0;
 								log.info("Completing album for " + metadataList.size() + " files");
 								MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadataList, new ResponseCallback<ActionResult>() {
@@ -949,12 +949,12 @@ public class MainWindow extends JFrame {
 											for (Metadata metadata : metadataList) {
 												int i = metadataList.indexOf(metadata);
 												updateStatus(counter++, metadataList.size());
-												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationConstants.CD_NUMBER_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN);
 											}
-										}else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+										}else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationConstants.STATUS_COLUMN).equals(ActionResult.New)) {
+											getDescriptionTable().getModel().setValueAt(response, i, ApplicationConstants.STATUS_COLUMN);
 										}
 										afterComplete(metadataWithAlbum);
 									}
@@ -963,7 +963,7 @@ public class MainWindow extends JFrame {
 							}
 
 							private void getLastfmData() {
-								getLabel().setText(ApplicationState.GETTING_LAST_FM);
+								getLabel().setText(ApplicationConstants.GETTING_LAST_FM);
 								counter = 0;
 								log.info("Searching in lastfm for " + metadataList.size() + " files");
 								for (final Metadata metadata : metadataList) {
@@ -975,17 +975,17 @@ public class MainWindow extends JFrame {
 											log.info("response in getLastfmData for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
-												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
-												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
-												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationConstants.ARTIST_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationConstants.TITLE_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationConstants.ALBUM_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationConstants.YEAR_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationConstants.GENRE_COLUMN);
+												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationConstants.STATUS_COLUMN);
 												if (metadata.getNewCoverArt() != null && i == selectedRow) {
 													updateImage(i);
 												}
-											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationConstants.STATUS_COLUMN).equals(ActionResult.New)) {
+												getDescriptionTable().getModel().setValueAt(response, i, ApplicationConstants.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {
 												completeValuesForAlbum();
@@ -1020,7 +1020,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void resetButtonsState() {
-		getLabel().setText(ApplicationState.DONE);
+		getLabel().setText(ApplicationConstants.DONE);
 		getCompleteMetadataButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
 		getExportButton().setEnabled(true);
@@ -1049,7 +1049,7 @@ public class MainWindow extends JFrame {
 							public void onResponse(ActionResult response) {
 								log.info("response on sending " + metadata.getTitle() + ": " + response);
 								updateStatus(counter++, metadataList.size());
-								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationConstants.STATUS_COLUMN);
 							}
 
 						});
@@ -1058,7 +1058,7 @@ public class MainWindow extends JFrame {
 				}
 
 				public void done() {
-					getLabel().setText(ApplicationState.DONE);
+					getLabel().setText(ApplicationConstants.DONE);
 					getCompleteMetadataButton().setEnabled(true);
 					getSendButton().setEnabled(true);
 					getOpenButton().setEnabled(true);
@@ -1069,7 +1069,7 @@ public class MainWindow extends JFrame {
 			getSendButton().setEnabled(false);
 			getOpenButton().setEnabled(false);
 			getProgressBar().setVisible(true);
-			getLabel().setText(ApplicationState.WORKING);
+			getLabel().setText(ApplicationConstants.WORKING);
 		}
 	}
 
@@ -1091,7 +1091,7 @@ public class MainWindow extends JFrame {
 
 						public void onResponse(ActionResult response) {
 							for (Metadata metadata : metadataList) {
-								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationConstants.STATUS_COLUMN);
 							}
 						}
 
@@ -1134,7 +1134,7 @@ public class MainWindow extends JFrame {
 	private class DescriptionTableModelListener implements TableModelListener {
 
 		public void tableChanged(TableModelEvent e) {
-			if (MainWindow.this.getCompleteMetadataButton().getText().equals(ApplicationState.APPLY) && e.getColumn() != ApplicationState.STATUS_COLUMN) {
+			if (MainWindow.this.getCompleteMetadataButton().getText().equals(ApplicationConstants.APPLY) && e.getColumn() != ApplicationConstants.STATUS_COLUMN) {
 				int lastRow = e.getLastRow();
 				DefaultTableModel model = (DefaultTableModel) e.getSource();
 				String artist = (String) model.getValueAt(lastRow, 0);

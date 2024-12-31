@@ -16,11 +16,16 @@
 
 package com.josdem.jmetadata.service;
 
+import com.josdem.jmetadata.model.MusicBrainzResponse;
+import com.josdem.jmetadata.model.Release;
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl;
+import com.josdem.jmetadata.util.ApplicationState;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,7 +38,18 @@ public class MusicBrainzServiceTest {
     void shouldGetReleaseIdByName(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
         var expectedId = "b04558a9-b69c-45bd-a6f4-d65706067780";
+        var musicBrainzResponse = getExpectedResponse(expectedId);
+        ApplicationState.cache.put("Night Life", musicBrainzResponse);
         var result = musicBrainzService.getAlbumByName("Night Life");
         assertEquals(expectedId, result.getId());
+    }
+
+    private MusicBrainzResponse getExpectedResponse(String expectedId) {
+        var musicBrainzResponse = new MusicBrainzResponse();
+        Release release = new Release();
+        release.setId(expectedId);
+        var releases = List.of(release);
+        musicBrainzResponse.setReleases(releases);
+        return musicBrainzResponse;
     }
 }

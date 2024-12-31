@@ -16,7 +16,7 @@
 
 package com.josdem.jmetadata.util;
 
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.impl.ImageServiceImpl;
 
@@ -62,7 +62,7 @@ public class ImageUtils {
         if (image == null) {
             return;
         }
-        File file = fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT);
+        File file = fileUtils.createFile(root, prefix, ApplicationConstants.IMAGE_EXT);
         saveImage(image, file);
     }
 
@@ -78,7 +78,7 @@ public class ImageUtils {
     private void saveImage(Image image, File file) throws IOException {
         log.info("Saving image: {}", file.getAbsolutePath());
         if (!is300Image(image)) {
-            image = resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+            image = resize(image, ApplicationConstants.THREE_HUNDRED, ApplicationConstants.THREE_HUNDRED);
         }
         write(image, file);
     }

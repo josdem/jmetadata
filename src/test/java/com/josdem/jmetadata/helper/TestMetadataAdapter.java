@@ -16,7 +16,7 @@
 
 package com.josdem.jmetadata.helper;
 
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.model.Metadata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,63 +49,63 @@ public class TestMetadataAdapter {
 
     @Test
     public void shouldUpdateArtist() throws Exception {
-        adapter.update(metadata, ApplicationState.ARTIST_COLUMN, ARTIST);
+        adapter.update(metadata, ApplicationConstants.ARTIST_COLUMN, ARTIST);
 
         verify(metadata).setArtist(ARTIST);
     }
 
     @Test
     public void shouldUpdateTitle() throws Exception {
-        adapter.update(metadata, ApplicationState.TITLE_COLUMN, TITLE);
+        adapter.update(metadata, ApplicationConstants.TITLE_COLUMN, TITLE);
 
         verify(metadata).setTitle(TITLE);
     }
 
     @Test
     public void shouldUpdateAlbum() throws Exception {
-        adapter.update(metadata, ApplicationState.ALBUM_COLUMN, ALBUM);
+        adapter.update(metadata, ApplicationConstants.ALBUM_COLUMN, ALBUM);
 
         verify(metadata).setAlbum(ALBUM);
     }
 
     @Test
     public void shouldUpdateTrackNumber() throws Exception {
-        adapter.update(metadata, ApplicationState.TRACK_NUMBER_COLUMN, TRACK_NUMBER);
+        adapter.update(metadata, ApplicationConstants.TRACK_NUMBER_COLUMN, TRACK_NUMBER);
 
         verify(metadata).setTrackNumber(TRACK_NUMBER);
     }
 
     @Test
     public void shouldUpdateTotalTracksNumber() throws Exception {
-        adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, TOTAL_TRACKS);
+        adapter.update(metadata, ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN, TOTAL_TRACKS);
 
         verify(metadata).setTotalTracks(TOTAL_TRACKS);
     }
 
     @Test
     public void shouldUpdateGenre() throws Exception {
-        adapter.update(metadata, ApplicationState.GENRE_COLUMN, GENRE_COLUMN);
+        adapter.update(metadata, ApplicationConstants.GENRE_COLUMN, GENRE_COLUMN);
 
         verify(metadata).setGenre(GENRE_COLUMN);
     }
 
     @Test
     public void shouldUpdateYear() throws Exception {
-        adapter.update(metadata, ApplicationState.YEAR_COLUMN, YEAR_COLUMN);
+        adapter.update(metadata, ApplicationConstants.YEAR_COLUMN, YEAR_COLUMN);
 
         verify(metadata).setYear(YEAR_COLUMN);
     }
 
     @Test
     public void shouldUpdateCdNumber() throws Exception {
-        adapter.update(metadata, ApplicationState.CD_NUMBER_COLUMN, CD_NUMBER);
+        adapter.update(metadata, ApplicationConstants.CD_NUMBER_COLUMN, CD_NUMBER);
 
         verify(metadata).setCdNumber(CD_NUMBER);
     }
 
     @Test
     public void shouldUpdateTotalCds() throws Exception {
-        adapter.update(metadata, ApplicationState.TOTAL_CDS_NUMBER_COLUMN, TOTAL_CDS_NUMBER);
+        adapter.update(metadata, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN, TOTAL_CDS_NUMBER);
 
         verify(metadata).setTotalCds(TOTAL_CDS_NUMBER);
     }

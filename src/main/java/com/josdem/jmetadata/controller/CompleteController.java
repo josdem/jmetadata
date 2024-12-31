@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.controller;
 
+import com.josdem.jmetadata.util.ApplicationState;
 import org.asmatron.messengine.annotations.RequestMethod;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
@@ -53,8 +54,6 @@ public class CompleteController {
 
     private RestService restService;
 
-    private final Map<String, MusicBrainzResponse> cache = new HashMap<>();
-
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
@@ -68,13 +67,13 @@ public class CompleteController {
             return ActionResult.Ready;
         }
         try {
-            if (cache.get(metadatas.getFirst().getAlbum()) == null) {
+            if (ApplicationState.cache.get(metadatas.getFirst().getAlbum()) == null) {
                 log.info("Getting releases");
                 var response = restService.getReleases(metadatas.getFirst().getAlbum() + " AND " + "artist:" + metadatas.getFirst().getArtist());
                 Response<MusicBrainzResponse> result = response.execute();
                 if (result.isSuccessful()) {
                     MusicBrainzResponse musicBrainzResponse = result.body();
-                    cache.put(metadatas.getFirst().getAlbum(), musicBrainzResponse);
+                    ApplicationState.cache.put(metadatas.getFirst().getAlbum(), musicBrainzResponse);
                     log.info("MusicBrainzResponse: {}", musicBrainzResponse);
                 } else {
                     log.error("Error getting releases: {}", result.errorBody());

@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.util;
 
 import org.apache.commons.lang3.StringUtils;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class TestFileUtils {
     @DisplayName("creating a temp file for image file")
     public void shouldCreateFileForImage(TestInfo testInfo) throws Exception {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
-        var result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
+        var result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationConstants.IMAGE_EXT);
         assertTrue(result.getName().matches("JMetadata_" + ONLY_DIGITS_REGEX + ".png"));
     }
 
@@ -106,15 +106,15 @@ class TestFileUtils {
     public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         File tempFile = fileUtils.createTempFile();
-        assertTrue(tempFile.getName().startsWith(ApplicationState.PREFIX));
-        assertTrue(tempFile.getName().endsWith(ApplicationState.FILE_EXT));
+        assertTrue(tempFile.getName().startsWith(ApplicationConstants.PREFIX));
+        assertTrue(tempFile.getName().endsWith(ApplicationConstants.FILE_EXT));
     }
 
     @Test
     @DisplayName("creating a temp file as text file")
     public void shouldCreateFileForFile(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
-        File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.FILE_EXT);
+        File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationConstants.FILE_EXT);
         assertTrue(result.getName().matches("JMetadata_" + ONLY_DIGITS_REGEX + ".txt"));
     }
 
@@ -123,7 +123,7 @@ class TestFileUtils {
     public void shouldCreateFileForFileWithPrefix(TestInfo testInfo) {
         log.info(() -> "Running test: " + testInfo.getDisplayName());
         String prefix = "MIRI_";
-        File result = fileUtils.createFile(root, prefix, ApplicationState.FILE_EXT);
+        File result = fileUtils.createFile(root, prefix, ApplicationConstants.FILE_EXT);
         assertTrue(result.getName().matches(prefix + ONLY_DIGITS_REGEX + ".txt"));
     }
 

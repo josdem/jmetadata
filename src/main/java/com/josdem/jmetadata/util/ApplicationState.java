@@ -14,22 +14,15 @@
    limitations under the License.
 */
 
-package com.josdem.jmetadata.service.impl;
+package com.josdem.jmetadata.util;
 
-import com.josdem.jmetadata.model.Album;
-import com.josdem.jmetadata.service.MusicBrainzService;
-import com.josdem.jmetadata.util.ApplicationState;
-import lombok.extern.slf4j.Slf4j;
+import com.josdem.jmetadata.model.MusicBrainzResponse;
 
-@Slf4j
-public class MusicBrainzServiceImpl implements MusicBrainzService {
+import java.util.HashMap;
+import java.util.Map;
 
-  public Album getAlbumByName(String name) {
-    log.info("Getting release");
-    var musicBrainzResponse = ApplicationState.cache.get(name);
-    var album = new Album();
-    album.setId(musicBrainzResponse.getReleases().getFirst().getId());
-    return album;
-  }
+public class ApplicationState {
+
+    public static final Map<String, MusicBrainzResponse> cache = new HashMap<>();
 
 }

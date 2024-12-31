@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.helper;
 
 
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.impl.ImageServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +43,7 @@ class TestImageHelper {
     public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
         File tempFile = imageService.createTempFile();
-        assertTrue(tempFile.getName().contains(ApplicationState.PREFIX));
-        assertTrue(tempFile.getName().contains(ApplicationState.IMAGE_EXT));
+        assertTrue(tempFile.getName().contains(ApplicationConstants.PREFIX));
+        assertTrue(tempFile.getName().contains(ApplicationConstants.IMAGE_EXT));
     }
 }

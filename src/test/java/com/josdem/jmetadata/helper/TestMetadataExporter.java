@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.helper;
 
 import org.apache.commons.lang3.StringUtils;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.model.ExportPackage;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.FormatterService;
@@ -83,7 +83,7 @@ class TestMetadataExporter {
         metadatas.add(metadata);
         when(exportPackage.getRoot()).thenReturn(file);
         when(exportPackage.getMetadataList()).thenReturn(metadatas);
-        when(fileUtils.createFile(file, StringUtils.EMPTY, ApplicationState.FILE_EXT)).thenReturn(file);
+        when(fileUtils.createFile(file, StringUtils.EMPTY, ApplicationConstants.FILE_EXT)).thenReturn(file);
         when(outputStreamWriter.getWriter(file)).thenReturn(writer);
     }
 
