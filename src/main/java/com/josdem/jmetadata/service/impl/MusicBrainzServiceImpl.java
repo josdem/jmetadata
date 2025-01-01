@@ -23,12 +23,14 @@ import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.util.ApplicationState;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Slf4j
+@Service
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
     private RestService restService;
