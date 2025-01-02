@@ -21,7 +21,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Image {
+public class CoverArtImage {
     private List<String> types;
     private boolean front;
     private boolean back;

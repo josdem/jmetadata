@@ -22,6 +22,6 @@ import java.util.List;
 
 @Data
 public class CoverArtResponse {
-    private List<Image> images;
+    private List<CoverArtImage> images;
     private String release;
 }

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.awt.*;
+import java.awt.Image;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
