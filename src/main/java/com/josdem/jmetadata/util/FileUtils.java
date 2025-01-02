@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.util;
 
 import org.apache.commons.lang3.StringUtils;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -59,7 +59,7 @@ public class FileUtils {
     }
 
     public File createTempFile() throws IOException {
-        return File.createTempFile(ApplicationState.PREFIX, ApplicationState.FILE_EXT);
+        return File.createTempFile(ApplicationConstants.PREFIX, ApplicationConstants.FILE_EXT);
     }
 
     public File createFile(File root, String prefix, String ext) {
@@ -68,6 +68,6 @@ public class FileUtils {
         sb.append(timestamp);
         sb.append(".");
         sb.append(ext.toLowerCase());
-        return (prefix.equals(StringUtils.EMPTY)) ? new File(root, ApplicationState.PREFIX + sb) : new File(root, prefix + sb);
+        return (prefix.equals(StringUtils.EMPTY)) ? new File(root, ApplicationConstants.PREFIX + sb) : new File(root, prefix + sb);
     }
 }

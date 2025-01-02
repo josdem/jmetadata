@@ -34,7 +34,7 @@ import javax.swing.UIManager;
 
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.event.Events;
 import com.josdem.jmetadata.gui.util.SelectedTextForeground;
@@ -130,7 +130,7 @@ public class LoginWindow {
 	private JLabel getPasswordLabel() {
 		if(passwordLabel == null){
 			passwordLabel = new JLabel();
-			passwordLabel.setText(ApplicationState.PASSWORD_LABEL);
+			passwordLabel.setText(ApplicationConstants.PASSWORD_LABEL);
 			passwordLabel.setBounds(PASSWORD_LABEL_BOUNDS);
 			passwordLabel.setName(SynthFonts.PLAIN_FONT16_GRAY100_100_100);
 			passwordLabel.setIcon(BULLET_ICON);
@@ -142,7 +142,7 @@ public class LoginWindow {
 	private JLabel getUserNameLabel() {
 		if(usernameLabel == null){
 			usernameLabel = new JLabel();
-			usernameLabel.setText(ApplicationState.USERNAME_LABEL);
+			usernameLabel.setText(ApplicationConstants.USERNAME_LABEL);
 			usernameLabel.setBounds(USERNAME_LABEL_BOUNDS);
 			usernameLabel.setName(SynthFonts.PLAIN_FONT16_GRAY100_100_100);
 			usernameLabel.setIcon(BULLET_ICON);

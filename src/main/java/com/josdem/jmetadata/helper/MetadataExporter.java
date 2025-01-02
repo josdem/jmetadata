@@ -32,7 +32,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.util.FileUtils;
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.model.ExportPackage;
 import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.FormatterService;
@@ -60,7 +60,7 @@ public class MetadataExporter {
 
 
 	public void export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);
+		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationConstants.FILE_EXT);
 		log.info("Exporting metadata to: " + file.getAbsolutePath());
 		OutputStream writer = outputStreamWriter.getWriter(file);
 		int counter = 1;

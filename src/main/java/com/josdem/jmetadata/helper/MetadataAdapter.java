@@ -16,37 +16,37 @@
 
 package com.josdem.jmetadata.helper;
 
-import com.josdem.jmetadata.ApplicationState;
+import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.model.Metadata;
 
 public class MetadataAdapter {
 
 	public void update(Metadata metadata, int column, String value) {
-		if(column == ApplicationState.ARTIST_COLUMN){
+		if(column == ApplicationConstants.ARTIST_COLUMN){
 			metadata.setArtist(value);
 		}
-		if (column == ApplicationState.TITLE_COLUMN){
+		if (column == ApplicationConstants.TITLE_COLUMN){
 			metadata.setTitle(value);
 		}
-		if (column == ApplicationState.ALBUM_COLUMN){
+		if (column == ApplicationConstants.ALBUM_COLUMN){
 			metadata.setAlbum(value);
 		}
-		if (column == ApplicationState.YEAR_COLUMN){
+		if (column == ApplicationConstants.YEAR_COLUMN){
 			metadata.setYear(value);
 		}
-		if (column == ApplicationState.TRACK_NUMBER_COLUMN){
+		if (column == ApplicationConstants.TRACK_NUMBER_COLUMN){
 			metadata.setTrackNumber(value);
 		}
-		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
+		if (column == ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN){
 			metadata.setTotalTracks(value);
 		}
-		if (column == ApplicationState.CD_NUMBER_COLUMN){
+		if (column == ApplicationConstants.CD_NUMBER_COLUMN){
 			metadata.setCdNumber(value);
 		}
-		if (column == ApplicationState.TOTAL_CDS_NUMBER_COLUMN){
+		if (column == ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN){
 			metadata.setTotalCds(value);
 		}
-		if (column == ApplicationState.GENRE_COLUMN){
+		if (column == ApplicationConstants.GENRE_COLUMN){
 			metadata.setGenre(value);
 		}
 	}

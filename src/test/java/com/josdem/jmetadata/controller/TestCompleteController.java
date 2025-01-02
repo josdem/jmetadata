@@ -22,6 +22,7 @@ import com.josdem.jmetadata.metadata.MetadataWriter;
 import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.LastfmService;
+import com.josdem.jmetadata.service.MusicBrainzService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -50,6 +51,8 @@ class TestCompleteController {
     @Mock
     private LastfmService coverArtService;
     @Mock
+    private MusicBrainzService musicBrainzService;
+    @Mock
     private CoverArt coverArt;
     @Mock
     private Image imageIcon;
@@ -67,6 +70,7 @@ class TestCompleteController {
     @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
+
         when(metadata.getArtist()).thenReturn(artist);
         when(metadata.getTitle()).thenReturn(title);
         when(metadata.getAlbum()).thenReturn(album);

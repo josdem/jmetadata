@@ -16,18 +16,21 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.annotations.RequestMethod;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.metadata.MetadataWriter;
+import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MetadataService;
+import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
+import com.josdem.jmetadata.util.ApplicationState;
+import org.asmatron.messengine.annotations.RequestMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +40,7 @@ import retrofit2.Response;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class CompleteController {
@@ -50,10 +51,10 @@ public class CompleteController {
     private LastfmService lastfmService;
     @Autowired
     private MetadataService metadataService;
+    @Autowired
+    private MusicBrainzService musicBrainzService;
 
     private RestService restService;
-
-    private final Map<String, MusicBrainzResponse> cache = new HashMap<>();
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -64,18 +65,21 @@ public class CompleteController {
 
     @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
     public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadatas) {
-        if(!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
+        if (!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
             return ActionResult.Ready;
         }
         try {
-            if (cache.get(metadatas.getFirst().getAlbum()) == null) {
+            if (ApplicationState.cache.get(metadatas.getFirst().getAlbum()) == null) {
                 log.info("Getting releases");
                 var response = restService.getReleases(metadatas.getFirst().getAlbum() + " AND " + "artist:" + metadatas.getFirst().getArtist());
                 Response<MusicBrainzResponse> result = response.execute();
                 if (result.isSuccessful()) {
                     MusicBrainzResponse musicBrainzResponse = result.body();
-                    cache.put(metadatas.getFirst().getAlbum(), musicBrainzResponse);
-                    log.info("MusicBrainzResponse: {}", musicBrainzResponse);
+                    String albumName = metadatas.getFirst().getAlbum();
+                    ApplicationState.cache.put(albumName, musicBrainzResponse);
+                    log.info("MusicBrainz Response: {}", musicBrainzResponse);
+                    Album album = musicBrainzService.getAlbumByName(albumName);
+                    log.info("MusicBrainz Album: {}", album);
                 } else {
                     log.error("Error getting releases: {}", result.errorBody());
                 }

@@ -21,6 +21,14 @@ It requires Java JDK 21.
 ./gradlew test
 ```
 
+#### To run a specific test
+```bash
+./gradlew test --tests $testName
+```
+
+**Where**
+- `$testName` is the test name you want to run
+
 _"As we enjoy great advantages from inventions of others, we should be glad of an opportunity to serve others by any invention of ours; and this we should do freely and generously."_ ~ Benjamin Franklin
 
 [Install](https://github.com/josdem/jmetadata/wiki/Install) | 

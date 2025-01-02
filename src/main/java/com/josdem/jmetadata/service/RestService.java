@@ -16,17 +16,27 @@
 
 package com.josdem.jmetadata.service;
 
+import com.josdem.jmetadata.ApplicationConstants;
+import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RestService {
     @Headers({
-            "Accept: application/json",
-            "User-Agent: JMetadata/1.1.0 (contact@josdem.io)"
+            "Accept: " + ApplicationConstants.MEDIA_TYPE,
+            "User-Agent: " + ApplicationConstants.USER_AGENT
     })
     @GET("release")
     Call<MusicBrainzResponse> getReleases(@Query("query") String query);
+
+    @Headers({
+            "Accept: " + ApplicationConstants.MEDIA_TYPE,
+            "User-Agent: " + ApplicationConstants.USER_AGENT
+    })
+    @GET("release/{id}")
+    Call<Album> getRelease(@Path("id") String id);
 }
