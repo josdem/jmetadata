@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,23 +14,18 @@
    limitations under the License.
 */
 
-package com.josdem.jmetadata.model;
+package com.josdem.jmetadata.helper;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-@Getter
-@Setter
-public class MusicBrainzTrack {
-    private String album;
-    private String trackNumber;
-    private String totalTrackNumber;
-    private String cdNumber;
-    private String totalCds;
+public class CoverArtRetrofitHelper {
+    private static final String BASE_URL = "https://coverartarchive.org/";
 
-    public MusicBrainzTrack() {
-        album = StringUtils.EMPTY;
-        trackNumber = "0";
+    public static Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
     }
 }

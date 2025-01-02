@@ -29,6 +29,6 @@ public class Image {
     private String image;
     private String comment;
     private boolean approved;
-    private List<Thumbnail> thumbnails;
+    private Thumbnail thumbnails;
     private String id;
 }

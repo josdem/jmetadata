@@ -19,12 +19,14 @@ package com.josdem.jmetadata.controller;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.helper.CoverArtRetrofitHelper;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.metadata.MetadataWriter;
 import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
+import com.josdem.jmetadata.service.CoverArtRestService;
 import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.MusicBrainzService;
@@ -54,13 +56,16 @@ public class CompleteController {
     @Autowired
     private MusicBrainzService musicBrainzService;
 
+
     private RestService restService;
+    private CoverArtRestService coverArtRestService;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @PostConstruct
     void setup() {
         restService = RetrofitHelper.getRetrofit().create(RestService.class);
+        coverArtRestService = CoverArtRetrofitHelper.getRetrofit().create(CoverArtRestService.class);
     }
 
     @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
@@ -80,6 +85,15 @@ public class CompleteController {
                     log.info("MusicBrainz Response: {}", musicBrainzResponse);
                     Album album = musicBrainzService.getAlbumByName(albumName);
                     log.info("MusicBrainz Album: {}", album);
+                    if(album.getCoverArtArchive().isFront()){
+                        log.info("Getting cover art");
+                        var coverArtResponse = coverArtRestService.getRelease(album.getId());
+                        var coverArtResult = coverArtResponse.execute();
+                        if(coverArtResult.isSuccessful()){
+                            var coverArt = coverArtResult.body();
+                            log.info("Cover Art: {}", coverArt);
+                        }
+                    }
                 } else {
                     log.error("Error getting releases: {}", result.errorBody());
                 }
