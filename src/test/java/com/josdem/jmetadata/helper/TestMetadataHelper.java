@@ -17,22 +17,31 @@
 package com.josdem.jmetadata.helper;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.util.Set;
+import org.junit.jupiter.api.TestInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class TestMetadataHelper {
+@Slf4j
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, MetadataHelper.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+class TestMetadataHelper {
 
-    private final MetadataHelper metadataHelper = new MetadataHelper();
+    private final MetadataHelper metadataHelper;
 
     @Test
-    public void shouldCreateAHashset() throws Exception {
-        Set<File> hashset = metadataHelper.createHashSet();
-        assertNotNull(hashset);
+    @DisplayName("creating a hashset")
+    public void shouldCreateAHashset(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        assertNotNull(metadataHelper.createHashSet(), "should create a hashset");
     }
 
 }

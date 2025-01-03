@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,19 +17,30 @@
 package com.josdem.jmetadata.helper;
 
 
-import org.jaudiotagger.tag.datatype.Artwork;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestArtworkHelper {
+@Slf4j
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, ArtworkHelper.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+class TestArtworkHelper {
 
-    private final ArtworkHelper artworkHelper = new ArtworkHelper();
+    private final ArtworkHelper artworkHelper;
 
     @Test
-    public void shouldCreateAnArtWork() throws Exception {
-        Artwork artwork = artworkHelper.createArtwork();
-        assertNotNull(artwork);
+    @DisplayName("creating an artwork")
+    public void shouldCreateAnArtWork(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        assertNotNull(artworkHelper.createArtwork(), "should create an artwork");
     }
 
 }
