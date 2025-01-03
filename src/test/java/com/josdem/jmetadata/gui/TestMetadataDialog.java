@@ -88,7 +88,7 @@ class TestMetadataDialog {
         //Avoid running in Linux since is not working properly
         if (!Environment.isLinux()) {
             metadatas.add(metadata);
-            when(metadataHelper.createMetadataAlbumVaues()).thenReturn(metadataAlbumValues);
+            when(metadataHelper.createMetadataAlbumValues()).thenReturn(metadataAlbumValues);
             when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 
             String message = "message";
