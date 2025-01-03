@@ -21,7 +21,7 @@ application {
 ext {
     audioTaggerVersion = '2.0.3'
     retrofitVersion = '2.11.0'
-    junitVersion = '5.7.0'
+    junitVersion = '5.9.0'
     slf4jVersion = '2.0.16'
     aspectjVersion = '1.9.22.1'
     messengineVersion = '0.1.0'
@@ -63,6 +63,7 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation files('lib/last.fm-bindings-0.1.0.jar')
 }
 

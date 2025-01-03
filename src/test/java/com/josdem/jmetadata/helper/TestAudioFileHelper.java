@@ -17,16 +17,23 @@
 package com.josdem.jmetadata.helper;
 
 
+import lombok.RequiredArgsConstructor;
 import org.jaudiotagger.audio.AudioFile;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestAudioFileHelper {
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, AudioFileHelper.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+class TestAudioFileHelper {
 
-    private final AudioFileHelper audioFileHelper = new AudioFileHelper();
+    private final AudioFileHelper audioFileHelper;
 
     private final File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
 
