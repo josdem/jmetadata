@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,23 +20,26 @@ package com.josdem.jmetadata.helper;
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.impl.ImageServiceImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, ImageServiceImpl.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TestImageHelper {
 
-    private final ImageService imageService = new ImageServiceImpl();
-
+    private final ImageService imageService;
 
     @Test
     @DisplayName("creating a temp file for cover art")
