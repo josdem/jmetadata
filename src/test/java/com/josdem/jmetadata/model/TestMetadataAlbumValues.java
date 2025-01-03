@@ -20,7 +20,7 @@ package com.josdem.jmetadata.model;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.awt.*;
+import java.awt.Image;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
