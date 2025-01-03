@@ -17,25 +17,32 @@
 package com.josdem.jmetadata.service;
 
 
-import org.apache.commons.lang3.StringUtils;
+import com.josdem.jmetadata.helper.ApplicationContextSingleton;
+import com.josdem.jmetadata.helper.FormatterHelper;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.FormatterServiceImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-
-public class TestFormatterService {
-    private final FormatterService formatter = new FormatterServiceImpl();
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, FormatterServiceImpl.class, FormatterHelper.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+class TestFormatterService {
+    private final FormatterService formatter;
 
     private final String badFormatA = "¿Cu&aacute;ndo?";
     private final String badFormatAExpected = "¿Cuándo?";
