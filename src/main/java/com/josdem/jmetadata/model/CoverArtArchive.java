@@ -20,9 +20,9 @@ import lombok.Data;
 
 @Data
 public class CoverArtArchive {
-    private boolean darkened;
-    private boolean back;
-    private boolean artwork;
-    private boolean front;
-    private int count;
+  private boolean darkened;
+  private boolean back;
+  private boolean artwork;
+  private boolean front;
+  private int count;
 }

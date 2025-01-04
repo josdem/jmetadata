@@ -16,45 +16,46 @@
 
 package com.josdem.jmetadata.helper;
 
+import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.model.ExportPackage;
+import com.josdem.jmetadata.model.Metadata;
+import com.josdem.jmetadata.service.MetadataService;
+import com.josdem.jmetadata.util.ImageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.apache.commons.lang3.StringUtils;
-
-import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-
-import com.josdem.jmetadata.model.Metadata;
-import com.josdem.jmetadata.util.ImageUtils;
-import com.josdem.jmetadata.model.ExportPackage;
-import com.josdem.jmetadata.service.MetadataService;
-import com.josdem.jmetadata.exception.MetadataException;
+import org.jaudiotagger.tag.TagException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ImageExporter {
 
-	@Autowired
-	private MetadataService metadataService;
+  @Autowired private MetadataService metadataService;
 
-	private ImageUtils imageUtils = new ImageUtils();
+  private ImageUtils imageUtils = new ImageUtils();
 
-	public void export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-		List<Metadata> metadataList = exportPackage.getMetadataList();
-		if(metadataList.get(0).getCoverArt() == null){
-			return;
-		}
-		File root = exportPackage.getRoot();
-		if (metadataService.isSameAlbum(metadataList)){
-			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
-		} else {
-			for (Metadata metadata : metadataList) {
-				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
-			}
-		}
-	}
+  public void export(ExportPackage exportPackage)
+      throws IOException,
+          CannotReadException,
+          TagException,
+          ReadOnlyFileException,
+          MetadataException {
+    List<Metadata> metadataList = exportPackage.getMetadataList();
+    if (metadataList.get(0).getCoverArt() == null) {
+      return;
+    }
+    File root = exportPackage.getRoot();
+    if (metadataService.isSameAlbum(metadataList)) {
+      imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    } else {
+      for (Metadata metadata : metadataList) {
+        imageUtils.saveCoverArtToFile(
+            metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
+      }
+    }
+  }
 }

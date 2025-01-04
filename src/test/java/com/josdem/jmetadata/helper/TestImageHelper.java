@@ -16,10 +16,12 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.impl.ImageServiceImpl;
+import java.io.File;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -29,24 +31,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @Slf4j
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, ImageServiceImpl.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TestImageHelper {
 
-    private final ImageService imageService;
+  private final ImageService imageService;
 
-    @Test
-    @DisplayName("creating a temp file for cover art")
-    public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        File tempFile = imageService.createTempFile();
-        assertTrue(tempFile.getName().contains(ApplicationConstants.PREFIX));
-        assertTrue(tempFile.getName().contains(ApplicationConstants.IMAGE_EXT));
-    }
+  @Test
+  @DisplayName("creating a temp file for cover art")
+  public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    File tempFile = imageService.createTempFile();
+    assertTrue(tempFile.getName().contains(ApplicationConstants.PREFIX));
+    assertTrue(tempFile.getName().contains(ApplicationConstants.IMAGE_EXT));
+  }
 }

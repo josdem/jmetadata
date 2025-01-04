@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,23 +27,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @Slf4j
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, FormatterHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TestFormatterHelper {
 
-    private final FormatterHelper helper;
+  private final FormatterHelper helper;
 
-    @Test
-    @DisplayName("should format for comparison")
-    public void shouldFormatForComparison(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        var word = "de - pazz";
-        var expectedWord = "depazz";
-        assertEquals(expectedWord, helper.getBasicFormat(word));
-    }
-
+  @Test
+  @DisplayName("should format for comparison")
+  public void shouldFormatForComparison(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var word = "de - pazz";
+    var expectedWord = "depazz";
+    assertEquals(expectedWord, helper.getBasicFormat(word));
+  }
 }

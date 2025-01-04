@@ -16,9 +16,9 @@
 
 package com.josdem.jmetadata.service;
 
-import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.action.ActionResult;
+import com.josdem.jmetadata.model.Metadata;
 
 public interface LastfmService {
-	ActionResult completeLastFM(Metadata metadata);
+  ActionResult completeLastFM(Metadata metadata);
 }

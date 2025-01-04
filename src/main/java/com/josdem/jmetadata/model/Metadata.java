@@ -16,46 +16,46 @@
 
 package com.josdem.jmetadata.model;
 
+import java.awt.Image;
+import java.io.File;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Image;
-import java.io.File;
-
 @Getter
 @Setter
 public class Metadata implements Comparable<Metadata> {
-    private String title;
-    private String artist;
-    private String album;
-    private String genre;
-    private String trackNumber;
-    private String totalTracks;
-    private Image coverArt;
-    private int length;
-    private int bitRate;
-    private File file;
-    private String cdNumber;
-    private String totalCds;
-    private String year;
-    private CoverArt newCoverArt;
-    private boolean metadataFromFile;
-    private boolean orderByFile = false;
+  private String title;
+  private String artist;
+  private String album;
+  private String genre;
+  private String trackNumber;
+  private String totalTracks;
+  private Image coverArt;
+  private int length;
+  private int bitRate;
+  private File file;
+  private String cdNumber;
+  private String totalCds;
+  private String year;
+  private CoverArt newCoverArt;
+  private boolean metadataFromFile;
+  private boolean orderByFile = false;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public int compareTo(Metadata metadata) {
-        if (metadata.isOrderByFile()) {
-            return getFile().getName().compareTo(metadata.getFile().getName());
-        }
-        try {
-            var thisTrackNumber = Integer.parseInt(getTrackNumber());
-            return Integer.compare(thisTrackNumber, Integer.parseInt(metadata.getTrackNumber()));
-        } catch (NumberFormatException nfe) {
-            log.info("Metadata : {} has an incorrect trackNumber: {}", metadata.getTitle(), nfe.getMessage());
-            return 0;
-        }
+  public int compareTo(Metadata metadata) {
+    if (metadata.isOrderByFile()) {
+      return getFile().getName().compareTo(metadata.getFile().getName());
     }
+    try {
+      var thisTrackNumber = Integer.parseInt(getTrackNumber());
+      return Integer.compare(thisTrackNumber, Integer.parseInt(metadata.getTrackNumber()));
+    } catch (NumberFormatException nfe) {
+      log.info(
+          "Metadata : {} has an incorrect trackNumber: {}", metadata.getTitle(), nfe.getMessage());
+      return 0;
+    }
+  }
 }

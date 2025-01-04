@@ -16,19 +16,18 @@
 
 package com.josdem.jmetadata.model;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class CoverArtImage {
-    private List<String> types;
-    private boolean front;
-    private boolean back;
-    private int edit;
-    private String image;
-    private String comment;
-    private boolean approved;
-    private Thumbnail thumbnails;
-    private String id;
+  private List<String> types;
+  private boolean front;
+  private boolean back;
+  private int edit;
+  private String image;
+  private String comment;
+  private boolean approved;
+  private Thumbnail thumbnails;
+  private String id;
 }

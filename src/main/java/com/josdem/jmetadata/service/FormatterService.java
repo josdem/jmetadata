@@ -19,12 +19,11 @@ package com.josdem.jmetadata.service;
 import com.josdem.jmetadata.model.Metadata;
 
 public interface FormatterService {
-    Boolean wasFormatted(Metadata metadata);
+  Boolean wasFormatted(Metadata metadata);
 
-    Boolean wasCamelized(Metadata metadata);
+  Boolean wasCamelized(Metadata metadata);
 
-    String getDuration(int length);
+  String getDuration(int length);
 
-    void isAnalyzable(Metadata metadata);
+  void isAnalyzable(Metadata metadata);
 }
-

@@ -20,12 +20,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CoverArtRetrofitHelper {
-    private static final String BASE_URL = "https://coverartarchive.org/";
+  private static final String BASE_URL = "https://coverartarchive.org/";
 
-    public static Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    }
+  public static Retrofit getRetrofit() {
+    return new Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+  }
 }

@@ -16,12 +16,13 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.annotations.RequestMethod;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.ExporterHelper;
 import com.josdem.jmetadata.model.ExportPackage;
+import java.io.IOException;
+import org.asmatron.messengine.annotations.RequestMethod;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
@@ -30,24 +31,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
-
 @Controller
 public class ExporterController {
 
-    @Autowired
-    private ExporterHelper exporterHelper;
+  @Autowired private ExporterHelper exporterHelper;
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMethod(Actions.EXPORT_METADATA)
-    public ActionResult sendMetadata(ExportPackage exportPackage) throws CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-        try {
-            return exporterHelper.export(exportPackage);
-        } catch (IOException ioe) {
-            log.error(ioe.getMessage(), ioe);
-            return ActionResult.Error;
-        }
+  @RequestMethod(Actions.EXPORT_METADATA)
+  public ActionResult sendMetadata(ExportPackage exportPackage)
+      throws CannotReadException, TagException, ReadOnlyFileException, MetadataException {
+    try {
+      return exporterHelper.export(exportPackage);
+    } catch (IOException ioe) {
+      log.error(ioe.getMessage(), ioe);
+      return ActionResult.Error;
     }
-
+  }
 }

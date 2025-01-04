@@ -23,8 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JAudioTaggerCollaborator {
 
-    public boolean isValid(Tag tag, AudioHeader header) {
-        return tag != null && header != null;
-    }
-
+  public boolean isValid(Tag tag, AudioHeader header) {
+    return tag != null && header != null;
+  }
 }

@@ -23,12 +23,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-    private final String username;
-    private final String password;
-    private Session session;
+  private final String username;
+  private final String password;
+  private Session session;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 }

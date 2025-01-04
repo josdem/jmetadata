@@ -22,28 +22,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class FormatterHelper {
 
-	public String getBasicFormat(String word) {
-		if(word.length() == 2){
-			return word;
-		}
-		String formatted = word.replace("-", StringUtils.EMPTY);
-		formatted = formatted.replace("(", StringUtils.EMPTY);
-		formatted = formatted.replace(")", StringUtils.EMPTY);
-		formatted = formatted.replace("0", StringUtils.EMPTY);
-		formatted = formatted.replace("1", StringUtils.EMPTY);
-		formatted = formatted.replace("2", StringUtils.EMPTY);
-		formatted = formatted.replace("3", StringUtils.EMPTY);
-		formatted = formatted.replace("4", StringUtils.EMPTY);
-		formatted = formatted.replace("5", StringUtils.EMPTY);
-		formatted = formatted.replace("6", StringUtils.EMPTY);
-		formatted = formatted.replace("7", StringUtils.EMPTY);
-		formatted = formatted.replace("8", StringUtils.EMPTY);
-		formatted = formatted.replace("9", StringUtils.EMPTY);
-		formatted = formatted.replace("'", StringUtils.EMPTY);
-		formatted = formatted.replace(",", StringUtils.EMPTY);
-		formatted = formatted.replace("I", StringUtils.EMPTY);
-		formatted = formatted.replace("&", StringUtils.EMPTY);
-		return formatted.replace(" ", StringUtils.EMPTY);
-	}
-
+  public String getBasicFormat(String word) {
+    if (word.length() == 2) {
+      return word;
+    }
+    String formatted = word.replace("-", StringUtils.EMPTY);
+    formatted = formatted.replace("(", StringUtils.EMPTY);
+    formatted = formatted.replace(")", StringUtils.EMPTY);
+    formatted = formatted.replace("0", StringUtils.EMPTY);
+    formatted = formatted.replace("1", StringUtils.EMPTY);
+    formatted = formatted.replace("2", StringUtils.EMPTY);
+    formatted = formatted.replace("3", StringUtils.EMPTY);
+    formatted = formatted.replace("4", StringUtils.EMPTY);
+    formatted = formatted.replace("5", StringUtils.EMPTY);
+    formatted = formatted.replace("6", StringUtils.EMPTY);
+    formatted = formatted.replace("7", StringUtils.EMPTY);
+    formatted = formatted.replace("8", StringUtils.EMPTY);
+    formatted = formatted.replace("9", StringUtils.EMPTY);
+    formatted = formatted.replace("'", StringUtils.EMPTY);
+    formatted = formatted.replace(",", StringUtils.EMPTY);
+    formatted = formatted.replace("I", StringUtils.EMPTY);
+    formatted = formatted.replace("&", StringUtils.EMPTY);
+    return formatted.replace(" ", StringUtils.EMPTY);
+  }
 }

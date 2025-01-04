@@ -16,44 +16,38 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.annotations.RequestMethod;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.helper.ScrobblerHelper;
 import com.josdem.jmetadata.model.Metadata;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
+import org.asmatron.messengine.annotations.RequestMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Slf4j
 @Controller
 public class ScrobblerController {
 
-    @Autowired
-    private ScrobblerHelper scrobblerHelper;
-    @Autowired
-    private ControlEngineConfigurator configurator;
+  @Autowired private ScrobblerHelper scrobblerHelper;
+  @Autowired private ControlEngineConfigurator configurator;
 
+  @PostConstruct
+  public void setup() {
+    scrobblerHelper.setControlEngine(configurator.getControlEngine());
+  }
 
-
-    @PostConstruct
-    public void setup() {
-        scrobblerHelper.setControlEngine(configurator.getControlEngine());
+  @RequestMethod(Actions.SEND_METADATA)
+  public ActionResult sendMetadata(Metadata metadata) {
+    try {
+      log.info("Sending scrobbling for: {}", metadata.getTitle());
+      return scrobblerHelper.send(metadata);
+    } catch (IOException | InterruptedException ioe) {
+      log.error(ioe.getMessage(), ioe);
+      return ActionResult.Error;
     }
-
-    @RequestMethod(Actions.SEND_METADATA)
-    public ActionResult sendMetadata(Metadata metadata) {
-        try {
-            log.info("Sending scrobbling for: {}", metadata.getTitle());
-            return scrobblerHelper.send(metadata);
-        } catch (IOException | InterruptedException ioe) {
-            log.error(ioe.getMessage(), ioe);
-            return ActionResult.Error;
-        }
-    }
-
+  }
 }

@@ -17,12 +17,10 @@
 package com.josdem.jmetadata.service;
 
 import com.josdem.jmetadata.model.Metadata;
-
 import java.util.List;
 
 public interface DefaultService {
-    boolean isCompletable(List<Metadata> metadatas);
+  boolean isCompletable(List<Metadata> metadatas);
 
-    void complete(List<Metadata> metadatas);
+  void complete(List<Metadata> metadatas);
 }
-

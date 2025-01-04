@@ -16,15 +16,16 @@
 
 package com.josdem.jmetadata.service;
 
+import com.josdem.jmetadata.action.ActionResult;
+import com.josdem.jmetadata.model.LastfmAlbum;
+import com.josdem.jmetadata.model.Metadata;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import com.josdem.jmetadata.model.Metadata;
-import com.josdem.jmetadata.model.LastfmAlbum;
-import com.josdem.jmetadata.action.ActionResult;
-
 public interface LastFMCompleteService {
-	boolean canLastFMHelpToComplete(Metadata metadata);
-	LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException;
-	ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata);
+  boolean canLastFMHelpToComplete(Metadata metadata);
+
+  LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException;
+
+  ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata);
 }

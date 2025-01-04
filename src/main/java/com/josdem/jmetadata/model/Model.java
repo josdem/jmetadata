@@ -16,25 +16,24 @@
 
 package com.josdem.jmetadata.model;
 
+import static org.asmatron.messengine.model.ModelId.model;
+
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-
 import org.asmatron.messengine.model.ModelId;
-
-import static org.asmatron.messengine.model.ModelId.model;
 
 public interface Model {
 
-	String CURRENT_USER_ID = "application.currentUser";
-	ModelId<User> CURRENT_USER = model(CURRENT_USER_ID);
+  String CURRENT_USER_ID = "application.currentUser";
+  ModelId<User> CURRENT_USER = model(CURRENT_USER_ID);
 
-	String METADATA_LIST = "application.metadataList";
-	ModelId<List<Metadata>> METADATA = model(METADATA_LIST);
+  String METADATA_LIST = "application.metadataList";
+  ModelId<List<Metadata>> METADATA = model(METADATA_LIST);
 
-	String METADATA_ARTIST_LIST = "application.metadataArtistList";
-	ModelId<Set<Metadata>> METADATA_ARTIST = model(METADATA_ARTIST_LIST);
+  String METADATA_ARTIST_LIST = "application.metadataArtistList";
+  ModelId<Set<Metadata>> METADATA_ARTIST = model(METADATA_ARTIST_LIST);
 
-	String FILES_WITHOUT_MINIMUM_METADATA_LIST = "application.filesWithoutMinimumMetadata";
-	ModelId<Set<File>> FILES_WITHOUT_MINIMUM_METADATA = model(FILES_WITHOUT_MINIMUM_METADATA_LIST);
+  String FILES_WITHOUT_MINIMUM_METADATA_LIST = "application.filesWithoutMinimumMetadata";
+  ModelId<Set<File>> FILES_WITHOUT_MINIMUM_METADATA = model(FILES_WITHOUT_MINIMUM_METADATA_LIST);
 }

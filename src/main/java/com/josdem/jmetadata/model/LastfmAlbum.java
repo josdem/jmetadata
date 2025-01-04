@@ -16,15 +16,14 @@
 
 package com.josdem.jmetadata.model;
 
+import java.awt.Image;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.awt.Image;
 
 @Getter
 @Setter
 public class LastfmAlbum {
-    private Image imageIcon;
-    private String year;
-    private String genre;
+  private Image imageIcon;
+  private String year;
+  private String genre;
 }

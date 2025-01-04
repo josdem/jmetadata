@@ -16,14 +16,22 @@
 
 package com.josdem.jmetadata.controller;
 
-import de.umass.lastfm.Session;
-import org.asmatron.messengine.ControlEngine;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.event.ValueEvent;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.josdem.jmetadata.event.Events;
 import com.josdem.jmetadata.helper.LastFMAuthenticator;
 import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.model.User;
+import de.umass.lastfm.Session;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,78 +40,61 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-
 class TestLoginController {
 
-    @InjectMocks
-    private final LoginController controller = new LoginController();
+  @InjectMocks private final LoginController controller = new LoginController();
 
-    @Mock
-    private LastFMAuthenticator lastfmAuthenticator;
-    @Mock
-    private ControlEngineConfigurator configurator;
-    @Mock
-    private ControlEngine controlEngine;
-    @Mock
-    private Session session;
+  @Mock private LastFMAuthenticator lastfmAuthenticator;
+  @Mock private ControlEngineConfigurator configurator;
+  @Mock private ControlEngine controlEngine;
+  @Mock private Session session;
 
-    private final String username = "josdem";
-    private final String password = "password";
+  private final String username = "josdem";
+  private final String password = "password";
 
-    private User credentials;
+  private User credentials;
 
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        when(configurator.getControlEngine()).thenReturn(controlEngine);
+    credentials = new User(username, password);
+  }
 
-        credentials = new User(username, password);
-    }
+  @Test
+  @DisplayName("login as a user")
+  public void shouldLogin(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(lastfmAuthenticator.login(username, password)).thenReturn(session);
 
-    @Test
-    @DisplayName("login as a user")
-    public void shouldLogin(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(lastfmAuthenticator.login(username, password)).thenReturn(session);
+    controller.login(credentials);
 
-        controller.login(credentials);
+    verify(lastfmAuthenticator).login(username, password);
+    verify(controlEngine).set(Model.CURRENT_USER, credentials, null);
+    verify(controlEngine).fireEvent(eq(Events.LOGGED), isA(ValueEvent.class));
+  }
 
-        verify(lastfmAuthenticator).login(username, password);
-        verify(controlEngine).set(Model.CURRENT_USER, credentials, null);
-        verify(controlEngine).fireEvent(eq(Events.LOGGED), isA(ValueEvent.class));
-    }
+  @Test
+  @DisplayName("login as a user failed")
+  public void shouldFailAtLogin(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    controller.login(credentials);
 
-    @Test
-    @DisplayName("login as a user failed")
-    public void shouldFailAtLogin(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        controller.login(credentials);
+    verify(lastfmAuthenticator).login(username, password);
+    verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
+    verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
+  }
 
-        verify(lastfmAuthenticator).login(username, password);
-        verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
-        verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
-    }
+  @Test
+  @DisplayName("login as a user failed due to exception")
+  public void shouldFailDueToException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(lastfmAuthenticator.login(username, password)).thenThrow(new IOException());
 
-    @Test
-    @DisplayName("login as a user failed due to exception")
-    public void shouldFailDueToException(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(lastfmAuthenticator.login(username, password)).thenThrow(new IOException());
+    controller.login(credentials);
 
-        controller.login(credentials);
-
-        verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
-    }
-
+    verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
+  }
 }

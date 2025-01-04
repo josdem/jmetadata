@@ -16,20 +16,19 @@
 
 package com.josdem.jmetadata.model;
 
+import java.awt.Image;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.awt.Image;
 
 @Getter
 @Setter
 public class MetadataAlbumValues {
-    private String genre;
-    private String album;
-    private String tracks;
-    private String cd;
-    private String cds;
-    private Image coverArt;
-    private String year;
-    private String artist;
+  private String genre;
+  private String album;
+  private String tracks;
+  private String cd;
+  private String cds;
+  private Image coverArt;
+  private String year;
+  private String artist;
 }

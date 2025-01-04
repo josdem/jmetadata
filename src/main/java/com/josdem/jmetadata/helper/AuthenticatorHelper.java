@@ -16,15 +16,15 @@
 
 package com.josdem.jmetadata.helper;
 
+import com.josdem.jmetadata.Auth;
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
-import com.josdem.jmetadata.Auth;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticatorHelper {
 
-    public Session getSession(String username, String password) {
-        return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
-    }
+  public Session getSession(String username, String password) {
+    return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
+  }
 }

@@ -18,7 +18,7 @@ package com.josdem.jmetadata.exception;
 
 public class MetadataException extends Exception {
 
-    public MetadataException(String message) {
-        super(message);
-    }
+  public MetadataException(String message) {
+    super(message);
+  }
 }

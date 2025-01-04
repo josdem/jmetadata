@@ -16,68 +16,65 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import de.umass.lastfm.Album;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-
 public class TestLastFMAlbumHelper {
-    private final LastFMAlbumHelper lastFMAlbumHelper = new LastFMAlbumHelper();
+  private final LastFMAlbumHelper lastFMAlbumHelper = new LastFMAlbumHelper();
 
-    private Date releaseDate = new Date();
-    @Mock
-    private Album album;
+  private Date releaseDate = new Date();
+  @Mock private Album album;
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    public void shouldGetYear() throws Exception {
-        SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
-        String currentYear = simpleDateformat.format(releaseDate);
-        String year = lastFMAlbumHelper.getYear(releaseDate);
-        assertEquals(currentYear, year);
-    }
+  @Test
+  public void shouldGetYear() throws Exception {
+    SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
+    String currentYear = simpleDateformat.format(releaseDate);
+    String year = lastFMAlbumHelper.getYear(releaseDate);
+    assertEquals(currentYear, year);
+  }
 
-    @Test
-    public void shouldGetEmptyYear() throws Exception {
-        assertEquals(StringUtils.EMPTY, lastFMAlbumHelper.getYear(null));
-    }
+  @Test
+  public void shouldGetEmptyYear() throws Exception {
+    assertEquals(StringUtils.EMPTY, lastFMAlbumHelper.getYear(null));
+  }
 
-    @Test
-    public void shouldMatchAGenre() throws Exception {
-        Collection<String> tags = new ArrayList<String>();
-        String tag = "House";
-        tags.add(tag);
+  @Test
+  public void shouldMatchAGenre() throws Exception {
+    Collection<String> tags = new ArrayList<String>();
+    String tag = "House";
+    tags.add(tag);
 
-        when(album.getTags()).thenReturn(tags);
+    when(album.getTags()).thenReturn(tags);
 
-        String result = lastFMAlbumHelper.getGenre(album);
-        assertEquals(tag, result);
-    }
+    String result = lastFMAlbumHelper.getGenre(album);
+    assertEquals(tag, result);
+  }
 
-    @Test
-    public void shouldNotMatchAGenre() throws Exception {
-        Collection<String> tags = new ArrayList<String>();
-        String tag = "usa";
-        tags.add(tag);
+  @Test
+  public void shouldNotMatchAGenre() throws Exception {
+    Collection<String> tags = new ArrayList<String>();
+    String tag = "usa";
+    tags.add(tag);
 
-        when(album.getTags()).thenReturn(tags);
+    when(album.getTags()).thenReturn(tags);
 
-        String result = lastFMAlbumHelper.getGenre(album);
-        assertEquals(StringUtils.EMPTY, result);
-    }
+    String result = lastFMAlbumHelper.getGenre(album);
+    assertEquals(StringUtils.EMPTY, result);
+  }
 }

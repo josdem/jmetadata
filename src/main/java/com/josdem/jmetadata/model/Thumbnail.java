@@ -21,12 +21,15 @@ import lombok.Data;
 
 @Data
 public class Thumbnail {
-    private String large;
-    private String small;
-    @SerializedName("250")
-    private String twoHundredFifty;
-    @SerializedName("500")
-    private String fiveHundred;
-    @SerializedName("1200")
-    private String oneThousandTwoHundred;
+  private String large;
+  private String small;
+
+  @SerializedName("250")
+  private String twoHundredFifty;
+
+  @SerializedName("500")
+  private String fiveHundred;
+
+  @SerializedName("1200")
+  private String oneThousandTwoHundred;
 }

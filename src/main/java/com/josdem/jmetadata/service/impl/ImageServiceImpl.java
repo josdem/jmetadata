@@ -18,28 +18,26 @@ package com.josdem.jmetadata.service.impl;
 
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
-import org.springframework.stereotype.Service;
-
-import javax.imageio.ImageIO;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import javax.imageio.ImageIO;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    public File createTempFile() throws IOException {
-        return File.createTempFile(ApplicationConstants.PREFIX, ApplicationConstants.IMAGE_EXT);
-    }
+  public File createTempFile() throws IOException {
+    return File.createTempFile(ApplicationConstants.PREFIX, ApplicationConstants.IMAGE_EXT);
+  }
 
-    public void write(Image bufferedImage, File file) throws IOException {
-        ImageIO.write((BufferedImage) bufferedImage, ApplicationConstants.IMAGE_EXT, file);
-    }
+  public void write(Image bufferedImage, File file) throws IOException {
+    ImageIO.write((BufferedImage) bufferedImage, ApplicationConstants.IMAGE_EXT, file);
+  }
 
-    public Image readImage(String imageURL) throws IOException {
-        return ImageIO.read(URI.create(imageURL).toURL());
-    }
-
+  public Image readImage(String imageURL) throws IOException {
+    return ImageIO.read(URI.create(imageURL).toURL());
+  }
 }

@@ -17,5 +17,5 @@
 package com.josdem.jmetadata.dnd;
 
 public interface DragRemoveListener {
-	void remove(Object parent, Object child);
+  void remove(Object parent, Object child);
 }

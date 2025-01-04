@@ -16,9 +16,15 @@
 
 package com.josdem.jmetadata.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.helper.ExporterHelper;
 import com.josdem.jmetadata.model.ExportPackage;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,53 +33,39 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-
-
 class TestExporterController {
 
-    @InjectMocks
-    private final ExporterController exporterController = new ExporterController();
+  @InjectMocks private final ExporterController exporterController = new ExporterController();
 
-    @Mock
-    private ExportPackage exportPackage;
-    @Mock
-    private ExporterHelper exporterHelper;
+  @Mock private ExportPackage exportPackage;
+  @Mock private ExporterHelper exporterHelper;
 
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @Test
+  @DisplayName("sending metadata")
+  public void shouldSendMetadata(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
 
-    @Test
-    @DisplayName("sending metadata")
-    public void shouldSendMetadata(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
+    ActionResult result = exporterController.sendMetadata(exportPackage);
 
-        ActionResult result = exporterController.sendMetadata(exportPackage);
+    verify(exporterHelper).export(exportPackage);
+    assertEquals(ActionResult.Exported, result);
+  }
 
-        verify(exporterHelper).export(exportPackage);
-        assertEquals(ActionResult.Exported, result);
-    }
+  @Test
+  @DisplayName("reporting error in sending metadata")
+  public void shouldReportErrorInSendingMetadata(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(exporterHelper.export(exportPackage)).thenThrow(new IOException());
 
-    @Test
-    @DisplayName("reporting error in sending metadata")
-    public void shouldReportErrorInSendingMetadata(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(exporterHelper.export(exportPackage)).thenThrow(new IOException());
+    ActionResult result = exporterController.sendMetadata(exportPackage);
 
-        ActionResult result = exporterController.sendMetadata(exportPackage);
-
-        assertEquals(ActionResult.Error, result);
-    }
-
+    assertEquals(ActionResult.Error, result);
+  }
 }

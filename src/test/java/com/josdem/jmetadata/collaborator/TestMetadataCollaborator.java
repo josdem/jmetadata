@@ -16,8 +16,15 @@
 
 package com.josdem.jmetadata.collaborator;
 
-import org.apache.commons.lang3.StringUtils;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 import com.josdem.jmetadata.model.Metadata;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,277 +33,265 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
 class TestMetadataCollaborator {
 
-    @InjectMocks
-    private final MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
+  @InjectMocks private final MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
 
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+  private final Logger log = Logger.getLogger(this.getClass().getName());
 
-    private final List<Metadata> metadatas = new ArrayList<Metadata>();
+  private final List<Metadata> metadatas = new ArrayList<Metadata>();
 
-    @Mock
-    private Metadata metadataOne;
-    @Mock
-    private Metadata metadataTwo;
+  @Mock private Metadata metadataOne;
+  @Mock private Metadata metadataTwo;
 
-    private final String artist = "artist";
-    private final String album = "album";
-    private final String genre = "genre";
-    private final String year = "year";
-    private final String totalTracks = "totalTracks";
-    private final String totalCds = "totalCds";
-    private final String cdNumber = "cdNumber";
+  private final String artist = "artist";
+  private final String album = "album";
+  private final String genre = "genre";
+  private final String year = "year";
+  private final String totalTracks = "totalTracks";
+  private final String totalCds = "totalCds";
+  private final String cdNumber = "cdNumber";
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    @DisplayName("getting artist")
-    public void shouldGetArtist(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getArtist()).thenReturn(artist);
-        when(metadataTwo.getArtist()).thenReturn(artist);
+  @Test
+  @DisplayName("getting artist")
+  public void shouldGetArtist(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getArtist()).thenReturn(artist);
+    when(metadataTwo.getArtist()).thenReturn(artist);
 
-        assertEquals(artist, metadataCollaborator.getArtist());
-    }
+    assertEquals(artist, metadataCollaborator.getArtist());
+  }
 
-    private void setMetadatasExpectations() {
-        metadatas.add(metadataOne);
-        metadatas.add(metadataTwo);
-        metadataCollaborator.setMetadatas(metadatas);
-    }
+  private void setMetadatasExpectations() {
+    metadatas.add(metadataOne);
+    metadatas.add(metadataTwo);
+    metadataCollaborator.setMetadatas(metadatas);
+  }
 
-    @Test
-    @DisplayName("not getting artist")
-    public void shouldNotGetArtist(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getArtist()).thenReturn(artist);
-        when(metadataTwo.getArtist()).thenReturn("otherArtist");
+  @Test
+  @DisplayName("not getting artist")
+  public void shouldNotGetArtist(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getArtist()).thenReturn(artist);
+    when(metadataTwo.getArtist()).thenReturn("otherArtist");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getArtist());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getArtist());
+  }
 
-    @Test
-    @DisplayName("not accepting null artist")
-    public void shouldGetEmptyArtist(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getArtist()).thenReturn(null);
-        when(metadataTwo.getArtist()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null artist")
+  public void shouldGetEmptyArtist(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getArtist()).thenReturn(null);
+    when(metadataTwo.getArtist()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getArtist);
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getArtist);
+  }
 
-    @Test
-    @DisplayName("getting album")
-    public void shouldGetAlbum(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getAlbum()).thenReturn(album);
-        when(metadataTwo.getAlbum()).thenReturn(album);
+  @Test
+  @DisplayName("getting album")
+  public void shouldGetAlbum(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getAlbum()).thenReturn(album);
+    when(metadataTwo.getAlbum()).thenReturn(album);
 
-        assertEquals(album, metadataCollaborator.getAlbum());
-    }
+    assertEquals(album, metadataCollaborator.getAlbum());
+  }
 
-    @Test
-    @DisplayName("not getting album")
-    public void shouldNotGetAlbum(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getAlbum()).thenReturn(album);
-        when(metadataTwo.getAlbum()).thenReturn("otherAlbum");
+  @Test
+  @DisplayName("not getting album")
+  public void shouldNotGetAlbum(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getAlbum()).thenReturn(album);
+    when(metadataTwo.getAlbum()).thenReturn("otherAlbum");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
+  }
 
-    @Test
-    @DisplayName("note accepting null album")
-    public void shouldGetEmptyAlbum(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getAlbum()).thenReturn(null);
-        when(metadataTwo.getAlbum()).thenReturn(null);
+  @Test
+  @DisplayName("note accepting null album")
+  public void shouldGetEmptyAlbum(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getAlbum()).thenReturn(null);
+    when(metadataTwo.getAlbum()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getAlbum);
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getAlbum);
+  }
 
-    @Test
-    @DisplayName("getting genre")
-    public void shouldGetGenre(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getGenre()).thenReturn(genre);
-        when(metadataTwo.getGenre()).thenReturn(genre);
+  @Test
+  @DisplayName("getting genre")
+  public void shouldGetGenre(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getGenre()).thenReturn(genre);
+    when(metadataTwo.getGenre()).thenReturn(genre);
 
-        assertEquals(genre, metadataCollaborator.getGenre());
-    }
+    assertEquals(genre, metadataCollaborator.getGenre());
+  }
 
-    @Test
-    @DisplayName("not getting genre")
-    public void shouldNotGetGenre(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getGenre()).thenReturn(genre);
-        when(metadataTwo.getGenre()).thenReturn("otherGenre");
+  @Test
+  @DisplayName("not getting genre")
+  public void shouldNotGetGenre(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getGenre()).thenReturn(genre);
+    when(metadataTwo.getGenre()).thenReturn("otherGenre");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getGenre());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getGenre());
+  }
 
-    @Test
-    @DisplayName("not accepting null genre")
-    public void shouldGetEmptyGenre(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getGenre()).thenReturn(null);
-        when(metadataTwo.getGenre()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null genre")
+  public void shouldGetEmptyGenre(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getGenre()).thenReturn(null);
+    when(metadataTwo.getGenre()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getGenre);
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getGenre);
+  }
 
-    @Test
-    @DisplayName("getting year")
-    public void shouldGetYear(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getYear()).thenReturn(year);
-        when(metadataTwo.getYear()).thenReturn(year);
+  @Test
+  @DisplayName("getting year")
+  public void shouldGetYear(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getYear()).thenReturn(year);
+    when(metadataTwo.getYear()).thenReturn(year);
 
-        assertEquals(year, metadataCollaborator.getYear());
-    }
+    assertEquals(year, metadataCollaborator.getYear());
+  }
 
-    @Test
-    @DisplayName("not getting year")
-    public void shouldNotGetYear(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getYear()).thenReturn(year);
-        when(metadataTwo.getYear()).thenReturn("otherYear");
+  @Test
+  @DisplayName("not getting year")
+  public void shouldNotGetYear(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getYear()).thenReturn(year);
+    when(metadataTwo.getYear()).thenReturn("otherYear");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
+  }
 
-    @Test
-    @DisplayName("not accepting null year")
-    public void shouldGetEmptyYear(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getYear()).thenReturn(null);
-        when(metadataTwo.getYear()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null year")
+  public void shouldGetEmptyYear(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getYear()).thenReturn(null);
+    when(metadataTwo.getYear()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getYear);
-        ;
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getYear);
+    ;
+  }
 
-    @Test
-    @DisplayName("getting total tracks")
-    public void shouldGetTotalTracks(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
-        when(metadataTwo.getTotalTracks()).thenReturn(totalTracks);
+  @Test
+  @DisplayName("getting total tracks")
+  public void shouldGetTotalTracks(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
+    when(metadataTwo.getTotalTracks()).thenReturn(totalTracks);
 
-        assertEquals(totalTracks, metadataCollaborator.getTotalTracks());
-    }
+    assertEquals(totalTracks, metadataCollaborator.getTotalTracks());
+  }
 
-    @Test
-    @DisplayName("not getting total tracks")
-    public void shouldNotGetTotalTracks(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
-        when(metadataTwo.getTotalTracks()).thenReturn("otherTotalTracks");
+  @Test
+  @DisplayName("not getting total tracks")
+  public void shouldNotGetTotalTracks(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
+    when(metadataTwo.getTotalTracks()).thenReturn("otherTotalTracks");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
+  }
 
-    @Test
-    @DisplayName("not accepting null total tracks")
-    public void shouldGetEmptyTotalTracks(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalTracks()).thenReturn(null);
-        when(metadataTwo.getTotalTracks()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null total tracks")
+  public void shouldGetEmptyTotalTracks(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalTracks()).thenReturn(null);
+    when(metadataTwo.getTotalTracks()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getTotalTracks);
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getTotalTracks);
+  }
 
-    @Test
-    @DisplayName("getting cd number")
-    public void shouldGetCdNumber(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getCdNumber()).thenReturn(cdNumber);
-        when(metadataTwo.getCdNumber()).thenReturn(cdNumber);
+  @Test
+  @DisplayName("getting cd number")
+  public void shouldGetCdNumber(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getCdNumber()).thenReturn(cdNumber);
+    when(metadataTwo.getCdNumber()).thenReturn(cdNumber);
 
-        assertEquals(cdNumber, metadataCollaborator.getCdNumber());
-    }
+    assertEquals(cdNumber, metadataCollaborator.getCdNumber());
+  }
 
-    @Test
-    @DisplayName("not getting cd number")
-    public void shouldNotGetCdNumber(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getCdNumber()).thenReturn(cdNumber);
-        when(metadataTwo.getCdNumber()).thenReturn("otherCdNumber");
+  @Test
+  @DisplayName("not getting cd number")
+  public void shouldNotGetCdNumber(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getCdNumber()).thenReturn(cdNumber);
+    when(metadataTwo.getCdNumber()).thenReturn("otherCdNumber");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getCdNumber());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getCdNumber());
+  }
 
-    @Test
-    @DisplayName("not accepting null cd number")
-    public void shouldGetEmptyCdNumber(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getCdNumber()).thenReturn(null);
-        when(metadataTwo.getCdNumber()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null cd number")
+  public void shouldGetEmptyCdNumber(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getCdNumber()).thenReturn(null);
+    when(metadataTwo.getCdNumber()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getCdNumber);
-    }
+    assertThrows(NullPointerException.class, metadataCollaborator::getCdNumber);
+  }
 
-    @Test
-    @DisplayName("getting total cds")
-    public void shouldGetTotalCds(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalCds()).thenReturn(totalCds);
-        when(metadataTwo.getTotalCds()).thenReturn(totalCds);
+  @Test
+  @DisplayName("getting total cds")
+  public void shouldGetTotalCds(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalCds()).thenReturn(totalCds);
+    when(metadataTwo.getTotalCds()).thenReturn(totalCds);
 
-        assertEquals(totalCds, metadataCollaborator.getTotalCds());
-    }
+    assertEquals(totalCds, metadataCollaborator.getTotalCds());
+  }
 
-    @Test
-    @DisplayName("not getting total cds")
-    public void shouldNotGetTotalCds(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalCds()).thenReturn(totalCds);
-        when(metadataTwo.getTotalCds()).thenReturn("otherCds");
+  @Test
+  @DisplayName("not getting total cds")
+  public void shouldNotGetTotalCds(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalCds()).thenReturn(totalCds);
+    when(metadataTwo.getTotalCds()).thenReturn("otherCds");
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
-    }
+    assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
+  }
 
-    @Test
-    @DisplayName("not accepting null total cds")
-    public void shouldGetEmptyTotalCds(TestInfo testInfo) {
-        log.info(() -> "Running test: " + testInfo.getDisplayName());
-        setMetadatasExpectations();
-        when(metadataOne.getTotalCds()).thenReturn(null);
-        when(metadataTwo.getTotalCds()).thenReturn(null);
+  @Test
+  @DisplayName("not accepting null total cds")
+  public void shouldGetEmptyTotalCds(TestInfo testInfo) {
+    log.info(() -> "Running test: " + testInfo.getDisplayName());
+    setMetadatasExpectations();
+    when(metadataOne.getTotalCds()).thenReturn(null);
+    when(metadataTwo.getTotalCds()).thenReturn(null);
 
-        assertThrows(NullPointerException.class, metadataCollaborator::getTotalCds);
-    }
-
+    assertThrows(NullPointerException.class, metadataCollaborator::getTotalCds);
+  }
 }

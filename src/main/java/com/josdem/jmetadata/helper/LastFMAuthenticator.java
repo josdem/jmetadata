@@ -17,23 +17,20 @@
 package com.josdem.jmetadata.helper;
 
 import de.umass.lastfm.Session;
+import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Component
 public class LastFMAuthenticator {
 
-    @Autowired
-    private AuthenticatorHelper authenticatorHelper;
+  @Autowired private AuthenticatorHelper authenticatorHelper;
 
-    public Session login(String username, String password) throws IOException {
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return null;
-        }
-        return authenticatorHelper.getSession(username, password);
+  public Session login(String username, String password) throws IOException {
+    if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+      return null;
     }
-
+    return authenticatorHelper.getSession(username, password);
+  }
 }

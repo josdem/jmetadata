@@ -20,44 +20,41 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-
 public class Picture {
-	private static final double PROPORTION = 0.45;
-	private static final int MIN_SIZE = 47;
-	private BufferedImage image;
-	private String name;
-	private int height;
-	private int width;
+  private static final double PROPORTION = 0.45;
+  private static final int MIN_SIZE = 47;
+  private BufferedImage image;
+  private String name;
+  private int height;
+  private int width;
 
-	public Picture(File file) throws IOException {
-		image = ImageIO.read(file);
-		if (image == null) {
-			throw new IllegalArgumentException("not an image");
-		}
-		name = file.getName();
-		height = image.getHeight();
-		width = image.getWidth();
-	}
+  public Picture(File file) throws IOException {
+    image = ImageIO.read(file);
+    if (image == null) {
+      throw new IllegalArgumentException("not an image");
+    }
+    name = file.getName();
+    height = image.getHeight();
+    width = image.getWidth();
+  }
 
-	public Image getImage() {
-		return image;
-	}
+  public Image getImage() {
+    return image;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public boolean isProportionedImage() {
-		double min = Math.min(width, height);
-		int max = Math.max(width, height);
-		return min / max >= PROPORTION;
-	}
+  public boolean isProportionedImage() {
+    double min = Math.min(width, height);
+    int max = Math.max(width, height);
+    return min / max >= PROPORTION;
+  }
 
-	public boolean isValidImageSize() {
-		return width > MIN_SIZE && height > MIN_SIZE;
-	}
-
+  public boolean isValidImageSize() {
+    return width > MIN_SIZE && height > MIN_SIZE;
+  }
 }

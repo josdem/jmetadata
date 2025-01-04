@@ -22,35 +22,33 @@ import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.util.ApplicationState;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Slf4j
 @Service
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
-    private RestService restService;
+  private RestService restService;
 
-    @PostConstruct
-    void setup() {
-        restService = RetrofitHelper.getRetrofit().create(RestService.class);
+  @PostConstruct
+  void setup() {
+    restService = RetrofitHelper.getRetrofit().create(RestService.class);
+  }
+
+  public Album getAlbumByName(String name) {
+    log.info("Getting release");
+    var musicBrainzResponse = ApplicationState.cache.get(name);
+    String id = musicBrainzResponse.getReleases().getFirst().getId();
+    var call = restService.getRelease(id);
+    try {
+      Response<Album> response = call.execute();
+      return response.body();
+    } catch (IOException e) {
+      throw new BusinessException(e.getMessage());
     }
-
-    public Album getAlbumByName(String name) {
-        log.info("Getting release");
-        var musicBrainzResponse = ApplicationState.cache.get(name);
-        String id = musicBrainzResponse.getReleases().getFirst().getId();
-        var call = restService.getRelease(id);
-        try {
-            Response<Album> response = call.execute();
-            return response.body();
-        } catch (IOException e) {
-            throw new BusinessException(e.getMessage());
-        }
-    }
-
+  }
 }

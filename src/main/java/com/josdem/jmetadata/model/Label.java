@@ -20,6 +20,6 @@ import lombok.Data;
 
 @Data
 public class Label {
-    private String id;
-    private String name;
+  private String id;
+  private String name;
 }

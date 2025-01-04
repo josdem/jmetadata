@@ -23,7 +23,6 @@ import retrofit2.http.Path;
 
 public interface CoverArtRestService {
 
-    @GET("release/{id}")
-    Call<CoverArtResponse> getRelease(@Path("id") String id);
-
+  @GET("release/{id}")
+  Call<CoverArtResponse> getRelease(@Path("id") String id);
 }

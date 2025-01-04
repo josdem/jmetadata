@@ -16,44 +16,39 @@
 
 package com.josdem.jmetadata;
 
+import com.josdem.jmetadata.helper.ApplicationContextSingleton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import com.josdem.jmetadata.helper.ApplicationContextSingleton;
+import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who knows how to launch ALL the process
  */
-
 public class Launcher {
-	private static final String HIPECOTECH_LNF = "com.josdem.jmetadata.laf.HipecotechLookAndFeel";
+  private static final String HIPECOTECH_LNF = "com.josdem.jmetadata.laf.HipecotechLookAndFeel";
 
+  public Launcher(ConfigurableApplicationContext applicationContext) {
+    DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
+    defaultEngine.start();
+  }
 
-	public Launcher(ConfigurableApplicationContext applicationContext) {
-		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
-		defaultEngine.start();
-	}
-
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(HIPECOTECH_LNF);
-		} catch (ClassNotFoundException e) {
-			log.error(e.getMessage(), e);
-		} catch (InstantiationException e) {
-			log.error(e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			log.error(e.getMessage(), e);
-		} catch (UnsupportedLookAndFeelException e) {
-			log.error(e.getMessage(), e);
-		}
-		new Launcher(ApplicationContextSingleton.getApplicationContext());
-	}
+  public static void main(String[] args) {
+    try {
+      UIManager.setLookAndFeel(HIPECOTECH_LNF);
+    } catch (ClassNotFoundException e) {
+      log.error(e.getMessage(), e);
+    } catch (InstantiationException e) {
+      log.error(e.getMessage(), e);
+    } catch (IllegalAccessException e) {
+      log.error(e.getMessage(), e);
+    } catch (UnsupportedLookAndFeelException e) {
+      log.error(e.getMessage(), e);
+    }
+    new Launcher(ApplicationContextSingleton.getApplicationContext());
+  }
 }

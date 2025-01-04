@@ -16,34 +16,36 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.annotations.RequestMethod;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.DefaultService;
+import java.io.IOException;
+import java.util.List;
+import org.asmatron.messengine.annotations.RequestMethod;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
-import java.util.List;
-
 @Controller
 public class DefaultController {
 
-    @Autowired
-    private DefaultService defaultService;
+  @Autowired private DefaultService defaultService;
 
-    @RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
-    public synchronized ActionResult complete(List<Metadata> metadatas) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-        if (defaultService.isCompletable(metadatas)) {
-            defaultService.complete(metadatas);
-            return ActionResult.New;
-        }
-        return ActionResult.Ready;
+  @RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
+  public synchronized ActionResult complete(List<Metadata> metadatas)
+      throws IOException,
+          CannotReadException,
+          TagException,
+          ReadOnlyFileException,
+          MetadataException {
+    if (defaultService.isCompletable(metadatas)) {
+      defaultService.complete(metadatas);
+      return ActionResult.New;
     }
-
+    return ActionResult.Ready;
+  }
 }

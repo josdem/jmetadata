@@ -17,6 +17,5 @@
 package com.josdem.jmetadata.observer;
 
 public interface Observer<T extends ObserveObject> {
-	public void observe(T t);
-
+  public void observe(T t);
 }

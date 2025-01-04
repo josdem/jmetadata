@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.gui.util;
 
 public interface SynthFonts {
-    String BOLD_FONT11_WHITE = "boldFont11White";
-    String BOLD_FONT11_BLACK = "boldFont11Black";
-    String PLAIN_FONT16_GRAY100_100_100 = "plainFont16Gray100100100";
+  String BOLD_FONT11_WHITE = "boldFont11White";
+  String BOLD_FONT11_BLACK = "boldFont11Black";
+  String PLAIN_FONT16_GRAY100_100_100 = "plainFont16Gray100100100";
 }

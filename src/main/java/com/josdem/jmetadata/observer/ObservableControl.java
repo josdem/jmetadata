@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.observer;
 
 public interface ObservableControl {
-	void suspend();
+  void suspend();
 
-	void resume();
+  void resume();
 }

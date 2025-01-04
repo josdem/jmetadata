@@ -17,8 +17,7 @@
 package com.josdem.jmetadata.observer;
 
 public interface ObserverCollection<T extends ObserveObject> {
-	public void add(Observer<T> l);
+  public void add(Observer<T> l);
 
-	public void remove(Observer<T> listener);
-
+  public void remove(Observer<T> listener);
 }

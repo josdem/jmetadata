@@ -17,5 +17,6 @@
 package com.josdem.jmetadata.model;
 
 public enum CoverArtType {
-	LAST_FM, DRAG_AND_DROP;
+  LAST_FM,
+  DRAG_AND_DROP;
 }

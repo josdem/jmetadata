@@ -20,6 +20,6 @@ import lombok.Data;
 
 @Data
 public class TextRepresentation {
-    private String language;
-    private String script;
+  private String language;
+  private String script;
 }

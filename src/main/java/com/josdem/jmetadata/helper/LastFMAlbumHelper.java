@@ -16,47 +16,47 @@
 
 package com.josdem.jmetadata.helper;
 
-import de.umass.lastfm.Album;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import com.josdem.jmetadata.Auth;
 import com.josdem.jmetadata.model.GenreTypes;
-import org.springframework.stereotype.Component;
-
+import de.umass.lastfm.Album;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 public class LastFMAlbumHelper {
 
-    public Album getAlbum(String artist, String album) {
-        return Album.getInfo(artist, album, Auth.KEY);
-    }
+  public Album getAlbum(String artist, String album) {
+    return Album.getInfo(artist, album, Auth.KEY);
+  }
 
-    public String getYear(Date releaseDate) {
-        if (releaseDate == null) {
-            return StringUtils.EMPTY;
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
-        String year = simpleDateFormat.format(releaseDate);
-        log.info("Year: {}", year);
-        return year;
+  public String getYear(Date releaseDate) {
+    if (releaseDate == null) {
+      return StringUtils.EMPTY;
     }
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+    String year = simpleDateFormat.format(releaseDate);
+    log.info("Year: {}", year);
+    return year;
+  }
 
-    public String getGenre(Album album) {
-        Collection<String> tags = album.getTags();
-        Iterator<String> iterator = tags.iterator();
-        while (iterator.hasNext()) {
-            String lastFmTag = iterator.next().toLowerCase();
-            log.info("lastFmTag: {}", lastFmTag);
-            if (GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN) {
-                log.info("lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
-                return GenreTypes.getGenreByName(lastFmTag).getName();
-            }
-        }
-        return StringUtils.EMPTY;
+  public String getGenre(Album album) {
+    Collection<String> tags = album.getTags();
+    Iterator<String> iterator = tags.iterator();
+    while (iterator.hasNext()) {
+      String lastFmTag = iterator.next().toLowerCase();
+      log.info("lastFmTag: {}", lastFmTag);
+      if (GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN) {
+        log.info(
+            "lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
+        return GenreTypes.getGenreByName(lastFmTag).getName();
+      }
     }
+    return StringUtils.EMPTY;
+  }
 }

@@ -22,8 +22,7 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
 
 public class LastFMTrackHelper {
 
-	public ScrobbleResult scrobble(String artist, String title, int time, Session session) {
-		return Track.scrobble(artist, title, time, session);
-	}
-
+  public ScrobbleResult scrobble(String artist, String title, int time, Session session) {
+    return Track.scrobble(artist, title, time, session);
+  }
 }

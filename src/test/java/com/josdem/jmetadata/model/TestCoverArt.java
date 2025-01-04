@@ -16,32 +16,27 @@
 
 package com.josdem.jmetadata.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.Image;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.awt.Image;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 class TestCoverArt {
 
-    @Mock
-    private Image imageIcon;
+  @Mock private Image imageIcon;
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    public void shouldCreateAnCoverArt() throws Exception {
-        CoverArt coverArt = new CoverArt(imageIcon, CoverArtType.DRAG_AND_DROP);
-        assertEquals(imageIcon, coverArt.getImage());
-        assertEquals(CoverArtType.DRAG_AND_DROP, coverArt.getType());
-    }
-
+  @Test
+  public void shouldCreateAnCoverArt() throws Exception {
+    CoverArt coverArt = new CoverArt(imageIcon, CoverArtType.DRAG_AND_DROP);
+    assertEquals(imageIcon, coverArt.getImage());
+    assertEquals(CoverArtType.DRAG_AND_DROP, coverArt.getType());
+  }
 }

@@ -16,7 +16,9 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.File;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -26,25 +28,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 @Slf4j
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, AudioFileHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TestAudioFileHelper {
 
-    private final AudioFileHelper audioFileHelper;
+  private final AudioFileHelper audioFileHelper;
 
-    private final File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+  private final File pepeGarden =
+      new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
 
-    @Test
-    @DisplayName("reading audio file")
-    public void shouldRead(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        assertNotNull(audioFileHelper.read(pepeGarden), "should read audio file");
-    }
-
+  @Test
+  @DisplayName("reading audio file")
+  public void shouldRead(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    assertNotNull(audioFileHelper.read(pepeGarden), "should read audio file");
+  }
 }

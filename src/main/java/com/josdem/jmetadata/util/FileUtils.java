@@ -16,58 +16,61 @@
 
 package com.josdem.jmetadata.util;
 
-import org.apache.commons.lang3.StringUtils;
 import com.josdem.jmetadata.ApplicationConstants;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FileUtils {
-    private List<File> fileList;
+  private List<File> fileList;
 
-    public List<File> getFileList(File root) {
-        fileList = new ArrayList<>();
-        scan(root);
-        return fileList;
-    }
+  public List<File> getFileList(File root) {
+    fileList = new ArrayList<>();
+    scan(root);
+    return fileList;
+  }
 
-    private void scan(File root) {
-        var listFiles = root.list();
-        assert listFiles != null;
-        Arrays.stream(listFiles).forEach(file -> {
-            var inode = new File(root.getAbsolutePath() + File.separator + file);
-            if (inode.isDirectory()) {
+  private void scan(File root) {
+    var listFiles = root.list();
+    assert listFiles != null;
+    Arrays.stream(listFiles)
+        .forEach(
+            file -> {
+              var inode = new File(root.getAbsolutePath() + File.separator + file);
+              if (inode.isDirectory()) {
                 scan(inode);
-            } else {
+              } else {
                 fileList.add(inode);
-            }
-        });
-    }
+              }
+            });
+  }
 
-    public boolean isMp3File(File file) {
-        return StringUtils.endsWithIgnoreCase(file.getPath(), "mp3");
-    }
+  public boolean isMp3File(File file) {
+    return StringUtils.endsWithIgnoreCase(file.getPath(), "mp3");
+  }
 
-    public boolean isM4aFile(File file) {
-        return StringUtils.endsWithIgnoreCase(file.getPath(), "m4a");
-    }
+  public boolean isM4aFile(File file) {
+    return StringUtils.endsWithIgnoreCase(file.getPath(), "m4a");
+  }
 
-    public File createTempFile() throws IOException {
-        return File.createTempFile(ApplicationConstants.PREFIX, ApplicationConstants.FILE_EXT);
-    }
+  public File createTempFile() throws IOException {
+    return File.createTempFile(ApplicationConstants.PREFIX, ApplicationConstants.FILE_EXT);
+  }
 
-    public File createFile(File root, String prefix, String ext) {
-        long timestamp = LocalDateTime.now().getNano();
-        StringBuilder sb = new StringBuilder();
-        sb.append(timestamp);
-        sb.append(".");
-        sb.append(ext.toLowerCase());
-        return (prefix.equals(StringUtils.EMPTY)) ? new File(root, ApplicationConstants.PREFIX + sb) : new File(root, prefix + sb);
-    }
+  public File createFile(File root, String prefix, String ext) {
+    long timestamp = LocalDateTime.now().getNano();
+    StringBuilder sb = new StringBuilder();
+    sb.append(timestamp);
+    sb.append(".");
+    sb.append(ext.toLowerCase());
+    return (prefix.equals(StringUtils.EMPTY))
+        ? new File(root, ApplicationConstants.PREFIX + sb)
+        : new File(root, prefix + sb);
+  }
 }

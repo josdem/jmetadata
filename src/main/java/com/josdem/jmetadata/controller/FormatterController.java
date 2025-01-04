@@ -16,26 +16,24 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.annotations.RequestMethod;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.FormatterService;
+import org.asmatron.messengine.annotations.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class FormatterController {
 
-    @Autowired
-    private FormatterService formatterService;
+  @Autowired private FormatterService formatterService;
 
-    @RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
-    public synchronized ActionResult format(Metadata metadata) {
-        formatterService.isAnalyzable(metadata);
-        Boolean formatted = formatterService.wasFormatted(metadata);
-        Boolean capitalized = formatterService.wasCamelized(metadata);
-        return formatted || capitalized ? ActionResult.New : ActionResult.Ready;
-    }
-
+  @RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
+  public synchronized ActionResult format(Metadata metadata) {
+    formatterService.isAnalyzable(metadata);
+    Boolean formatted = formatterService.wasFormatted(metadata);
+    Boolean capitalized = formatterService.wasCamelized(metadata);
+    return formatted || capitalized ? ActionResult.New : ActionResult.Ready;
+  }
 }

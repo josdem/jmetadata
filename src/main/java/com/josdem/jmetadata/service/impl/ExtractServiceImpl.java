@@ -18,42 +18,38 @@ package com.josdem.jmetadata.service.impl;
 
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.ExtractService;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-
-
 @Service
 public class ExtractServiceImpl implements ExtractService {
 
-
-    public Metadata extractFromFileName(File file) {
-        String titleComplete = file.getName();
-        Metadata metadata = new Metadata();
-        metadata.setFile(file);
-        try {
-            StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
-            String artist = stringTokenizer.nextToken().trim();
-            String title = removeExtension(stringTokenizer.nextToken().trim());
-            metadata.setArtist(artist);
-            metadata.setTitle(title);
-        } catch (NoSuchElementException nue) {
-            String uniqueName = removeExtension(titleComplete);
-            metadata.setArtist(uniqueName);
-            metadata.setTitle(uniqueName);
-            log.info(titleComplete, "{} has no next token");
-        }
-        metadata.setMetadataFromFile(true);
-        return metadata;
+  public Metadata extractFromFileName(File file) {
+    String titleComplete = file.getName();
+    Metadata metadata = new Metadata();
+    metadata.setFile(file);
+    try {
+      StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
+      String artist = stringTokenizer.nextToken().trim();
+      String title = removeExtension(stringTokenizer.nextToken().trim());
+      metadata.setArtist(artist);
+      metadata.setTitle(title);
+    } catch (NoSuchElementException nue) {
+      String uniqueName = removeExtension(titleComplete);
+      metadata.setArtist(uniqueName);
+      metadata.setTitle(uniqueName);
+      log.info(titleComplete, "{} has no next token");
     }
+    metadata.setMetadataFromFile(true);
+    return metadata;
+  }
 
-    private String removeExtension(String name) {
-        int extensionIndex = name.lastIndexOf(".");
-        return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
-    }
+  private String removeExtension(String name) {
+    int extensionIndex = name.lastIndexOf(".");
+    return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
+  }
 }

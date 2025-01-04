@@ -17,5 +17,5 @@
 package com.josdem.jmetadata.dnd;
 
 public interface DragAndDropListener {
-	Class<?>[] handledTypes();
+  Class<?>[] handledTypes();
 }

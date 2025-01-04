@@ -17,8 +17,7 @@
 package com.josdem.jmetadata.observer;
 
 public class ObserveObject {
-	public static final ObserveObject EMPTY = new ObserveObject();
+  public static final ObserveObject EMPTY = new ObserveObject();
 
-	protected ObserveObject() {
-	}
+  protected ObserveObject() {}
 }

@@ -16,6 +16,8 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.mockito.Mockito.verify;
+
 import com.josdem.jmetadata.model.ExportPackage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,30 +25,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.verify;
-
 public class TestExporterHelper {
-    @InjectMocks
-    private ExporterHelper exporterHelper = new ExporterHelper();
+  @InjectMocks private ExporterHelper exporterHelper = new ExporterHelper();
 
-    @Mock
-    private ImageExporter imageExporter;
-    @Mock
-    private MetadataExporter metadataExporter;
-    @Mock
-    private ExportPackage exportPackage;
+  @Mock private ImageExporter imageExporter;
+  @Mock private MetadataExporter metadataExporter;
+  @Mock private ExportPackage exportPackage;
 
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-    public void shouldExportImage() throws Exception {
-        exporterHelper.export(exportPackage);
-        verify(imageExporter).export(exportPackage);
-        verify(metadataExporter).export(exportPackage);
-    }
-
+  @Test
+  public void shouldExportImage() throws Exception {
+    exporterHelper.export(exportPackage);
+    verify(imageExporter).export(exportPackage);
+    verify(metadataExporter).export(exportPackage);
+  }
 }

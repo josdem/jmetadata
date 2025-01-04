@@ -16,20 +16,19 @@
 
 package com.josdem.jmetadata.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class TestCredentials {
 
-    @Test
-    public void shouldCreateCredentials() throws Exception {
-        String username = "josdem";
-        String password = "password";
-        User credentials = new User(username, password);
+  @Test
+  public void shouldCreateCredentials() throws Exception {
+    String username = "josdem";
+    String password = "password";
+    User credentials = new User(username, password);
 
-        assertEquals(username, credentials.getUsername());
-        assertEquals(password, credentials.getPassword());
-    }
+    assertEquals(username, credentials.getUsername());
+    assertEquals(password, credentials.getPassword());
+  }
 }

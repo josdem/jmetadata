@@ -20,6 +20,5 @@ import com.josdem.jmetadata.model.Album;
 
 public interface MusicBrainzService {
 
-    Album getAlbumByName(String name);
-
+  Album getAlbumByName(String name);
 }

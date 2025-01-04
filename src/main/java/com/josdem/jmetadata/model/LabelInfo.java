@@ -21,7 +21,8 @@ import lombok.Data;
 
 @Data
 public class LabelInfo {
-    @SerializedName("catalog-number")
-    private String catalogNumber;
-    private Label label;
+  @SerializedName("catalog-number")
+  private String catalogNumber;
+
+  private Label label;
 }

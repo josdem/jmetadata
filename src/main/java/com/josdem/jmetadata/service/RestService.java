@@ -26,17 +26,17 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RestService {
-    @Headers({
-            "Accept: " + ApplicationConstants.MEDIA_TYPE,
-            "User-Agent: " + ApplicationConstants.USER_AGENT
-    })
-    @GET("release")
-    Call<MusicBrainzResponse> getReleases(@Query("query") String query);
+  @Headers({
+    "Accept: " + ApplicationConstants.MEDIA_TYPE,
+    "User-Agent: " + ApplicationConstants.USER_AGENT
+  })
+  @GET("release")
+  Call<MusicBrainzResponse> getReleases(@Query("query") String query);
 
-    @Headers({
-            "Accept: " + ApplicationConstants.MEDIA_TYPE,
-            "User-Agent: " + ApplicationConstants.USER_AGENT
-    })
-    @GET("release/{id}")
-    Call<Album> getRelease(@Path("id") String id);
+  @Headers({
+    "Accept: " + ApplicationConstants.MEDIA_TYPE,
+    "User-Agent: " + ApplicationConstants.USER_AGENT
+  })
+  @GET("release/{id}")
+  Call<Album> getRelease(@Path("id") String id);
 }

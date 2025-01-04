@@ -17,33 +17,42 @@
 package com.josdem.jmetadata.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class Release {
-    private String id;
-    private int score;
-    @SerializedName("status-id")
-    private String statusId;
-    private int count;
-    private String title;
-    private String status;
-    @SerializedName("text-representation")
-    private TextRepresentation textRepresentation;
-    @SerializedName("artist-credit")
-    private List<ArtistCredit> artistCredit;
-    @SerializedName("release-events")
-    private List<ReleaseEvent> releaseEvents;
-    @SerializedName("release-group")
-    private ReleaseGroup releaseGroup;
-    private String date;
-    private String country;
-    private String barcode;
-    @SerializedName("label-info")
-    private List<LabelInfo> labelInfo;
-    @SerializedName("track-count")
-    private int trackCount;
-    private List<Media> media;
+  private String id;
+  private int score;
+
+  @SerializedName("status-id")
+  private String statusId;
+
+  private int count;
+  private String title;
+  private String status;
+
+  @SerializedName("text-representation")
+  private TextRepresentation textRepresentation;
+
+  @SerializedName("artist-credit")
+  private List<ArtistCredit> artistCredit;
+
+  @SerializedName("release-events")
+  private List<ReleaseEvent> releaseEvents;
+
+  @SerializedName("release-group")
+  private ReleaseGroup releaseGroup;
+
+  private String date;
+  private String country;
+  private String barcode;
+
+  @SerializedName("label-info")
+  private List<LabelInfo> labelInfo;
+
+  @SerializedName("track-count")
+  private int trackCount;
+
+  private List<Media> media;
 }

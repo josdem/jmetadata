@@ -21,9 +21,11 @@ import lombok.Data;
 
 @Data
 public class Media {
-    private String format;
-    @SerializedName("disc-count")
-    private int discCount;
-    @SerializedName("track-count")
-    private int trackCount;
+  private String format;
+
+  @SerializedName("disc-count")
+  private int discCount;
+
+  @SerializedName("track-count")
+  private int trackCount;
 }

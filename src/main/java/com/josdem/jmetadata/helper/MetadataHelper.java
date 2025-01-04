@@ -17,21 +17,19 @@
 package com.josdem.jmetadata.helper;
 
 import com.josdem.jmetadata.model.MetadataAlbumValues;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MetadataHelper {
 
-    public Set<File> createHashSet() {
-        return new HashSet<>();
-    }
+  public Set<File> createHashSet() {
+    return new HashSet<>();
+  }
 
-    public MetadataAlbumValues createMetadataAlbumValues() {
-        return new MetadataAlbumValues();
-    }
-
+  public MetadataAlbumValues createMetadataAlbumValues() {
+    return new MetadataAlbumValues();
+  }
 }

@@ -17,12 +17,11 @@
 package com.josdem.jmetadata.service;
 
 import com.josdem.jmetadata.model.Metadata;
-import org.springframework.stereotype.Service;
-
 import java.io.File;
+import org.springframework.stereotype.Service;
 
 @Service
 public interface ExtractService {
 
-    Metadata extractFromFileName(File file);
+  Metadata extractFromFileName(File file);
 }

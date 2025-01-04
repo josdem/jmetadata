@@ -19,5 +19,5 @@ package com.josdem.jmetadata.dnd;
 import java.awt.Container;
 
 public interface DragAndDropActionFactory {
-	DragAndDropAction getAction(Container frame);
+  DragAndDropAction getAction(Container frame);
 }

@@ -21,34 +21,33 @@ import com.josdem.jmetadata.model.Metadata;
 
 public class MetadataAdapter {
 
-	public void update(Metadata metadata, int column, String value) {
-		if(column == ApplicationConstants.ARTIST_COLUMN){
-			metadata.setArtist(value);
-		}
-		if (column == ApplicationConstants.TITLE_COLUMN){
-			metadata.setTitle(value);
-		}
-		if (column == ApplicationConstants.ALBUM_COLUMN){
-			metadata.setAlbum(value);
-		}
-		if (column == ApplicationConstants.YEAR_COLUMN){
-			metadata.setYear(value);
-		}
-		if (column == ApplicationConstants.TRACK_NUMBER_COLUMN){
-			metadata.setTrackNumber(value);
-		}
-		if (column == ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN){
-			metadata.setTotalTracks(value);
-		}
-		if (column == ApplicationConstants.CD_NUMBER_COLUMN){
-			metadata.setCdNumber(value);
-		}
-		if (column == ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN){
-			metadata.setTotalCds(value);
-		}
-		if (column == ApplicationConstants.GENRE_COLUMN){
-			metadata.setGenre(value);
-		}
-	}
-
+  public void update(Metadata metadata, int column, String value) {
+    if (column == ApplicationConstants.ARTIST_COLUMN) {
+      metadata.setArtist(value);
+    }
+    if (column == ApplicationConstants.TITLE_COLUMN) {
+      metadata.setTitle(value);
+    }
+    if (column == ApplicationConstants.ALBUM_COLUMN) {
+      metadata.setAlbum(value);
+    }
+    if (column == ApplicationConstants.YEAR_COLUMN) {
+      metadata.setYear(value);
+    }
+    if (column == ApplicationConstants.TRACK_NUMBER_COLUMN) {
+      metadata.setTrackNumber(value);
+    }
+    if (column == ApplicationConstants.TOTAL_TRACKS_NUMBER_COLUMN) {
+      metadata.setTotalTracks(value);
+    }
+    if (column == ApplicationConstants.CD_NUMBER_COLUMN) {
+      metadata.setCdNumber(value);
+    }
+    if (column == ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN) {
+      metadata.setTotalCds(value);
+    }
+    if (column == ApplicationConstants.GENRE_COLUMN) {
+      metadata.setGenre(value);
+    }
+  }
 }

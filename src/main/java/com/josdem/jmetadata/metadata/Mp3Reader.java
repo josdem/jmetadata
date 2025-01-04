@@ -17,8 +17,6 @@
 
 package com.josdem.jmetadata.metadata;
 
-import lombok.extern.slf4j.Slf4j;
-import org.asmatron.messengine.event.ValueEvent;
 import com.josdem.jmetadata.collaborator.JAudioTaggerCollaborator;
 import com.josdem.jmetadata.event.Events;
 import com.josdem.jmetadata.exception.MetadataException;
@@ -26,6 +24,11 @@ import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.helper.ReaderHelper;
 import com.josdem.jmetadata.model.GenreTypes;
 import com.josdem.jmetadata.model.Metadata;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
@@ -39,61 +42,61 @@ import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 @Slf4j
 @Service
 public class Mp3Reader extends MetadataReader {
-    @Autowired
-    private AudioFileHelper audioFileHelper;
-    @Autowired
-    private ReaderHelper readerHelper;
-    @Autowired
-    private JAudioTaggerCollaborator jAudioTaggerCollaborator;
+  @Autowired private AudioFileHelper audioFileHelper;
+  @Autowired private ReaderHelper readerHelper;
+  @Autowired private JAudioTaggerCollaborator jAudioTaggerCollaborator;
 
-    private AudioFile audioFile;
+  private AudioFile audioFile;
 
-    public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
-        try {
-            audioFile = audioFileHelper.read(file);
-        } catch (InvalidAudioFrameException ina) {
-            return null;
-        } catch (FileNotFoundException fnf) {
-            log.error("File: " + file.getAbsolutePath() + " Not found");
-            configurator.getControlEngine().fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
-            return null;
-        }
-        if (audioFile instanceof MP3File) {
-            MP3File audioMP3 = (MP3File) audioFile;
-            if (!audioMP3.hasID3v2Tag()) {
-                AbstractID3v2Tag id3v2tag = new ID3v24Tag();
-                audioMP3.setID3v2TagOnly(id3v2tag);
-                try {
-                    audioFile.commit();
-                } catch (CannotWriteException cwe) {
-                    log.error("An error occurs when I tried to update to ID3 v2");
-                    cwe.printStackTrace();
-                }
-            }
-            tag = audioFile.getTag();
-            header = audioFile.getAudioHeader();
-            if (jAudioTaggerCollaborator.isValid(tag, header)) {
-                return generateMetadata(file);
-            }
-        }
-        return new Metadata();
+  public Metadata getMetadata(File file)
+      throws CannotReadException,
+          IOException,
+          TagException,
+          ReadOnlyFileException,
+          MetadataException {
+    try {
+      audioFile = audioFileHelper.read(file);
+    } catch (InvalidAudioFrameException ina) {
+      return null;
+    } catch (FileNotFoundException fnf) {
+      log.error("File: " + file.getAbsolutePath() + " Not found");
+      configurator
+          .getControlEngine()
+          .fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
+      return null;
     }
-
-    @Override
-    public String getGenre() {
-        String tmpGenre = tag.getFirst(FieldKey.GENRE);
+    if (audioFile instanceof MP3File) {
+      MP3File audioMP3 = (MP3File) audioFile;
+      if (!audioMP3.hasID3v2Tag()) {
+        AbstractID3v2Tag id3v2tag = new ID3v24Tag();
+        audioMP3.setID3v2TagOnly(id3v2tag);
         try {
-            int index = Integer.valueOf(tmpGenre);
-            return GenreTypes.getGenreByCode(index);
-        } catch (NumberFormatException nfe) {
-            return readerHelper.getGenre(tag, tmpGenre);
+          audioFile.commit();
+        } catch (CannotWriteException cwe) {
+          log.error("An error occurs when I tried to update to ID3 v2");
+          cwe.printStackTrace();
         }
+      }
+      tag = audioFile.getTag();
+      header = audioFile.getAudioHeader();
+      if (jAudioTaggerCollaborator.isValid(tag, header)) {
+        return generateMetadata(file);
+      }
     }
+    return new Metadata();
+  }
+
+  @Override
+  public String getGenre() {
+    String tmpGenre = tag.getFirst(FieldKey.GENRE);
+    try {
+      int index = Integer.valueOf(tmpGenre);
+      return GenreTypes.getGenreByCode(index);
+    } catch (NumberFormatException nfe) {
+      return readerHelper.getGenre(tag, tmpGenre);
+    }
+  }
 }

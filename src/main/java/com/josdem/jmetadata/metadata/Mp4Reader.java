@@ -16,12 +16,11 @@
 
 package com.josdem.jmetadata.metadata;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.model.Metadata;
+import java.io.File;
+import java.io.IOException;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -33,29 +32,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
-* @author josdem (joseluis.delacruz@gmail.com)
-* @undestands This class knows how to read metadata from a m4a file
-*/
-
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @undestands This class knows how to read metadata from a m4a file
+ */
 @Service
 public class Mp4Reader extends MetadataReader {
 
-	@Autowired
-	private AudioFileHelper audioFileHelper;
+  @Autowired private AudioFileHelper audioFileHelper;
 
-	public Metadata getMetadata(File file) throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-		try{
-			AudioFile audioFile = audioFileHelper.read(file);
-			tag = (Mp4Tag) audioFile.getTag();
-			header = audioFile.getAudioHeader();
-			return generateMetadata(file);
-		} catch (CannotReadException cnr){
-			return null;
-		}
-	}
+  public Metadata getMetadata(File file)
+      throws IOException,
+          TagException,
+          ReadOnlyFileException,
+          InvalidAudioFrameException,
+          MetadataException {
+    try {
+      AudioFile audioFile = audioFileHelper.read(file);
+      tag = (Mp4Tag) audioFile.getTag();
+      header = audioFile.getAudioHeader();
+      return generateMetadata(file);
+    } catch (CannotReadException cnr) {
+      return null;
+    }
+  }
 
-	@Override
-	public String getGenre() {
-		return tag.getFirst(FieldKey.GENRE);
-	}
+  @Override
+  public String getGenre() {
+    return tag.getFirst(FieldKey.GENRE);
+  }
 }

@@ -16,14 +16,13 @@
 
 package com.josdem.jmetadata.model;
 
+import java.awt.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.awt.Image;
 
 @Getter
 @AllArgsConstructor
 public class CoverArt {
-    private final Image image;
-    private final CoverArtType type;
+  private final Image image;
+  private final CoverArtType type;
 }

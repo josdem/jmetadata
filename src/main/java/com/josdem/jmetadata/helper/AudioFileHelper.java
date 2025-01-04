@@ -18,7 +18,6 @@ package com.josdem.jmetadata.helper;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -30,8 +29,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AudioFileHelper {
 
-	public AudioFile read(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
-		return AudioFileIO.read(file);
-	}
-
+  public AudioFile read(File file)
+      throws CannotReadException,
+          IOException,
+          TagException,
+          ReadOnlyFileException,
+          InvalidAudioFrameException {
+    return AudioFileIO.read(file);
+  }
 }

@@ -18,45 +18,41 @@ package com.josdem.jmetadata.observer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
-
 public class Observable<T extends ObserveObject> implements ObserverCollection<T> {
-	private List<Observer<T>> observers = new ArrayList<Observer<T>>();
+  private List<Observer<T>> observers = new ArrayList<Observer<T>>();
 
+  public boolean fire(T param) {
+    if (param == null) {
+      return true;
+    }
+    boolean ok = true;
+    List<Observer<T>> observers = new ArrayList<Observer<T>>(this.observers);
+    for (Observer<T> listener : observers) {
+      try {
+        listener.observe(param);
+      } catch (Exception e) {
+        ok = false;
+        log.error(e.getMessage(), e);
+      }
+    }
+    return ok;
+  }
 
-	public boolean fire(T param) {
-		if (param == null) {
-			return true;
-		}
-		boolean ok = true;
-		List<Observer<T>> observers = new ArrayList<Observer<T>>(this.observers);
-		for (Observer<T> listener : observers) {
-			try {
-				listener.observe(param);
-			} catch (Exception e) {
-				ok = false;
-				log.error(e.getMessage(), e);
-			}
-		}
-		return ok;
-	}
+  public void add(Observer<T> l) {
+    if (l == null) {
+      throw new NullPointerException("Can't add a null listener.");
+    }
+    observers.add(l);
+  }
 
-	public void add(Observer<T> l) {
-		if (l == null) {
-			throw new NullPointerException("Can't add a null listener.");
-		}
-		observers.add(l);
-	}
+  public void remove(Observer<T> listener) {
+    observers.remove(listener);
+  }
 
-	public void remove(Observer<T> listener) {
-		observers.remove(listener);
-	}
-
-	public void clean() {
-		observers.clear();
-	}
+  public void clean() {
+    observers.clear();
+  }
 }

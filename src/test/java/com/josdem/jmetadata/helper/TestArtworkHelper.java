@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,21 +27,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 @Slf4j
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, ArtworkHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TestArtworkHelper {
 
-    private final ArtworkHelper artworkHelper;
+  private final ArtworkHelper artworkHelper;
 
-    @Test
-    @DisplayName("creating an artwork")
-    public void shouldCreateAnArtWork(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        assertNotNull(artworkHelper.createArtwork(), "should create an artwork");
-    }
-
+  @Test
+  @DisplayName("creating an artwork")
+  public void shouldCreateAnArtWork(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    assertNotNull(artworkHelper.createArtwork(), "should create an artwork");
+  }
 }

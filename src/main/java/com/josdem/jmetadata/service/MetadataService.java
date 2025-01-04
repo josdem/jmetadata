@@ -20,21 +20,28 @@ import com.josdem.jmetadata.exception.InvalidId3VersionException;
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.exception.TooMuchFilesException;
 import com.josdem.jmetadata.model.Metadata;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 public interface MetadataService {
 
-    List<Metadata> extractMetadata(File root) throws IOException, InterruptedException, TooMuchFilesException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException, InvalidId3VersionException;
+  List<Metadata> extractMetadata(File root)
+      throws IOException,
+          InterruptedException,
+          TooMuchFilesException,
+          CannotReadException,
+          TagException,
+          ReadOnlyFileException,
+          InvalidAudioFrameException,
+          MetadataException,
+          InvalidId3VersionException;
 
-    boolean isSameAlbum(List<Metadata> metadatas);
+  boolean isSameAlbum(List<Metadata> metadatas);
 
-    boolean isSameArtist(List<Metadata> metadatas);
-
+  boolean isSameArtist(List<Metadata> metadatas);
 }

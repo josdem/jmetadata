@@ -16,40 +16,39 @@
 
 package com.josdem.jmetadata.helper;
 
+import com.josdem.jmetadata.action.ActionResult;
+import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.model.ExportPackage;
+import com.josdem.jmetadata.model.Metadata;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-
-import com.josdem.jmetadata.model.Metadata;
-import com.josdem.jmetadata.action.ActionResult;
-import com.josdem.jmetadata.model.ExportPackage;
-import com.josdem.jmetadata.exception.MetadataException;
+import org.jaudiotagger.tag.TagException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ExporterHelper {
 
-	@Autowired
-	private ImageExporter imageExporter;
-	@Autowired
-	private MetadataExporter metadataExporter;
+  @Autowired private ImageExporter imageExporter;
+  @Autowired private MetadataExporter metadataExporter;
 
-	public ActionResult export(ExportPackage exportPackage) throws IOException, CannotReadException, TagException, ReadOnlyFileException, MetadataException {
-		List<Metadata> metadatas = exportPackage.getMetadataList();
-		for (Metadata metadata : metadatas) {
-			metadata.setOrderByFile(true);
-		}
-		Collections.sort(metadatas);
-		exportPackage.setMetadataList(metadatas);
-		imageExporter.export(exportPackage);
-		metadataExporter.export(exportPackage);
-		return ActionResult.Exported;
-	}
-
+  public ActionResult export(ExportPackage exportPackage)
+      throws IOException,
+          CannotReadException,
+          TagException,
+          ReadOnlyFileException,
+          MetadataException {
+    List<Metadata> metadatas = exportPackage.getMetadataList();
+    for (Metadata metadata : metadatas) {
+      metadata.setOrderByFile(true);
+    }
+    Collections.sort(metadatas);
+    exportPackage.setMetadataList(metadatas);
+    imageExporter.export(exportPackage);
+    metadataExporter.export(exportPackage);
+    return ActionResult.Exported;
+  }
 }

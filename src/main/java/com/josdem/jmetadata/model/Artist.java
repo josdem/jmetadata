@@ -21,8 +21,9 @@ import lombok.Data;
 
 @Data
 public class Artist {
-    private String id;
-    private String name;
-    @SerializedName("sort-name")
-    private String sortName;
+  private String id;
+  private String name;
+
+  @SerializedName("sort-name")
+  private String sortName;
 }

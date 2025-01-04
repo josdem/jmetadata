@@ -16,11 +16,17 @@
 
 package com.josdem.jmetadata.controller;
 
-import org.asmatron.messengine.ControlEngine;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.helper.ScrobblerHelper;
 import com.josdem.jmetadata.model.Metadata;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,88 +35,73 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-
-
 class TestScrobblerController {
 
-    @InjectMocks
-    private final ScrobblerController controller = new ScrobblerController();
+  @InjectMocks private final ScrobblerController controller = new ScrobblerController();
 
-    @Mock
-    private Metadata metadata;
-    @Mock
-    private ControlEngineConfigurator configurator;
-    @Mock
-    private ControlEngine controlEngine;
-    @Mock
-    private ScrobblerHelper scrobblerHelper;
+  @Mock private Metadata metadata;
+  @Mock private ControlEngineConfigurator configurator;
+  @Mock private ControlEngine controlEngine;
+  @Mock private ScrobblerHelper scrobblerHelper;
 
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.openMocks(this);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
+  }
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.openMocks(this);
-        when(configurator.getControlEngine()).thenReturn(controlEngine);
-    }
+  @Test
+  @DisplayName("sending metadata")
+  public void shouldSendMetadata(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
 
-    @Test
-    @DisplayName("sending metadata")
-    public void shouldSendMetadata(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
+    ActionResult result = controller.sendMetadata(metadata);
 
-        ActionResult result = controller.sendMetadata(metadata);
+    verify(scrobblerHelper).send(metadata);
+    assertEquals(ActionResult.New, result);
+  }
 
-        verify(scrobblerHelper).send(metadata);
-        assertEquals(ActionResult.New, result);
-    }
+  @Test
+  @DisplayName("detecting error in scrobbling")
+  public void shouldDetectWhenErrorInScrobbling(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
 
-    @Test
-    @DisplayName("detecting error in scrobbling")
-    public void shouldDetectWhenErrorInScrobbling(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
+    ActionResult result = controller.sendMetadata(metadata);
 
-        ActionResult result = controller.sendMetadata(metadata);
+    verify(scrobblerHelper).send(metadata);
+    assertEquals(ActionResult.Error, result);
+  }
 
-        verify(scrobblerHelper).send(metadata);
-        assertEquals(ActionResult.Error, result);
-    }
+  @Test
+  @DisplayName("setting up scrobbler")
+  public void shouldSetup(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    controller.setup();
+    verify(scrobblerHelper).setControlEngine(controlEngine);
+  }
 
-    @Test
-    @DisplayName("setting up scrobbler")
-    public void shouldSetup(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        controller.setup();
-        verify(scrobblerHelper).setControlEngine(controlEngine);
-    }
+  @Test
+  @DisplayName("catching IOException")
+  public void shouldCatchIOException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(scrobblerHelper.send(metadata)).thenThrow(new IOException());
 
-    @Test
-    @DisplayName("catching IOException")
-    public void shouldCatchIOException(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(scrobblerHelper.send(metadata)).thenThrow(new IOException());
+    ActionResult result = controller.sendMetadata(metadata);
 
-        ActionResult result = controller.sendMetadata(metadata);
+    assertEquals(ActionResult.Error, result);
+  }
 
-        assertEquals(ActionResult.Error, result);
-    }
+  @Test
+  @DisplayName("catching InterruptedException")
+  public void shouldCatchInterruptedException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(scrobblerHelper.send(metadata)).thenThrow(new InterruptedException());
 
-    @Test
-    @DisplayName("catching InterruptedException")
-    public void shouldCatchInterruptedException(TestInfo testInfo) throws Exception {
-        log.info(testInfo.getDisplayName());
-        when(scrobblerHelper.send(metadata)).thenThrow(new InterruptedException());
+    ActionResult result = controller.sendMetadata(metadata);
 
-        ActionResult result = controller.sendMetadata(metadata);
-
-        assertEquals(ActionResult.Error, result);
-    }
+    assertEquals(ActionResult.Error, result);
+  }
 }

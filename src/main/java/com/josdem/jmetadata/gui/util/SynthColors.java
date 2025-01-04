@@ -17,12 +17,11 @@
 package com.josdem.jmetadata.gui.util;
 
 import java.awt.Color;
-
 import javax.swing.UIManager;
 
 public interface SynthColors {
-		Color WHITE255_255_255 = UIManager.getDefaults().getColor("Color.white255_255_255");
-		Color CLEAR_GRAY245_245_245 = UIManager.getDefaults().getColor("Color.clearGray245_245_245");
-		Color BLUE175_205_225 = UIManager.getDefaults().getColor("Color.blue175_205_225");
-		Color GRAY150_150_150 = UIManager.getDefaults().getColor("Color.grid150_150_150");
+  Color WHITE255_255_255 = UIManager.getDefaults().getColor("Color.white255_255_255");
+  Color CLEAR_GRAY245_245_245 = UIManager.getDefaults().getColor("Color.clearGray245_245_245");
+  Color BLUE175_205_225 = UIManager.getDefaults().getColor("Color.blue175_205_225");
+  Color GRAY150_150_150 = UIManager.getDefaults().getColor("Color.grid150_150_150");
 }

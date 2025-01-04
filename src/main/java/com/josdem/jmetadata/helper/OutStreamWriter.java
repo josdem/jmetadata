@@ -23,8 +23,7 @@ import java.io.OutputStream;
 
 public class OutStreamWriter {
 
-	public OutputStream getWriter(File file) throws FileNotFoundException {
-		return new FileOutputStream(file);
-	}
-
+  public OutputStream getWriter(File file) throws FileNotFoundException {
+    return new FileOutputStream(file);
+  }
 }

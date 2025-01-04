@@ -16,13 +16,11 @@
 
 package com.josdem.jmetadata.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.springframework.stereotype.Component;
-
 import com.josdem.jmetadata.exception.BusinessException;
-
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Aspect
@@ -30,9 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AfterThrowingAdvice {
 
   @AfterThrowing(pointcut = "execution(* com.josdem.jmetadata.service..**.*(..))", throwing = "ex")
-  public void doRecoveryActions(RuntimeException ex){
+  public void doRecoveryActions(RuntimeException ex) {
     log.info("Wrapping exception: {}", String.valueOf(ex));
     throw new BusinessException(ex.getMessage(), ex);
   }
-
 }

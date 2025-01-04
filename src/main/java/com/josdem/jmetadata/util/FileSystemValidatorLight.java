@@ -22,42 +22,41 @@ import java.util.List;
 
 public class FileSystemValidatorLight {
 
-	private final List<File> folderList = new ArrayList<File>();
-	private final List<File> trackList = new ArrayList<File>();
-	private final List<File> playlistList = new ArrayList<File>();
+  private final List<File> folderList = new ArrayList<File>();
+  private final List<File> trackList = new ArrayList<File>();
+  private final List<File> playlistList = new ArrayList<File>();
 
-	public FileSystemValidatorLight(boolean fromExternalDevicesPanel, Iterable<File> files) {
-		for (File file : files) {
-			validateFile(file);
-		}
-	}
+  public FileSystemValidatorLight(boolean fromExternalDevicesPanel, Iterable<File> files) {
+    for (File file : files) {
+      validateFile(file);
+    }
+  }
 
-	private void validateFile(File file) {
-		if (file.isHidden()) {
-			return;
-		}
-		if (file.isDirectory()) {
-			File[] listFiles = file.listFiles();
-			boolean fold = false;
-			for (File file2 : listFiles) {
-				if (file2.isDirectory() && !file2.isHidden()) {
-					fold = true;
-					break;
-				}
-			}
-			if (fold) {
-				folderList.add(file);
-			} else {
-				playlistList.add(file);
-			}
+  private void validateFile(File file) {
+    if (file.isHidden()) {
+      return;
+    }
+    if (file.isDirectory()) {
+      File[] listFiles = file.listFiles();
+      boolean fold = false;
+      for (File file2 : listFiles) {
+        if (file2.isDirectory() && !file2.isHidden()) {
+          fold = true;
+          break;
+        }
+      }
+      if (fold) {
+        folderList.add(file);
+      } else {
+        playlistList.add(file);
+      }
 
-		} else {
-			trackList.add(file);
-		}
-	}
+    } else {
+      trackList.add(file);
+    }
+  }
 
-	public boolean hasError() {
-		return false;
-	}
-
+  public boolean hasError() {
+    return false;
+  }
 }

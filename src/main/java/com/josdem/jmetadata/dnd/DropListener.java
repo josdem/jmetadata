@@ -19,6 +19,7 @@ package com.josdem.jmetadata.dnd;
 import java.awt.Point;
 
 public interface DropListener extends DragAndDropListener {
-	boolean validateDrop(DraggedObject draggedObject, Point location);
-	void doDrop(DraggedObject draggedObject, Point location);
+  boolean validateDrop(DraggedObject draggedObject, Point location);
+
+  void doDrop(DraggedObject draggedObject, Point location);
 }

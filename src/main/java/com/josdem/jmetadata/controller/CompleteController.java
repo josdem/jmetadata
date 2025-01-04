@@ -32,6 +32,10 @@ import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.util.ApplicationState;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,107 +43,105 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import retrofit2.Response;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 @Controller
 public class CompleteController {
 
-    private MetadataWriter metadataWriter = new MetadataWriter();
+  private MetadataWriter metadataWriter = new MetadataWriter();
 
-    @Autowired
-    private LastfmService lastfmService;
-    @Autowired
-    private MetadataService metadataService;
-    @Autowired
-    private MusicBrainzService musicBrainzService;
+  @Autowired private LastfmService lastfmService;
+  @Autowired private MetadataService metadataService;
+  @Autowired private MusicBrainzService musicBrainzService;
 
+  private RestService restService;
+  private CoverArtRestService coverArtRestService;
 
-    private RestService restService;
-    private CoverArtRestService coverArtRestService;
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+  @PostConstruct
+  void setup() {
+    restService = RetrofitHelper.getRetrofit().create(RestService.class);
+    coverArtRestService = CoverArtRetrofitHelper.getRetrofit().create(CoverArtRestService.class);
+  }
 
-    @PostConstruct
-    void setup() {
-        restService = RetrofitHelper.getRetrofit().create(RestService.class);
-        coverArtRestService = CoverArtRetrofitHelper.getRetrofit().create(CoverArtRestService.class);
+  @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
+  public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadatas) {
+    if (!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
+      return ActionResult.Ready;
     }
-
-    @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
-    public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadatas) {
-        if (!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
-            return ActionResult.Ready;
-        }
-        try {
-            if (ApplicationState.cache.get(metadatas.getFirst().getAlbum()) == null) {
-                log.info("Getting releases");
-                var response = restService.getReleases(metadatas.getFirst().getAlbum() + " AND " + "artist:" + metadatas.getFirst().getArtist());
-                Response<MusicBrainzResponse> result = response.execute();
-                if (result.isSuccessful()) {
-                    MusicBrainzResponse musicBrainzResponse = result.body();
-                    String albumName = metadatas.getFirst().getAlbum();
-                    ApplicationState.cache.put(albumName, musicBrainzResponse);
-                    log.info("MusicBrainz Response: {}", musicBrainzResponse);
-                    Album album = musicBrainzService.getAlbumByName(albumName);
-                    log.info("MusicBrainz Album: {}", album);
-                    if(album.getCoverArtArchive().isFront()){
-                        log.info("Getting cover art");
-                        var coverArtResponse = coverArtRestService.getRelease(album.getId());
-                        var coverArtResult = coverArtResponse.execute();
-                        if(coverArtResult.isSuccessful()){
-                            var coverArt = coverArtResult.body();
-                            log.info("Cover Art: {}", coverArt);
-                        }
-                    }
-                } else {
-                    log.error("Error getting releases: {}", result.errorBody());
-                }
-                return ActionResult.New;
+    try {
+      if (ApplicationState.cache.get(metadatas.getFirst().getAlbum()) == null) {
+        log.info("Getting releases");
+        var response =
+            restService.getReleases(
+                metadatas.getFirst().getAlbum()
+                    + " AND "
+                    + "artist:"
+                    + metadatas.getFirst().getArtist());
+        Response<MusicBrainzResponse> result = response.execute();
+        if (result.isSuccessful()) {
+          MusicBrainzResponse musicBrainzResponse = result.body();
+          String albumName = metadatas.getFirst().getAlbum();
+          ApplicationState.cache.put(albumName, musicBrainzResponse);
+          log.info("MusicBrainz Response: {}", musicBrainzResponse);
+          Album album = musicBrainzService.getAlbumByName(albumName);
+          log.info("MusicBrainz Album: {}", album);
+          if (album.getCoverArtArchive().isFront()) {
+            log.info("Getting cover art");
+            var coverArtResponse = coverArtRestService.getRelease(album.getId());
+            var coverArtResult = coverArtResponse.execute();
+            if (coverArtResult.isSuccessful()) {
+              var coverArt = coverArtResult.body();
+              log.info("Cover Art: {}", coverArt);
             }
-        } catch (IOException ex) {
-            log.error(ex.getMessage(), ex);
-            return ActionResult.Error;
+          }
+        } else {
+          log.error("Error getting releases: {}", result.errorBody());
         }
-        return ActionResult.Complete;
+        return ActionResult.New;
+      }
+    } catch (IOException ex) {
+      log.error(ex.getMessage(), ex);
+      return ActionResult.Error;
     }
+    return ActionResult.Complete;
+  }
 
-    @RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
-    public ActionResult completeLastFmMetadata(Metadata metadata) {
-        log.info("trying to complete LastFM metadata for: {} - {}", metadata.getArtist(), metadata.getTitle());
-        return lastfmService.completeLastFM(metadata);
+  @RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
+  public ActionResult completeLastFmMetadata(Metadata metadata) {
+    log.info(
+        "trying to complete LastFM metadata for: {} - {}",
+        metadata.getArtist(),
+        metadata.getTitle());
+    return lastfmService.completeLastFM(metadata);
+  }
+
+  @RequestMethod(Actions.WRITE_METADATA)
+  public synchronized ActionResult completeAlbum(Metadata metadata) {
+    try {
+      File file = metadata.getFile();
+      log.info("writting: {}", metadata.getTitle());
+      metadataWriter.setFile(file);
+      metadataWriter.writeArtist(metadata.getArtist());
+      metadataWriter.writeTitle(metadata.getTitle());
+      metadataWriter.writeAlbum(metadata.getAlbum());
+      metadataWriter.writeTrackNumber(metadata.getTrackNumber());
+      metadataWriter.writeTotalTracksNumber(metadata.getTotalTracks());
+      metadataWriter.writeCdNumber(metadata.getCdNumber());
+      metadataWriter.writeTotalCds(metadata.getTotalCds());
+      metadataWriter.writeYear(metadata.getYear());
+      metadataWriter.writeGenre(metadata.getGenre());
+      CoverArt coverArtNew = metadata.getNewCoverArt();
+      if (coverArtNew != null) {
+        log.info("trying to remove artwork");
+        boolean result = metadataWriter.removeCoverArt();
+        log.info("artwork deleted with result: {}", result);
+        metadataWriter.writeCoverArt(coverArtNew.getImage());
+        metadata.setCoverArt(coverArtNew.getImage());
+      }
+      return ActionResult.Updated;
+    } catch (MetadataException mde) {
+      log.error(mde.getMessage(), mde);
+      return ActionResult.Error;
     }
-
-    @RequestMethod(Actions.WRITE_METADATA)
-    public synchronized ActionResult completeAlbum(Metadata metadata) {
-        try {
-            File file = metadata.getFile();
-            log.info("writting: {}", metadata.getTitle());
-            metadataWriter.setFile(file);
-            metadataWriter.writeArtist(metadata.getArtist());
-            metadataWriter.writeTitle(metadata.getTitle());
-            metadataWriter.writeAlbum(metadata.getAlbum());
-            metadataWriter.writeTrackNumber(metadata.getTrackNumber());
-            metadataWriter.writeTotalTracksNumber(metadata.getTotalTracks());
-            metadataWriter.writeCdNumber(metadata.getCdNumber());
-            metadataWriter.writeTotalCds(metadata.getTotalCds());
-            metadataWriter.writeYear(metadata.getYear());
-            metadataWriter.writeGenre(metadata.getGenre());
-            CoverArt coverArtNew = metadata.getNewCoverArt();
-            if (coverArtNew != null) {
-                log.info("trying to remove artwork");
-                boolean result = metadataWriter.removeCoverArt();
-                log.info("artwork deleted with result: {}", result);
-                metadataWriter.writeCoverArt(coverArtNew.getImage());
-                metadata.setCoverArt(coverArtNew.getImage());
-            }
-            return ActionResult.Updated;
-        } catch (MetadataException mde) {
-            log.error(mde.getMessage(), mde);
-            return ActionResult.Error;
-        }
-    }
-
+  }
 }

@@ -16,26 +16,25 @@
 
 package com.josdem.jmetadata.helper;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.asmatron.messengine.engines.DefaultEngine;
 import com.josdem.jmetadata.gui.LoginWindow;
 import com.josdem.jmetadata.gui.MainWindow;
+import org.asmatron.messengine.engines.DefaultEngine;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 class TestApplicationContextSingleton {
 
-    @Test
-    public void shouldCreateAnApplicationContext() throws Exception {
-        ConfigurableApplicationContext applicationContext = ApplicationContextSingleton.getApplicationContext();
-        DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
-        MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
-        LoginWindow loginWindow = applicationContext.getBean(LoginWindow.class);
-        assertNotNull(defaultEngine);
-        assertNotNull(mainWindow);
-        assertNotNull(loginWindow);
-    }
-
+  @Test
+  public void shouldCreateAnApplicationContext() throws Exception {
+    ConfigurableApplicationContext applicationContext =
+        ApplicationContextSingleton.getApplicationContext();
+    DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
+    MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
+    LoginWindow loginWindow = applicationContext.getBean(LoginWindow.class);
+    assertNotNull(defaultEngine);
+    assertNotNull(mainWindow);
+    assertNotNull(loginWindow);
+  }
 }

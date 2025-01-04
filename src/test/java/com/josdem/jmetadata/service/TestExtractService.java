@@ -16,8 +16,13 @@
 
 package com.josdem.jmetadata.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.ExtractServiceImpl;
+import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,56 +31,44 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-
-
 class TestExtractService {
 
-    public static final String EXPECTED_ARTIST = "Jennifer Lopez";
+  public static final String EXPECTED_ARTIST = "Jennifer Lopez";
 
-    @InjectMocks
-    private ExtractService extractService = new ExtractServiceImpl();
+  @InjectMocks private ExtractService extractService = new ExtractServiceImpl();
 
-    @Mock
-    private File file;
+  @Mock private File file;
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    @DisplayName("Should extract metadata from file when dash")
-    public void shouldExtractMetadataFromFileWhenDash(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        String filename = "Jennifer Lopez - 9A - 112.mp3";
-        when(file.getName()).thenReturn(filename);
+  @Test
+  @DisplayName("Should extract metadata from file when dash")
+  public void shouldExtractMetadataFromFileWhenDash(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    String filename = "Jennifer Lopez - 9A - 112.mp3";
+    when(file.getName()).thenReturn(filename);
 
-        Metadata result = extractService.extractFromFileName(file);
+    Metadata result = extractService.extractFromFileName(file);
 
-        assertEquals(EXPECTED_ARTIST, result.getArtist());
-        assertEquals("9A", result.getTitle());
-    }
+    assertEquals(EXPECTED_ARTIST, result.getArtist());
+    assertEquals("9A", result.getTitle());
+  }
 
-    @Test
-    @DisplayName("Should extract metadata from file when no dash")
-    public void shouldExtractMetadataFromFileWhenNoDash(TestInfo testInfo) {
-        log.info(testInfo.getDisplayName());
-        String expectedName = EXPECTED_ARTIST;
-        String filename = "Jennifer Lopez.mp3";
-        when(file.getName()).thenReturn(filename);
+  @Test
+  @DisplayName("Should extract metadata from file when no dash")
+  public void shouldExtractMetadataFromFileWhenNoDash(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    String expectedName = EXPECTED_ARTIST;
+    String filename = "Jennifer Lopez.mp3";
+    when(file.getName()).thenReturn(filename);
 
-        Metadata result = extractService.extractFromFileName(file);
+    Metadata result = extractService.extractFromFileName(file);
 
-        assertEquals(expectedName, result.getArtist());
-        assertEquals(expectedName, result.getTitle());
-    }
-
+    assertEquals(expectedName, result.getArtist());
+    assertEquals(expectedName, result.getTitle());
+  }
 }

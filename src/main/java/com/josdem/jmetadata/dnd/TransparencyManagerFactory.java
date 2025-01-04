@@ -19,23 +19,20 @@ package com.josdem.jmetadata.dnd;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
 public class TransparencyManagerFactory {
-	private static TransparencyManager manager;
+  private static TransparencyManager manager;
 
-
-	public static TransparencyManager getManager() {
-		if (manager != null) {
-			return manager;
-		}
-		try {
-			manager = new Jdk6u10TransparencyManager();
-			return manager;
-		} catch (Throwable t) {
-			log.error("Unexpected exception during TransparencyManager instantiation.", t);
-		}
-		manager = new NullTransparencyManager();
-		return manager;
-	}
-
+  public static TransparencyManager getManager() {
+    if (manager != null) {
+      return manager;
+    }
+    try {
+      manager = new Jdk6u10TransparencyManager();
+      return manager;
+    } catch (Throwable t) {
+      log.error("Unexpected exception during TransparencyManager instantiation.", t);
+    }
+    manager = new NullTransparencyManager();
+    return manager;
+  }
 }

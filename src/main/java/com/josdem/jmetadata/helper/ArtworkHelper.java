@@ -22,8 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArtworkHelper {
 
-	public Artwork createArtwork() {
-		return new Artwork();
-	}
-
+  public Artwork createArtwork() {
+    return new Artwork();
+  }
 }

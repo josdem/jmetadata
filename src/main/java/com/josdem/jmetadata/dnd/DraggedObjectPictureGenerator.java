@@ -16,39 +16,34 @@
 
 package com.josdem.jmetadata.dnd;
 
-import java.io.File;
-import java.util.List;
+import com.josdem.jmetadata.util.Picture;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-
-import com.josdem.jmetadata.util.Picture;
-
+import java.io.File;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-
 public class DraggedObjectPictureGenerator extends DraggedObjectFileSystemGenerator {
 
-
-	@Override
-	public DraggedObject get(Transferable transferable) {
-		DataFlavor[] flavors = transferable.getTransferDataFlavors();
-		if (flavors == null) {
-			return null;
-		}
-		for (DataFlavor flavor : flavors) {
-			List<File> files = null;
-			files = tryGetFile(transferable, flavor);
-			if (files != null && files.size() == 1 && !files.get(0).isDirectory()) {
-				try {
-					Object draggedObject = new Picture(files.get(0));
-					return new SimpleDraggedObject(draggedObject);
-				} catch (Exception e) {
-					log.error(e.getMessage(), e);
-				}
-			}
-		}
-		return new SimpleDraggedObject(null);
-	}
-
+  @Override
+  public DraggedObject get(Transferable transferable) {
+    DataFlavor[] flavors = transferable.getTransferDataFlavors();
+    if (flavors == null) {
+      return null;
+    }
+    for (DataFlavor flavor : flavors) {
+      List<File> files = null;
+      files = tryGetFile(transferable, flavor);
+      if (files != null && files.size() == 1 && !files.get(0).isDirectory()) {
+        try {
+          Object draggedObject = new Picture(files.get(0));
+          return new SimpleDraggedObject(draggedObject);
+        } catch (Exception e) {
+          log.error(e.getMessage(), e);
+        }
+      }
+    }
+    return new SimpleDraggedObject(null);
+  }
 }

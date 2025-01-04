@@ -16,14 +16,13 @@
 
 package com.josdem.jmetadata.model;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class MusicBrainzResponse {
-    private String created;
-    private int count;
-    private int offset;
-    private List<Release> releases;
+  private String created;
+  private int count;
+  private int offset;
+  private List<Release> releases;
 }

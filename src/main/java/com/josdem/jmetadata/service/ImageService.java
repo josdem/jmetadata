@@ -16,14 +16,15 @@
 
 package com.josdem.jmetadata.service;
 
-import java.io.File;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 public interface ImageService {
-	File createTempFile() throws IOException;
-	void write(Image bufferedImage, File file) throws IOException;
-	Image readImage(String imageURL) throws MalformedURLException, IOException;
-}
+  File createTempFile() throws IOException;
 
+  void write(Image bufferedImage, File file) throws IOException;
+
+  Image readImage(String imageURL) throws MalformedURLException, IOException;
+}

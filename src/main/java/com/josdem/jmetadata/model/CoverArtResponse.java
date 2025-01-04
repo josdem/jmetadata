@@ -16,12 +16,11 @@
 
 package com.josdem.jmetadata.model;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class CoverArtResponse {
-    private List<CoverArtImage> images;
-    private String release;
+  private List<CoverArtImage> images;
+  private String release;
 }

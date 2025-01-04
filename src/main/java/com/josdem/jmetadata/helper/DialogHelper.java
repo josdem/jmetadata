@@ -21,8 +21,7 @@ import javax.swing.JOptionPane;
 
 public class DialogHelper {
 
-	public void showMessageDialog(JFrame frame, String message) {
-		JOptionPane.showMessageDialog(frame, message);
-	}
-
+  public void showMessageDialog(JFrame frame, String message) {
+    JOptionPane.showMessageDialog(frame, message);
+  }
 }

@@ -16,51 +16,45 @@
 
 package com.josdem.jmetadata.controller;
 
-import de.umass.lastfm.Session;
-import org.asmatron.messengine.annotations.ActionMethod;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.event.ValueEvent;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.event.Events;
 import com.josdem.jmetadata.helper.LastFMAuthenticator;
 import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.model.User;
+import de.umass.lastfm.Session;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.asmatron.messengine.annotations.ActionMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
 
 @Slf4j
 @Controller
 public class LoginController {
 
-    @Autowired
-    private LastFMAuthenticator lastfmAuthenticator;
-    @Autowired
-    private ControlEngineConfigurator configurator;
+  @Autowired private LastFMAuthenticator lastfmAuthenticator;
+  @Autowired private ControlEngineConfigurator configurator;
 
- 
-
-    @ActionMethod(Actions.LOGIN_ID)
-    public void login(User user) {
-        var username = user.getUsername();
-        var password = user.getPassword();
-        log.info("Sending login information for user: {}", username);
-        try {
-            Session session = lastfmAuthenticator.login(username, password);
-            if (session != null) {
-                user.setSession(session);
-                configurator.getControlEngine().set(Model.CURRENT_USER, user, null);
-                configurator.getControlEngine().fireEvent(Events.LOGGED, new ValueEvent<>(user));
-            } else {
-                log.warn("Session for user {} failed", username);
-                configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
-            }
-        } catch (IOException ioe) {
-            log.error(ioe.getMessage(), ioe);
-            configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
-        }
+  @ActionMethod(Actions.LOGIN_ID)
+  public void login(User user) {
+    var username = user.getUsername();
+    var password = user.getPassword();
+    log.info("Sending login information for user: {}", username);
+    try {
+      Session session = lastfmAuthenticator.login(username, password);
+      if (session != null) {
+        user.setSession(session);
+        configurator.getControlEngine().set(Model.CURRENT_USER, user, null);
+        configurator.getControlEngine().fireEvent(Events.LOGGED, new ValueEvent<>(user));
+      } else {
+        log.warn("Session for user {} failed", username);
+        configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
+      }
+    } catch (IOException ioe) {
+      log.error(ioe.getMessage(), ioe);
+      configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
     }
-
+  }
 }

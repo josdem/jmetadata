@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,59 +26,57 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class TestMetadata {
 
-    private static final Log log = LogFactory.getLog(TestMetadata.class);
-    private final Metadata metadata = new Metadata();
+  private static final Log log = LogFactory.getLog(TestMetadata.class);
+  private final Metadata metadata = new Metadata();
 
-    private static final String trackNumber = "2";
-    private static final boolean metadataFromFile = true;
+  private static final String trackNumber = "2";
+  private static final boolean metadataFromFile = true;
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    @DisplayName("comparing with previous metadata")
-    public void shouldDetectPreviousMetadata(TestInfo testInfo) {
-        log.info("Running test: " + testInfo.getDisplayName());
-        Metadata previousMetadata = new Metadata();
-        previousMetadata.setTrackNumber("1");
+  @Test
+  @DisplayName("comparing with previous metadata")
+  public void shouldDetectPreviousMetadata(TestInfo testInfo) {
+    log.info("Running test: " + testInfo.getDisplayName());
+    Metadata previousMetadata = new Metadata();
+    previousMetadata.setTrackNumber("1");
 
-        metadata.setTrackNumber(trackNumber);
-        assertEquals(1, metadata.compareTo(previousMetadata));
-    }
+    metadata.setTrackNumber(trackNumber);
+    assertEquals(1, metadata.compareTo(previousMetadata));
+  }
 
-    @Test
-    @DisplayName("comparing with next metadata")
-    public void shouldDetectNextMetadata(TestInfo testInfo) {
-        log.info("Running test: " + testInfo.getDisplayName());
-        Metadata nextMetadata = new Metadata();
-        nextMetadata.setTrackNumber("3");
+  @Test
+  @DisplayName("comparing with next metadata")
+  public void shouldDetectNextMetadata(TestInfo testInfo) {
+    log.info("Running test: " + testInfo.getDisplayName());
+    Metadata nextMetadata = new Metadata();
+    nextMetadata.setTrackNumber("3");
 
-        metadata.setTrackNumber(trackNumber);
-        assertEquals(-1, metadata.compareTo(nextMetadata));
-    }
+    metadata.setTrackNumber(trackNumber);
+    assertEquals(-1, metadata.compareTo(nextMetadata));
+  }
 
-    @Test
-    @DisplayName("detecting track number bad format")
-    public void shouldRespondAtErrorInTrackNumber(TestInfo testInfo) {
-        log.info("Running test: " + testInfo.getDisplayName());
-        Metadata weirdMetadata = new Metadata();
-        weirdMetadata.setTrackNumber("somethingWrongFormat");
+  @Test
+  @DisplayName("detecting track number bad format")
+  public void shouldRespondAtErrorInTrackNumber(TestInfo testInfo) {
+    log.info("Running test: " + testInfo.getDisplayName());
+    Metadata weirdMetadata = new Metadata();
+    weirdMetadata.setTrackNumber("somethingWrongFormat");
 
-        metadata.setTrackNumber(trackNumber);
-        assertEquals(0, metadata.compareTo(weirdMetadata));
-    }
+    metadata.setTrackNumber(trackNumber);
+    assertEquals(0, metadata.compareTo(weirdMetadata));
+  }
 
-    @Test
-    @DisplayName("detecting metadata from file")
-    public void shouldKnowIfMetadataIsFromFile(TestInfo testInfo) {
-        log.info("Running test: " + testInfo.getDisplayName());
-        metadata.setMetadataFromFile(metadataFromFile);
-        assertEquals(metadataFromFile, metadata.isMetadataFromFile());
-    }
+  @Test
+  @DisplayName("detecting metadata from file")
+  public void shouldKnowIfMetadataIsFromFile(TestInfo testInfo) {
+    log.info("Running test: " + testInfo.getDisplayName());
+    metadata.setMetadataFromFile(metadataFromFile);
+    assertEquals(metadataFromFile, metadata.isMetadataFromFile());
+  }
 }

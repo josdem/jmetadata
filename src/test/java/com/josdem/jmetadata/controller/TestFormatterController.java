@@ -16,6 +16,8 @@
 
 package com.josdem.jmetadata.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.model.Metadata;
@@ -26,46 +28,39 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 public class TestFormatterController {
 
-    @InjectMocks
-    private FormatterController formatterController = new FormatterController();
+  @InjectMocks private FormatterController formatterController = new FormatterController();
 
-    @Mock
-    private FormatterService formatterService;
-    @Mock
-    private Metadata metadata;
+  @Mock private FormatterService formatterService;
+  @Mock private Metadata metadata;
 
-    @BeforeEach
-    public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
+  @BeforeEach
+  public void setup() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
-    @Test
-    public void shouldFormatWhenBadFormat() throws Exception {
-        when(formatterService.wasFormatted(metadata)).thenReturn(true);
-        when(formatterService.wasCamelized(metadata)).thenReturn(false);
-        ActionResult result = formatterController.format(metadata);
-        assertEquals(ActionResult.New, result);
-    }
+  @Test
+  public void shouldFormatWhenBadFormat() throws Exception {
+    when(formatterService.wasFormatted(metadata)).thenReturn(true);
+    when(formatterService.wasCamelized(metadata)).thenReturn(false);
+    ActionResult result = formatterController.format(metadata);
+    assertEquals(ActionResult.New, result);
+  }
 
-    @Test
-    public void shouldFormatWhenNotCamelized() throws Exception {
-        when(formatterService.wasFormatted(metadata)).thenReturn(false);
-        when(formatterService.wasCamelized(metadata)).thenReturn(true);
-        ActionResult result = formatterController.format(metadata);
-        assertEquals(ActionResult.New, result);
-    }
+  @Test
+  public void shouldFormatWhenNotCamelized() throws Exception {
+    when(formatterService.wasFormatted(metadata)).thenReturn(false);
+    when(formatterService.wasCamelized(metadata)).thenReturn(true);
+    ActionResult result = formatterController.format(metadata);
+    assertEquals(ActionResult.New, result);
+  }
 
-    @Test
-    public void shouldReturnComplete() throws Exception {
-        when(formatterService.wasFormatted(metadata)).thenReturn(false);
-        when(formatterService.wasCamelized(metadata)).thenReturn(false);
-        ActionResult result = formatterController.format(metadata);
-        assertEquals(ActionResult.Ready, result);
-    }
-
+  @Test
+  public void shouldReturnComplete() throws Exception {
+    when(formatterService.wasFormatted(metadata)).thenReturn(false);
+    when(formatterService.wasCamelized(metadata)).thenReturn(false);
+    ActionResult result = formatterController.format(metadata);
+    assertEquals(ActionResult.Ready, result);
+  }
 }

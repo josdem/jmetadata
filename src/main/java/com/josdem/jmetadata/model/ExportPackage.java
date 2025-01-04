@@ -16,18 +16,16 @@
 
 package com.josdem.jmetadata.model;
 
+import java.io.File;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.File;
-import java.util.List;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class ExportPackage {
-    private final File root;
-    private List<Metadata> metadataList;
+  private final File root;
+  private List<Metadata> metadataList;
 }

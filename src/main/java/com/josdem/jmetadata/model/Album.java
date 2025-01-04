@@ -17,30 +17,36 @@
 package com.josdem.jmetadata.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class Album {
-    private String date;
-    private String barcode;
-    private String status;
-    private String title;
-    private String country;
-    @SerializedName("cover-art-archive")
-    private CoverArtArchive coverArtArchive;
-    @SerializedName("release-events")
-    private List<ReleaseEvent> releaseEvents;
-    private String packaging;
-    private String disambiguation;
-    @SerializedName("text-representation")
-    private TextRepresentation textRepresentation;
-    private String id;
-    private String quality;
-    private String asin;
-    @SerializedName("status-id")
-    private String statusId;
-    @SerializedName("packaging-id")
-    private String packagingId;
+  private String date;
+  private String barcode;
+  private String status;
+  private String title;
+  private String country;
+
+  @SerializedName("cover-art-archive")
+  private CoverArtArchive coverArtArchive;
+
+  @SerializedName("release-events")
+  private List<ReleaseEvent> releaseEvents;
+
+  private String packaging;
+  private String disambiguation;
+
+  @SerializedName("text-representation")
+  private TextRepresentation textRepresentation;
+
+  private String id;
+  private String quality;
+  private String asin;
+
+  @SerializedName("status-id")
+  private String statusId;
+
+  @SerializedName("packaging-id")
+  private String packagingId;
 }

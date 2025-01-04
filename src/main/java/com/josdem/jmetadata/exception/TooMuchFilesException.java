@@ -18,15 +18,14 @@ package com.josdem.jmetadata.exception;
 
 public class TooMuchFilesException extends Exception {
 
-	private final Integer maxFiles;
+  private final Integer maxFiles;
 
-	public TooMuchFilesException(Integer maxFiles) {
-		this.maxFiles = maxFiles;
-	}
+  public TooMuchFilesException(Integer maxFiles) {
+    this.maxFiles = maxFiles;
+  }
 
-	@Override
-	public String getMessage() {
-		return "TOO MUCH FILES LOADED: " + maxFiles;
-	}
-
+  @Override
+  public String getMessage() {
+    return "TOO MUCH FILES LOADED: " + maxFiles;
+  }
 }

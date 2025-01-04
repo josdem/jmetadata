@@ -20,12 +20,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
-    private static final String BASE_URL = "https://musicbrainz.org/ws/2/";
+  private static final String BASE_URL = "https://musicbrainz.org/ws/2/";
 
-    public static Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    }
+  public static Retrofit getRetrofit() {
+    return new Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+  }
 }
