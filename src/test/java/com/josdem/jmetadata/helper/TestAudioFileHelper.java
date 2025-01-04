@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,23 +17,34 @@
 package com.josdem.jmetadata.helper;
 
 
-import org.jaudiotagger.audio.AudioFile;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestAudioFileHelper {
+@Slf4j
+@SpringBootTest
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, AudioFileHelper.class})
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+class TestAudioFileHelper {
 
-    private final AudioFileHelper audioFileHelper = new AudioFileHelper();
+    private final AudioFileHelper audioFileHelper;
 
     private final File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
 
     @Test
-    public void shouldRead() throws Exception {
-        AudioFile read = audioFileHelper.read(pepeGarden);
-        assertNotNull(read);
+    @DisplayName("reading audio file")
+    public void shouldRead(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        assertNotNull(audioFileHelper.read(pepeGarden), "should read audio file");
     }
 
 }

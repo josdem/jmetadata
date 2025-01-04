@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,22 +16,22 @@
 
 package com.josdem.jmetadata.helper;
 
+import com.josdem.jmetadata.model.MetadataAlbumValues;
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.josdem.jmetadata.model.MetadataAlbumValues;
-import org.springframework.stereotype.Service;
-
 @Service
 public class MetadataHelper {
 
-	public Set<File> createHashSet() {
-		return new HashSet<File>();
-	}
+    public Set<File> createHashSet() {
+        return new HashSet<>();
+    }
 
-	public MetadataAlbumValues createMetadataAlbumVaues() {
-		return new MetadataAlbumValues();
-	}
+    public MetadataAlbumValues createMetadataAlbumValues() {
+        return new MetadataAlbumValues();
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import com.josdem.jmetadata.helper.FormatterHelper;
 import com.josdem.jmetadata.model.Metadata;
@@ -26,10 +27,11 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 @Service
+@RequiredArgsConstructor
 public class FormatterServiceImpl implements FormatterService {
 
     private static final int SIXTY = 60;
-    private FormatterHelper helper = new FormatterHelper();
+    private final FormatterHelper helper;
 
     public Boolean wasFormatted(Metadata metadata) {
         return wasTitleFormatted(metadata) || wasArtistFormatted(metadata) || wasAlbumFormatted(metadata);
