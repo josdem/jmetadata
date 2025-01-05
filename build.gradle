@@ -1,13 +1,14 @@
 plugins {
     id 'java'
     id 'application'
+    id 'jacoco'
     id 'com.diffplug.spotless' version '6.25.0'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.josdem.jmetadata'
-version = '1.2.0'
+version = '1.2.1'
 
 java {
     toolchain {
@@ -78,6 +79,13 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation files('lib/last.fm-bindings-0.1.0.jar')
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
 
 test {
