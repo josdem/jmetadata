@@ -17,6 +17,6 @@
 package com.josdem.jmetadata;
 
 public interface Auth {
-  static final String KEY = "LASTFM_API_KEY";
-  static final String SECRET = "LASTFM_API_SECRET";
+  String KEY = System.getenv("LASTFM_API_KEY");
+  String SECRET = System.getenv("LASTFM_API_SECRET");
 }

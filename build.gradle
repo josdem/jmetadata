@@ -34,8 +34,25 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
     targetDir = "src/main/java/com/josdem/jmetadata"
+    lastfmApiKey = System.getenv('LASTFM_API_KEY')
+    lastfmApiSecret = System.getenv('LASTFM_API_SECRET')
 }
 
+// Task to package with credentials
+tasks.register('prepareDist') {
+    doLast {
+        // Ensure that both API Key and Secret are provided
+        if (!lastfmApiKey || !lastfmApiSecret) {
+            throw new GradleException("LastFM API Key and Secret are required. Pass them using environment variables.")
+        }
+        println("Packaging with LastFM API credentials")
+    }
+}
+
+// Pass properties to the application
+tasks.named('distZip') {
+    dependsOn 'prepareDist'
+}
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -93,8 +110,3 @@ test {
 }
 
 test.dependsOn("spotlessApply")
-
-tasks.register('settingCredentials') {
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${LASTFM_API_KEY}")
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_SECRET", value: "${LASTFM_API_SECRET}")
-}
