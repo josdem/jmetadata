@@ -42,7 +42,7 @@ ext {
 tasks.register('prepareDist') {
     doLast {
         if (!lastfmApiKey || !lastfmApiSecret) {
-            throw new GradleException("LastFM API Key and Secret are required.")
+            throw new GradleException("LastFM API Key and Secret are required. Pass them using -PlastfmApiKey=<key> -PlastfmApiSecret=<secret>")
         }
         println("Packaging with LastFM API credentials")
     }
