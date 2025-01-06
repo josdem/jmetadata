@@ -34,15 +34,16 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
     targetDir = "src/main/java/com/josdem/jmetadata"
-    lastfmApiKey = project.hasProperty('lastfmApiKey') ? project.getProperty('lastfmApiKey') : null
-    lastfmApiSecret = project.hasProperty('lastfmApiSecret') ? project.getProperty('lastfmApiSecret') : null
+    lastfmApiKey = project.hasProperty('lastfmApiKey') ? project.getProperty('lastfmApiKey') : System.getenv('LASTFM_API_KEY')
+    lastfmApiSecret = project.hasProperty('lastfmApiSecret') ? project.getProperty('lastfmApiSecret') : System.getenv('LASTFM_API_SECRET')
 }
 
 // Task to package with credentials
 tasks.register('prepareDist') {
     doLast {
+        // Ensure that both API Key and Secret are provided
         if (!lastfmApiKey || !lastfmApiSecret) {
-            throw new GradleException("LastFM API Key and Secret are required. Pass them using -PlastfmApiKey=<key> -PlastfmApiSecret=<secret>")
+            throw new GradleException("LastFM API Key and Secret are required. Pass them using -PlastfmApiKey=<key> -PlastfmApiSecret=<secret> or set environment variables.")
         }
         println("Packaging with LastFM API credentials")
     }
@@ -111,6 +112,13 @@ test {
 test.dependsOn("spotlessApply")
 
 tasks.register('settingCredentials') {
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${LASTFM_API_KEY}")
-    ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_SECRET", value: "${LASTFM_API_SECRET}")
+    doLast {
+        if (!lastfmApiKey || !lastfmApiSecret) {
+            throw new GradleException("LastFM API Key and Secret must be provided before replacing credentials in Auth.java.")
+        }
+        ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: lastfmApiKey)
+        ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_SECRET", value: lastfmApiSecret)
+        
+        println("Credentials have been replaced in Auth.java")
+    }
 }
