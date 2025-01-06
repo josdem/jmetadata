@@ -34,8 +34,24 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoAllVersion = '1.10.19'
     targetDir = "src/main/java/com/josdem/jmetadata"
+    lastfmApiKey = project.hasProperty('lastfmApiKey') ? project.getProperty('lastfmApiKey') : null
+    lastfmApiSecret = project.hasProperty('lastfmApiSecret') ? project.getProperty('lastfmApiSecret') : null
 }
 
+// Task to package with credentials
+tasks.register('prepareDist') {
+    doLast {
+        if (!lastfmApiKey || !lastfmApiSecret) {
+            throw new GradleException("LastFM API Key and Secret are required.")
+        }
+        println("Packaging with LastFM API credentials")
+    }
+}
+
+// Pass properties to the application
+tasks.named('distZip') {
+    dependsOn 'prepareDist'
+}
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
