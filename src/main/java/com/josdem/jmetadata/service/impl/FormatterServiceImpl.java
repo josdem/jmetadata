@@ -62,6 +62,7 @@ public class FormatterServiceImpl implements FormatterService {
             .replace("&deg;", "°")
             .replace("&ntilde;", "ñ")
             .replace("&auml;", "ä")
+            .replace("&aring;", "å")
             .replace("&ucirc;", "û");
     if (!newTitle.equals(metadata.getTitle())) {
       metadata.setTitle(newTitle);
@@ -94,6 +95,7 @@ public class FormatterServiceImpl implements FormatterService {
             .replace("&deg;", "°")
             .replace("&ntilde;", "ñ")
             .replace("&auml;", "ä")
+            .replace("&aring;", "å")
             .replace("&ucirc;", "û");
     if (!newArtist.equals(metadata.getArtist())) {
       metadata.setArtist(newArtist);
@@ -126,6 +128,7 @@ public class FormatterServiceImpl implements FormatterService {
             .replace("&deg;", "°")
             .replace("&ntilde;", "ñ")
             .replace("&auml;", "ä")
+            .replace("&aring;", "å")
             .replace("&ucirc;", "û");
     if (!newAlbum.equals(metadata.getAlbum())) {
       metadata.setAlbum(newAlbum);
