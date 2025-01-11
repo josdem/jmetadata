@@ -50,7 +50,6 @@ public class MetadataServiceImpl implements MetadataService {
   @Autowired private MetadataHelper metadataHelper;
   @Autowired private ExtractService extractService;
   @Autowired private MetadataReader mp3Reader;
-  @Autowired private MetadataReader mp4Reader;
   @Autowired private FileUtils fileUtils;
   @Autowired private Properties properties;
 
@@ -91,7 +90,7 @@ public class MetadataServiceImpl implements MetadataService {
       if (fileUtils.isMp3File(file)) {
         metadata = mp3Reader.getMetadata(file);
       } else if (fileUtils.isM4aFile(file)) {
-        metadata = mp4Reader.getMetadata(file);
+        log.info("{} not supported audio File", file.getAbsoluteFile());
       }
 
       if (metadata == null) {
