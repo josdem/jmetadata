@@ -18,6 +18,7 @@ package com.josdem.jmetadata.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.collaborator.JAudioTaggerCollaborator;
 import com.josdem.jmetadata.event.Events;
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.helper.ReaderHelper;
 import com.josdem.jmetadata.model.Metadata;
@@ -36,6 +38,7 @@ import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
@@ -96,12 +99,27 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetMetadata() throws Exception {
+  @DisplayName("getting metadata")
+  public void shouldGetMetadata(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(audioFile.hasID3v2Tag()).thenReturn(true);
     reader.getMetadata(file);
 
-    ((MP3File) verify(audioFile)).getTag();
-    ((MP3File) verify(audioFile)).getAudioHeader();
+    verify(audioFile).getTag();
+    verify(audioFile).getAudioHeader();
+  }
+
+  @Test
+  @DisplayName("not getting metadata due to invalid audio frame")
+  void shouldNotGetMetadataDueToInvalidAudioFrame(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(audioFileHelper.read(file))
+        .thenThrow(new InvalidAudioFrameException("Invalid Audio Frame Exception"));
+
+    assertThrows(BusinessException.class, () -> reader.getMetadata(file));
+
+    verify(audioFile, never()).getTag();
+    verify(audioFile, never()).getAudioHeader();
   }
 
   @Test
