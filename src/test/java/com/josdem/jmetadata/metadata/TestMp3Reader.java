@@ -18,6 +18,7 @@ package com.josdem.jmetadata.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.never;
@@ -32,6 +33,7 @@ import com.josdem.jmetadata.helper.ReaderHelper;
 import com.josdem.jmetadata.model.Metadata;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
@@ -84,6 +86,7 @@ public class TestMp3Reader {
     when(header.getBitRate()).thenReturn(BIT_RATE);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(true);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
   }
 
   @Test
@@ -263,35 +266,40 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetArtwork() throws Exception {
-    reader.getMetadata(file);
-    verify(artwork).getImage();
+  @DisplayName("getting cover art")
+  public void shouldNotGetCoverArt() throws Exception {
+    when(artwork.getImage()).thenReturn(bufferedImage);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(bufferedImage, metadata.getCoverArt());
+  }
+
+  @Test
+  @DisplayName("not getting cover art if no artwork")
+  public void shouldNotGetCoverArtIfNoArtWork(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(tag.getFirstArtwork()).thenReturn(null);
+    var metadata = reader.getMetadata(file);
+
+    assertNull(metadata.getCoverArt());
+  }
+
+  @Test
+  @DisplayName("not getting cover art due to exception")
+  public void shouldNotGetCoverArtDueToException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(artwork.getImage()).thenThrow(new IOException("IO Exception"));
+    when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
+    Metadata metadata = reader.getMetadata(file);
+
+    assertNull(metadata.getCoverArt());
+    verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<>(TITLE));
   }
 
   @Test
   public void shouldGetFile() throws Exception {
     Metadata metadata = reader.getMetadata(file);
     assertNotNull(metadata.getFile());
-  }
-
-  @Test
-  public void shouldNotGetCoverArt() throws Exception {
-    when(tag.getFirstArtwork()).thenReturn(artwork);
-    when(artwork.getImage()).thenReturn(bufferedImage);
-
-    Metadata metadata = reader.getMetadata(file);
-
-    verify(tag).getFirstArtwork();
-    assertEquals(bufferedImage, metadata.getCoverArt());
-  }
-
-  @Test
-  public void shouldNotGetCoverArtIfNull() throws Exception {
-    when(tag.getFirstArtwork()).thenReturn(null);
-    Metadata metadata = reader.getMetadata(file);
-
-    verify(tag).getFirstArtwork();
-    assertEquals(null, metadata.getCoverArt());
   }
 
   /** TODO: Bug in JAudioTagger null pointer exception when artwork.getImage() */

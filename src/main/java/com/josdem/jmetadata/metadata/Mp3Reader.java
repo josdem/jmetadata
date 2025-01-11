@@ -143,7 +143,7 @@ public class Mp3Reader implements MetadataReader {
       Artwork artwork = tag.getFirstArtwork();
       log.info("{} has cover art?: {}", getTitle(), artwork != null);
       return artwork == null ? null : artwork.getImage();
-    } catch (IllegalArgumentException | IOException | NullPointerException iae) {
+    } catch (IOException | NullPointerException iae) {
       return handleCoverArtException(metadata, iae);
     }
   }
