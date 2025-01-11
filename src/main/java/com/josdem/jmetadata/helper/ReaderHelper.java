@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -25,14 +25,10 @@ import org.springframework.stereotype.Service;
 public class ReaderHelper {
 
   public String getGenre(Tag tag, String genre) {
-    try {
-      if (genre != null && genre.startsWith("(")) {
-        int index = Integer.valueOf(genre.substring(genre.indexOf('(') + 1, genre.indexOf(')')));
-        return GenreTypes.getGenreByCode(index);
-      } else {
-        return tag.getFirst(FieldKey.GENRE);
-      }
-    } catch (NumberFormatException nue) {
+    if (genre.startsWith("(")) {
+      int index = Integer.parseInt(genre.substring(genre.indexOf('(') + 1, genre.indexOf(')')));
+      return GenreTypes.getGenreByCode(index);
+    } else {
       return tag.getFirst(FieldKey.GENRE);
     }
   }

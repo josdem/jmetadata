@@ -238,22 +238,26 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetGenre() throws Exception {
-    String genre = "Minimal Techno";
+  @DisplayName("getting genre")
+  public void shouldGetGenre(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var genre = "Minimal Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
     when(readerHelper.getGenre(tag, genre)).thenReturn(genre);
 
-    Metadata metadata = reader.getMetadata(file);
+    var metadata = reader.getMetadata(file);
 
     assertEquals(genre, metadata.getGenre());
   }
 
   @Test
-  public void shouldGetGenreByCode() throws Exception {
-    String genreAsCode = "31";
-    String genre = "Trance";
+  @DisplayName("getting genre by code")
+  public void shouldGetGenreByCode(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var genreAsCode = "31";
+    var genre = "Trance";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genreAsCode);
-    Metadata metadata = reader.getMetadata(file);
+    var metadata = reader.getMetadata(file);
 
     assertEquals(genre, metadata.getGenre());
   }

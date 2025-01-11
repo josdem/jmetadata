@@ -138,10 +138,8 @@ public class Mp3Reader implements MetadataReader {
     return tag.getFirst(FieldKey.DISC_TOTAL);
   }
 
-  /** TODO: Bug in JAudioTagger null pointer exception when artwork.getImage() */
   private Image getCoverArt(Metadata metadata) {
     try {
-      if (tag == null) return null;
       Artwork artwork = tag.getFirstArtwork();
       log.info("{} has cover art?: {}", getTitle(), artwork != null);
       return artwork == null ? null : artwork.getImage();
