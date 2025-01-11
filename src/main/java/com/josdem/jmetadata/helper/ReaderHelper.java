@@ -25,10 +25,14 @@ import org.springframework.stereotype.Service;
 public class ReaderHelper {
 
   public String getGenre(Tag tag, String genre) {
-    if (genre.startsWith("(")) {
-      int index = Integer.parseInt(genre.substring(genre.indexOf('(') + 1, genre.indexOf(')')));
-      return GenreTypes.getGenreByCode(index);
-    } else {
+    try {
+      if (genre != null && genre.startsWith("(")) {
+        int index = Integer.parseInt(genre.substring(genre.indexOf('(') + 1, genre.indexOf(')')));
+        return GenreTypes.getGenreByCode(index);
+      } else {
+        return tag.getFirst(FieldKey.GENRE);
+      }
+    } catch (NumberFormatException nue) {
       return tag.getFirst(FieldKey.GENRE);
     }
   }
