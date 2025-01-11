@@ -16,7 +16,6 @@
 
 package com.josdem.jmetadata.service.impl;
 
-import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.exception.TooMuchFilesException;
 import com.josdem.jmetadata.helper.MetadataHelper;
 import com.josdem.jmetadata.metadata.MetadataReader;
@@ -36,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,10 +74,7 @@ public class MetadataServiceImpl implements MetadataService {
   }
 
   private List<Metadata> getMetadataList(List<File> fileList)
-      throws IOException,
-          CannotReadException,
-          TagException,
-          ReadOnlyFileException {
+      throws IOException, CannotReadException, TagException, ReadOnlyFileException {
     for (File file : fileList) {
       log.info("Reading file: {}", file.getName());
       Metadata metadata = null;
