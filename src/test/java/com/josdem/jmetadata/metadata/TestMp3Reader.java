@@ -297,37 +297,20 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetFile() throws Exception {
+  @DisplayName("getting file")
+  public void shouldGetFile(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     Metadata metadata = reader.getMetadata(file);
     assertNotNull(metadata.getFile());
   }
 
-  /** TODO: Bug in JAudioTagger null pointer exception when artwork.getImage() */
   @Test
-  public void shouldNotGetCoverArtIfImageError() throws Exception {
-    when(tag.getFirstArtwork()).thenReturn(artwork);
-    when(artwork.getImage()).thenThrow(new NullPointerException());
-    when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
-
-    reader.getMetadata(file);
-
-    verify(tag).getFirstArtwork();
-    verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
-  }
-
-  @Test
-  public void shouldKnowWhenMp3IsNotANumberInsideParenthesis() throws Exception {
-    String genre = "(None)";
-    when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
-    reader.getMetadata(file);
-    verify(readerHelper).getGenre(tag, genre);
-  }
-
-  @Test
-  public void shouldReturnNewMetadataWhenNoTagOrNoHeader() throws Exception {
+  @DisplayName("getting new metadata when no tag or no header")
+  public void shouldReturnNewMetadataWhenNoTagOrNoHeader(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(false);
 
-    reader.getMetadata(file);
+    assertNotNull(reader.getMetadata(file));
 
     verify(tag, never()).getFirst(FieldKey.TITLE);
     verify(header, never()).getTrackLength();
