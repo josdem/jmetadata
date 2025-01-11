@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -61,9 +61,7 @@ public class MetadataServiceImpl implements MetadataService {
           TooMuchFilesException,
           CannotReadException,
           TagException,
-          ReadOnlyFileException,
-          InvalidAudioFrameException,
-          MetadataException {
+          ReadOnlyFileException {
     metadataList = new ArrayList<>();
     filesWithoutMinimumMetadata = metadataHelper.createHashSet();
     List<File> fileList = fileUtils.getFileList(root);
@@ -81,9 +79,7 @@ public class MetadataServiceImpl implements MetadataService {
       throws IOException,
           CannotReadException,
           TagException,
-          ReadOnlyFileException,
-          InvalidAudioFrameException,
-          MetadataException {
+          ReadOnlyFileException {
     for (File file : fileList) {
       log.info("Reading file: {}", file.getName());
       Metadata metadata = null;
@@ -92,7 +88,6 @@ public class MetadataServiceImpl implements MetadataService {
       } else if (fileUtils.isM4aFile(file)) {
         log.info("{} not supported audio File", file.getAbsoluteFile());
       }
-
       if (metadata == null) {
         log.info("{} is not a valid audio File", file.getAbsoluteFile());
       } else if (StringUtils.isNotEmpty(metadata.getArtist())
