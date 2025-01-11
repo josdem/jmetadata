@@ -123,28 +123,55 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetArtist() throws Exception {
+  @DisplayName("getting artist")
+  public void shouldGetArtist(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(tag.getFirst(FieldKey.ARTIST)).thenReturn(ARTIST);
-    Metadata metadata = reader.getMetadata(file);
+    var metadata = reader.getMetadata(file);
 
     assertEquals(ARTIST, metadata.getArtist());
   }
 
   @Test
-  public void shouldGetTitle() throws Exception {
+  @DisplayName("getting title")
+  public void shouldGetTitle(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
-    Metadata metadata = reader.getMetadata(file);
+    var metadata = reader.getMetadata(file);
 
     assertEquals(TITLE, metadata.getTitle());
   }
 
   @Test
-  public void shouldGetAlbum() throws Exception {
-    String album = "Nobody Seems To Care / Murder Weapon";
+  @DisplayName("getting album")
+  public void shouldGetAlbum(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var album = "Nobody Seems To Care / Murder Weapon";
     when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
-    Metadata metadata = reader.getMetadata(file);
+    var metadata = reader.getMetadata(file);
 
     assertEquals(album, metadata.getAlbum());
+  }
+
+  @Test
+  @DisplayName("getting year")
+  public void shouldGetYear(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    when(tag.getFirst(FieldKey.YEAR)).thenReturn(YEAR);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(YEAR, metadata.getYear());
+  }
+
+  @Test
+  @DisplayName("getting length")
+  public void shouldGetLength(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var length = 325;
+    when(header.getTrackLength()).thenReturn(length);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(length, metadata.getLength());
   }
 
   @Test
@@ -251,19 +278,6 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldGetLength() throws Exception {
-    int length = 325;
-    when(header.getBitRate()).thenReturn("64");
-    when(audioFile.hasID3v2Tag()).thenReturn(true);
-    when(header.getTrackLength()).thenReturn(length);
-    when(audioFile.getAudioHeader()).thenReturn(header);
-
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(length, metadata.getLength());
-  }
-
-  @Test
   public void shouldGetArtwork() throws Exception {
     reader.getMetadata(file);
     verify(artwork).getImage();
@@ -273,13 +287,6 @@ public class TestMp3Reader {
   public void shouldGetFile() throws Exception {
     Metadata metadata = reader.getMetadata(file);
     assertNotNull(metadata.getFile());
-  }
-
-  @Test
-  public void shouldGetYear() throws Exception {
-    when(tag.getFirst(FieldKey.YEAR)).thenReturn(YEAR);
-    Metadata metadata = reader.getMetadata(file);
-    assertEquals(YEAR, metadata.getYear());
   }
 
   @Test
