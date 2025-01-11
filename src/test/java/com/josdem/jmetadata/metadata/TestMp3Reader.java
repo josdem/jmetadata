@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@ package com.josdem.jmetadata.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.collaborator.JAudioTaggerCollaborator;
 import com.josdem.jmetadata.event.Events;
@@ -28,6 +30,7 @@ import com.josdem.jmetadata.helper.ReaderHelper;
 import com.josdem.jmetadata.model.Metadata;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
@@ -39,18 +42,21 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+@Slf4j
 public class TestMp3Reader {
   private static final String ARTIST = "Armin Van Buuren";
   private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
   private static final String YEAR = "2011";
   private static final String NULL = "null";
 
-  @InjectMocks private Mp3Reader reader = new Mp3Reader();
+  @InjectMocks private MetadataReader reader = new Mp3Reader();
 
   @Mock private MP3File audioFile;
   @Mock private File file;
@@ -66,7 +72,7 @@ public class TestMp3Reader {
 
   @BeforeEach
   public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     when(audioFileHelper.read(file)).thenReturn(audioFile);
     when(audioFile.getTag()).thenReturn(tag);
     when(audioFile.getAudioHeader()).thenReturn(header);
@@ -79,12 +85,14 @@ public class TestMp3Reader {
   }
 
   @Test
-  public void shouldUpdateID3toV2() throws Exception {
+  @DisplayName("updating ID3 to V2")
+  public void shouldUpdateID3toV2(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(audioFile.hasID3v2Tag()).thenReturn(false);
     reader.getMetadata(file);
 
-    ((MP3File) verify(audioFile)).setID3v2TagOnly((AbstractID3v2Tag) anyObject());
-    ((MP3File) verify(audioFile)).commit();
+    verify(audioFile).setID3v2TagOnly(isA(AbstractID3v2Tag.class));
+    verify(audioFile).commit();
   }
 
   @Test
