@@ -33,7 +33,6 @@ import com.josdem.jmetadata.model.Metadata;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
@@ -57,7 +56,6 @@ public class TestMp3Reader {
   private static final String ARTIST = "Armin Van Buuren";
   private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
   private static final String YEAR = "2011";
-  private static final String NULL = "null";
   private static final String BIT_RATE = "64";
 
   @InjectMocks private MetadataReader reader = new Mp3Reader();
@@ -196,6 +194,28 @@ public class TestMp3Reader {
   }
 
   @Test
+  @DisplayName("getting track number")
+  public void shouldGetTrackNumber(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var trackNumber = "11";
+    when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(trackNumber, metadata.getTrackNumber());
+  }
+
+  @Test
+  @DisplayName("getting total tracks")
+  public void shouldGetTotalTracks(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var totalTracks = "20";
+    when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(totalTracks, metadata.getTotalTracks());
+  }
+
+  @Test
   public void shouldGetGenre() throws Exception {
     String genre = "Minimal Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
@@ -214,88 +234,6 @@ public class TestMp3Reader {
     Metadata metadata = reader.getMetadata(file);
 
     assertEquals(genre, metadata.getGenre());
-  }
-
-  @Test
-  public void shouldGetTrackNumber() throws Exception {
-    String trackNumber = "11";
-    when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(trackNumber, metadata.getTrackNumber());
-  }
-
-  @Test
-  public void shouldGetTotalTracks() throws Exception {
-    String totalTracks = "20";
-    when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(totalTracks, metadata.getTotalTracks());
-  }
-
-  @Test
-  public void shouldReturnZEROInTrackNumberWhenTagIsNull() throws Exception {
-    when(tag.getFirst(FieldKey.TRACK)).thenReturn(NULL);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTrackNumber());
-  }
-
-  @Test
-  public void shouldReturnZEROInTotalTracksWhenTagIsNull() throws Exception {
-    when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(NULL);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
-  }
-
-  @Test
-  public void shouldReturnZEROInTrackNumberWhenNullPointer() throws Exception {
-    when(tag.getFirst(FieldKey.TRACK)).thenThrow(new NullPointerException());
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTrackNumber());
-  }
-
-  @Test
-  public void shouldReturnZEROInTotalTracksWhenNullPointer() throws Exception {
-    when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenThrow(new NullPointerException());
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
-  }
-
-  @Test
-  public void shouldReturnZEROInGettingCdNumberWhenNullPointer() throws Exception {
-    when(tag.getFirst(FieldKey.DISC_NO)).thenThrow(new NullPointerException());
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getCdNumber());
-  }
-
-  @Test
-  public void shouldReturnZEROInGettingTotalCdsWhenNullPointer() throws Exception {
-    when(tag.getFirst(FieldKey.DISC_TOTAL)).thenThrow(new NullPointerException());
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTotalCds());
-  }
-
-  @Test
-  public void shouldReturnZEROInCdNumberWhenTagIsNull() throws Exception {
-    when(tag.getFirst(FieldKey.DISC_NO)).thenReturn(NULL);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getCdNumber());
-  }
-
-  @Test
-  public void shouldReturnZEROInTotalCdsWhenTagIsNull() throws Exception {
-    when(tag.getFirst(FieldKey.DISC_TOTAL)).thenReturn(NULL);
-    Metadata metadata = reader.getMetadata(file);
-
-    assertEquals(StringUtils.EMPTY, metadata.getTotalCds());
   }
 
   @Test

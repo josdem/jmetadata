@@ -50,7 +50,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class Mp3Reader implements MetadataReader {
-  private static final String NULL = "null";
 
   @Autowired private AudioFileHelper audioFileHelper;
   @Autowired private ReaderHelper readerHelper;
@@ -125,29 +124,17 @@ public class Mp3Reader implements MetadataReader {
   }
 
   private String getTrackNumber() {
-    try {
-      var trackNumber = tag.getFirst(FieldKey.TRACK);
-      return trackNumber.equals(NULL) ? StringUtils.EMPTY : trackNumber;
-    } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting TrackNumber at: {}", getTitle());
-      return StringUtils.EMPTY;
-    }
+    return tag.getFirst(FieldKey.TRACK);
   }
 
   private String getTotalTracks() {
-    try {
-      var totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
-      return totalTracks.equals(NULL) ? StringUtils.EMPTY : totalTracks;
-    } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting Total Tracks at: {}", getTitle());
-      return StringUtils.EMPTY;
-    }
+    return tag.getFirst(FieldKey.TRACK_TOTAL);
   }
 
   private String getCdNumber() {
     try {
       var cdNumber = tag.getFirst(FieldKey.DISC_NO);
-      return cdNumber.equals(NULL) ? StringUtils.EMPTY : cdNumber;
+      return cdNumber == null ? StringUtils.EMPTY : cdNumber;
     } catch (NullPointerException nue) {
       log.warn("NullPointer Exception in getting CD Number at: {}", getTitle());
       return StringUtils.EMPTY;
@@ -157,7 +144,7 @@ public class Mp3Reader implements MetadataReader {
   private String getTotalCds() {
     try {
       var cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
-      return cdsTotal.equals(NULL) ? StringUtils.EMPTY : cdsTotal;
+      return cdsTotal == null ? StringUtils.EMPTY : cdsTotal;
     } catch (NullPointerException nue) {
       log.warn("NullPointer Exception in getting Total CDs Number at: {}", getTitle());
       return StringUtils.EMPTY;
