@@ -19,12 +19,11 @@ package com.josdem.jmetadata.metadata;
 
 import com.josdem.jmetadata.collaborator.JAudioTaggerCollaborator;
 import com.josdem.jmetadata.event.Events;
-import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.helper.ReaderHelper;
 import com.josdem.jmetadata.model.GenreTypes;
 import com.josdem.jmetadata.model.Metadata;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,35 +60,30 @@ public class Mp3Reader implements MetadataReader {
 
   protected Tag tag;
   protected AudioHeader header;
-  private AudioFile audioFile;
 
   public Metadata getMetadata(File file)
-      throws CannotReadException,
-          IOException,
-          TagException,
-          ReadOnlyFileException,
-          MetadataException {
+      throws CannotReadException, IOException, TagException, ReadOnlyFileException {
+    AudioFile audioFile;
     try {
       audioFile = audioFileHelper.read(file);
     } catch (InvalidAudioFrameException ina) {
-      return null;
+      throw new BusinessException("Invalid Audio Frame Exception: " + ina.getMessage());
     } catch (FileNotFoundException fnf) {
-      log.error("File: " + file.getAbsolutePath() + " Not found");
+      log.error("File: {} Not found", file.getAbsolutePath());
       configurator
           .getControlEngine()
-          .fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
-      return null;
+          .fireEvent(Events.LOAD_FILE, new ValueEvent<>(file.getAbsolutePath()));
+      throw new BusinessException("Invalid Audio Frame Exception: " + fnf.getMessage());
     }
-    if (audioFile instanceof MP3File) {
-      MP3File audioMP3 = (MP3File) audioFile;
+    if (audioFile instanceof MP3File audioMP3) {
       if (!audioMP3.hasID3v2Tag()) {
         AbstractID3v2Tag id3v2tag = new ID3v24Tag();
         audioMP3.setID3v2TagOnly(id3v2tag);
         try {
           audioFile.commit();
         } catch (CannotWriteException cwe) {
-          log.error("An error occurs when I tried to update to ID3 v2");
-          cwe.printStackTrace();
+          throw new BusinessException(
+              "An error occurs when I tried to update to ID3 v2" + cwe.getMessage());
         }
       }
       tag = audioFile.getTag();
@@ -105,7 +99,7 @@ public class Mp3Reader implements MetadataReader {
   public String getGenre() {
     String tmpGenre = tag.getFirst(FieldKey.GENRE);
     try {
-      int index = Integer.valueOf(tmpGenre);
+      int index = Integer.parseInt(tmpGenre);
       return GenreTypes.getGenreByCode(index);
     } catch (NumberFormatException nfe) {
       return readerHelper.getGenre(tag, tmpGenre);
@@ -133,77 +127,70 @@ public class Mp3Reader implements MetadataReader {
   }
 
   private int getBitRate() {
-    // Case variable bitRate
-    String bitRate = header.getBitRate().replace("~", "");
+    var bitRate = header.getBitRate().replace("~", "");
     return Integer.parseInt(bitRate);
   }
 
   private String getTrackNumber() {
     try {
-      String trackNumber = tag.getFirst(FieldKey.TRACK);
-      return trackNumber == NULL ? StringUtils.EMPTY : trackNumber;
+      var trackNumber = tag.getFirst(FieldKey.TRACK);
+      return trackNumber.equals(NULL) ? StringUtils.EMPTY : trackNumber;
     } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting TrackNumber at: " + getTitle());
+      log.warn("NullPointer Exception in getting TrackNumber at: {}", getTitle());
       return StringUtils.EMPTY;
     }
   }
 
   private String getTotalTracks() {
     try {
-      String totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
-      return totalTracks == NULL ? StringUtils.EMPTY : totalTracks;
+      var totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
+      return totalTracks.equals(NULL) ? StringUtils.EMPTY : totalTracks;
     } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting Total Tracks at: " + getTitle());
+      log.warn("NullPointer Exception in getting Total Tracks at: {}", getTitle());
       return StringUtils.EMPTY;
     }
   }
 
   private String getCdNumber() {
     try {
-      String cdNumber = tag.getFirst(FieldKey.DISC_NO);
-      return cdNumber == NULL ? StringUtils.EMPTY : cdNumber;
+      var cdNumber = tag.getFirst(FieldKey.DISC_NO);
+      return cdNumber.equals(NULL) ? StringUtils.EMPTY : cdNumber;
     } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting CD Number at: " + getTitle());
+      log.warn("NullPointer Exception in getting CD Number at: {}", getTitle());
       return StringUtils.EMPTY;
     }
   }
 
   private String getTotalCds() {
     try {
-      String cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
-      return cdsTotal == NULL ? StringUtils.EMPTY : cdsTotal;
+      var cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
+      return cdsTotal.equals(NULL) ? StringUtils.EMPTY : cdsTotal;
     } catch (NullPointerException nue) {
-      log.warn("NullPointer Exception in getting Total CDs Number at: " + getTitle());
+      log.warn("NullPointer Exception in getting Total CDs Number at: {}", getTitle());
       return StringUtils.EMPTY;
     }
   }
 
   /** TODO: Bug in JAudioTagger null pointer exception when artwork.getImage() */
-  private Image getCoverArt(Metadata metadata) throws MetadataException {
+  private Image getCoverArt(Metadata metadata) {
     try {
       if (tag == null) return null;
       Artwork artwork = tag.getFirstArtwork();
-      log.info(getTitle() + " has cover art?: " + (artwork != null));
+      log.info("{} has cover art?: {}", getTitle(), artwork != null);
       return artwork == null ? null : artwork.getImage();
-    } catch (IllegalArgumentException iae) {
+    } catch (IllegalArgumentException | IOException | NullPointerException iae) {
       return handleCoverArtException(metadata, iae);
-    } catch (IOException ioe) {
-      return handleCoverArtException(metadata, ioe);
-    } catch (NullPointerException nue) {
-      return handleCoverArtException(metadata, nue);
     }
   }
 
   private Image handleCoverArtException(Metadata metadata, Exception exc) {
-    log.info("couldn't get coverArt for file: " + metadata.getTitle());
-    log.error("Exception: " + exc.getMessage());
-    configurator
-            .getControlEngine()
-            .fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(getTitle()));
+    log.info(
+        "couldn't get coverArt for file: {} with error: {}", metadata.getTitle(), exc.getMessage());
+    configurator.getControlEngine().fireEvent(Events.LOAD_COVER_ART, new ValueEvent<>(getTitle()));
     return null;
   }
 
-  protected Metadata generateMetadata(File file) throws IOException, MetadataException {
+  protected Metadata generateMetadata(File file) {
     Metadata metadata = new Metadata();
     metadata.setCoverArt(getCoverArt(metadata));
     metadata.setTitle(getTitle());
