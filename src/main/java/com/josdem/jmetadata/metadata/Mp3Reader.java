@@ -26,7 +26,6 @@ import com.josdem.jmetadata.model.GenreTypes;
 import com.josdem.jmetadata.model.Metadata;
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -68,12 +67,6 @@ public class Mp3Reader implements MetadataReader {
       audioFile = audioFileHelper.read(file);
     } catch (InvalidAudioFrameException ina) {
       throw new BusinessException("Invalid Audio Frame Exception: " + ina.getMessage());
-    } catch (FileNotFoundException fnf) {
-      log.error("File: {} Not found", file.getAbsolutePath());
-      configurator
-          .getControlEngine()
-          .fireEvent(Events.LOAD_FILE, new ValueEvent<>(file.getAbsolutePath()));
-      throw new BusinessException("Invalid Audio Frame Exception: " + fnf.getMessage());
     }
     if (audioFile instanceof MP3File audioMP3) {
       if (!audioMP3.hasID3v2Tag()) {
