@@ -216,6 +216,28 @@ public class TestMp3Reader {
   }
 
   @Test
+  @DisplayName("getting cd number")
+  public void shouldGetCdNumber(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var cdNumber = "1";
+    when(tag.getFirst(FieldKey.DISC_NO)).thenReturn(cdNumber);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(cdNumber, metadata.getCdNumber());
+  }
+
+  @Test
+  @DisplayName("getting total cds")
+  public void shouldGetTotalCds(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var totalCds = "2";
+    when(tag.getFirst(FieldKey.DISC_TOTAL)).thenReturn(totalCds);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(totalCds, metadata.getTotalCds());
+  }
+
+  @Test
   public void shouldGetGenre() throws Exception {
     String genre = "Minimal Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
