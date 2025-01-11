@@ -58,6 +58,7 @@ public class TestMp3Reader {
   private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
   private static final String YEAR = "2011";
   private static final String NULL = "null";
+  private static final String BIT_RATE = "64";
 
   @InjectMocks private MetadataReader reader = new Mp3Reader();
 
@@ -74,7 +75,7 @@ public class TestMp3Reader {
   @Mock private JAudioTaggerCollaborator jAudioTaggerCollaborator;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     MockitoAnnotations.openMocks(this);
     when(audioFileHelper.read(file)).thenReturn(audioFile);
     when(audioFile.getTag()).thenReturn(tag);
@@ -82,14 +83,14 @@ public class TestMp3Reader {
     when(artwork.getImage()).thenReturn(bufferedImage);
     when(tag.getFirstArtwork()).thenReturn(artwork);
     when(audioFile.hasID3v2Tag()).thenReturn(true);
-    when(header.getBitRate()).thenReturn("64");
+    when(header.getBitRate()).thenReturn(BIT_RATE);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(true);
   }
 
   @Test
   @DisplayName("updating ID3 to V2")
-  public void shouldUpdateID3toV2(TestInfo testInfo) throws Exception {
+  void shouldUpdateID3toV2(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(audioFile.hasID3v2Tag()).thenReturn(false);
     reader.getMetadata(file);
@@ -100,7 +101,7 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting metadata")
-  public void shouldGetMetadata(TestInfo testInfo) throws Exception {
+  void shouldGetMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(audioFile.hasID3v2Tag()).thenReturn(true);
     reader.getMetadata(file);
@@ -124,7 +125,7 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting artist")
-  public void shouldGetArtist(TestInfo testInfo) throws Exception {
+  void shouldGetArtist(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(tag.getFirst(FieldKey.ARTIST)).thenReturn(ARTIST);
     var metadata = reader.getMetadata(file);
@@ -134,7 +135,7 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting title")
-  public void shouldGetTitle(TestInfo testInfo) throws Exception {
+  void shouldGetTitle(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
     var metadata = reader.getMetadata(file);
@@ -144,7 +145,7 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting album")
-  public void shouldGetAlbum(TestInfo testInfo) throws Exception {
+  void shouldGetAlbum(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var album = "Nobody Seems To Care / Murder Weapon";
     when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
@@ -155,7 +156,7 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting year")
-  public void shouldGetYear(TestInfo testInfo) throws Exception {
+  void shouldGetYear(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(tag.getFirst(FieldKey.YEAR)).thenReturn(YEAR);
     var metadata = reader.getMetadata(file);
@@ -165,13 +166,33 @@ public class TestMp3Reader {
 
   @Test
   @DisplayName("getting length")
-  public void shouldGetLength(TestInfo testInfo) throws Exception {
+  void shouldGetLength(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var length = 325;
     when(header.getTrackLength()).thenReturn(length);
     var metadata = reader.getMetadata(file);
 
     assertEquals(length, metadata.getLength());
+  }
+
+  @Test
+  @DisplayName("getting bit rate")
+  void shouldGetBitRate(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(Integer.parseInt(BIT_RATE), metadata.getBitRate());
+  }
+
+  @Test
+  @DisplayName("getting variable bit rate")
+  void shouldGetVariableBitRate(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var variableBitRate = "~64";
+    when(header.getBitRate()).thenReturn(variableBitRate);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(Integer.parseInt(BIT_RATE), metadata.getBitRate());
   }
 
   @Test
