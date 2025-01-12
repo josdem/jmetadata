@@ -104,6 +104,7 @@ sonar {
 }
 
 test.dependsOn("spotlessApply")
+jacocoTestReport.dependsOn("test")
 
 tasks.register('settingCredentials') {
     ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${LASTFM_API_KEY}")
