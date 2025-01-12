@@ -89,7 +89,6 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        html.required = false
         xml.required = true
     }
 }
