@@ -87,9 +87,19 @@ jacoco {
 }
 
 jacocoTestReport {
+    dependsOn test
+
     reports {
+        html.required = true
         xml.required = true
     }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/laf/**/*', '**/gui/**/*', '**/dnd/**/*'])
+        }))
+    }
+
 }
 
 test {
