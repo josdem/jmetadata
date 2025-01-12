@@ -28,7 +28,6 @@ import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.exception.TooMuchFilesException;
 import com.josdem.jmetadata.helper.MetadataHelper;
 import com.josdem.jmetadata.metadata.Mp3Reader;
-import com.josdem.jmetadata.metadata.Mp4Reader;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.MetadataServiceImpl;
 import com.josdem.jmetadata.util.FileUtils;
@@ -43,7 +42,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,7 +64,6 @@ class TestMetadataService {
   @Mock private MetadataHelper metadataHelper;
   @Mock private ExtractService extractService;
   @Mock private Mp3Reader mp3Reader;
-  @Mock private Mp4Reader mp4Reader;
   @Mock private Metadata metadata;
   @Mock private Metadata anotherMetadata;
   @Mock private Set<File> filesWithoutMinimumMetadata;
@@ -86,7 +83,7 @@ class TestMetadataService {
 
   @BeforeEach
   public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(properties.getProperty("max.files.allowed")).thenReturn(maxFilesAllowed.toString());
   }
@@ -108,13 +105,11 @@ class TestMetadataService {
   @DisplayName("extracting metadata when mp4")
   public void shouldExtractMetadataWhenMp4(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    setMp4Expectations();
+    when(fileUtils.isM4aFile(pepeGarden)).thenReturn(true);
     setFileListExpectations();
 
     List<Metadata> metadatas = metadataService.extractMetadata(root);
-    Metadata metadata = metadatas.getFirst();
-
-    verifyExpectations(metadatas, metadata);
+    assertTrue(metadatas.isEmpty(), "should be empty due to not supported audio file");
   }
 
   @Test
@@ -133,7 +128,7 @@ class TestMetadataService {
   @DisplayName("cleaning metadata list")
   public void shouldCleanMetadataList(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    setMp4Expectations();
+    setMp3Expectations();
     setFileListExpectations();
 
     List<Metadata> metadatas = metadataService.extractMetadata(root);
@@ -274,16 +269,6 @@ class TestMetadataService {
           MetadataException {
     when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
     when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
-  }
-
-  private void setMp4Expectations()
-      throws IOException,
-          TagException,
-          ReadOnlyFileException,
-          InvalidAudioFrameException,
-          MetadataException {
-    when(fileUtils.isM4aFile(pepeGarden)).thenReturn(true);
-    when(mp4Reader.getMetadata(pepeGarden)).thenReturn(metadata);
   }
 
   private void setFileListExpectations() {

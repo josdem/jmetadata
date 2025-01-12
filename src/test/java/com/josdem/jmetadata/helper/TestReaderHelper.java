@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,15 +19,19 @@ package com.josdem.jmetadata.helper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestReaderHelper {
+@Slf4j
+class TestReaderHelper {
 
   @InjectMocks private ReaderHelper readerHelper = new ReaderHelper();
 
@@ -35,27 +39,33 @@ public class TestReaderHelper {
 
   @BeforeEach
   public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
-  public void shouldGetGenre() throws Exception {
-    String genre = "Minimal Techno";
+  @DisplayName("getting genre")
+  public void shouldGetGenre(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var genre = "Minimal Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
     assertEquals(genre, readerHelper.getGenre(tag, genre));
   }
 
   @Test
-  public void shouldGetGenreByCodeWithParentheses() throws Exception {
-    String genreAsCode = "(18)";
-    String genre = "Techno";
+  @DisplayName("getting genre by code")
+  public void shouldGetGenreByCodeWithParentheses(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var genreAsCode = "(18)";
+    var genre = "Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genreAsCode);
     assertEquals(genre, readerHelper.getGenre(tag, genreAsCode));
   }
 
   @Test
-  public void shouldKnowWhenMp3IsNotANumberInsideParenthesis() throws Exception {
-    String genre = "(None)";
+  @DisplayName("getting genre when not valid number")
+  public void shouldKnowWhenMp3IsNotANumberInsideParenthesis(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var genre = "(None)";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
     assertEquals(genre, readerHelper.getGenre(tag, genre));
   }

@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.josdem.jmetadata.service.impl;
 
-import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.exception.TooMuchFilesException;
 import com.josdem.jmetadata.helper.MetadataHelper;
 import com.josdem.jmetadata.metadata.MetadataReader;
@@ -36,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +48,6 @@ public class MetadataServiceImpl implements MetadataService {
   @Autowired private MetadataHelper metadataHelper;
   @Autowired private ExtractService extractService;
   @Autowired private MetadataReader mp3Reader;
-  @Autowired private MetadataReader mp4Reader;
   @Autowired private FileUtils fileUtils;
   @Autowired private Properties properties;
 
@@ -62,9 +59,7 @@ public class MetadataServiceImpl implements MetadataService {
           TooMuchFilesException,
           CannotReadException,
           TagException,
-          ReadOnlyFileException,
-          InvalidAudioFrameException,
-          MetadataException {
+          ReadOnlyFileException {
     metadataList = new ArrayList<>();
     filesWithoutMinimumMetadata = metadataHelper.createHashSet();
     List<File> fileList = fileUtils.getFileList(root);
@@ -79,21 +74,15 @@ public class MetadataServiceImpl implements MetadataService {
   }
 
   private List<Metadata> getMetadataList(List<File> fileList)
-      throws IOException,
-          CannotReadException,
-          TagException,
-          ReadOnlyFileException,
-          InvalidAudioFrameException,
-          MetadataException {
+      throws IOException, CannotReadException, TagException, ReadOnlyFileException {
     for (File file : fileList) {
       log.info("Reading file: {}", file.getName());
       Metadata metadata = null;
       if (fileUtils.isMp3File(file)) {
         metadata = mp3Reader.getMetadata(file);
       } else if (fileUtils.isM4aFile(file)) {
-        metadata = mp4Reader.getMetadata(file);
+        log.info("{} not supported audio File", file.getAbsoluteFile());
       }
-
       if (metadata == null) {
         log.info("{} is not a valid audio File", file.getAbsoluteFile());
       } else if (StringUtils.isNotEmpty(metadata.getArtist())
