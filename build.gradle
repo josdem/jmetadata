@@ -83,8 +83,7 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = "0.8.11"
-    reportsDirectory = layout.buildDirectory.dir('coverage-reports')
+    toolVersion = "0.8.12"
 }
 
 jacocoTestReport {
@@ -102,13 +101,10 @@ sonar {
         property "sonar.projectKey", "josdem_jmetadata"
         property "sonar.organization", "josdem-io"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${project.layout.buildDirectory}/coverage-reports/test/jacocoTestReport.xml"
-        property "sonar.coverage.exclusions", "**/laf/**/*,**/gui/**/*,**/dnd/**/*"
     }
 }
 
 test.dependsOn("spotlessApply")
-jacocoTestReport.dependsOn("test")
 
 tasks.register('settingCredentials') {
     ant.replace(file: "${targetDir}/Auth.java", token: "LASTFM_API_KEY", value: "${LASTFM_API_KEY}")
