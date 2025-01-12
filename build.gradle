@@ -84,10 +84,12 @@ dependencies {
 
 jacoco {
     toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir('coverage-reports')
 }
 
 jacocoTestReport {
     reports {
+        html.required = false
         xml.required = true
     }
 }
@@ -101,6 +103,7 @@ sonar {
         property "sonar.projectKey", "josdem_jmetadata"
         property "sonar.organization", "josdem-io"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.layout.buildDirectory}/coverage-reports/test/jacocoTestReport.xml"
         property "sonar.coverage.exclusions", "**/laf/**/*,**/gui/**/*,**/dnd/**/*"
     }
 }
