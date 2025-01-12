@@ -2,7 +2,7 @@ name: CI - Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "feature/58" ]
   pull_request:
     branches: ["main"]
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: Setup xvfb and run tests
         run: Xvfb :1 -screen 0 1600x1200x24 &
-      - run: ./gradlew test
+      - run: ./gradlew test jacocoTestReport
         env:
           DISPLAY: :1
       - name: Tear down xvfb
