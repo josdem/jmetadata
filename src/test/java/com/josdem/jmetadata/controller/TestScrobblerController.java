@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -46,18 +46,18 @@ class TestScrobblerController {
   @Mock private ScrobblerHelper scrobblerHelper;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() {
     MockitoAnnotations.openMocks(this);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
   }
 
   @Test
   @DisplayName("sending metadata")
-  public void shouldSendMetadata(TestInfo testInfo) throws Exception {
+  void shouldSendMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
 
-    ActionResult result = controller.sendMetadata(metadata);
+    var result = controller.sendMetadata(metadata);
 
     verify(scrobblerHelper).send(metadata);
     assertEquals(ActionResult.New, result);
@@ -65,11 +65,11 @@ class TestScrobblerController {
 
   @Test
   @DisplayName("detecting error in scrobbling")
-  public void shouldDetectWhenErrorInScrobbling(TestInfo testInfo) throws Exception {
+  void shouldDetectWhenErrorInScrobbling(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
 
-    ActionResult result = controller.sendMetadata(metadata);
+    var result = controller.sendMetadata(metadata);
 
     verify(scrobblerHelper).send(metadata);
     assertEquals(ActionResult.Error, result);
@@ -77,7 +77,7 @@ class TestScrobblerController {
 
   @Test
   @DisplayName("setting up scrobbler")
-  public void shouldSetup(TestInfo testInfo) {
+  void shouldSetup(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     controller.setup();
     verify(scrobblerHelper).setControlEngine(controlEngine);
@@ -85,22 +85,22 @@ class TestScrobblerController {
 
   @Test
   @DisplayName("catching IOException")
-  public void shouldCatchIOException(TestInfo testInfo) throws Exception {
+  void shouldCatchIOException(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(scrobblerHelper.send(metadata)).thenThrow(new IOException());
 
-    ActionResult result = controller.sendMetadata(metadata);
+    var result = controller.sendMetadata(metadata);
 
     assertEquals(ActionResult.Error, result);
   }
 
   @Test
   @DisplayName("catching InterruptedException")
-  public void shouldCatchInterruptedException(TestInfo testInfo) throws Exception {
+  void shouldCatchInterruptedException(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(scrobblerHelper.send(metadata)).thenThrow(new InterruptedException());
 
-    ActionResult result = controller.sendMetadata(metadata);
+    var result = controller.sendMetadata(metadata);
 
     assertEquals(ActionResult.Error, result);
   }

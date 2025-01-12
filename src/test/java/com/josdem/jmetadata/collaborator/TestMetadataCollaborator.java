@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 import com.josdem.jmetadata.model.Metadata;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,11 +33,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+@Slf4j
 class TestMetadataCollaborator {
 
   @InjectMocks private final MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
-
-  private final Logger log = Logger.getLogger(this.getClass().getName());
 
   private final List<Metadata> metadatas = new ArrayList<Metadata>();
 
@@ -53,14 +52,14 @@ class TestMetadataCollaborator {
   private final String cdNumber = "cdNumber";
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
   @DisplayName("getting artist")
-  public void shouldGetArtist(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetArtist(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getArtist()).thenReturn(artist);
     when(metadataTwo.getArtist()).thenReturn(artist);
@@ -76,8 +75,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting artist")
-  public void shouldNotGetArtist(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetArtist(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getArtist()).thenReturn(artist);
     when(metadataTwo.getArtist()).thenReturn("otherArtist");
@@ -87,8 +86,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null artist")
-  public void shouldGetEmptyArtist(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyArtist(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getArtist()).thenReturn(null);
     when(metadataTwo.getArtist()).thenReturn(null);
@@ -98,8 +97,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting album")
-  public void shouldGetAlbum(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetAlbum(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getAlbum()).thenReturn(album);
     when(metadataTwo.getAlbum()).thenReturn(album);
@@ -109,8 +108,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting album")
-  public void shouldNotGetAlbum(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetAlbum(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getAlbum()).thenReturn(album);
     when(metadataTwo.getAlbum()).thenReturn("otherAlbum");
@@ -120,8 +119,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("note accepting null album")
-  public void shouldGetEmptyAlbum(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyAlbum(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getAlbum()).thenReturn(null);
     when(metadataTwo.getAlbum()).thenReturn(null);
@@ -131,8 +130,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting genre")
-  public void shouldGetGenre(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetGenre(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getGenre()).thenReturn(genre);
     when(metadataTwo.getGenre()).thenReturn(genre);
@@ -142,8 +141,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting genre")
-  public void shouldNotGetGenre(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetGenre(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getGenre()).thenReturn(genre);
     when(metadataTwo.getGenre()).thenReturn("otherGenre");
@@ -153,8 +152,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null genre")
-  public void shouldGetEmptyGenre(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyGenre(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getGenre()).thenReturn(null);
     when(metadataTwo.getGenre()).thenReturn(null);
@@ -164,8 +163,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting year")
-  public void shouldGetYear(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetYear(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getYear()).thenReturn(year);
     when(metadataTwo.getYear()).thenReturn(year);
@@ -175,8 +174,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting year")
-  public void shouldNotGetYear(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetYear(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getYear()).thenReturn(year);
     when(metadataTwo.getYear()).thenReturn("otherYear");
@@ -186,8 +185,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null year")
-  public void shouldGetEmptyYear(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyYear(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getYear()).thenReturn(null);
     when(metadataTwo.getYear()).thenReturn(null);
@@ -198,8 +197,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting total tracks")
-  public void shouldGetTotalTracks(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetTotalTracks(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
     when(metadataTwo.getTotalTracks()).thenReturn(totalTracks);
@@ -209,8 +208,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting total tracks")
-  public void shouldNotGetTotalTracks(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetTotalTracks(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
     when(metadataTwo.getTotalTracks()).thenReturn("otherTotalTracks");
@@ -220,8 +219,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null total tracks")
-  public void shouldGetEmptyTotalTracks(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyTotalTracks(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalTracks()).thenReturn(null);
     when(metadataTwo.getTotalTracks()).thenReturn(null);
@@ -231,8 +230,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting cd number")
-  public void shouldGetCdNumber(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetCdNumber(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getCdNumber()).thenReturn(cdNumber);
     when(metadataTwo.getCdNumber()).thenReturn(cdNumber);
@@ -242,8 +241,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting cd number")
-  public void shouldNotGetCdNumber(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetCdNumber(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getCdNumber()).thenReturn(cdNumber);
     when(metadataTwo.getCdNumber()).thenReturn("otherCdNumber");
@@ -253,8 +252,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null cd number")
-  public void shouldGetEmptyCdNumber(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyCdNumber(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getCdNumber()).thenReturn(null);
     when(metadataTwo.getCdNumber()).thenReturn(null);
@@ -264,8 +263,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("getting total cds")
-  public void shouldGetTotalCds(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetTotalCds(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalCds()).thenReturn(totalCds);
     when(metadataTwo.getTotalCds()).thenReturn(totalCds);
@@ -275,8 +274,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not getting total cds")
-  public void shouldNotGetTotalCds(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldNotGetTotalCds(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalCds()).thenReturn(totalCds);
     when(metadataTwo.getTotalCds()).thenReturn("otherCds");
@@ -286,8 +285,8 @@ class TestMetadataCollaborator {
 
   @Test
   @DisplayName("not accepting null total cds")
-  public void shouldGetEmptyTotalCds(TestInfo testInfo) {
-    log.info(() -> "Running test: " + testInfo.getDisplayName());
+  void shouldGetEmptyTotalCds(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     setMetadatasExpectations();
     when(metadataOne.getTotalCds()).thenReturn(null);
     when(metadataTwo.getTotalCds()).thenReturn(null);
