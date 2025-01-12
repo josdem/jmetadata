@@ -82,6 +82,10 @@ dependencies {
     implementation files('lib/last.fm-bindings-0.1.0.jar')
 }
 
+jacoco {
+    toolVersion = "0.8.11"
+}
+
 jacocoTestReport {
     reports {
         xml.required = true
