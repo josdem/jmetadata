@@ -2,13 +2,14 @@ plugins {
     id 'java'
     id 'application'
     id 'jacoco'
+    id 'org.sonarqube' version '6.0.0.5145'
     id 'com.diffplug.spotless' version '6.25.0'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.josdem.jmetadata'
-version = '1.2.3'
+version = '1.2.4'
 
 java {
     toolchain {
