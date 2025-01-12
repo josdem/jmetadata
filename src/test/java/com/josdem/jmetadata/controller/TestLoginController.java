@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -56,8 +56,8 @@ class TestLoginController {
   private User credentials;
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
 
     credentials = new User(username, password);
@@ -65,7 +65,7 @@ class TestLoginController {
 
   @Test
   @DisplayName("login as a user")
-  public void shouldLogin(TestInfo testInfo) throws Exception {
+  void shouldLogin(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(lastfmAuthenticator.login(username, password)).thenReturn(session);
 
@@ -78,7 +78,7 @@ class TestLoginController {
 
   @Test
   @DisplayName("login as a user failed")
-  public void shouldFailAtLogin(TestInfo testInfo) throws Exception {
+  void shouldFailAtLogin(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     controller.login(credentials);
 

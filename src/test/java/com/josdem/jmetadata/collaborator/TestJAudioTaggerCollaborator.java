@@ -1,5 +1,5 @@
 /*
-   Copyright 2014 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -42,13 +42,13 @@ class TestJAudioTaggerCollaborator {
   @Mock private AudioHeader header;
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() throws Exception {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
   @DisplayName("validating tag and header")
-  public void shouldValidateTagAndHeader(TestInfo testInfo) {
+  void shouldValidateTagAndHeader(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     assertTrue(jAudioTaggerCollaborator.isValid(tag, header));
   }
@@ -56,7 +56,7 @@ class TestJAudioTaggerCollaborator {
   @ParameterizedTest
   @MethodSource("metadata")
   @DisplayName("detecting invalid metadata")
-  public void shouldDetectInvalidTag(Tag tag, AudioHeader header) {
+  void shouldDetectInvalidTag(Tag tag, AudioHeader header) {
     log.info("Running detecting invalid metadata");
     assertFalse(jAudioTaggerCollaborator.isValid(tag, header));
   }

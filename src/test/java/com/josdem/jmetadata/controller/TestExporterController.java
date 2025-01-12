@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -42,17 +42,17 @@ class TestExporterController {
   @Mock private ExporterHelper exporterHelper;
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
   @DisplayName("sending metadata")
-  public void shouldSendMetadata(TestInfo testInfo) throws Exception {
+  void shouldSendMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
 
-    ActionResult result = exporterController.sendMetadata(exportPackage);
+    var result = exporterController.sendMetadata(exportPackage);
 
     verify(exporterHelper).export(exportPackage);
     assertEquals(ActionResult.Exported, result);
@@ -60,11 +60,11 @@ class TestExporterController {
 
   @Test
   @DisplayName("reporting error in sending metadata")
-  public void shouldReportErrorInSendingMetadata(TestInfo testInfo) throws Exception {
+  void shouldReportErrorInSendingMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(exporterHelper.export(exportPackage)).thenThrow(new IOException());
 
-    ActionResult result = exporterController.sendMetadata(exportPackage);
+    var result = exporterController.sendMetadata(exportPackage);
 
     assertEquals(ActionResult.Error, result);
   }

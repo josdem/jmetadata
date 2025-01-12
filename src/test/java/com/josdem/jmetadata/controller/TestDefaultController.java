@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -44,17 +44,17 @@ class TestDefaultController {
   private final List<Metadata> metadatas = new ArrayList<Metadata>();
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
   @DisplayName("completing total tracks")
-  public void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
+  void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(defaultService.isCompletable(metadatas)).thenReturn(true);
 
-    ActionResult result = defaultController.complete(metadatas);
+    var result = defaultController.complete(metadatas);
 
     verify(defaultService).complete(metadatas);
     assertEquals(ActionResult.New, result);
@@ -62,11 +62,11 @@ class TestDefaultController {
 
   @Test
   @DisplayName("not completing total tracks")
-  public void shouldNotCompleteTotalTracks(TestInfo testInfo) throws Exception {
+  void shouldNotCompleteTotalTracks(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(defaultService.isCompletable(metadatas)).thenReturn(false);
 
-    ActionResult result = defaultController.complete(metadatas);
+    var result = defaultController.complete(metadatas);
 
     assertEquals(ActionResult.Ready, result);
   }
