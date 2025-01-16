@@ -19,10 +19,12 @@ package com.josdem.jmetadata.service.impl;
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,5 +52,11 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
     } catch (IOException e) {
       throw new BusinessException(e.getMessage());
     }
+  }
+
+  @Override
+  public List<Metadata> completeAlbum(List<Metadata> metadataList, Album album) {
+    log.info("Trying to complete year from album");
+    return metadataList;
   }
 }

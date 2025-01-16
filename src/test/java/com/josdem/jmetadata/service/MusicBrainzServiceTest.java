@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl;
@@ -29,6 +30,7 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,5 +90,23 @@ public class MusicBrainzServiceTest {
     var releases = List.of(release);
     musicBrainzResponse.setReleases(releases);
     return musicBrainzResponse;
+  }
+
+  @Test
+  @DisplayName("completing year from album")
+  void shouldCompleteYearFromAlbum(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var metadata = new Metadata();
+    metadata.setAlbum("Nightlife");
+    metadata.setArtist("Pet shop boys");
+    metadata.setYear(StringUtils.EMPTY);
+    var metadataList = List.of(metadata);
+    var album = new Album();
+    album.setDate("1999-03-29");
+
+    var result = musicBrainzService.completeAlbum(metadataList, album);
+
+    assertEquals("1999", result.getFirst().getYear());
+    assertEquals(1, result.size());
   }
 }
