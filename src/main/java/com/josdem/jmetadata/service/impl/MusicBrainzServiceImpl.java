@@ -63,7 +63,7 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
     log.info("Trying to complete year from album");
     metadataList.forEach(
         metadata -> {
-          if (StringUtils.isEmpty(metadata.getYear())) {
+          if (StringUtils.isEmpty(metadata.getYear()) || StringUtils.isBlank(metadata.getYear())) {
             metadata.setYear(AlbumUtils.formatYear(album.getDate()));
           }
         });

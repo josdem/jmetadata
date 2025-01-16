@@ -30,11 +30,12 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -92,14 +93,14 @@ public class MusicBrainzServiceTest {
     return musicBrainzResponse;
   }
 
-  @Test
   @DisplayName("completing year from album")
-  void shouldCompleteYearFromAlbum(TestInfo testInfo) {
-    log.info(testInfo.getDisplayName());
+  @ParameterizedTest
+  @ValueSource(strings = {"", " "})
+  void shouldCompleteYearFromAlbum(String metadataYear) {
     var metadata = new Metadata();
     metadata.setAlbum("Nightlife");
     metadata.setArtist("Pet shop boys");
-    metadata.setYear(StringUtils.EMPTY);
+    metadata.setYear(metadataYear);
     var metadataList = List.of(metadata);
     var album = new Album();
     album.setDate("1999-03-29");
