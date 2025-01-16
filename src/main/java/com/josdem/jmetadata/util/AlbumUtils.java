@@ -18,7 +18,7 @@ package com.josdem.jmetadata.util;
 
 public class AlbumUtils {
 
-  private void StringUtils() {
+  private AlbumUtils() {
     throw new IllegalStateException("Utility class");
   }
 
