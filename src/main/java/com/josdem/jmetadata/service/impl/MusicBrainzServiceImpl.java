@@ -22,16 +22,20 @@ import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
+import com.josdem.jmetadata.util.AlbumUtils;
 import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
   private RestService restService;
@@ -57,6 +61,12 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
   @Override
   public List<Metadata> completeAlbum(List<Metadata> metadataList, Album album) {
     log.info("Trying to complete year from album");
+    metadataList.forEach(
+        metadata -> {
+          if (StringUtils.isEmpty(metadata.getYear())) {
+            metadata.setYear(AlbumUtils.formatYear(album.getDate()));
+          }
+        });
     return metadataList;
   }
 }
