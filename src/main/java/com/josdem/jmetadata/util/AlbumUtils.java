@@ -18,6 +18,10 @@ package com.josdem.jmetadata.util;
 
 public class AlbumUtils {
 
+  private void StringUtils() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String formatYear(String date) {
     return date.substring(0, 4);
   }
