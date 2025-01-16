@@ -56,6 +56,9 @@ public class MusicBrainzServiceTest {
 
   @Mock private Call<Album> call;
 
+  private final Metadata metadata = new Metadata();
+  private final Album album = new Album();
+
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
@@ -100,12 +103,9 @@ public class MusicBrainzServiceTest {
   @NullSource
   @ValueSource(strings = {"", " "})
   void shouldCompleteYearFromAlbum(String metadataYear) {
-    var metadata = new Metadata();
-    metadata.setAlbum("Nightlife");
-    metadata.setArtist("Pet shop boys");
+    setMetadataExpectations();
     metadata.setYear(metadataYear);
     var metadataList = List.of(metadata);
-    var album = new Album();
     album.setDate("1999-03-29");
 
     var result = musicBrainzService.completeAlbum(metadataList, album);
@@ -119,15 +119,17 @@ public class MusicBrainzServiceTest {
   @ValueSource(strings = {"", " "})
   @DisplayName("not completing year if not valid format")
   void shouldNotCompleteYearIfNotValidFormat(String date) {
-    var metadata = new Metadata();
-    metadata.setAlbum("Nightlife");
-    metadata.setArtist("Pet shop boys");
+    setMetadataExpectations();
     metadata.setYear(StringUtils.EMPTY);
     var metadataList = List.of(metadata);
-    var album = new Album();
     album.setDate(date);
 
     assertThrows(
         BusinessException.class, () -> musicBrainzService.completeAlbum(metadataList, album));
+  }
+
+  private void setMetadataExpectations() {
+    metadata.setAlbum("Nightlife");
+    metadata.setArtist("Pet shop boys");
   }
 }
