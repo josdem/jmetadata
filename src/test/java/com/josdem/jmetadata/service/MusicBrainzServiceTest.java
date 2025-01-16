@@ -30,6 +30,7 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -111,5 +112,22 @@ public class MusicBrainzServiceTest {
 
     assertEquals("1999", result.getFirst().getYear());
     assertEquals(1, result.size());
+  }
+
+  @ParameterizedTest
+  @NullSource
+  @ValueSource(strings = {"", " "})
+  @DisplayName("not completing year if not valid format")
+  void shouldNotCompleteYearIfNotValidFormat(String date) {
+    var metadata = new Metadata();
+    metadata.setAlbum("Nightlife");
+    metadata.setArtist("Pet shop boys");
+    metadata.setYear(StringUtils.EMPTY);
+    var metadataList = List.of(metadata);
+    var album = new Album();
+    album.setDate(date);
+
+    assertThrows(
+        BusinessException.class, () -> musicBrainzService.completeAlbum(metadataList, album));
   }
 }
