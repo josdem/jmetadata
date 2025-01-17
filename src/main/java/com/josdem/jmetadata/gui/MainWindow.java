@@ -217,7 +217,7 @@ public class MainWindow extends JFrame {
                 Metadata metadata = metadatas.get(selectedRow);
                 CoverArt coverArt =
                     new CoverArt(
-                        imageUtils.resize(
+                        ImageUtils.resize(
                             image,
                             ApplicationConstants.THREE_HUNDRED,
                             ApplicationConstants.THREE_HUNDRED),
@@ -830,11 +830,11 @@ public class MainWindow extends JFrame {
       }
       imageLabel.setText(label);
     } else if (metadata.getCoverArt() != null) {
-      if (imageUtils.is300Image(metadata.getCoverArt())) {
+      if (ImageUtils.is300Image(metadata.getCoverArt())) {
         imagePanel.add(new JLabel(new ImageIcon(metadata.getCoverArt())));
       } else {
         Image resize =
-            imageUtils.resize(
+            ImageUtils.resize(
                 metadata.getCoverArt(),
                 ApplicationConstants.THREE_HUNDRED,
                 ApplicationConstants.THREE_HUNDRED);
