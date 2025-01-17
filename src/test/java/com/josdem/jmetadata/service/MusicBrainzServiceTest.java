@@ -18,6 +18,7 @@ package com.josdem.jmetadata.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
@@ -189,6 +190,23 @@ public class MusicBrainzServiceTest {
     assertThrows(
         BusinessException.class,
         () -> musicBrainzService.completeCoverArt(metadataList, coverArtResponse));
+  }
+
+  @Test
+  @DisplayName("not completing cover art since it already exists")
+  void shouldNotCompleteCoverArtSinceItAlreadyExists(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+
+    var existingImage = mock(Image.class);
+    var coverArtResponse = setCoverArtExpectations();
+    setMetadataExpectations();
+    metadata.setCoverArt(existingImage);
+    var metadataList = List.of(metadata);
+
+    var result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse);
+
+    assertEquals(existingImage, result.getFirst().getCoverArt());
+    assertEquals(1, result.size());
   }
 
   @NotNull
