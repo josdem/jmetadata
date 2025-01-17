@@ -24,5 +24,5 @@ public interface MusicBrainzService {
 
   Album getAlbumByName(String name);
 
-  List<Metadata> completeAlbum(List<Metadata> metadataList, Album album);
+  List<Metadata> completeYear(List<Metadata> metadataList, Album album);
 }

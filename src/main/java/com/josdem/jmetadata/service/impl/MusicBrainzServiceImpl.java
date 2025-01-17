@@ -59,7 +59,7 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
   }
 
   @Override
-  public List<Metadata> completeAlbum(List<Metadata> metadataList, Album album) {
+  public List<Metadata> completeYear(List<Metadata> metadataList, Album album) {
     log.info("Trying to complete year from album");
     if (StringUtils.isEmpty(album.getDate()) || StringUtils.isBlank(album.getDate())) {
       throw new BusinessException("Album date is not valid");

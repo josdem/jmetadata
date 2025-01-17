@@ -108,7 +108,7 @@ public class MusicBrainzServiceTest {
     var metadataList = List.of(metadata);
     album.setDate("1999-03-29");
 
-    var result = musicBrainzService.completeAlbum(metadataList, album);
+    var result = musicBrainzService.completeYear(metadataList, album);
 
     assertEquals("1999", result.getFirst().getYear());
     assertEquals(1, result.size());
@@ -125,7 +125,7 @@ public class MusicBrainzServiceTest {
     album.setDate(date);
 
     assertThrows(
-        BusinessException.class, () -> musicBrainzService.completeAlbum(metadataList, album));
+        BusinessException.class, () -> musicBrainzService.completeYear(metadataList, album));
   }
 
   private void setMetadataExpectations() {
