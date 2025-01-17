@@ -22,12 +22,15 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.CoverArtImage;
 import com.josdem.jmetadata.model.CoverArtResponse;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
+import com.josdem.jmetadata.model.Thumbnail;
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl;
 import com.josdem.jmetadata.util.ApplicationState;
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +61,8 @@ public class MusicBrainzServiceTest {
   @Mock private Call<Album> call;
 
   @Mock private ImageService imageService;
+
+  @Mock private Image image;
 
   private final Metadata metadata = new Metadata();
   private final Album album = new Album();
@@ -148,5 +153,28 @@ public class MusicBrainzServiceTest {
     assertThrows(
         BusinessException.class,
         () -> musicBrainzService.completeCoverArt(metadataList, coverArtResponse));
+  }
+
+  @Test
+  @DisplayName("completing cover art")
+  void shouldCompleteCoverArt(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var coverArtUrl =
+        "http://coverartarchive.org/release/7f3e3b3b-0b0b-4b3b-8b3b-4f3b3b3b3b3b/1234567890.jpg";
+    var coverArtResponse = new CoverArtResponse();
+    var coverArtImage = new CoverArtImage();
+    var thumbnails = new Thumbnail();
+    thumbnails.setLarge(coverArtUrl);
+    coverArtImage.setThumbnails(thumbnails);
+    coverArtResponse.setImages(List.of(coverArtImage));
+    setMetadataExpectations();
+    metadata.setCoverArt(null);
+    var metadataList = List.of(metadata);
+    when(imageService.readImage(coverArtUrl)).thenReturn(image);
+
+    var result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse);
+
+    assertEquals(image, result.getFirst().getCoverArt());
+    assertEquals(1, result.size());
   }
 }
