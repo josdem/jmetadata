@@ -33,7 +33,7 @@ public class ImageUtils {
   private FileUtils fileUtils = new FileUtils();
   private static final int THREE_HUNDRED = 300;
 
-  public Image resize(Image image, int width, int height) {
+  public static Image resize(Image image, int width, int height) {
     BufferedImage bufferedImage = (BufferedImage) image;
     int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
     BufferedImage resizedImage = new BufferedImage(width, height, type);
@@ -81,7 +81,7 @@ public class ImageUtils {
     write(image, file);
   }
 
-  public boolean is300Image(Image image) {
+  public static boolean is300Image(Image image) {
     int imageHeight =
         image.getHeight(
             new ImageObserver() {

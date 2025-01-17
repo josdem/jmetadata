@@ -18,6 +18,7 @@ package com.josdem.jmetadata.service.impl;
 
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
+import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,6 +39,11 @@ public class ImageServiceImpl implements ImageService {
   }
 
   public Image readImage(String imageURL) throws IOException {
-    return ImageIO.read(URI.create(imageURL).toURL());
+    var image = ImageIO.read(URI.create(imageURL).toURL());
+    if (!ImageUtils.is300Image(image)) {
+      return ImageUtils.resize(
+          image, ApplicationConstants.THREE_HUNDRED, ApplicationConstants.THREE_HUNDRED);
+    }
+    return image;
   }
 }

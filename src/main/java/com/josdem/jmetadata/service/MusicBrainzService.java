@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.service;
 
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.CoverArtResponse;
 import com.josdem.jmetadata.model.Metadata;
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface MusicBrainzService {
 
   Album getAlbumByName(String name);
 
-  List<Metadata> completeAlbum(List<Metadata> metadataList, Album album);
+  List<Metadata> completeYear(List<Metadata> metadataList, Album album);
+
+  List<Metadata> completeCoverArt(List<Metadata> metadataList, CoverArtResponse coverArt);
 }

@@ -85,7 +85,7 @@ public class CompleteController {
           log.info("MusicBrainz Response: {}", musicBrainzResponse);
           Album album = musicBrainzService.getAlbumByName(albumName);
           log.info("MusicBrainz Album: {}", album);
-          musicBrainzService.completeAlbum(metadatas, album);
+          musicBrainzService.completeYear(metadatas, album);
           if (album.getCoverArtArchive().isFront()) {
             log.info("Getting cover art");
             var coverArtResponse = coverArtRestService.getRelease(album.getId());
@@ -93,6 +93,7 @@ public class CompleteController {
             if (coverArtResult.isSuccessful()) {
               var coverArt = coverArtResult.body();
               log.info("Cover Art: {}", coverArt);
+              musicBrainzService.completeCoverArt(metadatas, coverArt);
             }
           }
         } else {
