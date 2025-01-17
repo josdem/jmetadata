@@ -78,6 +78,9 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
   @Override
   public List<Metadata> completeCoverArt(
       List<Metadata> metadataList, CoverArtResponse coverArtResponse) {
+    if (coverArtResponse.getImages().isEmpty()) {
+      throw new BusinessException("Cover art is not available");
+    }
     var coverArtUrl = coverArtResponse.getImages().getFirst().getThumbnails().getLarge();
     try {
       var coverArt = imageService.readImage(coverArtUrl);
