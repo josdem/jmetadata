@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.CoverArtResponse;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
@@ -50,11 +51,13 @@ public class MusicBrainzServiceTest {
   private static final String ALBUM_NAME = "Night Life";
   private static final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";
 
-  @InjectMocks private final MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
+  @InjectMocks private MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
 
   @Mock private RestService restService;
 
   @Mock private Call<Album> call;
+
+  @Mock private ImageService imageService;
 
   private final Metadata metadata = new Metadata();
   private final Album album = new Album();
@@ -131,5 +134,19 @@ public class MusicBrainzServiceTest {
   private void setMetadataExpectations() {
     metadata.setAlbum("Nightlife");
     metadata.setArtist("Pet shop boys");
+  }
+
+  @Test
+  @DisplayName("not completing cover art since response is empty")
+  void shouldNotCompleteCoverArtSinceResponseIsEmpty(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    var coverArtResponse = new CoverArtResponse();
+    coverArtResponse.setImages(List.of());
+    setMetadataExpectations();
+    metadata.setCoverArt(null);
+    var metadataList = List.of(metadata);
+    assertThrows(
+        BusinessException.class,
+        () -> musicBrainzService.completeCoverArt(metadataList, coverArtResponse));
   }
 }

@@ -93,6 +93,7 @@ public class CompleteController {
             if (coverArtResult.isSuccessful()) {
               var coverArt = coverArtResult.body();
               log.info("Cover Art: {}", coverArt);
+              musicBrainzService.completeCoverArt(metadatas, coverArt);
             }
           }
         } else {

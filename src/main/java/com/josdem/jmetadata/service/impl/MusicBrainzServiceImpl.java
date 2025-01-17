@@ -19,7 +19,9 @@ package com.josdem.jmetadata.service.impl;
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.CoverArtResponse;
 import com.josdem.jmetadata.model.Metadata;
+import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.util.AlbumUtils;
@@ -27,18 +29,18 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
   private RestService restService;
+  @Autowired private ImageService imageService;
 
   @PostConstruct
   void setup() {
@@ -70,6 +72,24 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
             metadata.setYear(AlbumUtils.formatYear(album.getDate()));
           }
         });
+    return metadataList;
+  }
+
+  @Override
+  public List<Metadata> completeCoverArt(
+      List<Metadata> metadataList, CoverArtResponse coverArtResponse) {
+    var coverArtUrl = coverArtResponse.getImages().getFirst().getThumbnails().getLarge();
+    try {
+      var coverArt = imageService.readImage(coverArtUrl);
+      metadataList.forEach(
+          metadata -> {
+            if (metadata.getCoverArt() == null) {
+              metadata.setCoverArt(coverArt);
+            }
+          });
+    } catch (IOException ioe) {
+      throw new BusinessException("Error reading image: " + ioe.getMessage());
+    }
     return metadataList;
   }
 }
