@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,8 @@ public class MusicBrainzServiceTest {
 
   private static final String ALBUM_NAME = "Night Life";
   private static final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";
+  private static final String COVER_ART_URL =
+      "http://coverartarchive.org/release/7f3e3b3b-0b0b-4b3b-8b3b-4f3b3b3b3b3b/1234567890.jpg";
 
   @InjectMocks private MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
 
@@ -159,22 +162,43 @@ public class MusicBrainzServiceTest {
   @DisplayName("completing cover art")
   void shouldCompleteCoverArt(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    var coverArtUrl =
-        "http://coverartarchive.org/release/7f3e3b3b-0b0b-4b3b-8b3b-4f3b3b3b3b3b/1234567890.jpg";
-    var coverArtResponse = new CoverArtResponse();
-    var coverArtImage = new CoverArtImage();
-    var thumbnails = new Thumbnail();
-    thumbnails.setLarge(coverArtUrl);
-    coverArtImage.setThumbnails(thumbnails);
-    coverArtResponse.setImages(List.of(coverArtImage));
+
+    var coverArtResponse = setCoverArtExpectations();
     setMetadataExpectations();
     metadata.setCoverArt(null);
     var metadataList = List.of(metadata);
-    when(imageService.readImage(coverArtUrl)).thenReturn(image);
+    when(imageService.readImage(COVER_ART_URL)).thenReturn(image);
 
     var result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse);
 
     assertEquals(image, result.getFirst().getCoverArt());
     assertEquals(1, result.size());
+  }
+
+  @Test
+  @DisplayName("not completing cover art since error reading image")
+  void shouldNotCompleteCoverArtSinceErrorReadingImage(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    var coverArtResponse = setCoverArtExpectations();
+    setMetadataExpectations();
+    metadata.setCoverArt(null);
+    var metadataList = List.of(metadata);
+    when(imageService.readImage(COVER_ART_URL)).thenThrow(new IOException("Error"));
+
+    assertThrows(
+        BusinessException.class,
+        () -> musicBrainzService.completeCoverArt(metadataList, coverArtResponse));
+  }
+
+  @NotNull
+  private static CoverArtResponse setCoverArtExpectations() {
+    var coverArtResponse = new CoverArtResponse();
+    var coverArtImage = new CoverArtImage();
+    var thumbnails = new Thumbnail();
+    thumbnails.setLarge(COVER_ART_URL);
+    coverArtImage.setThumbnails(thumbnails);
+    coverArtResponse.setImages(List.of(coverArtImage));
+    return coverArtResponse;
   }
 }
