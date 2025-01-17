@@ -36,6 +36,7 @@ public interface ApplicationConstants {
   int HEIGHT = 600;
   String COVER_ART_FROM_FILE = "Cover Art from File";
   String COVER_ART_FROM_LASTFM = "Cover Art from Lastfm";
+  String COVER_ART_FROM_MUSIC_BRAINZ = "Cover Art from MusicBrainz";
   String COVER_ART_FROM_DRAG_AND_DROP = "Cover Art from Drag & Drop";
   String COVER_ART_DEFAULT = "Covert Art not found";
   String APPLY = "Apply";

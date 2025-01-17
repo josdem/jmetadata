@@ -18,5 +18,6 @@ package com.josdem.jmetadata.model;
 
 public enum CoverArtType {
   LAST_FM,
+  MUSIC_BRAINZ,
   DRAG_AND_DROP;
 }

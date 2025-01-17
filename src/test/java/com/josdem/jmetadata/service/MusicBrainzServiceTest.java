@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -173,6 +174,7 @@ public class MusicBrainzServiceTest {
     var result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse);
 
     assertEquals(image, result.getFirst().getCoverArt());
+    assertNotNull(result.getFirst().getNewCoverArt());
     assertEquals(1, result.size());
   }
 

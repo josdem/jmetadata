@@ -19,7 +19,9 @@ package com.josdem.jmetadata.service.impl;
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.CoverArtResponse;
+import com.josdem.jmetadata.model.CoverArtType;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.MusicBrainzService;
@@ -84,11 +86,13 @@ public class MusicBrainzServiceImpl implements MusicBrainzService {
     }
     var coverArtUrl = coverArtResponse.getImages().getFirst().getThumbnails().getLarge();
     try {
-      var coverArt = imageService.readImage(coverArtUrl);
+      var coverArtImage = imageService.readImage(coverArtUrl);
       metadataList.forEach(
           metadata -> {
             if (metadata.getCoverArt() == null) {
-              metadata.setCoverArt(coverArt);
+              metadata.setCoverArt(coverArtImage);
+              CoverArt coverArt = new CoverArt(coverArtImage, CoverArtType.MUSIC_BRAINZ);
+              metadata.setNewCoverArt(coverArt);
             }
           });
     } catch (IOException ioe) {

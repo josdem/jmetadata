@@ -825,6 +825,9 @@ public class MainWindow extends JFrame {
       if (coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)) {
         label = ApplicationConstants.COVER_ART_FROM_DRAG_AND_DROP;
       }
+      if (coverArt.getType().equals(CoverArtType.MUSIC_BRAINZ)) {
+        label = ApplicationConstants.COVER_ART_FROM_MUSIC_BRAINZ;
+      }
       imageLabel.setText(label);
     } else if (metadata.getCoverArt() != null) {
       if (imageUtils.is300Image(metadata.getCoverArt())) {
