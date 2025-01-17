@@ -1,5 +1,5 @@
 /*
-   Copyright 2024 Jose Morales contact@josdem.io
+   Copyright 2025 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Album;
+import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.model.Release;
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl;
@@ -29,10 +30,14 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -50,6 +55,9 @@ public class MusicBrainzServiceTest {
   @Mock private RestService restService;
 
   @Mock private Call<Album> call;
+
+  private final Metadata metadata = new Metadata();
+  private final Album album = new Album();
 
   @BeforeEach
   void setup() {
@@ -88,5 +96,40 @@ public class MusicBrainzServiceTest {
     var releases = List.of(release);
     musicBrainzResponse.setReleases(releases);
     return musicBrainzResponse;
+  }
+
+  @DisplayName("completing year from album")
+  @ParameterizedTest
+  @NullSource
+  @ValueSource(strings = {"", " "})
+  void shouldCompleteYearFromAlbum(String metadataYear) {
+    setMetadataExpectations();
+    metadata.setYear(metadataYear);
+    var metadataList = List.of(metadata);
+    album.setDate("1999-03-29");
+
+    var result = musicBrainzService.completeAlbum(metadataList, album);
+
+    assertEquals("1999", result.getFirst().getYear());
+    assertEquals(1, result.size());
+  }
+
+  @ParameterizedTest
+  @NullSource
+  @ValueSource(strings = {"", " "})
+  @DisplayName("not completing year if not valid format")
+  void shouldNotCompleteYearIfNotValidFormat(String date) {
+    setMetadataExpectations();
+    metadata.setYear(StringUtils.EMPTY);
+    var metadataList = List.of(metadata);
+    album.setDate(date);
+
+    assertThrows(
+        BusinessException.class, () -> musicBrainzService.completeAlbum(metadataList, album));
+  }
+
+  private void setMetadataExpectations() {
+    metadata.setAlbum("Nightlife");
+    metadata.setArtist("Pet shop boys");
   }
 }

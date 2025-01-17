@@ -14,15 +14,15 @@
    limitations under the License.
 */
 
-package com.josdem.jmetadata.service;
+package com.josdem.jmetadata.util;
 
-import com.josdem.jmetadata.model.Album;
-import com.josdem.jmetadata.model.Metadata;
-import java.util.List;
+public class AlbumUtils {
 
-public interface MusicBrainzService {
+  private AlbumUtils() {
+    throw new IllegalStateException("Utility class");
+  }
 
-  Album getAlbumByName(String name);
-
-  List<Metadata> completeAlbum(List<Metadata> metadataList, Album album);
+  public static String formatYear(String date) {
+    return date.substring(0, 4);
+  }
 }
