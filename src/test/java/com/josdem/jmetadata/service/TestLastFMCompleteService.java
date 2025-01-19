@@ -204,7 +204,7 @@ class TestLastFMCompleteService {
 
   @Test
   @DisplayName("detecting when lastfm has cover art")
-  public void shouldNotSetCoverArtIfAnyInFile(TestInfo testInfo) throws Exception {
+  void shouldNotSetCoverArtIfAnyInFile(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     metadata.setCoverArt(image);
     metadata.setAlbum(album);
