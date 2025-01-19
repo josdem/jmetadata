@@ -16,8 +16,13 @@
 
 package com.josdem.jmetadata.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.helper.LastFMAlbumHelper;
@@ -26,7 +31,7 @@ import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
-import java.awt.*;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +60,6 @@ class TestLastFMCompleteService {
   private final String genre = "Minimal Techno";
   private final String artist = "Linas";
   private final String album = "Time Lapse";
-  private final String imageURL = "http://userserve-ak.last.fm/serve/300x300/35560281.png";
 
   @BeforeEach
   public void setup() throws Exception {
@@ -81,7 +85,7 @@ class TestLastFMCompleteService {
 
   @Test
   @DisplayName("completing metadata when no cover art")
-  public void shouldCompleteIfNoCoverArt(TestInfo testInfo) {
+  void shouldCompleteIfNoCoverArt(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     setArtistAndAlbumExpectations();
     metadata.setYear(year);
@@ -175,6 +179,7 @@ class TestLastFMCompleteService {
   }
 
   private void setImageExpectations() throws IOException {
+    var imageURL = "http://userserve-ak.last.fm/serve/300x300/35560281.png";
     when(albumFromLastFM.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
     when(imageService.readImage(imageURL)).thenReturn(image);
   }
@@ -183,13 +188,13 @@ class TestLastFMCompleteService {
   @DisplayName("detecting when nothing changed")
   public void shouldDetectWhenNothingChanged(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
-    ActionResult actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
+    var actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
     assertEquals(ActionResult.Ready, actionResult);
   }
 
   @Test
   @DisplayName("detecting when lastfm has new values")
-  public void shouldDetectLastfmHasNewValues(TestInfo testInfo) {
+  void shouldDetectLastfmHasNewValues(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     when(lastfmAlbum.getYear()).thenReturn(year);
 
@@ -237,7 +242,7 @@ class TestLastFMCompleteService {
 
   @Test
   @DisplayName("not complete from lastFM since it does not have info")
-  public void shouldNotCompleteFromLastFM(TestInfo testInfo) {
+  void shouldNotCompleteFromLastFM(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     setArtistAndAlbumExpectations();
     when(lastfmHelper.getAlbum(artist, album)).thenReturn(null);
