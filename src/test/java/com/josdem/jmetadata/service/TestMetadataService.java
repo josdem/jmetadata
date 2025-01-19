@@ -48,14 +48,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
 class TestMetadataService {
 
-  @InjectMocks private final MetadataService metadataService = new MetadataServiceImpl();
+  private MetadataService metadataService;
 
   @Mock private FileUtils fileUtils;
   @Mock private File root;
@@ -86,6 +85,9 @@ class TestMetadataService {
     MockitoAnnotations.openMocks(this);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(properties.getProperty("max.files.allowed")).thenReturn(maxFilesAllowed.toString());
+    metadataService =
+        new MetadataServiceImpl(
+            configurator, metadataHelper, extractService, mp3Reader, fileUtils, properties);
   }
 
   @Test

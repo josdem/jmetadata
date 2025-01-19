@@ -29,13 +29,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestLastfmService {
 
-  @InjectMocks private LastfmService lastfmService = new LastfmServiceImpl();
+  private LastfmService lastfmService;
 
   @Mock private Metadata metadata;
   @Mock private Image imageIcon;
@@ -48,6 +47,7 @@ public class TestLastfmService {
   public void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
     when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true);
+    lastfmService = new LastfmServiceImpl(completeService);
   }
 
   @Test

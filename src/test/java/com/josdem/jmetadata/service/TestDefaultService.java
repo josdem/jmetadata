@@ -33,7 +33,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -45,7 +44,7 @@ class TestDefaultService {
   private static final String TOTAL_CD_NUMBER = "1";
   private static final Log log = LogFactory.getLog(TestDefaultService.class);
 
-  @InjectMocks private final DefaultService defaultService = new DefaultServiceImpl();
+  private DefaultService defaultService;
 
   @Mock private Metadata metadata_one;
   @Mock private Metadata metadata_two;
@@ -56,6 +55,7 @@ class TestDefaultService {
   @BeforeEach
   public void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
+    defaultService = new DefaultServiceImpl(metadataService);
   }
 
   @Test

@@ -34,13 +34,13 @@ import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestLastFMCompleteService {
 
-  @InjectMocks private LastFMCompleteService completeService = new LastFMCompleteServiceImpl();
+  private LastFMCompleteService completeService;
+
   @Mock private Metadata metadata;
   @Mock private LastfmAlbum lastfmAlbum;
   @Mock private LastFMAlbumHelper lastfmHelper;
@@ -59,6 +59,7 @@ public class TestLastFMCompleteService {
   public void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
     when(lastfmHelper.getAlbum(artist, album)).thenReturn(albumFromLastFM);
+    completeService = new LastFMCompleteServiceImpl(imageService, lastfmHelper);
   }
 
   private void setArtistAndAlbumExpectations() {
