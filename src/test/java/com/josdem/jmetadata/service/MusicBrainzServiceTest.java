@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -211,7 +210,6 @@ public class MusicBrainzServiceTest {
     assertEquals(1, result.size());
   }
 
-  @NotNull
   private static CoverArtResponse setCoverArtExpectations() {
     var coverArtResponse = new CoverArtResponse();
     var coverArtImage = new CoverArtImage();
