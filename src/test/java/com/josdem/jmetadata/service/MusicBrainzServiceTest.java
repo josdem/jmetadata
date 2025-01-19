@@ -23,6 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.exception.BusinessException;
+import com.josdem.jmetadata.helper.RetrofitInstance;
 import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.CoverArtImage;
 import com.josdem.jmetadata.model.CoverArtResponse;
@@ -44,11 +45,11 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 @Slf4j
 public class MusicBrainzServiceTest {
@@ -58,9 +59,13 @@ public class MusicBrainzServiceTest {
   private static final String COVER_ART_URL =
       "http://coverartarchive.org/release/7f3e3b3b-0b0b-4b3b-8b3b-4f3b3b3b3b3b/1234567890.jpg";
 
-  @InjectMocks private MusicBrainzService musicBrainzService = new MusicBrainzServiceImpl();
+  private MusicBrainzServiceImpl musicBrainzService;
 
   @Mock private RestService restService;
+
+  @Mock private Retrofit retrofit;
+
+  @Mock private RetrofitInstance retrofitInstance;
 
   @Mock private Call<Album> call;
 
@@ -76,6 +81,11 @@ public class MusicBrainzServiceTest {
     MockitoAnnotations.openMocks(this);
     MusicBrainzResponse musicBrainzResponse = getExpectedResponse();
     ApplicationState.cache.put("Night Life", musicBrainzResponse);
+    when(retrofitInstance.getRetrofit()).thenReturn(retrofit);
+    when(retrofit.create(RestService.class)).thenReturn(restService);
+    when(restService.getRelease(ALBUM_ID)).thenReturn(call);
+    musicBrainzService = new MusicBrainzServiceImpl(imageService, retrofitInstance);
+    musicBrainzService.setup();
   }
 
   @Test
@@ -85,7 +95,6 @@ public class MusicBrainzServiceTest {
     var expectedAlbum = new Album();
     expectedAlbum.setId(ALBUM_ID);
     when(call.execute()).thenReturn(Response.success(expectedAlbum));
-    when(restService.getRelease(ALBUM_ID)).thenReturn(call);
 
     var result = musicBrainzService.getAlbumByName(ALBUM_NAME);
     assertEquals(ALBUM_ID, result.getId());

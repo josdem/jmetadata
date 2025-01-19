@@ -31,25 +31,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MetadataServiceImpl implements MetadataService {
 
-  @Autowired private ControlEngineConfigurator configurator;
-  @Autowired private MetadataHelper metadataHelper;
-  @Autowired private ExtractService extractService;
-  @Autowired private MetadataReader mp3Reader;
-  @Autowired private FileUtils fileUtils;
-  @Autowired private Properties properties;
+  private final ControlEngineConfigurator configurator;
+  private final MetadataHelper metadataHelper;
+  private final ExtractService extractService;
+  private final MetadataReader mp3Reader;
+  private final FileUtils fileUtils;
+  private final Properties properties;
 
   private List<Metadata> metadataList;
   private Set<File> filesWithoutMinimumMetadata;

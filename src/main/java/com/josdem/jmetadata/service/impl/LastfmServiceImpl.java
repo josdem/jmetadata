@@ -23,15 +23,16 @@ import com.josdem.jmetadata.service.LastFMCompleteService;
 import com.josdem.jmetadata.service.LastfmService;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LastfmServiceImpl implements LastfmService {
 
-  @Autowired private LastFMCompleteService completeService;
+  private final LastFMCompleteService completeService;
 
   public synchronized ActionResult completeLastFM(Metadata metadata) {
     try {

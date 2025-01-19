@@ -17,7 +17,7 @@
 package com.josdem.jmetadata.service.impl;
 
 import com.josdem.jmetadata.exception.BusinessException;
-import com.josdem.jmetadata.helper.RetrofitHelper;
+import com.josdem.jmetadata.helper.RetrofitInstance;
 import com.josdem.jmetadata.model.Album;
 import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.CoverArtResponse;
@@ -31,22 +31,26 @@ import com.josdem.jmetadata.util.ApplicationState;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 @Slf4j
 @Service
+@Setter
+@RequiredArgsConstructor
 public class MusicBrainzServiceImpl implements MusicBrainzService {
 
   private RestService restService;
-  @Autowired private ImageService imageService;
+  private final ImageService imageService;
+  private final RetrofitInstance retrofitInstance;
 
   @PostConstruct
-  void setup() {
-    restService = RetrofitHelper.getRetrofit().create(RestService.class);
+  public void setup() {
+    restService = retrofitInstance.getRetrofit().create(RestService.class);
   }
 
   public Album getAlbumByName(String name) {

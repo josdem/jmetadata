@@ -22,19 +22,20 @@ import com.josdem.jmetadata.service.MetadataService;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DefaultServiceImpl implements DefaultService {
 
   private static final String CD_NUMBER = "1";
   private static final String TOTAL_CD_NUMBER = "1";
 
-  @Autowired private MetadataService metadataService;
+  private final MetadataService metadataService;
 
   private final Logger log = LoggerFactory.getLogger(this.getClass());
 

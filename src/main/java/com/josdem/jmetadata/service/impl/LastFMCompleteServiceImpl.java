@@ -31,24 +31,20 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.HashMap;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-
-/**
- * @understands A class who evaluates metadata and decides if LastFM can help to complete
- *     information
- */
 @Service
+@RequiredArgsConstructor
 public class LastFMCompleteServiceImpl implements LastFMCompleteService {
 
-  @Autowired private LastFMAlbumHelper lastfmHelper;
-  @Autowired private ImageService imageService;
+  private final ImageService imageService;
+  private final LastFMAlbumHelper lastfmHelper;
 
-  private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
+  private final HashMap<String, Album> cachedAlbums = new HashMap<>();
 
   public boolean canLastFMHelpToComplete(Metadata metadata) {
     String artist = metadata.getArtist();
@@ -65,7 +61,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
           }
         }
       }
-      return info == null ? false : true;
+      return info != null;
     }
     return false;
   }
