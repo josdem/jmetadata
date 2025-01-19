@@ -61,7 +61,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
           }
         }
       }
-      return info == null ? false : true;
+      return info != null;
     }
     return false;
   }
