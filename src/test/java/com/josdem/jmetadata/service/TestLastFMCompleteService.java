@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.josdem.jmetadata.helper.LastFMAlbumHelper;
-import com.josdem.jmetadata.model.LastfmAlbum;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl;
 import de.umass.lastfm.Album;
@@ -41,7 +40,6 @@ class TestLastFMCompleteService {
 
   private LastFMCompleteService completeService;
 
-  @Mock private LastfmAlbum lastfmAlbum;
   @Mock private LastFMAlbumHelper lastfmHelper;
   @Mock private ImageService imageService;
   @Mock private Album albumFromLastFM;
@@ -153,8 +151,7 @@ class TestLastFMCompleteService {
   @DisplayName("getting lastfm metadata")
   void shouldGetLastfm(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    metadata.setAlbum(album);
-    metadata.setArtist(artist);
+    setArtistAndAlbumExpectations();
     setImageExpectations();
     setYearAndGenreExpectations();
     completeService.canLastFMHelpToComplete(metadata);
@@ -177,46 +174,8 @@ class TestLastFMCompleteService {
     when(albumFromLastFM.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
     when(imageService.readImage(imageURL)).thenReturn(image);
   }
+
   /*
-
-  @Test
-  public void shouldNotGetGenreFromCache() throws Exception {
-    setGenreExpectations();
-    when(cachedAlbums.get(album)).thenReturn(albumFromLastFM);
-
-    LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
-
-    verify(lastfmHelper).getGenre(albumFromLastFM);
-    assertEquals(genre, lastfmAlbum.getGenre());
-  }
-
-  private void setGenreExpectations() {
-    Date date = new Date();
-    when(metadata.getAlbum()).thenReturn(album);
-    when(albumFromLastFM.getReleaseDate()).thenReturn(date);
-    when(lastfmHelper.getYear(date)).thenReturn(year);
-    when(lastfmHelper.getGenre(albumFromLastFM)).thenReturn(genre);
-  }
-
-  @Test
-  public void shouldGetLastfmEvenThoughThereisNoCoverArt() throws Exception {
-    setYearAndGenreExpectations();
-
-    LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
-
-    assertEquals(year, lastFMalbum.getYear());
-    assertEquals(genre, lastFMalbum.getGenre());
-    assertNull(lastFMalbum.getImageIcon());
-  }
-
-  private void setYearAndGenreExpectations() {
-    var date = new Date();
-    when(metadata.getAlbum()).thenReturn(album);
-    when(cachedAlbums.get(album)).thenReturn(albumFromLastFM);
-    when(albumFromLastFM.getReleaseDate()).thenReturn(date);
-    when(lastfmHelper.getYear(date)).thenReturn(year);
-    when(lastfmHelper.getGenre(albumFromLastFM)).thenReturn(genre);
-  }
 
   @Test
   public void shouldDetectWhenNothingChanged() throws Exception {
