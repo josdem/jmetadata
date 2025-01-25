@@ -145,7 +145,7 @@
  * We also recommend that a file or class name and description of purpose be included on the same
  * "printed page" as the copyright notice for easier identification within third-party archives.
  *
- * <p>Copyright 2013 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+ * <p>Copyright 2025 Jose Morales contact@josdem.io
  *
  * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
