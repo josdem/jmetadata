@@ -45,7 +45,7 @@ import org.springframework.test.context.ContextConfiguration;
       FormatterHelper.class
     })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestFormatterService {
+class FormatterServiceTest {
   private final FormatterService formatter;
 
   private final String badFormatA = "¿Cu&aacute;ndo?";

@@ -26,9 +26,8 @@ import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.DefaultServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,13 +35,13 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class TestDefaultService {
+@Slf4j
+class DefaultServiceTest {
 
   private static final String TOTAL_TRACKS = "2";
   private static final String TRACK_NUMBER_METADATA_ONE = "1";
   private static final String CD_NUMBER = "1";
   private static final String TOTAL_CD_NUMBER = "1";
-  private static final Log log = LogFactory.getLog(TestDefaultService.class);
 
   private DefaultService defaultService;
 
@@ -53,15 +52,15 @@ class TestDefaultService {
   private final List<Metadata> metadatas = new ArrayList<>();
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() throws Exception {
+    MockitoAnnotations.openMocks(this);
     defaultService = new DefaultServiceImpl(metadataService);
   }
 
   @Test
   @DisplayName("validating we can complete metadata due to we do not have total tracks")
-  public void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldCompleteTotalTracks(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
     when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
     when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
@@ -74,8 +73,8 @@ class TestDefaultService {
 
   @Test
   @DisplayName("validating we can complete metadata due to we do not have cd number")
-  public void shouldCompleteCdNumber(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldCompleteCdNumber(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
@@ -88,8 +87,8 @@ class TestDefaultService {
 
   @Test
   @DisplayName("validating we can complete metadata due to we do not have total cds")
-  public void shouldCompleteTotalCds(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldCompleteTotalCds(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
@@ -102,9 +101,9 @@ class TestDefaultService {
 
   @Test
   @DisplayName("validating we can not complete metadata due to we have one track")
-  public void shouldNotCompleteIfSingleTrack(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
-    var metadatas = new ArrayList<Metadata>();
+  void shouldNotCompleteIfSingleTrack(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var metadataList = new ArrayList<Metadata>();
 
     when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
     when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
@@ -112,10 +111,10 @@ class TestDefaultService {
     when(metadata_two.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
     when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
-    when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-    metadatas.add(metadata_one);
+    when(metadataService.isSameAlbum(metadataList)).thenReturn(true);
+    metadataList.add(metadata_one);
 
-    defaultService.isCompletable(metadatas);
+    defaultService.isCompletable(metadataList);
 
     verify(metadata_one, never()).setTotalTracks(TOTAL_TRACKS);
     verify(metadata_one, never()).setCdNumber(CD_NUMBER);
@@ -124,8 +123,8 @@ class TestDefaultService {
 
   @Test
   @DisplayName("completing metadata")
-  public void shouldComplete(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldComplete(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
     setTracksNumberExpectations();
 
@@ -141,8 +140,8 @@ class TestDefaultService {
 
   @Test
   @DisplayName("validating we do not need to complete metadata")
-  public void shouldNotCompleteMetadataWhenNoNecessary(TestInfo testInfo) throws Exception {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldNotCompleteMetadataWhenNoNecessary(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
     when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
@@ -156,8 +155,8 @@ class TestDefaultService {
 
   @Test
   @DisplayName("validating we cannot complete metadata due to not having track number")
-  public void shouldNotCompleteWhenNoTrackNumber(TestInfo testInfo) {
-    log.info("Running test: {}" + testInfo.getDisplayName());
+  void shouldNotCompleteWhenNoTrackNumber(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     when(metadata_one.getTrackNumber()).thenReturn(StringUtils.EMPTY);
     when(metadata_two.getTrackNumber()).thenReturn(StringUtils.EMPTY);
     metadatas.add(metadata_one);

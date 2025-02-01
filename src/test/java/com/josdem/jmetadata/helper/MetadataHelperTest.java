@@ -31,7 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, MetadataHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestMetadataHelper {
+class MetadataHelperTest {
 
   private final MetadataHelper metadataHelper;
 

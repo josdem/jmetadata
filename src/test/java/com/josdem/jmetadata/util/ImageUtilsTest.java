@@ -37,7 +37,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-public class TestImageUtils {
+class ImageUtilsTest {
 
   private static final Integer THREE_HUNDRED = 300;
 

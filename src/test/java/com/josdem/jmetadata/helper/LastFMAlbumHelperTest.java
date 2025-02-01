@@ -30,10 +30,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestLastFMAlbumHelper {
+class LastFMAlbumHelperTest {
   private final LastFMAlbumHelper lastFMAlbumHelper = new LastFMAlbumHelper();
 
-  private Date releaseDate = new Date();
+  private final Date releaseDate = new Date();
+
   @Mock private Album album;
 
   @BeforeEach

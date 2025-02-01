@@ -52,7 +52,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestMetadataService {
+class MetadataServiceTest {
 
   private MetadataService metadataService;
 

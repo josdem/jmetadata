@@ -25,7 +25,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestMetadataAdapter {
+class MetadataAdapterTest {
+
   private final MetadataAdapter adapter = new MetadataAdapter();
 
   @Mock private Metadata metadata;

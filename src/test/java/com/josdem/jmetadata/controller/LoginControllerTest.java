@@ -41,7 +41,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestLoginController {
+class LoginControllerTest {
 
   @InjectMocks private final LoginController controller = new LoginController();
 

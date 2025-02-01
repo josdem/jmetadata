@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
-class TestGenreTypes {
+class GenreTypesTest {
 
   @Test
   public void shouldGetMinimalAsGenre() throws Exception {

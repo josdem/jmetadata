@@ -22,7 +22,7 @@ import java.awt.Image;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class TestMetadataAlbumValues {
+class MetadataAlbumValuesTest {
   private static final String GENRE = "Trance";
   private static final String ARTIST = "Cosmic Gate";
   private static final String ALBUM = "Sign Of The Times (Deluxe Edition)";

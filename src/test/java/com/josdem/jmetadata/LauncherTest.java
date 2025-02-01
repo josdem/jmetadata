@@ -26,17 +26,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class TestLauncher {
+class LauncherTest {
   @Mock private DefaultEngine defaultEngine;
   @Mock private ConfigurableApplicationContext context;
 
   @BeforeEach
-  public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
-  public void shouldInitialize() throws Exception {
+  void shouldInitialize() throws Exception {
     when(context.getBean(DefaultEngine.class)).thenReturn(defaultEngine);
 
     new Launcher(context);

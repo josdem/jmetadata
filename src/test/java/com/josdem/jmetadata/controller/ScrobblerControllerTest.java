@@ -36,7 +36,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestScrobblerController {
+class ScrobblerControllerTest {
 
   @InjectMocks private final ScrobblerController controller = new ScrobblerController();
 

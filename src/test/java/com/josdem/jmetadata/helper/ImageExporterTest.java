@@ -33,7 +33,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestImageExporter {
+class ImageExporterTest {
   @InjectMocks private ImageExporter imageExporter = new ImageExporter();
 
   @Mock private ImageUtils imageUtils;
@@ -41,46 +41,47 @@ public class TestImageExporter {
   @Mock private Image coverArt;
   @Mock private MetadataService metadataService;
 
-  private String album = "Bliksem";
-  private String artist = "Sander van Doorn";
-  private String title = "Bliksem";
-
-  private List<Metadata> metadatas = new ArrayList<Metadata>();
+  private final List<Metadata> metadataList = new ArrayList<>();
   private ExportPackage exportPackage;
   @Mock private File root;
 
   @BeforeEach
   public void setup() throws Exception {
+    var title = "Bliksem";
+    var album = "Bliksem Album";
+    var artist = "Sander van Doorn";
     MockitoAnnotations.initMocks(this);
     when(metadata.getAlbum()).thenReturn(album);
     when(metadata.getArtist()).thenReturn(artist);
     when(metadata.getTitle()).thenReturn(title);
-    metadatas.add(metadata);
-    exportPackage = new ExportPackage(root, metadatas);
+    metadataList.add(metadata);
+    exportPackage = new ExportPackage(root, metadataList);
   }
 
   @Test
   public void shouldExportASingleImage() throws Exception {
     when(metadata.getCoverArt()).thenReturn(coverArt);
-    when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+    when(metadataService.isSameAlbum(metadataList)).thenReturn(true);
     imageExporter.export(exportPackage);
-    verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    verify(imageUtils)
+        .saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
   }
 
   @Test
   public void shouldExportASingleImageWhenSameAlbum() throws Exception {
     when(metadata.getCoverArt()).thenReturn(coverArt);
-    when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-    metadatas.add(metadata);
+    when(metadataService.isSameAlbum(metadataList)).thenReturn(true);
+    metadataList.add(metadata);
     imageExporter.export(exportPackage);
-    verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+    verify(imageUtils)
+        .saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
   }
 
   @Test
   public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
     when(metadata.getCoverArt()).thenReturn(coverArt);
     Metadata metadata = setSecondMetadataExpectations();
-    metadatas.add(metadata);
+    metadataList.add(metadata);
     imageExporter.export(exportPackage);
     verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn" + "-" + "Bliksem");
     verify(imageUtils)
@@ -100,6 +101,6 @@ public class TestImageExporter {
   public void shouldNotExportIfNoImage() throws Exception {
     imageExporter.export(exportPackage);
     verify(imageUtils, never())
-        .saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+        .saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
   }
 }

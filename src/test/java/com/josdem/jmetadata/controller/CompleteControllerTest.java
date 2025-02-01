@@ -35,7 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class TestCompleteController {
+class CompleteControllerTest {
   private static final String ERROR = "Error";
 
   @InjectMocks private final CompleteController controller = new CompleteController();

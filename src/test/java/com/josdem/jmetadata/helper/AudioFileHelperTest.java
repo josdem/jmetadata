@@ -32,7 +32,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, AudioFileHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestAudioFileHelper {
+class AudioFileHelperTest {
 
   private final AudioFileHelper audioFileHelper;
 

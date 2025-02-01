@@ -31,7 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, ArtworkHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestArtworkHelper {
+class ArtworkHelperTest {
 
   private final ArtworkHelper artworkHelper;
 

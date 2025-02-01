@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class TestUser {
+class UserTest {
   private User user;
   private final String username = "josdem";
   private final String password = "password";
@@ -33,7 +33,7 @@ class TestUser {
 
   @BeforeEach
   public void setup() throws Exception {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     user = new User(username, password);
   }
 

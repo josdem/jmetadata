@@ -35,10 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
-public class TestScrobblerHelper {
+class ScrobblerHelperTest {
   private static final String TRACK_NUMBER = "1";
 
   @InjectMocks private ScrobblerHelper helperScrobbler = new ScrobblerHelper();

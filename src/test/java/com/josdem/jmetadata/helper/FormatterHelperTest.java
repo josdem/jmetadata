@@ -31,7 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, FormatterHelper.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestFormatterHelper {
+class FormatterHelperTest {
 
   private final FormatterHelper helper;
 

@@ -24,7 +24,7 @@ import org.asmatron.messengine.engines.DefaultEngine;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 
-class TestApplicationContextSingleton {
+class ApplicationContextSingletonTest {
 
   @Test
   public void shouldCreateAnApplicationContext() throws Exception {
