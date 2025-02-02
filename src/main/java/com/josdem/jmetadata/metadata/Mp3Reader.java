@@ -28,6 +28,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioFile;
@@ -126,8 +127,10 @@ public class Mp3Reader implements MetadataReader {
     return tag.getFirst(FieldKey.TRACK);
   }
 
+  //This is a bug in jaudiotagger, it returns "null" instead of an empty string
   private String getTotalTracks() {
-    return tag.getFirst(FieldKey.TRACK_TOTAL);
+    var totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
+    return totalTracks.equals("null") ? StringUtils.EMPTY : totalTracks;
   }
 
   private String getCdNumber() {
