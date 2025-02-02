@@ -199,7 +199,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting track number")
-  public void shouldGetTrackNumber(TestInfo testInfo) throws Exception {
+  void shouldGetTrackNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var trackNumber = "11";
     when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
@@ -210,7 +210,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting total tracks")
-  public void shouldGetTotalTracks(TestInfo testInfo) throws Exception {
+  void shouldGetTotalTracks(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var totalTracks = "20";
     when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
@@ -221,7 +221,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting empty string when total tracks is 'null'")
-  public void shouldGetEmptyTotalTracks(TestInfo testInfo) throws Exception {
+  void shouldGetEmptyTotalTracks(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var totalTracks = "null";
     when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
@@ -232,7 +232,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting cd number")
-  public void shouldGetCdNumber(TestInfo testInfo) throws Exception {
+  void shouldGetCdNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var cdNumber = "1";
     when(tag.getFirst(FieldKey.DISC_NO)).thenReturn(cdNumber);
@@ -243,7 +243,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting total cds")
-  public void shouldGetTotalCds(TestInfo testInfo) throws Exception {
+  void shouldGetTotalCds(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var totalCds = "2";
     when(tag.getFirst(FieldKey.DISC_TOTAL)).thenReturn(totalCds);
@@ -254,7 +254,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting genre")
-  public void shouldGetGenre(TestInfo testInfo) throws Exception {
+  void shouldGetGenre(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var genre = "Minimal Techno";
     when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
@@ -267,7 +267,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting genre by code")
-  public void shouldGetGenreByCode(TestInfo testInfo) throws Exception {
+  void shouldGetGenreByCode(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     var genreAsCode = "31";
     var genre = "Trance";
@@ -279,7 +279,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting cover art")
-  public void shouldNotGetCoverArt() throws Exception {
+  void shouldNotGetCoverArt() throws Exception {
     when(artwork.getImage()).thenReturn(bufferedImage);
     var metadata = reader.getMetadata(file);
 
@@ -288,7 +288,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("not getting cover art if no artwork")
-  public void shouldNotGetCoverArtIfNoArtWork(TestInfo testInfo) throws Exception {
+  void shouldNotGetCoverArtIfNoArtWork(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(tag.getFirstArtwork()).thenReturn(null);
     var metadata = reader.getMetadata(file);
@@ -298,7 +298,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("not getting cover art due to exception")
-  public void shouldNotGetCoverArtDueToException(TestInfo testInfo) throws Exception {
+  void shouldNotGetCoverArtDueToException(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(artwork.getImage()).thenThrow(new IOException("IO Exception"));
     when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
@@ -310,7 +310,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting file")
-  public void shouldGetFile(TestInfo testInfo) throws Exception {
+  void shouldGetFile(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     Metadata metadata = reader.getMetadata(file);
     assertNotNull(metadata.getFile());
@@ -318,7 +318,7 @@ class Mp3ReaderTest {
 
   @Test
   @DisplayName("getting new metadata when no tag or no header")
-  public void shouldReturnNewMetadataWhenNoTagOrNoHeader(TestInfo testInfo) throws Exception {
+  void shouldReturnNewMetadataWhenNoTagOrNoHeader(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(false);
 
