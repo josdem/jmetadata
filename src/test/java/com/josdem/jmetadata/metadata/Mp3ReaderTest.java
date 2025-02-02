@@ -35,6 +35,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
@@ -216,6 +217,17 @@ class Mp3ReaderTest {
     var metadata = reader.getMetadata(file);
 
     assertEquals(totalTracks, metadata.getTotalTracks());
+  }
+
+  @Test
+  @DisplayName("getting empty string when total tracks is 'null'")
+  public void shouldGetEmptyTotalTracks(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var totalTracks = "null";
+    when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
+    var metadata = reader.getMetadata(file);
+
+    assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
   }
 
   @Test

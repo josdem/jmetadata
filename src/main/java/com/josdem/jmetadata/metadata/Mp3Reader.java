@@ -127,10 +127,10 @@ public class Mp3Reader implements MetadataReader {
     return tag.getFirst(FieldKey.TRACK);
   }
 
-  //This is a bug in jaudiotagger, it returns "null" instead of an empty string
+  // This is a bug in jaudiotagger, it returns "null" instead of an empty string
   private String getTotalTracks() {
     var totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
-    return totalTracks.equals("null") ? StringUtils.EMPTY : totalTracks;
+    return totalTracks != null && totalTracks.equals("null") ? StringUtils.EMPTY : totalTracks;
   }
 
   private String getCdNumber() {
