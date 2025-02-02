@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestMetadataCollaborator {
+class MetadataCollaboratorTest {
 
   @InjectMocks private final MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
 

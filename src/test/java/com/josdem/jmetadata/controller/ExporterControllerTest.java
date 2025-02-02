@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestExporterController {
+class ExporterControllerTest {
 
   @InjectMocks private final ExporterController exporterController = new ExporterController();
 

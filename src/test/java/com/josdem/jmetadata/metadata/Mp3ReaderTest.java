@@ -54,7 +54,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-public class TestMp3Reader {
+class Mp3ReaderTest {
   private static final String ARTIST = "Armin Van Buuren";
   private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
   private static final String YEAR = "2011";

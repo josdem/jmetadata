@@ -38,10 +38,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
-public class TestMetadataWriter {
+class MetadataWriterTest {
   @InjectMocks private final MetadataWriter metadataWriter = new MetadataWriter();
 
   @Mock private AudioFile audioFile;

@@ -18,17 +18,16 @@ package com.josdem.jmetadata.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.MockitoAnnotations;
 
-class TestMetadata {
+@Slf4j
+class MetadataTest {
 
-  private static final Log log = LogFactory.getLog(TestMetadata.class);
   private final Metadata metadata = new Metadata();
 
   private static final String trackNumber = "2";
@@ -41,8 +40,8 @@ class TestMetadata {
 
   @Test
   @DisplayName("comparing with previous metadata")
-  public void shouldDetectPreviousMetadata(TestInfo testInfo) {
-    log.info("Running test: " + testInfo.getDisplayName());
+  void shouldDetectPreviousMetadata(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     Metadata previousMetadata = new Metadata();
     previousMetadata.setTrackNumber("1");
 
@@ -52,8 +51,8 @@ class TestMetadata {
 
   @Test
   @DisplayName("comparing with next metadata")
-  public void shouldDetectNextMetadata(TestInfo testInfo) {
-    log.info("Running test: " + testInfo.getDisplayName());
+  void shouldDetectNextMetadata(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     Metadata nextMetadata = new Metadata();
     nextMetadata.setTrackNumber("3");
 
@@ -63,8 +62,8 @@ class TestMetadata {
 
   @Test
   @DisplayName("detecting track number bad format")
-  public void shouldRespondAtErrorInTrackNumber(TestInfo testInfo) {
-    log.info("Running test: " + testInfo.getDisplayName());
+  void shouldRespondAtErrorInTrackNumber(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     Metadata weirdMetadata = new Metadata();
     weirdMetadata.setTrackNumber("somethingWrongFormat");
 
@@ -74,8 +73,8 @@ class TestMetadata {
 
   @Test
   @DisplayName("detecting metadata from file")
-  public void shouldKnowIfMetadataIsFromFile(TestInfo testInfo) {
-    log.info("Running test: " + testInfo.getDisplayName());
+  void shouldKnowIfMetadataIsFromFile(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     metadata.setMetadataFromFile(metadataFromFile);
     assertEquals(metadataFromFile, metadata.isMetadataFromFile());
   }

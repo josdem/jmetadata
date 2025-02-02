@@ -28,7 +28,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class TestLastFMAuthenticator {
+class LastFMAuthenticatorTest {
 
   @InjectMocks private final LastFMAuthenticator lastFMAuthenticator = new LastFMAuthenticator();
 

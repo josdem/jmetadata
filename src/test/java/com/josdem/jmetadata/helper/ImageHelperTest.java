@@ -35,7 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, ImageServiceImpl.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class TestImageHelper {
+class ImageHelperTest {
 
   private final ImageService imageService;
 

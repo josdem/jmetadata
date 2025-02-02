@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestLastfmService {
+class LastfmServiceTest {
 
   private LastfmService lastfmService;
 
@@ -44,14 +44,14 @@ public class TestLastfmService {
   private String genre = "Minimal Techno";
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
     when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true);
     lastfmService = new LastfmServiceImpl(completeService);
   }
 
   @Test
-  public void shouldCompleteMetadataFromLastfm() throws Exception {
+  void shouldCompleteMetadataFromLastfm() throws Exception {
     setCompleteHelperExpectations();
     when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
     when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
@@ -63,7 +63,7 @@ public class TestLastfmService {
   }
 
   @Test
-  public void shouldNotCompleteLastfmCoverArtMetadataDueToMetadataComplete() throws Exception {
+  void shouldNotCompleteLastfmCoverArtMetadataDueToMetadataComplete() throws Exception {
     when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(false);
 
     ActionResult result = lastfmService.completeLastFM(metadata);
@@ -71,7 +71,7 @@ public class TestLastfmService {
   }
 
   @Test
-  public void shouldNotCompleteGenreIfAlredyHasOne() throws Exception {
+  void shouldNotCompleteGenreIfAlredyHasOne() throws Exception {
     setCompleteHelperExpectations();
     when(metadata.getGenre()).thenReturn(genre);
 
@@ -81,7 +81,7 @@ public class TestLastfmService {
   }
 
   @Test
-  public void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
+  void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
     setCompleteHelperExpectations();
     when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Ready);
 
@@ -90,7 +90,7 @@ public class TestLastfmService {
   }
 
   @Test
-  public void shouldReturnSomethingnewValueIfNoBadFormatAndCapitalized() throws Exception {
+  void shouldReturnSomethingnewValueIfNoBadFormatAndCapitalized() throws Exception {
     setCompleteHelperExpectations();
     when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 
@@ -99,13 +99,13 @@ public class TestLastfmService {
     assertEquals(ActionResult.New, result);
   }
 
-  private void setCompleteHelperExpectations() throws MalformedURLException, IOException {
+  void setCompleteHelperExpectations() throws MalformedURLException, IOException {
     when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true);
     when(completeService.getLastFM(metadata)).thenReturn(lastfmAlbum);
   }
 
   @Test
-  public void shouldCatchMalformedURLException() throws Exception {
+  void shouldCatchMalformedURLException() throws Exception {
     when(completeService.getLastFM(metadata)).thenThrow(new MalformedURLException());
 
     ActionResult result = lastfmService.completeLastFM(metadata);
@@ -114,7 +114,7 @@ public class TestLastfmService {
   }
 
   @Test
-  public void shouldCatchIOException() throws Exception {
+  void shouldCatchIOException() throws Exception {
     when(completeService.getLastFM(metadata)).thenThrow(new IOException());
 
     ActionResult result = lastfmService.completeLastFM(metadata);

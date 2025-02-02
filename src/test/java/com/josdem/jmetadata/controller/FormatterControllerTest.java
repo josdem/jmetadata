@@ -28,7 +28,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestFormatterController {
+class FormatterControllerTest {
 
   @InjectMocks private FormatterController formatterController = new FormatterController();
 

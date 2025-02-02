@@ -35,7 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class TestMetadataExporter {
+class MetadataExporterTest {
   private static final String NEW_LINE = "\n";
   private static final String DASH = " - ";
   private static final String DOT = ". ";

@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-class TestCredentials {
+class CredentialsTest {
 
   @Test
   public void shouldCreateCredentials() throws Exception {
-    String username = "josdem";
-    String password = "password";
-    User credentials = new User(username, password);
+    var username = "josdem";
+    var password = "password";
+    var credentials = new User(username, password);
 
     assertEquals(username, credentials.getUsername());
     assertEquals(password, credentials.getPassword());

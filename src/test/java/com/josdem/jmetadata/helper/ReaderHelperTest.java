@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestReaderHelper {
+class ReaderHelperTest {
 
   @InjectMocks private ReaderHelper readerHelper = new ReaderHelper();
 

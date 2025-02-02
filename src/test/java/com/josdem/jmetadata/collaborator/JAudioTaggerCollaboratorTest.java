@@ -33,7 +33,7 @@ import org.mockito.MockitoAnnotations;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TestJAudioTaggerCollaborator {
+class JAudioTaggerCollaboratorTest {
 
   @InjectMocks
   private final JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();

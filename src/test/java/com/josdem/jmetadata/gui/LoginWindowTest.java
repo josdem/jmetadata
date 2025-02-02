@@ -34,7 +34,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestLoginWindow {
+public class LoginWindowTest {
   @InjectMocks private LoginWindow loginWindow = new LoginWindow();
 
   private static final String USERNAME_TEXTFIELD_NAME = "loginTextField";

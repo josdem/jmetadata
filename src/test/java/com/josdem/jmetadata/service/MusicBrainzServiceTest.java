@@ -52,7 +52,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 @Slf4j
-public class MusicBrainzServiceTest {
+class MusicBrainzServiceTest {
 
   private static final String ALBUM_NAME = "Night Life";
   private static final String ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780";

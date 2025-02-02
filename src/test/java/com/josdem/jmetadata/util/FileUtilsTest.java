@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.lang.NonNull;
 
-class TestFileUtils {
+class FileUtilsTest {
 
   private static final String ONLY_DIGITS_REGEX = "[0-9]+";
 

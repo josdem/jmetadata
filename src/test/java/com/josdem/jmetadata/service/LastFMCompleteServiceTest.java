@@ -44,7 +44,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class TestLastFMCompleteService {
+class LastFMCompleteServiceTest {
 
   private LastFMCompleteService completeService;
 
