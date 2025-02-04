@@ -7,13 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import com.josdem.jmetadata.exception.BusinessException;
 
 @Slf4j
-public class AlbumUtilsTest {
+class AlbumUtilsTest {
 
   @Test
   @DisplayName("formatting year from date")
-  public void testFormatYear(TestInfo testInfo) {
+  void testFormatYear(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
 
     // Arrange
@@ -28,37 +29,25 @@ public class AlbumUtilsTest {
 
   @Test
   @DisplayName("formatting year with invalid date")
-  public void testFormatYearWithInvalidDate(TestInfo testInfo) {
+  void testFormatYearWithInvalidDate(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
 
     // Arrange
     String date = "20";
 
     // Act & Assert
-    assertThrows(
-        StringIndexOutOfBoundsException.class,
-        () -> {
-          AlbumUtils.formatYear(date);
-        });
+    assertThrows(BusinessException.class, () -> AlbumUtils.formatYear(date));
   }
 
   @Test
-  @DisplayName("testing private constructor")
-  public void testPrivateConstructor(TestInfo testInfo) {
+  @DisplayName("formatting year with non-date string")
+  void testFormatYearWithNonDateString(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
 
+    // Arrange
+    String date = "thisIsNotValidDate";
+
     // Act & Assert
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          java.lang.reflect.Constructor<AlbumUtils> constructor =
-              AlbumUtils.class.getDeclaredConstructor();
-          constructor.setAccessible(true);
-          try {
-            constructor.newInstance();
-          } catch (java.lang.reflect.InvocationTargetException e) {
-            throw (IllegalStateException) e.getCause();
-          }
-        });
+    assertThrows(BusinessException.class, () -> AlbumUtils.formatYear(date));
   }
 }
