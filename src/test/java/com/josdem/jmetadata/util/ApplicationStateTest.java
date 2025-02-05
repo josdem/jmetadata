@@ -3,18 +3,26 @@ package com.josdem.jmetadata.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ApplicationStateTest {
 
+  private MusicBrainzResponse response;
+
+  @BeforeEach
+  public void setUp() {
+    response = new MusicBrainzResponse();
+  }
+
   @Test
   @DisplayName("adding and retrieving from cache")
   void testAddAndRetrieveFromCache() {
     // Arrange
     var key = "testKey";
-    MusicBrainzResponse response = new MusicBrainzResponse();
     ApplicationState.cache.put(key, response);
 
     // Act
@@ -42,7 +50,6 @@ class ApplicationStateTest {
   void testRemoveFromCache() {
     // Arrange
     var key = "testKey";
-    MusicBrainzResponse response = new MusicBrainzResponse();
     ApplicationState.cache.put(key, response);
 
     // Act
