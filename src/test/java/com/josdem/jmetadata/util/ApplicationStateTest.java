@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 
-public class ApplicationStateTest {
+class ApplicationStateTest {
 
   @Test
   @DisplayName("adding and retrieving from cache")
-  public void testAddAndRetrieveFromCache(TestInfo testInfo) {
+  void testAddAndRetrieveFromCache() {
     // Arrange
     String key = "testKey";
     MusicBrainzResponse response = new MusicBrainzResponse();
@@ -27,7 +26,7 @@ public class ApplicationStateTest {
 
   @Test
   @DisplayName("retrieving non-existent key from cache")
-  public void testRetrieveNonExistentKeyFromCache(TestInfo testInfo) {
+  void testRetrieveNonExistentKeyFromCache() {
     // Arrange
     String key = "nonExistentKey";
 
@@ -40,7 +39,7 @@ public class ApplicationStateTest {
 
   @Test
   @DisplayName("removing from cache")
-  public void testRemoveFromCache(TestInfo testInfo) {
+  void testRemoveFromCache() {
     // Arrange
     String key = "testKey";
     MusicBrainzResponse response = new MusicBrainzResponse();
