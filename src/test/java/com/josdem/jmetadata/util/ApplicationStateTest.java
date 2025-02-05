@@ -13,12 +13,12 @@ class ApplicationStateTest {
   @DisplayName("adding and retrieving from cache")
   void testAddAndRetrieveFromCache() {
     // Arrange
-    String key = "testKey";
+    var key = "testKey";
     MusicBrainzResponse response = new MusicBrainzResponse();
     ApplicationState.cache.put(key, response);
 
     // Act
-    MusicBrainzResponse cachedResponse = ApplicationState.cache.get(key);
+    var cachedResponse = ApplicationState.cache.get(key);
 
     // Assert
     assertEquals(response, cachedResponse);
@@ -28,10 +28,10 @@ class ApplicationStateTest {
   @DisplayName("retrieving non-existent key from cache")
   void testRetrieveNonExistentKeyFromCache() {
     // Arrange
-    String key = "nonExistentKey";
+    var key = "nonExistentKey";
 
     // Act
-    MusicBrainzResponse cachedResponse = ApplicationState.cache.get(key);
+    var cachedResponse = ApplicationState.cache.get(key);
 
     // Assert
     assertNull(cachedResponse);
@@ -41,13 +41,13 @@ class ApplicationStateTest {
   @DisplayName("removing from cache")
   void testRemoveFromCache() {
     // Arrange
-    String key = "testKey";
+    var key = "testKey";
     MusicBrainzResponse response = new MusicBrainzResponse();
     ApplicationState.cache.put(key, response);
 
     // Act
     ApplicationState.cache.remove(key);
-    MusicBrainzResponse cachedResponse = ApplicationState.cache.get(key);
+    var cachedResponse = ApplicationState.cache.get(key);
 
     // Assert
     assertNull(cachedResponse);
