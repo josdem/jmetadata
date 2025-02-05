@@ -16,13 +16,17 @@
 
 package com.josdem.jmetadata.util;
 
+import com.josdem.jmetadata.exception.BusinessException;
+
 public class AlbumUtils {
 
   private AlbumUtils() {
     throw new IllegalStateException("Utility class");
   }
-
   public static String formatYear(String date) {
+    if (date == null || date.length() < 4 || !date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+      throw new BusinessException("Invalid date");
+    }
     return date.substring(0, 4);
   }
 }
