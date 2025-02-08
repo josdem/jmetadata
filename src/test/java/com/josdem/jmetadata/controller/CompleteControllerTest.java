@@ -28,6 +28,7 @@ import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MusicBrainzService;
+import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
 import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import java.awt.Image;
 import java.io.File;
@@ -52,6 +53,7 @@ class CompleteControllerTest {
   @Mock private CoverArt coverArt;
   @Mock private Image imageIcon;
   @Mock private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  @Mock private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
   private String artist = "Dave Deen";
   private String title = "Footprints (Original Mix)";
@@ -125,7 +127,7 @@ class CompleteControllerTest {
   @DisplayName("completing metadata with LastFM service")
   void shouldCompleteMetadata() {
     var metadataList = List.of(metadata);
-    when(musicBrainzCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true);
+    when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true);
     controller.completeLastFmMetadata(metadataList);
     verify(coverArtService).completeLastFM(metadata);
   }
@@ -134,7 +136,7 @@ class CompleteControllerTest {
   @DisplayName("not completing metadata with LastFM service")
   void shouldNotCompleteMetadata() {
     var metadataList = List.of(metadata);
-    when(musicBrainzCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
+    when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
     controller.completeLastFmMetadata(metadataList);
     verify(coverArtService, never()).completeLastFM(metadata);
   }
