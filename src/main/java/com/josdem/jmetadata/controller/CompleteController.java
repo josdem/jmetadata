@@ -31,6 +31,7 @@ import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
+import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
 import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import com.josdem.jmetadata.util.ApplicationState;
 import java.io.File;
@@ -53,6 +54,7 @@ public class CompleteController {
   @Autowired private MetadataService metadataService;
   @Autowired private MusicBrainzService musicBrainzService;
   @Autowired private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  @Autowired private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
   private RestService restService;
   private CoverArtRestService coverArtRestService;
@@ -111,16 +113,20 @@ public class CompleteController {
   }
 
   @RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
-  public ActionResult completeLastFmMetadata(Metadata metadata) {
+  public ActionResult completeLastFmMetadata(List<Metadata> metadataList) {
     log.info("trying to complete using LastFM service");
-    return lastfmService.completeLastFM(metadata);
+    if (!lastFMCompleteServiceAdapter.canComplete(metadataList)) {
+      return ActionResult.Ready;
+    }
+    metadataList.forEach(metadata -> lastfmService.completeLastFM(metadata));
+    return ActionResult.New;
   }
 
   @RequestMethod(Actions.WRITE_METADATA)
   public synchronized ActionResult completeAlbum(Metadata metadata) {
     try {
       File file = metadata.getFile();
-      log.info("writting: {}", metadata.getTitle());
+      log.info("writing: {}", metadata.getTitle());
       metadataWriter.setFile(file);
       metadataWriter.writeArtist(metadata.getArtist());
       metadataWriter.writeTitle(metadata.getTitle());
