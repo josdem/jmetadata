@@ -31,6 +31,7 @@ import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
+import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import com.josdem.jmetadata.util.ApplicationState;
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class CompleteController {
   @Autowired private LastfmService lastfmService;
   @Autowired private MetadataService metadataService;
   @Autowired private MusicBrainzService musicBrainzService;
+  @Autowired private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
 
   private RestService restService;
   private CoverArtRestService coverArtRestService;
@@ -64,28 +66,28 @@ public class CompleteController {
   }
 
   @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
-  public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadatas) {
-    if (!metadataService.isSameAlbum(metadatas) || !metadataService.isSameArtist(metadatas)) {
+  public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadataList) {
+    if (!musicBrainzCompleteServiceAdapter.canComplete(metadataList)) {
       return ActionResult.Ready;
     }
     try {
-      if (ApplicationState.cache.get(metadatas.getFirst().getAlbum()) == null) {
+      if (ApplicationState.cache.get(metadataList.getFirst().getAlbum()) == null) {
         log.info("Getting releases");
         var response =
             restService.getReleases(
-                metadatas.getFirst().getAlbum()
+                metadataList.getFirst().getAlbum()
                     + " AND "
                     + "artist:"
-                    + metadatas.getFirst().getArtist());
+                    + metadataList.getFirst().getArtist());
         Response<MusicBrainzResponse> result = response.execute();
         if (result.isSuccessful()) {
           MusicBrainzResponse musicBrainzResponse = result.body();
-          String albumName = metadatas.getFirst().getAlbum();
+          String albumName = metadataList.getFirst().getAlbum();
           ApplicationState.cache.put(albumName, musicBrainzResponse);
           log.info("MusicBrainz Response: {}", musicBrainzResponse);
           Album album = musicBrainzService.getAlbumByName(albumName);
           log.info("MusicBrainz Album: {}", album);
-          musicBrainzService.completeYear(metadatas, album);
+          musicBrainzService.completeYear(metadataList, album);
           if (album.getCoverArtArchive().isFront()) {
             log.info("Getting cover art");
             var coverArtResponse = coverArtRestService.getRelease(album.getId());
@@ -93,7 +95,7 @@ public class CompleteController {
             if (coverArtResult.isSuccessful()) {
               var coverArt = coverArtResult.body();
               log.info("Cover Art: {}", coverArt);
-              musicBrainzService.completeCoverArt(metadatas, coverArt);
+              musicBrainzService.completeCoverArt(metadataList, coverArt);
             }
           }
         } else {
@@ -110,10 +112,7 @@ public class CompleteController {
 
   @RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
   public ActionResult completeLastFmMetadata(Metadata metadata) {
-    log.info(
-        "trying to complete LastFM metadata for: {} - {}",
-        metadata.getArtist(),
-        metadata.getTitle());
+    log.info("trying to complete using LastFM service");
     return lastfmService.completeLastFM(metadata);
   }
 

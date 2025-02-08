@@ -3,11 +3,11 @@ package com.josdem.jmetadata.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import com.josdem.jmetadata.exception.BusinessException;
 
 @Slf4j
 class AlbumUtilsTest {
