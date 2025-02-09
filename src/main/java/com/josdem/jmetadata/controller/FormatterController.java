@@ -20,14 +20,15 @@ import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.FormatterService;
+import lombok.RequiredArgsConstructor;
 import org.asmatron.messengine.annotations.RequestMethod;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
+@RequiredArgsConstructor
 public class FormatterController {
 
-  @Autowired private FormatterService formatterService;
+  private final FormatterService formatterService;
 
   @RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
   public synchronized ActionResult format(Metadata metadata) {
