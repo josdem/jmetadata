@@ -36,14 +36,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
 class LoginControllerTest {
 
-  @InjectMocks private final LoginController controller = new LoginController();
+  private LoginController controller;
 
   @Mock private LastFMAuthenticator lastfmAuthenticator;
   @Mock private ControlEngineConfigurator configurator;
@@ -61,6 +60,7 @@ class LoginControllerTest {
     when(configurator.getControlEngine()).thenReturn(controlEngine);
 
     credentials = new User(username, password);
+    controller = new LoginController(lastfmAuthenticator, configurator);
   }
 
   @Test

@@ -23,19 +23,20 @@ import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.model.User;
 import de.umass.lastfm.Session;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 
-  @Autowired private LastFMAuthenticator lastfmAuthenticator;
-  @Autowired private ControlEngineConfigurator configurator;
+  private final LastFMAuthenticator lastfmAuthenticator;
+  private final ControlEngineConfigurator configurator;
 
   @ActionMethod(Actions.LOGIN_ID)
   public void login(User user) {
