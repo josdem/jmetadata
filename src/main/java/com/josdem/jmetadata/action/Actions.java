@@ -46,7 +46,8 @@ public interface Actions {
       cm(COMPLETE_ALBUM_METADATA);
 
   String COMPLETE_LAST_FM_METADATA = "completeLastfmMetadata";
-  ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_LAST_FM = cm(COMPLETE_LAST_FM_METADATA);
+  ActionId<RequestAction<List<Metadata>, ActionResult>> COMPLETE_LAST_FM =
+      cm(COMPLETE_LAST_FM_METADATA);
 
   String WRITE_METADATA = "writeMetadata";
   ActionId<RequestAction<Metadata, ActionResult>> WRITE = cm(WRITE_METADATA);

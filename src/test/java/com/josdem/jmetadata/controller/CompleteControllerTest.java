@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,9 +28,13 @@ import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MusicBrainzService;
+import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
+import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import java.awt.Image;
 import java.io.File;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -47,6 +52,8 @@ class CompleteControllerTest {
   @Mock private MusicBrainzService musicBrainzService;
   @Mock private CoverArt coverArt;
   @Mock private Image imageIcon;
+  @Mock private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  @Mock private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
   private String artist = "Dave Deen";
   private String title = "Footprints (Original Mix)";
@@ -117,8 +124,20 @@ class CompleteControllerTest {
   }
 
   @Test
-  public void shouldCompleteCoverArtMetadata() throws Exception {
-    controller.completeLastFmMetadata(metadata);
+  @DisplayName("completing metadata with LastFM service")
+  void shouldCompleteMetadata() {
+    var metadataList = List.of(metadata);
+    when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true);
+    controller.completeLastFmMetadata(metadataList);
     verify(coverArtService).completeLastFM(metadata);
+  }
+
+  @Test
+  @DisplayName("not completing metadata with LastFM service")
+  void shouldNotCompleteMetadata() {
+    var metadataList = List.of(metadata);
+    when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
+    controller.completeLastFmMetadata(metadataList);
+    verify(coverArtService, never()).completeLastFM(metadata);
   }
 }

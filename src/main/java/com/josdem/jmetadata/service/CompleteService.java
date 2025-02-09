@@ -19,10 +19,11 @@ package com.josdem.jmetadata.service;
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.model.AlbumInfo;
 import com.josdem.jmetadata.model.Metadata;
+import java.util.List;
 
 public interface CompleteService {
   /** Determines if the metadata can be completed. */
-  boolean canComplete(Metadata metadata);
+  boolean canComplete(List<Metadata> metadataList);
 
   /** Retrieves album information based on the given metadata. */
   AlbumInfo getInfo(Metadata metadata);

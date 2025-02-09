@@ -22,44 +22,50 @@ import com.josdem.jmetadata.model.LastfmAlbum;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.CompleteService;
 import com.josdem.jmetadata.service.LastFMCompleteService;
+import com.josdem.jmetadata.service.MetadataService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class LastFMCompleteServiceAdapter implements CompleteService {
 
-    private final LastFMCompleteService lastFMCompleteService;
+  private final LastFMCompleteService lastFMCompleteService;
+  private final MetadataService metadataService;
 
-    @Override
-    public boolean canComplete(Metadata metadata) {
-        return lastFMCompleteService.canLastFMHelpToComplete(metadata);
-    }
+  @Override
+  public boolean canComplete(List<Metadata> metadataList) {
+    return (!metadataService.isSameAlbum(metadataList)
+        || !metadataService.isSameArtist(metadataList));
+  }
 
-    @Override
-    public AlbumInfo getInfo(Metadata metadata) {
-        try {
-            var lastfmAlbum = lastFMCompleteService.getLastFM(metadata);
-            if (lastfmAlbum == null) {
-                return null;
-            }
-            var albumInfo = new AlbumInfo();
-            albumInfo.setYear(lastfmAlbum.getYear());
-            albumInfo.setCoverArt(lastfmAlbum.getImageIcon());
-            albumInfo.setGenre(lastfmAlbum.getGenre());
-            return albumInfo;
-        } catch (Exception e) {
-            log.error("Error retrieving LastFM information: {}", e.getMessage(), e);
-            return null;
-        }
+  @Override
+  public AlbumInfo getInfo(Metadata metadata) {
+    try {
+      var lastfmAlbum = lastFMCompleteService.getLastFM(metadata);
+      if (lastfmAlbum == null) {
+        return null;
+      }
+      var albumInfo = new AlbumInfo();
+      albumInfo.setYear(lastfmAlbum.getYear());
+      albumInfo.setCoverArt(lastfmAlbum.getImageIcon());
+      albumInfo.setGenre(lastfmAlbum.getGenre());
+      return albumInfo;
+    } catch (Exception e) {
+      log.error("Error retrieving LastFM information: {}", e.getMessage(), e);
+      return null;
     }
+  }
 
-    @Override
-    public ActionResult isSomethingNew(AlbumInfo albumInfo, Metadata metadata) {
-        var lastfmAlbum = new LastfmAlbum();
-        lastfmAlbum.setYear(albumInfo.getYear());
-        lastfmAlbum.setGenre(albumInfo.getGenre());
-        lastfmAlbum.setImageIcon(albumInfo.getCoverArt());
-        return lastFMCompleteService.isSomethingNew(lastfmAlbum, metadata);
-    }
+  @Override
+  public ActionResult isSomethingNew(AlbumInfo albumInfo, Metadata metadata) {
+    var lastfmAlbum = new LastfmAlbum();
+    lastfmAlbum.setYear(albumInfo.getYear());
+    lastfmAlbum.setGenre(albumInfo.getGenre());
+    lastfmAlbum.setImageIcon(albumInfo.getCoverArt());
+    return lastFMCompleteService.isSomethingNew(lastfmAlbum, metadata);
+  }
 }

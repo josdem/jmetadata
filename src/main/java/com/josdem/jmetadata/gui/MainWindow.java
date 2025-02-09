@@ -1121,7 +1121,7 @@ public class MainWindow extends JFrame {
                                   .getViewEngine()
                                   .request(
                                       Actions.COMPLETE_LAST_FM,
-                                      metadata,
+                                      metadataList,
                                       new ResponseCallback<ActionResult>() {
 
                                         public void onResponse(ActionResult response) {
