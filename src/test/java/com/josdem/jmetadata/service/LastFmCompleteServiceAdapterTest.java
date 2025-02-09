@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.model.Metadata;
-import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
+import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,11 +32,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-class MusicBrainzCompleteServiceAdapterTest {
+class LastFmCompleteServiceAdapterTest {
 
-  private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
-  @Mock private MusicBrainzService musicBrainzService;
+  @Mock private LastFMCompleteService lastFMCompleteService;
   @Mock private MetadataService metadataService;
 
   private final Metadata metadata = new Metadata();
@@ -44,8 +44,8 @@ class MusicBrainzCompleteServiceAdapterTest {
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
-    musicBrainzCompleteServiceAdapter =
-        new MusicBrainzCompleteServiceAdapter(musicBrainzService, metadataService);
+    lastFMCompleteServiceAdapter =
+        new LastFMCompleteServiceAdapter(lastFMCompleteService, metadataService);
   }
 
   @Test
@@ -53,7 +53,7 @@ class MusicBrainzCompleteServiceAdapterTest {
   void shouldDetectIfCanCompleteMetadataDueToSameAlbum(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     when(metadataService.isSameAlbum(List.of(metadata))).thenReturn(true);
-    assertTrue(musicBrainzCompleteServiceAdapter.canComplete(List.of(metadata)));
+    assertTrue(lastFMCompleteServiceAdapter.canComplete(List.of(metadata)));
   }
 
   @Test
@@ -61,7 +61,7 @@ class MusicBrainzCompleteServiceAdapterTest {
   void shouldDetectIfCanCompleteMetadataDueToSameArtist(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     when(metadataService.isSameArtist(List.of(metadata))).thenReturn(true);
-    assertTrue(musicBrainzCompleteServiceAdapter.canComplete(List.of(metadata)));
+    assertTrue(lastFMCompleteServiceAdapter.canComplete(List.of(metadata)));
   }
 
   @Test
@@ -70,6 +70,6 @@ class MusicBrainzCompleteServiceAdapterTest {
     log.info(testInfo.getDisplayName());
     when(metadataService.isSameAlbum(List.of(metadata))).thenReturn(false);
     when(metadataService.isSameArtist(List.of(metadata))).thenReturn(false);
-    assertFalse(musicBrainzCompleteServiceAdapter.canComplete(List.of(metadata)));
+    assertFalse(lastFMCompleteServiceAdapter.canComplete(List.of(metadata)));
   }
 }
