@@ -30,14 +30,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
 class DefaultControllerTest {
 
-  @InjectMocks private final DefaultController defaultController = new DefaultController();
+  private DefaultController defaultController;
 
   @Mock private DefaultService defaultService;
 
@@ -46,6 +45,7 @@ class DefaultControllerTest {
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
+    defaultController = new DefaultController(defaultService);
   }
 
   @Test
