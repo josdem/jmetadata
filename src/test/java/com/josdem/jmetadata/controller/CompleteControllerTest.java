@@ -36,14 +36,13 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class CompleteControllerTest {
   private static final String ERROR = "Error";
 
-  @InjectMocks private final CompleteController controller = new CompleteController();
+  private CompleteController controller;
 
   @Mock private MetadataWriter metadataWriter;
   @Mock private Metadata metadata;
@@ -52,8 +51,8 @@ class CompleteControllerTest {
   @Mock private MusicBrainzService musicBrainzService;
   @Mock private CoverArt coverArt;
   @Mock private Image imageIcon;
-  @Mock private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
   @Mock private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
+  @Mock private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
 
   private String artist = "Dave Deen";
   private String title = "Footprints (Original Mix)";
@@ -79,6 +78,13 @@ class CompleteControllerTest {
     when(metadata.getYear()).thenReturn(year);
     when(metadata.getGenre()).thenReturn(genre);
     when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Ready);
+    controller =
+        new CompleteController(
+            metadataWriter,
+            coverArtService,
+            musicBrainzService,
+            musicBrainzCompleteServiceAdapter,
+            lastFMCompleteServiceAdapter);
   }
 
   @Test

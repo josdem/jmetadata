@@ -28,7 +28,6 @@ import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.MusicBrainzResponse;
 import com.josdem.jmetadata.service.CoverArtRestService;
 import com.josdem.jmetadata.service.LastfmService;
-import com.josdem.jmetadata.service.MetadataService;
 import com.josdem.jmetadata.service.MusicBrainzService;
 import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
@@ -38,23 +37,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import retrofit2.Response;
 
 @Controller
+@RequiredArgsConstructor
 public class CompleteController {
 
-  private MetadataWriter metadataWriter = new MetadataWriter();
-
-  @Autowired private LastfmService lastfmService;
-  @Autowired private MetadataService metadataService;
-  @Autowired private MusicBrainzService musicBrainzService;
-  @Autowired private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
-  @Autowired private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
+  private final MetadataWriter metadataWriter;
+  private final LastfmService lastfmService;
+  private final MusicBrainzService musicBrainzService;
+  private final MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  private final LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
   private RestService restService;
   private CoverArtRestService coverArtRestService;

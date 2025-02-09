@@ -36,12 +36,10 @@ import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-
-/**
- * @understands A class who knows how to write metadata in a audio file
- */
+@Service
 public class MetadataWriter {
   private Tag tag;
   private AudioFile audioFile;
