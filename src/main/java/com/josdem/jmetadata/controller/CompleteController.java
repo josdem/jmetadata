@@ -116,7 +116,7 @@ public class CompleteController {
     if (!lastFMCompleteServiceAdapter.canComplete(metadataList)) {
       return ActionResult.Ready;
     }
-    metadataList.forEach(metadata -> lastfmService.completeLastFM(metadata));
+    metadataList.forEach(lastfmService::completeLastFM);
     return ActionResult.New;
   }
 
