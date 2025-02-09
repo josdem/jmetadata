@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.JFileChooser;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.ActionMethod;
@@ -40,7 +39,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Slf4j

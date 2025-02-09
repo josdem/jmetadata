@@ -22,18 +22,19 @@ import com.josdem.jmetadata.helper.ScrobblerHelper;
 import com.josdem.jmetadata.model.Metadata;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class ScrobblerController {
 
-  @Autowired private ScrobblerHelper scrobblerHelper;
-  @Autowired private ControlEngineConfigurator configurator;
+  private final ScrobblerHelper scrobblerHelper;
+  private final ControlEngineConfigurator configurator;
 
   @PostConstruct
   public void setup() {

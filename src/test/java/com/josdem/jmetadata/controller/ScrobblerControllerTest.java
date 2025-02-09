@@ -31,14 +31,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
 class ScrobblerControllerTest {
 
-  @InjectMocks private final ScrobblerController controller = new ScrobblerController();
+  private ScrobblerController controller;
 
   @Mock private Metadata metadata;
   @Mock private ControlEngineConfigurator configurator;
@@ -49,6 +48,7 @@ class ScrobblerControllerTest {
   void setup() {
     MockitoAnnotations.openMocks(this);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
+    controller = new ScrobblerController(scrobblerHelper, configurator);
   }
 
   @Test
