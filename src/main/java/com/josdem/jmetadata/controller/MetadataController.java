@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.JFileChooser;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
@@ -41,13 +43,14 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-@Controller
 @Slf4j
+@Controller
+@RequiredArgsConstructor
 public class MetadataController {
 
-  @Autowired private Properties properties;
-  @Autowired private MetadataService metadataService;
-  @Autowired private ControlEngineConfigurator configurator;
+  private final Properties properties;
+  private final MetadataService metadataService;
+  private final ControlEngineConfigurator configurator;
 
   private List<Metadata> metadataList;
 
