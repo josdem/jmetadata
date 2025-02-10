@@ -83,6 +83,9 @@ public class CompleteController {
           String albumName = metadataList.getFirst().getAlbum();
           ApplicationState.cache.put(albumName, musicBrainzResponse);
           log.info("MusicBrainz Response: {}", musicBrainzResponse);
+          if (musicBrainzResponse.getReleases().isEmpty()) {
+            return ActionResult.Ready;
+          }
           Album album = musicBrainzService.getAlbumByName(albumName);
           log.info("MusicBrainz Album: {}", album);
           musicBrainzService.completeYear(metadataList, album);
