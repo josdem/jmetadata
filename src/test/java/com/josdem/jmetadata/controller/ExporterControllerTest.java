@@ -29,14 +29,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
 class ExporterControllerTest {
 
-  @InjectMocks private final ExporterController exporterController = new ExporterController();
+  private ExporterController exporterController;
 
   @Mock private ExportPackage exportPackage;
   @Mock private ExporterHelper exporterHelper;
@@ -44,6 +43,7 @@ class ExporterControllerTest {
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
+    exporterController = new ExporterController(exporterHelper);
   }
 
   @Test

@@ -22,21 +22,20 @@ import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.ExporterHelper;
 import com.josdem.jmetadata.model.ExportPackage;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class ExporterController {
 
-  @Autowired private ExporterHelper exporterHelper;
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private final ExporterHelper exporterHelper;
 
   @RequestMethod(Actions.EXPORT_METADATA)
   public ActionResult sendMetadata(ExportPackage exportPackage)

@@ -23,17 +23,18 @@ import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.DefaultService;
 import java.io.IOException;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
+@RequiredArgsConstructor
 public class DefaultController {
 
-  @Autowired private DefaultService defaultService;
+  private final DefaultService defaultService;
 
   @RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
   public synchronized ActionResult complete(List<Metadata> metadatas)

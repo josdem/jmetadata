@@ -24,13 +24,12 @@ import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.FormatterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class FormatterControllerTest {
 
-  @InjectMocks private FormatterController formatterController = new FormatterController();
+  private FormatterController formatterController;
 
   @Mock private FormatterService formatterService;
   @Mock private Metadata metadata;
@@ -38,6 +37,7 @@ class FormatterControllerTest {
   @BeforeEach
   public void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
+    formatterController = new FormatterController(formatterService);
   }
 
   @Test
