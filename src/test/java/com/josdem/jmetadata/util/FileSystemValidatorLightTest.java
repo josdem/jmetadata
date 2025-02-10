@@ -1,94 +1,93 @@
 package com.josdem.jmetadata.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class FileSystemValidatorLightTest {
 
-    private FileSystemValidatorLight fileSystemValidatorLight;
+  private FileSystemValidatorLight fileSystemValidatorLight;
 
-    @BeforeEach
-    void setUp() {
-        // Initialize the FileSystemValidatorLight with an empty list
-        fileSystemValidatorLight = new FileSystemValidatorLight(false, Collections.emptyList());
-    }
+  @BeforeEach
+  void setUp() {
+    fileSystemValidatorLight = new FileSystemValidatorLight(false, Collections.emptyList());
+  }
 
-    @Test
-    void testValidateFileWithHiddenFile() {
-        File hiddenFile = Mockito.mock(File.class);
-        Mockito.when(hiddenFile.isHidden()).thenReturn(true);
+  @Test
+  void testValidateFileWithHiddenFile() {
+    var hiddenFile = mock(File.class);
+    when(hiddenFile.isHidden()).thenReturn(true);
 
-        fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(hiddenFile));
+    fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(hiddenFile));
 
-        assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
-        assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
-        assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
-    }
+    assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
+    assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
+    assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
+  }
 
-    @Test
-    void testValidateFileWithDirectoryContainingSubdirectory() {
-        File subDirectory = Mockito.mock(File.class);
-        Mockito.when(subDirectory.isDirectory()).thenReturn(true);
-        Mockito.when(subDirectory.isHidden()).thenReturn(false);
+  @Test
+  void testValidateFileWithDirectoryContainingSubdirectory() {
+    var subDirectory = mock(File.class);
+    when(subDirectory.isDirectory()).thenReturn(true);
+    when(subDirectory.isHidden()).thenReturn(false);
 
-        File directory = Mockito.mock(File.class);
-        Mockito.when(directory.isDirectory()).thenReturn(true);
-        Mockito.when(directory.isHidden()).thenReturn(false);
-        Mockito.when(directory.listFiles()).thenReturn(new File[]{subDirectory});
+    var directory = mock(File.class);
+    when(directory.isDirectory()).thenReturn(true);
+    when(directory.isHidden()).thenReturn(false);
+    when(directory.listFiles()).thenReturn(new File[] {subDirectory});
 
-        fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(directory));
+    fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(directory));
 
-        assertEquals(1, fileSystemValidatorLight.getFolderList().size());
-        assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
-        assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
-    }
+    assertEquals(1, fileSystemValidatorLight.getFolderList().size());
+    assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
+    assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
+  }
 
-    @Test
-    void testValidateFileWithDirectoryContainingOnlyFiles() {
-        File file1 = Mockito.mock(File.class);
-        Mockito.when(file1.isDirectory()).thenReturn(false);
-        Mockito.when(file1.isHidden()).thenReturn(false);
+  @Test
+  void testValidateFileWithDirectoryContainingOnlyFiles() {
+    var file1 = mock(File.class);
+    when(file1.isDirectory()).thenReturn(false);
+    when(file1.isHidden()).thenReturn(false);
 
-        File file2 = Mockito.mock(File.class);
-        Mockito.when(file2.isDirectory()).thenReturn(false);
-        Mockito.when(file2.isHidden()).thenReturn(false);
+    var file2 = mock(File.class);
+    when(file2.isDirectory()).thenReturn(false);
+    when(file2.isHidden()).thenReturn(false);
 
-        File directory = Mockito.mock(File.class);
-        Mockito.when(directory.isDirectory()).thenReturn(true);
-        Mockito.when(directory.isHidden()).thenReturn(false);
-        Mockito.when(directory.listFiles()).thenReturn(new File[]{file1, file2});
+    var directory = mock(File.class);
+    when(directory.isDirectory()).thenReturn(true);
+    when(directory.isHidden()).thenReturn(false);
+    when(directory.listFiles()).thenReturn(new File[] {file1, file2});
 
-        fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(directory));
+    fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(directory));
 
-        assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
-        assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
-        assertEquals(1, fileSystemValidatorLight.getPlaylistList().size());
-    }
+    assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
+    assertTrue(fileSystemValidatorLight.getTrackList().isEmpty());
+    assertEquals(1, fileSystemValidatorLight.getPlaylistList().size());
+  }
 
-    @Test
-    void testValidateFileWithRegularFile() {
-        File regularFile = Mockito.mock(File.class);
-        Mockito.when(regularFile.isDirectory()).thenReturn(false);
-        Mockito.when(regularFile.isHidden()).thenReturn(false);
+  @Test
+  void testValidateFileWithRegularFile() {
+    var regularFile = mock(File.class);
+    when(regularFile.isDirectory()).thenReturn(false);
+    when(regularFile.isHidden()).thenReturn(false);
 
-        fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(regularFile));
+    fileSystemValidatorLight = new FileSystemValidatorLight(false, Arrays.asList(regularFile));
 
-        assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
-        assertEquals(1, fileSystemValidatorLight.getTrackList().size());
-        assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
-    }
+    assertTrue(fileSystemValidatorLight.getFolderList().isEmpty());
+    assertEquals(1, fileSystemValidatorLight.getTrackList().size());
+    assertTrue(fileSystemValidatorLight.getPlaylistList().isEmpty());
+  }
 
-    @Test
-    void testHasError() {
-        assertFalse(fileSystemValidatorLight.hasError());
-    }
+  @Test
+  void testHasError() {
+    assertFalse(fileSystemValidatorLight.hasError());
+  }
 }
