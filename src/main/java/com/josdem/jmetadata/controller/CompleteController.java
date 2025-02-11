@@ -38,12 +38,12 @@ import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.asmatron.messengine.annotations.RequestMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import retrofit2.Response;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class CompleteController {
@@ -56,8 +56,6 @@ public class CompleteController {
 
   private RestService restService;
   private CoverArtRestService coverArtRestService;
-
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
   @PostConstruct
   void setup() {
@@ -85,6 +83,9 @@ public class CompleteController {
           String albumName = metadataList.getFirst().getAlbum();
           ApplicationState.cache.put(albumName, musicBrainzResponse);
           log.info("MusicBrainz Response: {}", musicBrainzResponse);
+          if (musicBrainzResponse.getReleases().isEmpty()) {
+            return ActionResult.Ready;
+          }
           Album album = musicBrainzService.getAlbumByName(albumName);
           log.info("MusicBrainz Album: {}", album);
           musicBrainzService.completeYear(metadataList, album);
@@ -116,7 +117,7 @@ public class CompleteController {
     if (!lastFMCompleteServiceAdapter.canComplete(metadataList)) {
       return ActionResult.Ready;
     }
-    metadataList.forEach(metadata -> lastfmService.completeLastFM(metadata));
+    metadataList.forEach(lastfmService::completeLastFM);
     return ActionResult.New;
   }
 

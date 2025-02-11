@@ -38,8 +38,7 @@ public class MusicBrainzCompleteServiceAdapter implements CompleteService {
 
   @Override
   public boolean canComplete(List<Metadata> metadataList) {
-    return (!metadataService.isSameAlbum(metadataList)
-        || !metadataService.isSameArtist(metadataList));
+    return metadataService.isSameAlbum(metadataList) || metadataService.isSameArtist(metadataList);
   }
 
   @Override

@@ -949,10 +949,9 @@ public class MainWindow extends JFrame {
                           public void onResponse(ActionResult response) {
                             updateStatus(counter++, metadataList.size());
                             log.info(
-                                "response in getting from MusicBrainz album "
-                                    + metadata.getTitle()
-                                    + ": "
-                                    + response);
+                                "response in getting information from MusicBrainz track{}: {}",
+                                metadata.getTitle(),
+                                response);
                             if (response.equals(ActionResult.New)) {
                               metadataWithAlbum.add(metadata);
                               getDescriptionTable()
