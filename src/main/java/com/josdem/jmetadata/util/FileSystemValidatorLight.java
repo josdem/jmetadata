@@ -59,4 +59,16 @@ public class FileSystemValidatorLight {
   public boolean hasError() {
     return false;
   }
+
+  public List<File> getFolderList() {
+    return folderList;
+  }
+
+  public List<File> getTrackList() {
+    return trackList;
+  }
+
+  public List<File> getPlaylistList() {
+    return playlistList;
+  }
 }
