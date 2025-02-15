@@ -107,10 +107,7 @@ public class DragTooltipDialog extends JDialog {
   private boolean allowed;
 
   public DragTooltipDialog(Window owner) {
-    super(
-        (owner instanceof Frame) ? (JFrame) owner : null,
-        null,
-        false);
+    super((owner instanceof Frame) ? (JFrame) owner : null, null, false);
     initialize();
   }
 
