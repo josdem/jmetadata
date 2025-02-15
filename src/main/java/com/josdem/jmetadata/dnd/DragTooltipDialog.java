@@ -110,10 +110,8 @@ public class DragTooltipDialog extends JDialog {
     super(
         (owner instanceof Frame) ? (JFrame) owner : null,
         null,
-        false,
-        TransparencyManagerFactory.getManager().getTranslucencyCapableGC());
+        false);
     initialize();
-    TransparencyManagerFactory.getManager().setWindowOpaque(this, false);
   }
 
   private void initialize() {
@@ -144,7 +142,6 @@ public class DragTooltipDialog extends JDialog {
         log.debug("Drag tootltip display error.");
       }
     }
-    TransparencyManagerFactory.getManager().setWindowOpaque(this, false);
   }
 
   private void setFullSize(Dimension contentSize) {
@@ -174,7 +171,6 @@ public class DragTooltipDialog extends JDialog {
     int width = 0;
     Dimension contentSize = new Dimension(width, height);
     this.setFullSize(contentSize);
-    TransparencyManagerFactory.getManager().setWindowOpaque(this, false);
   }
 
   public void setContent(String... message) {
@@ -200,7 +196,6 @@ public class DragTooltipDialog extends JDialog {
     descriptionPanel.setBounds(7, 20, width, height);
     descriptionPanel.add(imagePanel);
     this.setFullSize(width + 14, height + dragIcon.getHeight() + 7);
-    TransparencyManagerFactory.getManager().setWindowOpaque(this, false);
   }
 
   private Dimension fillContent(List<?>... stuff) {
@@ -216,7 +211,6 @@ public class DragTooltipDialog extends JDialog {
       descriptionPanel.setBounds(21, 3, width, height);
       descriptionPanel.add(dynamicPanel.getPanel());
     }
-    TransparencyManagerFactory.getManager().setWindowOpaque(this, false);
     return new Dimension(width, height);
   }
 
