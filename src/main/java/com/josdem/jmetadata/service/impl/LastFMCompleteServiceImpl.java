@@ -116,9 +116,9 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
       release = album.getReleaseDate();
     }
     if (release != null) {
-      log.info("Year date format: " + release);
+      log.info("Year date format: {}", release);
       lastfmAlbum.setYear(lastfmHelper.getYear(release));
-      log.info("Year metadata format: " + lastfmAlbum.getYear());
+      log.info("Year metadata format: {}", lastfmAlbum.getYear());
     } else {
       lastfmAlbum.setYear(StringUtils.EMPTY);
     }

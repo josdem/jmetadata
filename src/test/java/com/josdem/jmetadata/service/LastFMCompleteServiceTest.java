@@ -29,6 +29,7 @@ import com.josdem.jmetadata.helper.LastFMAlbumHelper;
 import com.josdem.jmetadata.model.LastfmAlbum;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl;
+import com.josdem.jmetadata.util.ApplicationState;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 import java.awt.Image;
@@ -158,13 +159,13 @@ class LastFMCompleteServiceTest {
     setArtistAndAlbumExpectations();
     setImageExpectations();
     setYearAndGenreExpectations();
-    completeService.canLastFMHelpToComplete(metadata);
 
     var lastFMalbum = completeService.getLastFM(metadata);
 
     assertEquals(year, lastFMalbum.getYear());
     assertEquals(genre, lastFMalbum.getGenre());
     assertEquals(image, lastFMalbum.getImageIcon());
+    assertEquals(albumFromLastFM, ApplicationState.lastFmCache.get(album));
   }
 
   private void setYearAndGenreExpectations() {
@@ -234,5 +235,17 @@ class LastFMCompleteServiceTest {
 
     verify(albumFromLastFM, never()).getReleaseDate();
     assertTrue(StringUtils.isEmpty(lastFMalbum.getYear()));
+  }
+
+  @Test
+  @DisplayName("not complete from lastFM since it does not have info")
+  void shouldNotCompleteFromLastFM(TestInfo testInfo) throws IOException {
+    log.info(testInfo.getDisplayName());
+    setArtistAndAlbumExpectations();
+    when(lastfmHelper.getAlbum(artist, album)).thenReturn(null);
+
+    completeService.getLastFM(metadata);
+
+    assertNull(ApplicationState.lastFmCache.get(album));
   }
 }
