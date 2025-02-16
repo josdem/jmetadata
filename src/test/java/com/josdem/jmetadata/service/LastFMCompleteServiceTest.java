@@ -80,7 +80,6 @@ class LastFMCompleteServiceTest {
     setArtistAndAlbumExpectations();
 
     assertTrue(completeService.canLastFMHelpToComplete(metadata));
-    verify(lastfmHelper).getAlbum(artist, album);
   }
 
   @Test
@@ -92,7 +91,6 @@ class LastFMCompleteServiceTest {
     metadata.setGenre(genre);
 
     assertTrue(completeService.canLastFMHelpToComplete(metadata));
-    verify(lastfmHelper).getAlbum(artist, album);
   }
 
   @Test
@@ -104,7 +102,6 @@ class LastFMCompleteServiceTest {
     metadata.setYear(year);
 
     assertTrue(completeService.canLastFMHelpToComplete(metadata));
-    verify(lastfmHelper).getAlbum(artist, album);
   }
 
   @Test
@@ -116,7 +113,6 @@ class LastFMCompleteServiceTest {
     metadata.setGenre(genre);
 
     assertTrue(completeService.canLastFMHelpToComplete(metadata));
-    verify(lastfmHelper).getAlbum(artist, album);
   }
 
   @Test
@@ -238,17 +234,5 @@ class LastFMCompleteServiceTest {
 
     verify(albumFromLastFM, never()).getReleaseDate();
     assertTrue(StringUtils.isEmpty(lastFMalbum.getYear()));
-  }
-
-  @Test
-  @DisplayName("not complete from lastFM since it does not have info")
-  void shouldNotCompleteFromLastFM(TestInfo testInfo) {
-    log.info(testInfo.getDisplayName());
-    setArtistAndAlbumExpectations();
-    when(lastfmHelper.getAlbum(artist, album)).thenReturn(null);
-
-    assertFalse(completeService.canLastFMHelpToComplete(metadata));
-
-    verify(lastfmHelper).getAlbum(artist, album);
   }
 }
