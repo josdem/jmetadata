@@ -24,13 +24,12 @@ import com.josdem.jmetadata.model.LastfmAlbum;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.ImageService;
 import com.josdem.jmetadata.service.LastFMCompleteService;
+import com.josdem.jmetadata.util.ApplicationState;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 import java.awt.Image;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Date;
-import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -44,26 +43,10 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
   private final ImageService imageService;
   private final LastFMAlbumHelper lastfmHelper;
 
-  private final HashMap<String, Album> cachedAlbums = new HashMap<>();
-
   public boolean canLastFMHelpToComplete(Metadata metadata) {
-    String artist = metadata.getArtist();
-    String album = metadata.getAlbum();
-
-    if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
-      Album info = cachedAlbums.get(metadata.getAlbum());
-      if (info == null) {
-        info = lastfmHelper.getAlbum(artist, album);
-        if (info != null) {
-          String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
-          if (!StringUtils.isEmpty(imageUrl)) {
-            cachedAlbums.put(metadata.getAlbum(), info);
-          }
-        }
-      }
-      return info != null;
-    }
-    return false;
+    var artist = metadata.getArtist();
+    var album = metadata.getAlbum();
+    return (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album));
   }
 
   private boolean hasAlbumAndArtist(String artist, String album) {
@@ -76,21 +59,26 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
         || StringUtils.isEmpty(metadata.getGenre()));
   }
 
-  public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
-    LastfmAlbum lastfmAlbum = new LastfmAlbum();
+  public LastfmAlbum getLastFM(Metadata metadata) throws IOException {
+    if (ApplicationState.lastFmCache.get(metadata.getAlbum()) == null) {
+      var album = lastfmHelper.getAlbum(metadata.getArtist(), metadata.getAlbum());
+      if (album != null) {
+        ApplicationState.lastFmCache.put(metadata.getAlbum(), album);
+      }
+    }
+    var lastfmAlbum = new LastfmAlbum();
     setCoverArt(metadata, lastfmAlbum);
     setYear(metadata, lastfmAlbum);
     setGenre(metadata, lastfmAlbum);
     return lastfmAlbum;
   }
 
-  private void setCoverArt(Metadata metadata, LastfmAlbum lastfmAlbum)
-      throws MalformedURLException, IOException {
+  private void setCoverArt(Metadata metadata, LastfmAlbum lastfmAlbum) throws IOException {
     if (metadata.getCoverArt() != null) {
       return;
     }
     String imageURL = StringUtils.EMPTY;
-    Album album = cachedAlbums.get(metadata.getAlbum());
+    Album album = ApplicationState.lastFmCache.get(metadata.getAlbum());
     if (album != null) {
       imageURL = album.getImageURL(ImageSize.EXTRALARGE);
       log.info("imageURL: {} from album: {}", imageURL, album.getName());
@@ -105,7 +93,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
     if (!StringUtils.isEmpty(metadata.getGenre()) || StringUtils.isEmpty(metadata.getAlbum())) {
       return;
     }
-    Album album = cachedAlbums.get(metadata.getAlbum());
+    Album album = ApplicationState.lastFmCache.get(metadata.getAlbum());
     String genre = StringUtils.EMPTY;
     if (album != null) {
       genre = lastfmHelper.getGenre(album);
@@ -123,14 +111,14 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
       return;
     }
     Date release = null;
-    Album album = cachedAlbums.get(metadata.getAlbum());
+    Album album = ApplicationState.lastFmCache.get(metadata.getAlbum());
     if (album != null) {
       release = album.getReleaseDate();
     }
     if (release != null) {
-      log.info("Year date format: " + release);
+      log.info("Year date format: {}", release);
       lastfmAlbum.setYear(lastfmHelper.getYear(release));
-      log.info("Year metadata format: " + lastfmAlbum.getYear());
+      log.info("Year metadata format: {}", lastfmAlbum.getYear());
     } else {
       lastfmAlbum.setYear(StringUtils.EMPTY);
     }

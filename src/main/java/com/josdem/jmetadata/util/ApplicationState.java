@@ -17,10 +17,12 @@
 package com.josdem.jmetadata.util;
 
 import com.josdem.jmetadata.model.MusicBrainzResponse;
+import de.umass.lastfm.Album;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationState {
 
   public static final Map<String, MusicBrainzResponse> cache = new HashMap<>();
+  public static final Map<String, Album> lastFmCache = new HashMap<>();
 }
