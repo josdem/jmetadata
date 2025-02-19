@@ -48,7 +48,7 @@ public class ScrobblerController {
       return scrobblerHelper.send(metadata);
     } catch (IOException | InterruptedException ioe) {
       log.error(ioe.getMessage(), ioe);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     }
   }
 }

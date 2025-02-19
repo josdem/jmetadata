@@ -77,7 +77,7 @@ class CompleteControllerTest {
     when(metadata.getTotalCds()).thenReturn(totalCds);
     when(metadata.getYear()).thenReturn(year);
     when(metadata.getGenre()).thenReturn(genre);
-    when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Ready);
+    when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.READY);
     controller =
         new CompleteController(
             metadataWriter,
@@ -103,7 +103,7 @@ class CompleteControllerTest {
     verify(metadataWriter).writeTotalCds(totalCds);
     verify(metadataWriter).writeYear(year);
     verify(metadataWriter).writeGenre(genre);
-    assertEquals(ActionResult.Updated, result);
+    assertEquals(ActionResult.UPDATED, result);
   }
 
   @Test
@@ -116,7 +116,7 @@ class CompleteControllerTest {
     verify(metadataWriter).removeCoverArt();
     verify(metadataWriter).writeCoverArt(imageIcon);
     verify(metadata).setCoverArt(imageIcon);
-    assertEquals(ActionResult.Updated, result);
+    assertEquals(ActionResult.UPDATED, result);
   }
 
   @Test
@@ -126,7 +126,7 @@ class CompleteControllerTest {
 
     ActionResult result = controller.completeAlbum(metadata);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 
   @Test

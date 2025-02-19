@@ -60,6 +60,6 @@ public class MusicBrainzCompleteServiceAdapter implements CompleteService {
       metadata.setYear(albumInfo.getYear());
       updated = true;
     }
-    return updated ? ActionResult.New : ActionResult.Ready;
+    return updated ? ActionResult.NEW : ActionResult.READY;
   }
 }

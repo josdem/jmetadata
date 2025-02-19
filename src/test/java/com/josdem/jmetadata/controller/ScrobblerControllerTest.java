@@ -55,24 +55,24 @@ class ScrobblerControllerTest {
   @DisplayName("sending metadata")
   void shouldSendMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
+    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.NEW);
 
     var result = controller.sendMetadata(metadata);
 
     verify(scrobblerHelper).send(metadata);
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   @Test
   @DisplayName("detecting error in scrobbling")
   void shouldDetectWhenErrorInScrobbling(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
+    when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.ERROR);
 
     var result = controller.sendMetadata(metadata);
 
     verify(scrobblerHelper).send(metadata);
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 
   @Test
@@ -91,7 +91,7 @@ class ScrobblerControllerTest {
 
     var result = controller.sendMetadata(metadata);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 
   @Test
@@ -102,6 +102,6 @@ class ScrobblerControllerTest {
 
     var result = controller.sendMetadata(metadata);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 }

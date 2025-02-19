@@ -49,6 +49,6 @@ public class ExporterHelper {
     exportPackage.setMetadataList(metadatas);
     imageExporter.export(exportPackage);
     metadataExporter.export(exportPackage);
-    return ActionResult.Exported;
+    return ActionResult.EXPORTED;
   }
 }

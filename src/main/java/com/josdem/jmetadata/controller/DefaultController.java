@@ -45,8 +45,8 @@ public class DefaultController {
           MetadataException {
     if (defaultService.isCompletable(metadatas)) {
       defaultService.complete(metadatas);
-      return ActionResult.New;
+      return ActionResult.NEW;
     }
-    return ActionResult.Ready;
+    return ActionResult.READY;
   }
 }

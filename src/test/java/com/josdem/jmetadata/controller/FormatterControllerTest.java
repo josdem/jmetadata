@@ -45,7 +45,7 @@ class FormatterControllerTest {
     when(formatterService.wasFormatted(metadata)).thenReturn(true);
     when(formatterService.wasCamelized(metadata)).thenReturn(false);
     ActionResult result = formatterController.format(metadata);
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   @Test
@@ -53,7 +53,7 @@ class FormatterControllerTest {
     when(formatterService.wasFormatted(metadata)).thenReturn(false);
     when(formatterService.wasCamelized(metadata)).thenReturn(true);
     ActionResult result = formatterController.format(metadata);
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   @Test
@@ -61,6 +61,6 @@ class FormatterControllerTest {
     when(formatterService.wasFormatted(metadata)).thenReturn(false);
     when(formatterService.wasCamelized(metadata)).thenReturn(false);
     ActionResult result = formatterController.format(metadata);
-    assertEquals(ActionResult.Ready, result);
+    assertEquals(ActionResult.READY, result);
   }
 }

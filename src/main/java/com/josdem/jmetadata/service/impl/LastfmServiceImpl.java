@@ -40,17 +40,17 @@ public class LastfmServiceImpl implements LastfmService {
         LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
         return completeService.isSomethingNew(lastfmAlbum, metadata);
       } else {
-        return ActionResult.Ready;
+        return ActionResult.READY;
       }
     } catch (MalformedURLException mfe) {
       log.error("MalformedURLException: {}", mfe.getMessage(), mfe);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     } catch (IOException ioe) {
       log.error("IOException: {}", ioe.getMessage(), ioe);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     } catch (IllegalStateException ise) {
       log.error("Missing environment variables for LastFM API Key or Secret: {}", ise.getMessage());
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     }
   }
 }
