@@ -39,7 +39,7 @@ class PictureTest {
   }
 
   @Test
-  void testPictureInitializationWithInvalidImage() throws IOException {
+  void testPictureInitializationWithInvalidImage() {
     assertThrows(
         IllegalArgumentException.class, () -> new Picture(invalidImageFile), "not an image");
   }
