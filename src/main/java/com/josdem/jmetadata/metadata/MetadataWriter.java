@@ -140,7 +140,7 @@ public class MetadataWriter {
       audioFile.commit();
       return true;
     } catch (KeyNotFoundException | CannotWriteException kne) {
-      throw new MetadataException(kne.getMessage());
+      throw new BusinessException(kne.getMessage());
     }
   }
 
@@ -156,7 +156,7 @@ public class MetadataWriter {
         | FieldDataInvalidException
         | CannotWriteException
         | NullPointerException kne) {
-      throw new MetadataException(kne.getMessage());
+      throw new BusinessException(kne.getMessage());
     }
   }
 
