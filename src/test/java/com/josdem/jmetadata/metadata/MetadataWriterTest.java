@@ -147,16 +147,31 @@ class MetadataWriterTest {
     String trackNumber = "1";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.TRACK, trackNumber);
-    assertThrows(BusinessException.class, ()-> metadataWriter.writeTrackNumber(trackNumber));
+    assertThrows(BusinessException.class, () -> metadataWriter.writeTrackNumber(trackNumber));
   }
 
   @Test
-  public void shouldWriteTotalTracksNumber() throws Exception {
+  @DisplayName("writing total tracks number")
+  void shouldWriteTotalTracksNumber(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     String totalTracksNumber = "10";
 
     metadataWriter.writeTotalTracksNumber(totalTracksNumber);
     verify(tag).setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing total tracks number due to exception")
+  void shouldNotWriteTotalTracksNumber(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    String totalTracksNumber = "10";
+
+    doThrow(FieldDataInvalidException.class)
+        .when(tag)
+        .setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
+    assertThrows(
+        BusinessException.class, () -> metadataWriter.writeTotalTracksNumber(totalTracksNumber));
   }
 
   @Test
