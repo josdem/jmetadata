@@ -31,7 +31,7 @@ class PictureTest {
 
   @Test
   void testPictureInitialization() throws IOException {
-    Picture picture = new Picture(validImageFile);
+    var picture = new Picture(validImageFile);
 
     assertEquals(validImageFile.getName(), picture.getName());
     assertEquals(bufferedImage.getHeight(), picture.getImage().getHeight(null));
@@ -46,7 +46,7 @@ class PictureTest {
 
   @Test
   void testIsProportionedImage() throws IOException {
-    Picture picture = new Picture(validImageFile);
+    var picture = new Picture(validImageFile);
 
     assertTrue(picture.isProportionedImage());
   }
@@ -59,14 +59,14 @@ class PictureTest {
         new BufferedImage(300, 100, BufferedImage.TYPE_INT_RGB);
     ImageIO.write(disproportionedBufferedImage, "jpg", disproportionedImageFile);
 
-    Picture picture = new Picture(disproportionedImageFile);
+    var picture = new Picture(disproportionedImageFile);
 
     assertFalse(picture.isProportionedImage());
   }
 
   @Test
   void testIsValidImageSize() throws IOException {
-    Picture picture = new Picture(validImageFile);
+    var picture = new Picture(validImageFile);
 
     assertTrue(picture.isValidImageSize());
   }
@@ -78,7 +78,7 @@ class PictureTest {
     BufferedImage smallBufferedImage = new BufferedImage(30, 30, BufferedImage.TYPE_INT_RGB);
     ImageIO.write(smallBufferedImage, "jpg", smallImageFile);
 
-    Picture picture = new Picture(smallImageFile);
+    var picture = new Picture(smallImageFile);
 
     assertFalse(picture.isValidImageSize());
   }
