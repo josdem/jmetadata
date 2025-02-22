@@ -70,7 +70,7 @@ class MetadataWriterTest {
   @DisplayName("writing artist")
   void shouldWriteArtist(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String artist = "Markus Schulz";
+    var artist = "Markus Schulz";
     metadataWriter.writeArtist(artist);
 
     verify(tag).setField(FieldKey.ARTIST, artist);
@@ -81,7 +81,7 @@ class MetadataWriterTest {
   @DisplayName("not writing artist due to exception")
   void shouldNotWriteArtist(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String artist = "Markus Schulz";
+    var artist = "Markus Schulz";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ARTIST, artist);
     assertThrows(BusinessException.class, () -> metadataWriter.writeArtist(artist));
@@ -91,7 +91,7 @@ class MetadataWriterTest {
   @DisplayName("writing track name")
   void shouldWriteTrackName(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String trackName = "Nowhere";
+    var trackName = "Nowhere";
     metadataWriter.writeTitle(trackName);
 
     verify(tag).setField(FieldKey.TITLE, trackName);
@@ -102,7 +102,7 @@ class MetadataWriterTest {
   @DisplayName("not writing track name due to exception")
   void shouldNotWriteTrackName(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String trackName = "Nowhere";
+    var trackName = "Nowhere";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.TITLE, trackName);
     assertThrows(BusinessException.class, () -> metadataWriter.writeTitle(trackName));
@@ -112,7 +112,7 @@ class MetadataWriterTest {
   @DisplayName("writing album")
   void shouldWriteAlbum(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String album = "Sahara Nights";
+    var album = "Sahara Nights";
     metadataWriter.writeAlbum(album);
 
     verify(tag).setField(FieldKey.ALBUM, album);
@@ -123,7 +123,7 @@ class MetadataWriterTest {
   @DisplayName("not writing album due to exception")
   void shouldNotWriteAlbum(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String album = "Sahara Nights";
+    var album = "Sahara Nights";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ALBUM, album);
     assertThrows(BusinessException.class, () -> metadataWriter.writeAlbum(album));
@@ -133,7 +133,7 @@ class MetadataWriterTest {
   @DisplayName("writing track number")
   void shouldWriteTrackNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String trackNumber = "1";
+    var trackNumber = "1";
 
     metadataWriter.writeTrackNumber(trackNumber);
     verify(tag).setField(FieldKey.TRACK, trackNumber);
@@ -165,7 +165,7 @@ class MetadataWriterTest {
   @DisplayName("not writing total tracks number due to exception")
   void shouldNotWriteTotalTracksNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String totalTracksNumber = "10";
+    var totalTracksNumber = "10";
 
     doThrow(FieldDataInvalidException.class)
         .when(tag)
@@ -202,9 +202,9 @@ class MetadataWriterTest {
   @DisplayName("writing cd number")
   void shouldWriteCdNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String cdNumber = "1";
+    var cdNumber = "1";
 
-    boolean result = metadataWriter.writeCdNumber(cdNumber);
+    var result = metadataWriter.writeCdNumber(cdNumber);
 
     verify(tag).setField(FieldKey.DISC_NO, cdNumber);
     verify(audioFile).commit();
@@ -215,7 +215,7 @@ class MetadataWriterTest {
   @DisplayName("not writing cd number due to exception")
   void shouldNotWriteCdNumber(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String cdNumber = "1";
+    var cdNumber = "1";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.DISC_NO, cdNumber);
     assertThrows(BusinessException.class, () -> metadataWriter.writeCdNumber(cdNumber));
@@ -225,9 +225,9 @@ class MetadataWriterTest {
   @DisplayName("writing total cds")
   void shouldWriteTotalCds(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String totalCds = "2";
+    var totalCds = "2";
 
-    boolean result = metadataWriter.writeTotalCds(totalCds);
+    var result = metadataWriter.writeTotalCds(totalCds);
 
     verify(tag).setField(FieldKey.DISC_TOTAL, totalCds);
     verify(audioFile).commit();
@@ -238,35 +238,45 @@ class MetadataWriterTest {
   @DisplayName("not writing total cds due to exception")
   void shouldNotWriteTotalCds(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    String totalCds = "2";
+    var totalCds = "2";
 
     doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.DISC_TOTAL, totalCds);
     assertThrows(BusinessException.class, () -> metadataWriter.writeTotalCds(totalCds));
   }
 
   @Test
-  public void shouldNotWritetotalTracksNumberTrackNumberIfEmptyString() throws Exception {
+  @DisplayName("not writing total tracks number if empty string")
+  void shouldNotWriteTotalTracksNumberTrackNumberIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeTrackNumber(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldNotWriteTotalTracksNumberIfEmptyString() throws Exception {
+  @DisplayName("not writing total tracks number if empty string")
+  void shouldNotWriteTotalTracksNumberIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeTotalTracksNumber(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldNotWriteCdNumberIfEmptyString() throws Exception {
+  @DisplayName("not writing cd number if empty string")
+  void shouldNotWriteCdNumberIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeCdNumber(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldNotWriteTotalCdsIfEmptyString() throws Exception {
+  @DisplayName("not writing total cds if empty string")
+  void shouldNotWriteTotalCdsIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeTotalCds(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldWriteYear() throws Exception {
-    String year = "1990";
+  @DisplayName("writing year")
+  void shouldWriteYear(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var year = "1990";
 
     metadataWriter.writeYear(year);
     verify(tag).setField(FieldKey.YEAR, year);
@@ -274,17 +284,31 @@ class MetadataWriterTest {
   }
 
   @Test
-  public void shouldNotWriteYearIfEmptyString() throws Exception {
+  @DisplayName("not writing year due to exception")
+  void shouldNotWriteYearIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeYear(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldWriteGenre() throws Exception {
-    String genre = "Minimal Techno";
+  @DisplayName("writing genre")
+  void shouldWriteGenre(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var genre = "Minimal Techno";
 
     metadataWriter.writeGenre(genre);
     verify(tag).setField(FieldKey.GENRE, genre);
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing genre due to exception")
+  void shouldNotWriteGenre(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var genre = "Minimal Techno";
+
+    doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.GENRE, genre);
+    assertThrows(BusinessException.class, () -> metadataWriter.writeGenre(genre));
   }
 
   @Test
