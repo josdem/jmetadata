@@ -78,7 +78,7 @@ public class MetadataWriter {
       tag.setField(FieldKey.TITLE, trackName);
       audioFile.commit();
     } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
-      log.error(kne.getMessage(), kne);
+      throw new BusinessException(kne.getMessage());
     }
   }
 
@@ -88,7 +88,7 @@ public class MetadataWriter {
       audioFile.commit();
       return true;
     } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
-      throw new MetadataException(kne.getMessage());
+      throw new BusinessException(kne.getMessage());
     }
   }
 

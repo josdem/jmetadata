@@ -42,7 +42,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
@@ -110,12 +109,24 @@ class MetadataWriterTest {
   }
 
   @Test
-  public void shouldWriteAlbum() throws Exception {
+  @DisplayName("writing album")
+  void shouldWriteAlbum(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     String album = "Sahara Nights";
     metadataWriter.writeAlbum(album);
 
     verify(tag).setField(FieldKey.ALBUM, album);
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing album due to exception")
+  void shouldNotWriteAlbum(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    String album = "Sahara Nights";
+
+    doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ALBUM, album);
+    assertThrows(BusinessException.class, () -> metadataWriter.writeAlbum(album));
   }
 
   @Test
