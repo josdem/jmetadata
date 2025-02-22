@@ -222,7 +222,9 @@ class MetadataWriterTest {
   }
 
   @Test
-  public void shouldWriteTotalCds() throws Exception {
+  @DisplayName("writing total cds")
+  void shouldWriteTotalCds(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     String totalCds = "2";
 
     boolean result = metadataWriter.writeTotalCds(totalCds);
@@ -230,6 +232,16 @@ class MetadataWriterTest {
     verify(tag).setField(FieldKey.DISC_TOTAL, totalCds);
     verify(audioFile).commit();
     assertTrue(result);
+  }
+
+  @Test
+  @DisplayName("not writing total cds due to exception")
+  void shouldNotWriteTotalCds(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    String totalCds = "2";
+
+    doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.DISC_TOTAL, totalCds);
+    assertThrows(BusinessException.class, () -> metadataWriter.writeTotalCds(totalCds));
   }
 
   @Test
