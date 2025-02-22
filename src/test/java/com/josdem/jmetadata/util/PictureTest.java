@@ -2,106 +2,84 @@ package com.josdem.jmetadata.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PictureTest {
 
-    private File imageFile;
-    private BufferedImage bufferedImage;
+  private File validImageFile;
+  private File invalidImageFile;
+  private BufferedImage bufferedImage;
 
-    @BeforeEach
-    void setUp() throws IOException {
-        imageFile = mock(File.class);
-        bufferedImage = mock(BufferedImage.class);
-    }
+  @BeforeEach
+  void setUp() throws IOException {
+    // Create a temporary valid image file
+    validImageFile = File.createTempFile("testImage", ".jpg");
+    bufferedImage = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
+    ImageIO.write(bufferedImage, "jpg", validImageFile);
 
-    @Test
-    void testPictureInitialization() throws IOException {
-        when(imageFile.getName()).thenReturn("testImage.jpg");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(bufferedImage);
-        when(bufferedImage.getHeight()).thenReturn(100);
-        when(bufferedImage.getWidth()).thenReturn(200);
+    // Create a temporary invalid image file
+    invalidImageFile = File.createTempFile("invalidImage", ".txt");
+  }
 
-        var picture = new Picture(imageFile);
+  @Test
+  void testPictureInitialization() throws IOException {
+    Picture picture = new Picture(validImageFile);
 
-        assertEquals("testImage.jpg", picture.getName());
-        assertEquals(bufferedImage, picture.getImage());
-        assertEquals(100, picture.getImage().getHeight(null));
-        assertEquals(200, picture.getImage().getWidth(null));
-    }
+    assertEquals(validImageFile.getName(), picture.getName());
+    assertEquals(bufferedImage.getHeight(), picture.getImage().getHeight(null));
+    assertEquals(bufferedImage.getWidth(), picture.getImage().getWidth(null));
+  }
 
-    @Test
-    void testPictureInitializationWithInvalidImage() throws IOException {
-        when(imageFile.getName()).thenReturn("invalidImage.txt");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(null);
+  @Test
+  void testPictureInitializationWithInvalidImage() throws IOException {
+    assertThrows(
+        IllegalArgumentException.class, () -> new Picture(invalidImageFile), "not an image");
+  }
 
-        assertThrows(IllegalArgumentException.class, () -> new Picture(imageFile), "not an image");
-    }
+  @Test
+  void testIsProportionedImage() throws IOException {
+    Picture picture = new Picture(validImageFile);
 
-    @Test
-    void testIsProportionedImage() throws IOException {
-        when(imageFile.getName()).thenReturn("testImage.jpg");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(bufferedImage);
-        when(bufferedImage.getHeight()).thenReturn(100);
-        when(bufferedImage.getWidth()).thenReturn(200);
+    assertTrue(picture.isProportionedImage());
+  }
 
-        var picture = new Picture(imageFile);
+  @Test
+  void testIsNotProportionedImage() throws IOException {
+    // Create a temporary image file with different proportions
+    File disproportionedImageFile = File.createTempFile("disproportionedImage", ".jpg");
+    BufferedImage disproportionedBufferedImage =
+        new BufferedImage(300, 100, BufferedImage.TYPE_INT_RGB);
+    ImageIO.write(disproportionedBufferedImage, "jpg", disproportionedImageFile);
 
-        assertTrue(picture.isProportionedImage());
-    }
+    Picture picture = new Picture(disproportionedImageFile);
 
-    @Test
-    void testIsNotProportionedImage() throws IOException {
-        when(imageFile.getName()).thenReturn("testImage.jpg");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(bufferedImage);
-        when(bufferedImage.getHeight()).thenReturn(100);
-        when(bufferedImage.getWidth()).thenReturn(300);
+    assertFalse(picture.isProportionedImage());
+  }
 
-        var picture = new Picture(imageFile);
+  @Test
+  void testIsValidImageSize() throws IOException {
+    Picture picture = new Picture(validImageFile);
 
-        assertFalse(picture.isProportionedImage());
-    }
+    assertTrue(picture.isValidImageSize());
+  }
 
-    @Test
-    void testIsValidImageSize() throws IOException {
-        when(imageFile.getName()).thenReturn("testImage.jpg");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(bufferedImage);
-        when(bufferedImage.getHeight()).thenReturn(100);
-        when(bufferedImage.getWidth()).thenReturn(200);
+  @Test
+  void testIsNotValidImageSize() throws IOException {
+    // Create a temporary image file with small size
+    File smallImageFile = File.createTempFile("smallImage", ".jpg");
+    BufferedImage smallBufferedImage = new BufferedImage(30, 30, BufferedImage.TYPE_INT_RGB);
+    ImageIO.write(smallBufferedImage, "jpg", smallImageFile);
 
-        var picture = new Picture(imageFile);
+    Picture picture = new Picture(smallImageFile);
 
-        assertTrue(picture.isValidImageSize());
-    }
-
-    @Test
-    void testIsNotValidImageSize() throws IOException {
-        when(imageFile.getName()).thenReturn("testImage.jpg");
-        when(imageFile.exists()).thenReturn(true);
-        when(ImageIO.read(imageFile)).thenReturn(bufferedImage);
-        when(bufferedImage.getHeight()).thenReturn(30);
-        when(bufferedImage.getWidth()).thenReturn(30);
-
-        var picture = new Picture(imageFile);
-
-        assertFalse(picture.isValidImageSize());
-    }
+    assertFalse(picture.isValidImageSize());
+  }
 }
