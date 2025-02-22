@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.action.ActionResult;
-import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.metadata.MetadataWriter;
 import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
@@ -33,12 +33,16 @@ import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import java.awt.Image;
 import java.io.File;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+@Slf4j
 class CompleteControllerTest {
   private static final String ERROR = "Error";
 
@@ -120,11 +124,13 @@ class CompleteControllerTest {
   }
 
   @Test
-  public void shouldNotUpdateMetadata() throws Exception {
+  @DisplayName("not completing metadata")
+  void shouldNotUpdateMetadata(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     when(metadata.getFile()).thenReturn(file);
-    when(metadataWriter.writeAlbum(album)).thenThrow(new MetadataException(ERROR));
+    when(metadataWriter.writeAlbum(album)).thenThrow(new BusinessException(ERROR));
 
-    ActionResult result = controller.completeAlbum(metadata);
+    var result = controller.completeAlbum(metadata);
 
     assertEquals(ActionResult.Error, result);
   }

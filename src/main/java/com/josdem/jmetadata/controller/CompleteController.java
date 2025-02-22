@@ -18,7 +18,7 @@ package com.josdem.jmetadata.controller;
 
 import com.josdem.jmetadata.action.ActionResult;
 import com.josdem.jmetadata.action.Actions;
-import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.CoverArtRetrofitHelper;
 import com.josdem.jmetadata.helper.RetrofitHelper;
 import com.josdem.jmetadata.metadata.MetadataWriter;
@@ -145,8 +145,8 @@ public class CompleteController {
         metadata.setCoverArt(coverArtNew.getImage());
       }
       return ActionResult.Updated;
-    } catch (MetadataException mde) {
-      log.error(mde.getMessage(), mde);
+    } catch (BusinessException bse) {
+      log.error(bse.getMessage(), bse);
       return ActionResult.Error;
     }
   }

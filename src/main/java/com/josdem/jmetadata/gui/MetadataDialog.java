@@ -124,7 +124,7 @@ public class MetadataDialog extends AllDialog {
   private JLabel cdsLabel;
   private JPanel imagePanel;
   private Image coverArt;
-  private ImageUtils imageUtils;
+  private final transient ImageUtils imageUtils;
   private MetadataHelper metadataHelper = new MetadataHelper();
   private MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
   private final ControlEngineConfigurator configurator;

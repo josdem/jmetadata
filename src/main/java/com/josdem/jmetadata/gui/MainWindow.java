@@ -87,10 +87,6 @@ import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-
-/**
- * @understands A principal JAudioScrobbler principal window
- */
 @SuppressWarnings("unused")
 public class MainWindow extends JFrame {
   private static final long serialVersionUID = 1311230231101552007L;
@@ -170,7 +166,6 @@ public class MainWindow extends JFrame {
   private JMenuItem exitMenuItem;
   private InputMap inputMap;
   private JScrollPane scrollPane;
-  private ImageUtils imageUtils;
   private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
   private MetadataAdapter metadataAdapter = new MetadataAdapter();
   private DialogHelper dialogHelper = new DialogHelper();
@@ -186,7 +181,7 @@ public class MainWindow extends JFrame {
 
   public MainWindow() {
     super(ApplicationConstants.APPLICATION_NAME);
-    imageUtils = new ImageUtils(new ImageServiceImpl(), new FileUtils());
+    ImageUtils imageUtils = new ImageUtils(new ImageServiceImpl(), new FileUtils());
     initialize();
     getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
   }

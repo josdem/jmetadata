@@ -17,7 +17,6 @@
 package com.josdem.jmetadata.metadata;
 
 import com.josdem.jmetadata.exception.BusinessException;
-import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
@@ -82,7 +81,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeAlbum(String album) throws MetadataException {
+  public boolean writeAlbum(String album) {
     try {
       tag.setField(FieldKey.ALBUM, album);
       audioFile.commit();
@@ -92,7 +91,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeTrackNumber(String trackNumber) throws MetadataException {
+  public boolean writeTrackNumber(String trackNumber) {
     try {
       if (StringUtils.isEmpty(trackNumber)) {
         return false;
@@ -105,7 +104,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeTotalTracksNumber(String totalTracksNumber) throws MetadataException {
+  public boolean writeTotalTracksNumber(String totalTracksNumber) {
     try {
       if (StringUtils.isEmpty(totalTracksNumber)) {
         return false;
@@ -118,7 +117,7 @@ public class MetadataWriter {
     }
   }
 
-  public void writeCoverArt(Image lastfmCoverArt) throws MetadataException {
+  public void writeCoverArt(Image lastfmCoverArt) {
     try {
       File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt);
       Artwork artwork = artworkHelper.createArtwork();
@@ -134,7 +133,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean removeCoverArt() throws MetadataException {
+  public boolean removeCoverArt() {
     try {
       tag.deleteArtworkField();
       audioFile.commit();
@@ -144,7 +143,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeCdNumber(String cdNumber) throws MetadataException {
+  public boolean writeCdNumber(String cdNumber) {
     try {
       if (StringUtils.isEmpty(cdNumber)) {
         return false;
@@ -160,7 +159,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeTotalCds(String totalCds) throws MetadataException {
+  public boolean writeTotalCds(String totalCds) {
     try {
       if (StringUtils.isEmpty(totalCds)) {
         return false;
@@ -176,7 +175,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeYear(String year) throws MetadataException {
+  public boolean writeYear(String year) {
     try {
       if (StringUtils.isEmpty(year)) {
         return false;
@@ -192,7 +191,7 @@ public class MetadataWriter {
     }
   }
 
-  public boolean writeGenre(String genre) throws MetadataException {
+  public boolean writeGenre(String genre) {
     try {
       if (StringUtils.isEmpty(genre)) {
         return false;
