@@ -50,12 +50,11 @@ class MethodWrapperTest {
   void testMethodWrapperInitializationWithInvalidMethod() {
     assertThrows(
         RuntimeException.class,
-        () -> {
-          MethodWrapper.forClass("com.josdem.jmetadata.util.NonExistentClass")
-              .method("nonExistentMethod")
-              .withParameters(String.class)
-              .andReturnType(String.class);
-        });
+        () ->
+            MethodWrapper.forClass("com.josdem.jmetadata.util.NonExistentClass")
+                .method("nonExistentMethod")
+                .withParameters(String.class)
+                .andReturnType(String.class));
   }
 
   @Test
