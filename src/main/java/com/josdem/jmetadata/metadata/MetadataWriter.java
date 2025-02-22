@@ -54,16 +54,8 @@ public class MetadataWriter {
     try {
       audioFile = audioFileIOHelper.read(file);
       tag = audioFile.getTag();
-    } catch (CannotReadException nre) {
+    } catch (CannotReadException | IOException | TagException | ReadOnlyFileException | InvalidAudioFrameException nre) {
       log.error(nre.getMessage(), nre);
-    } catch (IOException ioe) {
-      log.error(ioe.getMessage(), ioe);
-    } catch (TagException tae) {
-      log.error(tae.getMessage(), tae);
-    } catch (ReadOnlyFileException roe) {
-      log.error(roe.getMessage(), roe);
-    } catch (InvalidAudioFrameException iae) {
-      log.error(iae.getMessage(), iae);
     }
   }
 
@@ -71,12 +63,8 @@ public class MetadataWriter {
     try {
       tag.setField(FieldKey.ARTIST, artist);
       audioFile.commit();
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
       log.error(kne.getMessage(), kne);
-    } catch (FieldDataInvalidException fie) {
-      log.error(fie.getMessage(), fie);
-    } catch (CannotWriteException nwe) {
-      log.error(nwe.getMessage(), nwe);
     }
   }
 
@@ -84,12 +72,8 @@ public class MetadataWriter {
     try {
       tag.setField(FieldKey.TITLE, trackName);
       audioFile.commit();
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
       log.error(kne.getMessage(), kne);
-    } catch (FieldDataInvalidException fie) {
-      log.error(fie.getMessage(), fie);
-    } catch (CannotWriteException nwe) {
-      log.error(nwe.getMessage(), nwe);
     }
   }
 
@@ -98,12 +82,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.ALBUM, album);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
     }
   }
 
@@ -115,12 +95,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.TRACK, trackNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
     }
   }
 
@@ -132,33 +108,21 @@ public class MetadataWriter {
       tag.setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
     }
   }
 
-  public boolean writeCoverArt(Image lastfmCoverArt) throws MetadataException {
+  public void writeCoverArt(Image lastfmCoverArt) throws MetadataException {
     try {
       File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt);
       Artwork artwork = artworkHelper.createArtwork();
       artwork.setFromFile(coverArtFile);
       tag.setField(artwork);
       audioFile.commit();
-      return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException | IOException |
+             NullPointerException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (IOException ioe) {
-      throw new MetadataException(ioe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
     }
   }
 
@@ -167,10 +131,8 @@ public class MetadataWriter {
       tag.deleteArtworkField();
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | CannotWriteException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
     }
   }
 
@@ -182,14 +144,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.DISC_NO, cdNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException | NullPointerException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
     }
   }
 
@@ -201,14 +157,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.DISC_TOTAL, totalCds);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException | NullPointerException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
     }
   }
 
@@ -220,14 +170,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.YEAR, year);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException | NullPointerException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
     }
   }
 
@@ -239,14 +183,8 @@ public class MetadataWriter {
       tag.setField(FieldKey.GENRE, genre);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException | NullPointerException kne) {
       throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
     }
   }
 }
