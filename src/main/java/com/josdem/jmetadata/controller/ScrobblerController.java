@@ -46,8 +46,12 @@ public class ScrobblerController {
     try {
       log.info("Sending scrobbling for: {}", metadata.getTitle());
       return scrobblerHelper.send(metadata);
-    } catch (IOException | InterruptedException ioe) {
+    } catch (IOException ioe) {
       log.error(ioe.getMessage(), ioe);
+      return ActionResult.ERROR;
+    } catch (InterruptedException e) {
+      log.warn("Thread was interrupted", e);
+      Thread.currentThread().interrupt();
       return ActionResult.ERROR;
     }
   }
