@@ -130,7 +130,7 @@ public class MetadataWriter {
         | CannotWriteException
         | IOException
         | NullPointerException kne) {
-      throw new MetadataException(kne.getMessage());
+      throw new BusinessException(kne.getMessage());
     }
   }
 

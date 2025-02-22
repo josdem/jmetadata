@@ -175,7 +175,9 @@ class MetadataWriterTest {
   }
 
   @Test
-  public void shouldWriteCoverArt() throws Exception {
+  @DisplayName("writing cover art")
+  void shouldWriteCoverArt(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     when(imageUtils.saveCoverArtToFile(image)).thenReturn(file);
     when(artworkHelper.createArtwork()).thenReturn(artwork);
 
@@ -185,6 +187,15 @@ class MetadataWriterTest {
     verify(artwork).setFromFile(file);
     verify(tag).setField(isA(Artwork.class));
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing cover art due to exception")
+  void shouldNotWriteCoverArt(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    doThrow(FieldDataInvalidException.class).when(tag).setField(isA(Artwork.class));
+    assertThrows(BusinessException.class, () -> metadataWriter.writeCoverArt(image));
   }
 
   @Test
