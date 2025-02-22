@@ -25,18 +25,22 @@ import static org.mockito.Mockito.when;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
-import java.awt.*;
+import java.awt.Image;
 import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+@Slf4j
 class MetadataWriterTest {
   private MetadataWriter metadataWriter;
 
@@ -50,22 +54,18 @@ class MetadataWriterTest {
   @Mock private Artwork artwork;
 
   @BeforeEach
-  public void initialize() {
+  void setup() throws Exception {
     MockitoAnnotations.openMocks(this);
+    when(audioFileHelper.read(file)).thenReturn(audioFile);
     when(audioFile.getTag()).thenReturn(tag);
     metadataWriter = new MetadataWriter(imageUtils, audioFileHelper, artworkHelper);
-  }
-
-  @Test
-  public void shouldSetFile() throws Exception {
-    when(audioFileHelper.read(file)).thenReturn(audioFile);
     metadataWriter.setFile(file);
-
-    verify(audioFile).getTag();
   }
 
   @Test
-  public void shouldWriteArtist() throws Exception {
+  @DisplayName("writing artist")
+  void shouldWriteArtist(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     String artist = "Markus Schulz";
     metadataWriter.writeArtist(artist);
 
