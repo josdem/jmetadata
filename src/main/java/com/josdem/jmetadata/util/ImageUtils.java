@@ -18,13 +18,11 @@ package com.josdem.jmetadata.util;
 
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
-import com.josdem.jmetadata.service.impl.ImageServiceImpl;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

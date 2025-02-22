@@ -36,6 +36,8 @@ import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.model.User;
 import com.josdem.jmetadata.observer.ObservValue;
 import com.josdem.jmetadata.observer.Observer;
+import com.josdem.jmetadata.service.impl.ImageServiceImpl;
+import com.josdem.jmetadata.util.FileUtils;
 import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -168,7 +170,7 @@ public class MainWindow extends JFrame {
   private JMenuItem exitMenuItem;
   private InputMap inputMap;
   private JScrollPane scrollPane;
-  private ImageUtils imageUtils = new ImageUtils();
+  private ImageUtils imageUtils;
   private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
   private MetadataAdapter metadataAdapter = new MetadataAdapter();
   private DialogHelper dialogHelper = new DialogHelper();
@@ -184,6 +186,7 @@ public class MainWindow extends JFrame {
 
   public MainWindow() {
     super(ApplicationConstants.APPLICATION_NAME);
+    imageUtils = new ImageUtils(new ImageServiceImpl(), new FileUtils());
     initialize();
     getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
   }

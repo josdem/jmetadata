@@ -23,7 +23,6 @@ import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -32,7 +32,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -41,7 +40,7 @@ class ImageUtilsTest {
 
   private static final Integer THREE_HUNDRED = 300;
 
-  @InjectMocks private final ImageUtils imageUtils = new ImageUtils();
+  private ImageUtils imageUtils;
 
   @Mock private ImageService imageService;
   @Mock private Image image;
@@ -52,6 +51,7 @@ class ImageUtilsTest {
   @BeforeEach
   public void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
+    imageUtils = new ImageUtils(imageService, fileUtils);
   }
 
   @Test

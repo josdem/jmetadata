@@ -34,12 +34,11 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class MetadataWriterTest {
-  @InjectMocks private final MetadataWriter metadataWriter = new MetadataWriter();
+  private MetadataWriter metadataWriter;
 
   @Mock private AudioFile audioFile;
   @Mock private Tag tag;
@@ -52,8 +51,9 @@ class MetadataWriterTest {
 
   @BeforeEach
   public void initialize() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     when(audioFile.getTag()).thenReturn(tag);
+    metadataWriter = new MetadataWriter(imageUtils, audioFileHelper, artworkHelper);
   }
 
   @Test
