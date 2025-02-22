@@ -312,12 +312,16 @@ class MetadataWriterTest {
   }
 
   @Test
-  public void shouldNotWriteGenreIfEmptyString() throws Exception {
+  @DisplayName("not writing genre if empty string")
+  void shouldNotWriteGenreIfEmptyString(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertFalse(metadataWriter.writeGenre(StringUtils.EMPTY));
   }
 
   @Test
-  public void shouldRemoveCoverArt() throws Exception {
+  @DisplayName("removing cover art")
+  void shouldRemoveCoverArt(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     assertTrue(metadataWriter.removeCoverArt());
 
     verify(tag).deleteArtworkField();
