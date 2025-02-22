@@ -25,19 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DnDListenerCollection<T extends DragAndDropListener> {
-  private Map<Component, List<T>> listeners = new HashMap<Component, List<T>>();
+  private Map<Component, List<T>> listeners = new HashMap<>();
 
   public void put(Component component, T listener) {
-    List<T> listeners = null;
+    List<T> componentListeners = null;
     synchronized (this.listeners) {
-      listeners = this.listeners.get(component);
-      if (listeners == null) {
-        listeners = new ArrayList<T>();
-        this.listeners.put(component, listeners);
+      componentListeners = this.listeners.get(component);
+      if (componentListeners == null) {
+        componentListeners = new ArrayList<>();
+        this.listeners.put(component, componentListeners);
       }
     }
-    synchronized (listeners) {
-      for (T t : listeners) {
+    synchronized (componentListeners) {
+      for (T t : componentListeners) {
         if (t.getClass().equals(listener.getClass()) && t.equals(listener)) {
           log.warn(
               "DUPLICATE HANDLER FOR COMPONENT: "
@@ -47,7 +47,7 @@ public class DnDListenerCollection<T extends DragAndDropListener> {
           return;
         }
       }
-      listeners.add(listener);
+      componentListeners.add(listener);
     }
   }
 
@@ -56,23 +56,23 @@ public class DnDListenerCollection<T extends DragAndDropListener> {
   }
 
   public void remove(Component component, T listener) {
-    List<T> listeners = this.listeners.get(component);
-    if (listeners != null) {
-      listeners.remove(listener);
-      if (listeners.isEmpty()) {
+    List<T> componentListeners = this.listeners.get(component);
+    if (componentListeners != null) {
+      componentListeners.remove(listener);
+      if (componentListeners.isEmpty()) {
         this.listeners.remove(component);
       }
     }
   }
 
   public DnDListenerEntries<T> getInmediateEntries(Class<?> clazz, Component component) {
-    DnDListenerEntries<T> entries = new DnDListenerEntries<T>();
+    DnDListenerEntries<T> entries = new DnDListenerEntries<>();
     if (component == null) {
       return entries;
     }
-    List<T> listeners = this.listeners.get(component);
-    if (listeners != null) {
-      for (T t : listeners) {
+    List<T> componentListeners = this.listeners.get(component);
+    if (componentListeners != null) {
+      for (T t : componentListeners) {
         entries.put(clazz, component, t);
       }
     }
@@ -84,7 +84,7 @@ public class DnDListenerCollection<T extends DragAndDropListener> {
   }
 
   public DnDListenerEntries<T> getUpwardEntries(Class<?> clazz, Component c) {
-    DnDListenerEntries<T> dragOverListeners = new DnDListenerEntries<T>();
+    DnDListenerEntries<T> dragOverListeners = new DnDListenerEntries<>();
     addListenersToMotionMap(clazz, c, dragOverListeners);
     return dragOverListeners;
   }
@@ -93,9 +93,9 @@ public class DnDListenerCollection<T extends DragAndDropListener> {
     if (c == null) {
       return;
     }
-    List<T> list = listeners.get(c);
-    if (list != null) {
-      for (T t : list) {
+    List<T> componentListeners = listeners.get(c);
+    if (componentListeners != null) {
+      for (T t : componentListeners) {
         result.put(clazz, c, t);
       }
     }
