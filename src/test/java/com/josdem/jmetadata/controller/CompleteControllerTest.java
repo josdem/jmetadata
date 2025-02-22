@@ -69,7 +69,7 @@ class CompleteControllerTest {
   private String totalCds = "2";
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     MockitoAnnotations.initMocks(this);
 
     when(metadata.getArtist()).thenReturn(artist);

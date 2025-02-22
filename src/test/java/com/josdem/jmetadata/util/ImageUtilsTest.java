@@ -49,14 +49,14 @@ class ImageUtilsTest {
   @Mock private File root;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() {
     MockitoAnnotations.initMocks(this);
     imageUtils = new ImageUtils(imageService, fileUtils);
   }
 
   @Test
   @DisplayName("saving cover art to file")
-  public void shouldSaveCoverArtToFile(TestInfo testInfo) throws Exception {
+  void shouldSaveCoverArtToFile(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(imageService.createTempFile()).thenReturn(file);
     when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
@@ -68,7 +68,7 @@ class ImageUtilsTest {
 
   @Test
   @DisplayName("not saving cover art if no image")
-  public void shouldNotSaveCoverArtIfNoImage(TestInfo testInfo) throws Exception {
+  void shouldNotSaveCoverArtIfNoImage(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     imageUtils.saveCoverArtToFile(null);
 
@@ -77,7 +77,7 @@ class ImageUtilsTest {
 
   @Test
   @DisplayName("not saving cover art if no root file")
-  public void shouldNotSaveCoverArtIfRootAndNoImage(TestInfo testInfo) throws Exception {
+  void shouldNotSaveCoverArtIfRootAndNoImage(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
 
@@ -86,7 +86,7 @@ class ImageUtilsTest {
 
   @Test
   @DisplayName("saving cover art to file with custom prefix and path")
-  public void shouldSaveImageToFile() throws Exception {
+  void shouldSaveImageToFile() throws Exception {
     var prefix = "MIRI_";
     var path = "PATH";
     when(fileUtils.createFile(root, prefix, ApplicationConstants.IMAGE_EXT)).thenReturn(file);
