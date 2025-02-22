@@ -101,7 +101,7 @@ public class MetadataWriter {
       audioFile.commit();
       return true;
     } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
-      throw new MetadataException(kne.getMessage());
+      throw new BusinessException(kne.getMessage());
     }
   }
 
