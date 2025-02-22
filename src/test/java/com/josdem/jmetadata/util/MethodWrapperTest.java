@@ -33,12 +33,12 @@ class MethodWrapperTest {
     Constructor<MethodWrapper> constructor =
         MethodWrapper.class.getDeclaredConstructor(Method.class, Class.class);
     constructor.setAccessible(true);
-    MethodWrapper<String> methodWrapper = constructor.newInstance(method, String.class);
+    MethodWrapper<String> localMethodWrapper = constructor.newInstance(method, String.class);
 
     Method checkMethod = MethodWrapper.class.getDeclaredMethod("check");
     checkMethod.setAccessible(true);
     MethodWrapper<String> checkedMethodWrapper =
-        (MethodWrapper<String>) checkMethod.invoke(methodWrapper);
+        (MethodWrapper<String>) checkMethod.invoke(localMethodWrapper);
 
     Field methodField = MethodWrapper.class.getDeclaredField("method");
     methodField.setAccessible(true);
@@ -71,10 +71,11 @@ class MethodWrapperTest {
     Constructor<MethodWrapper> constructor =
         MethodWrapper.class.getDeclaredConstructor(Method.class, Class.class);
     constructor.setAccessible(true);
-    MethodWrapper<String> methodWrapper = constructor.newInstance(null, null);
-    MethodWrapper<String>.UsingMethodWrapper<String> usingMethodWrapper = methodWrapper.using(null);
+    MethodWrapper<String> localMethodWrapper = constructor.newInstance(null, null);
+    MethodWrapper<String>.UsingMethodWrapper<String> localUsingMethodWrapper =
+        localMethodWrapper.using(null);
 
-    assertNull(usingMethodWrapper.invoke("test"));
+    assertNull(localUsingMethodWrapper.invoke("test"));
   }
 
   @Test
