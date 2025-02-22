@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PictureTest {
@@ -30,8 +31,9 @@ class PictureTest {
   }
 
   @Test
+  @DisplayName("initializing a valid image")
   void testPictureInitialization() throws IOException {
-    var picture = new Picture(validImageFile);
+    Picture picture = new Picture(validImageFile);
 
     assertEquals(validImageFile.getName(), picture.getName());
     assertEquals(bufferedImage.getHeight(), picture.getImage().getHeight(null));
@@ -39,19 +41,22 @@ class PictureTest {
   }
 
   @Test
+  @DisplayName("initializing an invalid image")
   void testPictureInitializationWithInvalidImage() {
     assertThrows(
         IllegalArgumentException.class, () -> new Picture(invalidImageFile), "not an image");
   }
 
   @Test
+  @DisplayName("checking if the image is proportioned")
   void testIsProportionedImage() throws IOException {
-    var picture = new Picture(validImageFile);
+    Picture picture = new Picture(validImageFile);
 
     assertTrue(picture.isProportionedImage());
   }
 
   @Test
+  @DisplayName("checking if the image is not proportioned")
   void testIsNotProportionedImage() throws IOException {
     // Create a temporary image file with different proportions
     File disproportionedImageFile = File.createTempFile("disproportionedImage", ".jpg");
@@ -59,26 +64,28 @@ class PictureTest {
         new BufferedImage(300, 100, BufferedImage.TYPE_INT_RGB);
     ImageIO.write(disproportionedBufferedImage, "jpg", disproportionedImageFile);
 
-    var picture = new Picture(disproportionedImageFile);
+    Picture picture = new Picture(disproportionedImageFile);
 
     assertFalse(picture.isProportionedImage());
   }
 
   @Test
+  @DisplayName("checking if the image size is valid")
   void testIsValidImageSize() throws IOException {
-    var picture = new Picture(validImageFile);
+    Picture picture = new Picture(validImageFile);
 
     assertTrue(picture.isValidImageSize());
   }
 
   @Test
+  @DisplayName("checking if the image size is not valid")
   void testIsNotValidImageSize() throws IOException {
     // Create a temporary image file with small size
     File smallImageFile = File.createTempFile("smallImage", ".jpg");
     BufferedImage smallBufferedImage = new BufferedImage(30, 30, BufferedImage.TYPE_INT_RGB);
     ImageIO.write(smallBufferedImage, "jpg", smallImageFile);
 
-    var picture = new Picture(smallImageFile);
+    Picture picture = new Picture(smallImageFile);
 
     assertFalse(picture.isValidImageSize());
   }
