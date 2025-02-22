@@ -30,10 +30,14 @@ public class DragAndDropActionEmpty implements DragAndDropAction {
   }
 
   @Override
-  public void dragExit() {}
+  public void dragExit() {
+    throw new UnsupportedOperationException("dragExit() is not implemented");
+  }
 
   @Override
-  public void setLocation(Point location) {}
+  public void setLocation(Point location) {
+    throw new UnsupportedOperationException("setLocation() is not implemented");
+  }
 
   @Override
   public ObserverCollection<ObservValue<Component>> onComponentChangedListener() {
@@ -41,10 +45,14 @@ public class DragAndDropActionEmpty implements DragAndDropAction {
   }
 
   @Override
-  public void setDropListeners(DnDListenerEntries<DropListener> dropListeners) {}
+  public void setDropListeners(DnDListenerEntries<DropListener> dropListeners) {
+    throw new UnsupportedOperationException("setDropListeners() is not implemented");
+  }
 
   @Override
-  public void setDragListeners(DnDListenerEntries<DragOverListener> dragListeners) {}
+  public void setDragListeners(DnDListenerEntries<DragOverListener> dragListeners) {
+    throw new UnsupportedOperationException("setDragListeners() is not implemented");
+  }
 
   @Override
   public boolean validate(Point point) {
@@ -57,11 +65,13 @@ public class DragAndDropActionEmpty implements DragAndDropAction {
   }
 
   @Override
-  public void setDragObject(DraggedObject draggedObject) {}
+  public void setDragObject(DraggedObject draggedObject) {
+    throw new UnsupportedOperationException("setDragObject() is not implemented");
+  }
 
   @Override
   public boolean drop(Point location) {
-    return false;
+    throw new UnsupportedOperationException("drop() is not implemented");
   }
 
   @Override
