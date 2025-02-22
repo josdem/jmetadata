@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.metadata;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.exception.MetadataException;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
@@ -68,7 +69,7 @@ public class MetadataWriter {
       tag.setField(FieldKey.ARTIST, artist);
       audioFile.commit();
     } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
-      log.error(kne.getMessage(), kne);
+      throw new BusinessException(kne.getMessage());
     }
   }
 

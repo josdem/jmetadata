@@ -17,19 +17,22 @@
 package com.josdem.jmetadata.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
-import java.awt.Image;
+import java.awt.*;
 import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.tag.FieldDataInvalidException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
@@ -38,6 +41,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
@@ -71,6 +75,16 @@ class MetadataWriterTest {
 
     verify(tag).setField(FieldKey.ARTIST, artist);
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing artist due to exception")
+  void shouldNotWriteArtist(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    String artist = "Markus Schulz";
+
+    Mockito.doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ARTIST, artist);
+    assertThrows(BusinessException.class, () -> metadataWriter.writeArtist(artist));
   }
 
   @Test
