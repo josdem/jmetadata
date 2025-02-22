@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +28,7 @@ import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
-import java.awt.*;
+import java.awt.Image;
 import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -83,17 +84,29 @@ class MetadataWriterTest {
     log.info(testInfo.getDisplayName());
     String artist = "Markus Schulz";
 
-    Mockito.doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ARTIST, artist);
+    doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.ARTIST, artist);
     assertThrows(BusinessException.class, () -> metadataWriter.writeArtist(artist));
   }
 
   @Test
-  public void shouldWriteTrackName() throws Exception {
+  @DisplayName("writing track name")
+  void shouldWriteTrackName(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
     String trackName = "Nowhere";
     metadataWriter.writeTitle(trackName);
 
     verify(tag).setField(FieldKey.TITLE, trackName);
     verify(audioFile).commit();
+  }
+
+  @Test
+  @DisplayName("not writing track name due to exception")
+  void shouldNotWriteTrackName(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    String trackName = "Nowhere";
+
+    doThrow(FieldDataInvalidException.class).when(tag).setField(FieldKey.TITLE, trackName);
+    assertThrows(BusinessException.class, () -> metadataWriter.writeTitle(trackName));
   }
 
   @Test
