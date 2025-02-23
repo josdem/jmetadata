@@ -16,13 +16,14 @@
 
 package com.josdem.jmetadata.metadata;
 
-import com.josdem.jmetadata.exception.MetadataException;
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.ArtworkHelper;
 import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
@@ -40,27 +41,25 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MetadataWriter {
   private Tag tag;
   private AudioFile audioFile;
-  private AudioFileHelper audioFileIOHelper = new AudioFileHelper();
-  private ImageUtils imageUtils = new ImageUtils();
-  private ArtworkHelper artworkHelper = new ArtworkHelper();
+
+  private final ImageUtils imageUtils;
+  private final AudioFileHelper audioFileIOHelper;
+  private final ArtworkHelper artworkHelper;
 
   public void setFile(File file) {
     try {
       audioFile = audioFileIOHelper.read(file);
       tag = audioFile.getTag();
-    } catch (CannotReadException nre) {
+    } catch (CannotReadException
+        | IOException
+        | TagException
+        | ReadOnlyFileException
+        | InvalidAudioFrameException nre) {
       log.error(nre.getMessage(), nre);
-    } catch (IOException ioe) {
-      log.error(ioe.getMessage(), ioe);
-    } catch (TagException tae) {
-      log.error(tae.getMessage(), tae);
-    } catch (ReadOnlyFileException roe) {
-      log.error(roe.getMessage(), roe);
-    } catch (InvalidAudioFrameException iae) {
-      log.error(iae.getMessage(), iae);
     }
   }
 
@@ -68,12 +67,8 @@ public class MetadataWriter {
     try {
       tag.setField(FieldKey.ARTIST, artist);
       audioFile.commit();
-    } catch (KeyNotFoundException kne) {
-      log.error(kne.getMessage(), kne);
-    } catch (FieldDataInvalidException fie) {
-      log.error(fie.getMessage(), fie);
-    } catch (CannotWriteException nwe) {
-      log.error(nwe.getMessage(), nwe);
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
@@ -81,30 +76,22 @@ public class MetadataWriter {
     try {
       tag.setField(FieldKey.TITLE, trackName);
       audioFile.commit();
-    } catch (KeyNotFoundException kne) {
-      log.error(kne.getMessage(), kne);
-    } catch (FieldDataInvalidException fie) {
-      log.error(fie.getMessage(), fie);
-    } catch (CannotWriteException nwe) {
-      log.error(nwe.getMessage(), nwe);
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeAlbum(String album) throws MetadataException {
+  public boolean writeAlbum(String album) {
     try {
       tag.setField(FieldKey.ALBUM, album);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeTrackNumber(String trackNumber) throws MetadataException {
+  public boolean writeTrackNumber(String trackNumber) {
     try {
       if (StringUtils.isEmpty(trackNumber)) {
         return false;
@@ -112,16 +99,12 @@ public class MetadataWriter {
       tag.setField(FieldKey.TRACK, trackNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeTotalTracksNumber(String totalTracksNumber) throws MetadataException {
+  public boolean writeTotalTracksNumber(String totalTracksNumber) {
     try {
       if (StringUtils.isEmpty(totalTracksNumber)) {
         return false;
@@ -129,49 +112,38 @@ public class MetadataWriter {
       tag.setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
+    } catch (KeyNotFoundException | FieldDataInvalidException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeCoverArt(Image lastfmCoverArt) throws MetadataException {
+  public void writeCoverArt(Image lastfmCoverArt) {
     try {
       File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt);
       Artwork artwork = artworkHelper.createArtwork();
       artwork.setFromFile(coverArtFile);
       tag.setField(artwork);
       audioFile.commit();
-      return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (IOException ioe) {
-      throw new MetadataException(ioe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
+    } catch (KeyNotFoundException
+        | FieldDataInvalidException
+        | CannotWriteException
+        | IOException
+        | NullPointerException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean removeCoverArt() throws MetadataException {
+  public boolean removeCoverArt() {
     try {
       tag.deleteArtworkField();
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
+    } catch (KeyNotFoundException | CannotWriteException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeCdNumber(String cdNumber) throws MetadataException {
+  public boolean writeCdNumber(String cdNumber) {
     try {
       if (StringUtils.isEmpty(cdNumber)) {
         return false;
@@ -179,18 +151,15 @@ public class MetadataWriter {
       tag.setField(FieldKey.DISC_NO, cdNumber);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
+    } catch (KeyNotFoundException
+        | FieldDataInvalidException
+        | CannotWriteException
+        | NullPointerException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeTotalCds(String totalCds) throws MetadataException {
+  public boolean writeTotalCds(String totalCds) {
     try {
       if (StringUtils.isEmpty(totalCds)) {
         return false;
@@ -198,18 +167,15 @@ public class MetadataWriter {
       tag.setField(FieldKey.DISC_TOTAL, totalCds);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
+    } catch (KeyNotFoundException
+        | FieldDataInvalidException
+        | CannotWriteException
+        | NullPointerException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeYear(String year) throws MetadataException {
+  public boolean writeYear(String year) {
     try {
       if (StringUtils.isEmpty(year)) {
         return false;
@@ -217,18 +183,15 @@ public class MetadataWriter {
       tag.setField(FieldKey.YEAR, year);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
+    } catch (KeyNotFoundException
+        | FieldDataInvalidException
+        | CannotWriteException
+        | NullPointerException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 
-  public boolean writeGenre(String genre) throws MetadataException {
+  public boolean writeGenre(String genre) {
     try {
       if (StringUtils.isEmpty(genre)) {
         return false;
@@ -236,14 +199,11 @@ public class MetadataWriter {
       tag.setField(FieldKey.GENRE, genre);
       audioFile.commit();
       return true;
-    } catch (KeyNotFoundException kne) {
-      throw new MetadataException(kne.getMessage());
-    } catch (FieldDataInvalidException fie) {
-      throw new MetadataException(fie.getMessage());
-    } catch (CannotWriteException nwe) {
-      throw new MetadataException(nwe.getMessage());
-    } catch (NullPointerException nue) {
-      throw new MetadataException(nue.getMessage());
+    } catch (KeyNotFoundException
+        | FieldDataInvalidException
+        | CannotWriteException
+        | NullPointerException kne) {
+      throw new BusinessException(kne.getMessage());
     }
   }
 }

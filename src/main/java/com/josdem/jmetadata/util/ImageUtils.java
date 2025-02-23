@@ -18,20 +18,24 @@ package com.josdem.jmetadata.util;
 
 import com.josdem.jmetadata.ApplicationConstants;
 import com.josdem.jmetadata.service.ImageService;
-import com.josdem.jmetadata.service.impl.ImageServiceImpl;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class ImageUtils {
-  private ImageService imageService = new ImageServiceImpl();
 
-  private FileUtils fileUtils = new FileUtils();
   private static final int THREE_HUNDRED = 300;
+
+  private final ImageService imageService;
+  private final FileUtils fileUtils;
 
   public static Image resize(Image image, int width, int height) {
     BufferedImage bufferedImage = (BufferedImage) image;

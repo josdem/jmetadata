@@ -29,12 +29,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class ImageExporterTest {
-  @InjectMocks private ImageExporter imageExporter = new ImageExporter();
+  private ImageExporter imageExporter;
 
   @Mock private ImageUtils imageUtils;
   @Mock private Metadata metadata;
@@ -46,16 +45,17 @@ class ImageExporterTest {
   @Mock private File root;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     var title = "Bliksem";
     var album = "Bliksem Album";
     var artist = "Sander van Doorn";
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     when(metadata.getAlbum()).thenReturn(album);
     when(metadata.getArtist()).thenReturn(artist);
     when(metadata.getTitle()).thenReturn(title);
     metadataList.add(metadata);
     exportPackage = new ExportPackage(root, metadataList);
+    imageExporter = new ImageExporter(imageUtils, metadataService);
   }
 
   @Test

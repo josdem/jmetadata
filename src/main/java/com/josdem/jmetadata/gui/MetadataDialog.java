@@ -27,6 +27,8 @@ import com.josdem.jmetadata.model.MetadataAlbumValues;
 import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.observer.ObservValue;
 import com.josdem.jmetadata.observer.Observer;
+import com.josdem.jmetadata.service.impl.ImageServiceImpl;
+import com.josdem.jmetadata.util.FileUtils;
 import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -122,7 +124,7 @@ public class MetadataDialog extends AllDialog {
   private JLabel cdsLabel;
   private JPanel imagePanel;
   private Image coverArt;
-  private ImageUtils imageUtils = new ImageUtils();
+  private final transient ImageUtils imageUtils;
   private MetadataHelper metadataHelper = new MetadataHelper();
   private MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
   private final ControlEngineConfigurator configurator;
@@ -132,6 +134,7 @@ public class MetadataDialog extends AllDialog {
     super(frame, true, message);
     this.configurator = controlEngineConfigurator;
     this.message = message;
+    imageUtils = new ImageUtils(new ImageServiceImpl(), new FileUtils());
     List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
     metadataCollaborator.setMetadatas(metadatas);
     initializeContentPane();
