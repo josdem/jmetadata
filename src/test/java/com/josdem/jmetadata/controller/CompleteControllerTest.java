@@ -33,7 +33,6 @@ import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import java.awt.Image;
 import java.io.File;
 import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

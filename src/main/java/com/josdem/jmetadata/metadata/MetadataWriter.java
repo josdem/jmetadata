@@ -59,7 +59,7 @@ public class MetadataWriter {
         | TagException
         | ReadOnlyFileException
         | InvalidAudioFrameException nre) {
-      log.error(nre.getMessage(), nre);
+      throw new BusinessException(nre.getMessage());
     }
   }
 

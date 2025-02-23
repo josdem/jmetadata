@@ -30,6 +30,7 @@ import com.josdem.jmetadata.helper.AudioFileHelper;
 import com.josdem.jmetadata.util.ImageUtils;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
@@ -64,6 +65,15 @@ class MetadataWriterTest {
     when(audioFile.getTag()).thenReturn(tag);
     metadataWriter = new MetadataWriter(imageUtils, audioFileHelper, artworkHelper);
     metadataWriter.setFile(file);
+  }
+
+  @Test
+  @DisplayName("not setting file due to exception")
+  void shouldNotSetFile(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    doThrow(IOException.class).when(audioFileHelper).read(file);
+    assertThrows(BusinessException.class, () -> metadataWriter.setFile(file));
   }
 
   @Test
