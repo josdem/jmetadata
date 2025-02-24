@@ -24,19 +24,19 @@ import com.josdem.jmetadata.util.ImageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ImageExporter {
 
-  @Autowired private MetadataService metadataService;
-
-  private ImageUtils imageUtils = new ImageUtils();
+  private final ImageUtils imageUtils;
+  private final MetadataService metadataService;
 
   public void export(ExportPackage exportPackage)
       throws IOException,
