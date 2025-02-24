@@ -33,8 +33,8 @@ public class MainFrameDragOverListener implements DragOverListener {
 
   @Override
   public void dragEnter(DraggedObject draggedObject) {
-    if (frame instanceof Frame) {
-      dialog = new DragTooltipDialog((Frame) frame);
+    if (frame instanceof Frame windowFrame) {
+      dialog = new DragTooltipDialog(windowFrame);
     } else {
       dialog = new DragTooltipDialog(null);
     }
@@ -79,7 +79,7 @@ public class MainFrameDragOverListener implements DragOverListener {
   @Override
   public void updateLocation(Point location) {
     if (dialog != null) {
-      Point p = (Point) location.clone();
+      Point p = new Point(location);
       p.x = p.x + 5;
       SwingUtilities.convertPointToScreen(p, frame);
       dialog.setLocation(p);
@@ -95,6 +95,6 @@ public class MainFrameDragOverListener implements DragOverListener {
 
   @Override
   public Class<?>[] handledTypes() {
-    return null;
+    return new Class<?>[0];
   }
 }
