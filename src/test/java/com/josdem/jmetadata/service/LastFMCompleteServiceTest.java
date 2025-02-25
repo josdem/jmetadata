@@ -186,7 +186,7 @@ class LastFMCompleteServiceTest {
   public void shouldDetectWhenNothingChanged(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
     var actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
-    assertEquals(ActionResult.Ready, actionResult);
+    assertEquals(ActionResult.READY, actionResult);
   }
 
   @Test
@@ -196,7 +196,7 @@ class LastFMCompleteServiceTest {
     when(lastfmAlbum.getYear()).thenReturn(year);
 
     var actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
-    assertEquals(ActionResult.New, actionResult);
+    assertEquals(ActionResult.NEW, actionResult);
   }
 
   @Test

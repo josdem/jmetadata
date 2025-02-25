@@ -17,15 +17,15 @@
 package com.josdem.jmetadata.action;
 
 public enum ActionResult {
-  Ready,
-  New,
-  Error,
-  Not_Scrobbleable,
-  Sessionless,
-  NotFound,
-  Updated,
-  NotLogged,
-  Sent,
-  Exported,
-  Complete
+  READY,
+  NEW,
+  ERROR,
+  NOT_SCROBBLEABLE,
+  SESSIONLESS,
+  NOT_FOUND,
+  UPDATED,
+  NOT_LOGGED,
+  SENT,
+  EXPORTED,
+  COMPLETE
 }

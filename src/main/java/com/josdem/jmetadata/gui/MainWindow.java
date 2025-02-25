@@ -226,7 +226,7 @@ public class MainWindow extends JFrame {
                 metadataWithAlbum.add(metadata);
                 getDescriptionTable()
                     .getModel()
-                    .setValueAt(ActionResult.New, selectedRow, ApplicationConstants.STATUS_COLUMN);
+                    .setValueAt(ActionResult.NEW, selectedRow, ApplicationConstants.STATUS_COLUMN);
                 getApplyButton().setEnabled(!working);
                 log.info("setting applyButton to : " + !working);
               }
@@ -426,7 +426,7 @@ public class MainWindow extends JFrame {
         metadataWithAlbum.add(metadata);
         getDescriptionTable()
             .getModel()
-            .setValueAt(ActionResult.New, i, ApplicationConstants.STATUS_COLUMN);
+            .setValueAt(ActionResult.NEW, i, ApplicationConstants.STATUS_COLUMN);
         if (i == selectedRow) {
           updateImage(i);
         }
@@ -627,7 +627,7 @@ public class MainWindow extends JFrame {
 
   public JButton getCompleteMetadataButton() {
     if (completeMetadataButton == null) {
-      completeMetadataButton = new JButton(ActionResult.Complete.toString());
+      completeMetadataButton = new JButton(ActionResult.COMPLETE.toString());
       completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
       completeMetadataButton.setEnabled(false);
       completeMetadataButton.setBounds(COMPLETE_BUTTON_BOUNDS);
@@ -791,7 +791,7 @@ public class MainWindow extends JFrame {
 
                     getDescriptionTable()
                         .getModel()
-                        .setValueAt(ActionResult.New, row, ApplicationConstants.STATUS_COLUMN);
+                        .setValueAt(ActionResult.NEW, row, ApplicationConstants.STATUS_COLUMN);
 
                     controlEngineConfigurator
                         .getControlEngine()
@@ -950,7 +950,7 @@ public class MainWindow extends JFrame {
                                 "response in getting information from MusicBrainz track{}: {}",
                                 metadata.getTitle(),
                                 response);
-                            if (response.equals(ActionResult.New)) {
+                            if (response.equals(ActionResult.NEW)) {
                               metadataWithAlbum.add(metadata);
                               getDescriptionTable()
                                   .getModel()
@@ -1011,7 +1011,7 @@ public class MainWindow extends JFrame {
                                                   + metadata.getTitle()
                                                   + ": "
                                                   + response);
-                                          if (response.equals(ActionResult.New)) {
+                                          if (response.equals(ActionResult.NEW)) {
                                             metadataWithAlbum.add(metadata);
                                             getDescriptionTable()
                                                 .getModel()
@@ -1034,7 +1034,7 @@ public class MainWindow extends JFrame {
                                           } else if (!getDescriptionTable()
                                               .getModel()
                                               .getValueAt(i, ApplicationConstants.STATUS_COLUMN)
-                                              .equals(ActionResult.New)) {
+                                              .equals(ActionResult.NEW)) {
                                             getDescriptionTable()
                                                 .getModel()
                                                 .setValueAt(
@@ -1069,7 +1069,7 @@ public class MainWindow extends JFrame {
                                                 + metadata.getTitle()
                                                 + ": "
                                                 + response);
-                                        if (response.equals(ActionResult.New)) {
+                                        if (response.equals(ActionResult.NEW)) {
                                           for (Metadata metadata : metadataList) {
                                             int i = metadataList.indexOf(metadata);
                                             updateStatus(counter++, metadataList.size());
@@ -1096,7 +1096,7 @@ public class MainWindow extends JFrame {
                                         } else if (!getDescriptionTable()
                                             .getModel()
                                             .getValueAt(i, ApplicationConstants.STATUS_COLUMN)
-                                            .equals(ActionResult.New)) {
+                                            .equals(ActionResult.NEW)) {
                                           getDescriptionTable()
                                               .getModel()
                                               .setValueAt(
@@ -1128,7 +1128,7 @@ public class MainWindow extends JFrame {
                                                   + metadata.getTitle()
                                                   + ": "
                                                   + response);
-                                          if (response.equals(ActionResult.New)) {
+                                          if (response.equals(ActionResult.NEW)) {
                                             metadataWithAlbum.add(metadata);
                                             getDescriptionTable()
                                                 .getModel()
@@ -1163,7 +1163,7 @@ public class MainWindow extends JFrame {
                                             getDescriptionTable()
                                                 .getModel()
                                                 .setValueAt(
-                                                    ActionResult.New,
+                                                    ActionResult.NEW,
                                                     i,
                                                     ApplicationConstants.STATUS_COLUMN);
                                             if (metadata.getNewCoverArt() != null
@@ -1173,7 +1173,7 @@ public class MainWindow extends JFrame {
                                           } else if (!getDescriptionTable()
                                               .getModel()
                                               .getValueAt(i, ApplicationConstants.STATUS_COLUMN)
-                                              .equals(ActionResult.New)) {
+                                              .equals(ActionResult.NEW)) {
                                             getDescriptionTable()
                                                 .getModel()
                                                 .setValueAt(

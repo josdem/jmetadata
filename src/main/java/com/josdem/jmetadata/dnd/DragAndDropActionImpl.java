@@ -49,19 +49,19 @@ public class DragAndDropActionImpl implements DragAndDropAction {
     }
     Boolean result = false;
     if (isDragObjectSet()) {
-      final DraggedObject draggedObject = this.draggedObject;
-      final DnDListenerEntries<DropListener> dropListeners = this.dropListeners;
+      final DraggedObject currentDraggedObject = this.draggedObject;
+      final DnDListenerEntries<DropListener> currentDropListeners = this.dropListeners;
       result =
-          dropListeners.forEach(
-              DragAndDropIterators.validateDrop(draggedObject, point, currentFrame));
+          currentDropListeners.forEach(
+              DragAndDropIterators.validateDrop(currentDraggedObject, point, currentFrame));
       result = DragAndDropIterators.createBoolean(result);
     } else {
       result = true;
     }
     if (this.validationResult != result.booleanValue()) {
-      final DnDListenerEntries<DragOverListener> dragListeners = this.dragListeners;
+      final DnDListenerEntries<DragOverListener> currentDragListeners = this.dragListeners;
       this.validationResult = result.booleanValue();
-      dragListeners.forEach(DragAndDropIterators.dragAllowedChanged(result.booleanValue()));
+      currentDragListeners.forEach(DragAndDropIterators.dragAllowedChanged(result.booleanValue()));
     }
     return validationResult;
   }
@@ -73,30 +73,31 @@ public class DragAndDropActionImpl implements DragAndDropAction {
 
   @Override
   public boolean drop(final Point point) {
-    final DraggedObject draggedObject = this.draggedObject;
-    final DnDListenerEntries<DropListener> dropListeners = this.dropListeners;
-    final DnDListenerEntries<DragOverListener> dragListeners = this.dragListeners;
-    final Container currentFrame = this.currentFrame;
+    final DraggedObject currentDraggedObject = this.draggedObject;
+    final DnDListenerEntries<DropListener> currentDropListeners = this.dropListeners;
+    final DnDListenerEntries<DragOverListener> currentDragListeners = this.dragListeners;
+    final Container currentFrameInstance = this.currentFrame;
     final boolean isDone = isDone();
     final boolean isDragObjectSet = isDragObjectSet();
     stop(true);
     boolean success = false;
     if (!(isDone || !isDragObjectSet)) {
       Boolean result =
-          dropListeners.forEach(DragAndDropIterators.doDrop(point, draggedObject, currentFrame));
+          currentDropListeners.forEach(
+              DragAndDropIterators.doDrop(point, currentDraggedObject, currentFrameInstance));
       success = DragAndDropIterators.createBoolean(result);
     }
-    dragListeners.forEach(DragAndDropIterators.dropOcurred(success));
+    currentDragListeners.forEach(DragAndDropIterators.dropOcurred(success));
     return success;
   }
 
-  public void setLocation(Point location) {
+  public void setLocation(Point newLocation) {
     if (isDone()) {
       return;
     }
-    if (!this.location.equals(location)) {
-      this.location = location;
-      Component newComponent = currentFrame.findComponentAt(location);
+    if (!this.location.equals(newLocation)) {
+      this.location = newLocation;
+      Component newComponent = currentFrame.findComponentAt(newLocation);
       if (newComponent != null && !newComponent.equals(currentComponent)) {
         currentComponent = newComponent;
         currentComponentChanged.fire(new ObservValue<Component>(newComponent));
@@ -105,39 +106,39 @@ public class DragAndDropActionImpl implements DragAndDropAction {
   }
 
   @Override
-  public void setDragObject(DraggedObject draggedObject) {
-    if (this.draggedObject != draggedObject) {
-      this.draggedObject = draggedObject;
+  public void setDragObject(DraggedObject newDraggedObject) {
+    if (this.draggedObject != newDraggedObject) {
+      this.draggedObject = newDraggedObject;
       currentComponentChanged.fire(new ObservValue<Component>(currentComponent));
     }
   }
 
-  public void setDropListeners(DnDListenerEntries<DropListener> dropListeners) {
-    if (dropListeners == null || isDone()) {
-      dropListeners = DnDListenerEntries.empty();
+  public void setDropListeners(DnDListenerEntries<DropListener> newDropListeners) {
+    if (newDropListeners == null || isDone()) {
+      newDropListeners = DnDListenerEntries.empty();
     }
-    this.dropListeners = dropListeners;
+    this.dropListeners = newDropListeners;
     validate(location);
   }
 
-  public void setDragListeners(DnDListenerEntries<DragOverListener> dragListeners) {
-    setDragListeners(dragListeners, false);
+  public void setDragListeners(DnDListenerEntries<DragOverListener> newDragListeners) {
+    setDragListeners(newDragListeners, false);
   }
 
   private void setDragListeners(
-      DnDListenerEntries<DragOverListener> dragListeners, boolean isForDrop) {
-    if (dragListeners == null || isDone()) {
-      dragListeners = DnDListenerEntries.empty();
+      DnDListenerEntries<DragOverListener> newDragListeners, boolean isForDrop) {
+    if (newDragListeners == null || isDone()) {
+      newDragListeners = DnDListenerEntries.empty();
     }
-    Point location = this.location;
+    Point currentLocation = this.location;
     DnDListenerEntries<DragOverListener> lastListeners = this.dragListeners;
-    lastListeners.forEachExclude(DragAndDropIterators.dragExit(isForDrop), dragListeners);
+    lastListeners.forEachExclude(DragAndDropIterators.dragExit(isForDrop), newDragListeners);
     DraggedObject draggedObj = draggedObject;
     boolean valRes = validationResult;
     Container frame = currentFrame;
-    dragListeners.forEachExclude(
-        DragAndDropIterators.dragEnter(location, draggedObj, valRes, frame), lastListeners);
-    this.dragListeners = dragListeners;
+    newDragListeners.forEachExclude(
+        DragAndDropIterators.dragEnter(currentLocation, draggedObj, valRes, frame), lastListeners);
+    this.dragListeners = newDragListeners;
   }
 
   @Override
@@ -181,8 +182,8 @@ public class DragAndDropActionImpl implements DragAndDropAction {
     if (isDone()) {
       return;
     }
-    final Point point = location;
-    final DnDListenerEntries<DragOverListener> dragListeners = this.dragListeners;
-    dragListeners.forEach(DragAndDropIterators.updateLocation(point, currentFrame));
+    final Point currentPoint = location;
+    final DnDListenerEntries<DragOverListener> currentDragListeners = this.dragListeners;
+    currentDragListeners.forEach(DragAndDropIterators.updateLocation(currentPoint, currentFrame));
   }
 }

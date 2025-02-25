@@ -128,7 +128,7 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
     if (lastfmAlbum.getImageIcon() == null
         && StringUtils.isEmpty(lastfmAlbum.getYear())
         && StringUtils.isEmpty(lastfmAlbum.getGenre())) {
-      return ActionResult.Ready;
+      return ActionResult.READY;
     }
     if (lastfmAlbum.getImageIcon() != null) {
       CoverArt coverArt = new CoverArt(lastfmAlbum.getImageIcon(), CoverArtType.LAST_FM);
@@ -140,6 +140,6 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
     if (StringUtils.isEmpty(metadata.getGenre())) {
       metadata.setGenre(lastfmAlbum.getGenre());
     }
-    return ActionResult.New;
+    return ActionResult.NEW;
   }
 }

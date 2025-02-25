@@ -63,49 +63,53 @@ public class MetadataController {
       if (root.exists()) {
         configurator
             .getControlEngine()
-            .fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
-        try {
-          metadataList = metadataService.extractMetadata(root);
-          if (metadataList.isEmpty()) {
-            configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
-          } else {
-            Collections.sort(metadataList);
-            sendLoadedEvent(metadataList);
-          }
-        } catch (IOException
-            | TagException
-            | ReadOnlyFileException
-            | InvalidAudioFrameException
-            | InvalidId3VersionException
-            | InterruptedException
-            | CannotReadException
-            | MetadataException e) {
-          handleException(e);
-        } catch (IllegalArgumentException e) {
-          sendLoadedEvent(metadataList);
-          handleException(e);
-        } catch (TooMuchFilesException e) {
-          log.error(e.getMessage(), e);
-          String maxFilesAllowed = properties.getProperty("max.files.allowed");
-          configurator
-              .getControlEngine()
-              .fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<String>(maxFilesAllowed));
-        }
+            .fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<>(root.getAbsolutePath()));
+        processMetadata(root);
       } else {
         configurator
             .getControlEngine()
-            .fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<String>(root.toString()));
+            .fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<>(root.toString()));
       }
     } else {
       configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
     }
   }
 
+  private void processMetadata(File root) {
+    try {
+      metadataList = metadataService.extractMetadata(root);
+      if (metadataList.isEmpty()) {
+        configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
+      } else {
+        Collections.sort(metadataList);
+        sendLoadedEvent(metadataList);
+      }
+    } catch (IOException
+        | TagException
+        | ReadOnlyFileException
+        | InvalidAudioFrameException
+        | InvalidId3VersionException
+        | CannotReadException
+        | MetadataException e) {
+      handleException(e);
+    } catch (IllegalArgumentException e) {
+      sendLoadedEvent(metadataList);
+      handleException(e);
+    } catch (TooMuchFilesException e) {
+      log.error(e.getMessage(), e);
+      String maxFilesAllowed = properties.getProperty("max.files.allowed");
+      configurator
+          .getControlEngine()
+          .fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<>(maxFilesAllowed));
+    } catch (InterruptedException e) {
+      log.warn("Thread was interrupted", e);
+      Thread.currentThread().interrupt();
+    }
+  }
+
   private void sendLoadedEvent(List<Metadata> metadataList) {
     configurator.getControlEngine().set(Model.METADATA, metadataList, null);
-    configurator
-        .getControlEngine()
-        .fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
+    configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<>(metadataList));
     configurator.getControlEngine().fireEvent(Events.LOADED);
   }
 

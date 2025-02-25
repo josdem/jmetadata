@@ -57,7 +57,7 @@ class DefaultControllerTest {
     var result = defaultController.complete(metadatas);
 
     verify(defaultService).complete(metadatas);
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   @Test
@@ -68,6 +68,6 @@ class DefaultControllerTest {
 
     var result = defaultController.complete(metadatas);
 
-    assertEquals(ActionResult.Ready, result);
+    assertEquals(ActionResult.READY, result);
   }
 }

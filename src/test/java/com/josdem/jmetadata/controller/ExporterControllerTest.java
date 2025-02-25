@@ -50,12 +50,12 @@ class ExporterControllerTest {
   @DisplayName("sending metadata")
   void shouldSendMetadata(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.Exported);
+    when(exporterHelper.export(exportPackage)).thenReturn(ActionResult.EXPORTED);
 
     var result = exporterController.sendMetadata(exportPackage);
 
     verify(exporterHelper).export(exportPackage);
-    assertEquals(ActionResult.Exported, result);
+    assertEquals(ActionResult.EXPORTED, result);
   }
 
   @Test
@@ -66,6 +66,6 @@ class ExporterControllerTest {
 
     var result = exporterController.sendMetadata(exportPackage);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 }

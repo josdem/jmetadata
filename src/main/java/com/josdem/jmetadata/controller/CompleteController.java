@@ -66,7 +66,7 @@ public class CompleteController {
   @RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
   public synchronized ActionResult completeAlbumMetadata(List<Metadata> metadataList) {
     if (!musicBrainzCompleteServiceAdapter.canComplete(metadataList)) {
-      return ActionResult.Ready;
+      return ActionResult.READY;
     }
     try {
       if (ApplicationState.cache.get(metadataList.getFirst().getAlbum()) == null) {
@@ -84,7 +84,7 @@ public class CompleteController {
           ApplicationState.cache.put(albumName, musicBrainzResponse);
           log.info("MusicBrainz Response: {}", musicBrainzResponse);
           if (musicBrainzResponse.getReleases().isEmpty()) {
-            return ActionResult.Ready;
+            return ActionResult.READY;
           }
           Album album = musicBrainzService.getAlbumByName(albumName);
           log.info("MusicBrainz Album: {}", album);
@@ -102,23 +102,23 @@ public class CompleteController {
         } else {
           log.error("Error getting releases: {}", result.errorBody());
         }
-        return ActionResult.New;
+        return ActionResult.NEW;
       }
     } catch (IOException ex) {
       log.error(ex.getMessage(), ex);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     }
-    return ActionResult.Complete;
+    return ActionResult.COMPLETE;
   }
 
   @RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
   public ActionResult completeLastFmMetadata(List<Metadata> metadataList) {
     log.info("trying to complete using LastFM service");
     if (!lastFMCompleteServiceAdapter.canComplete(metadataList)) {
-      return ActionResult.Ready;
+      return ActionResult.READY;
     }
     metadataList.forEach(lastfmService::completeLastFM);
-    return ActionResult.New;
+    return ActionResult.NEW;
   }
 
   @RequestMethod(Actions.WRITE_METADATA)
@@ -144,10 +144,10 @@ public class CompleteController {
         metadataWriter.writeCoverArt(coverArtNew.getImage());
         metadata.setCoverArt(coverArtNew.getImage());
       }
-      return ActionResult.Updated;
+      return ActionResult.UPDATED;
     } catch (BusinessException bse) {
       log.error(bse.getMessage(), bse);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     }
   }
 }

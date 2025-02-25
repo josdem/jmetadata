@@ -35,6 +35,6 @@ public class FormatterController {
     formatterService.isAnalyzable(metadata);
     Boolean formatted = formatterService.wasFormatted(metadata);
     Boolean capitalized = formatterService.wasCamelized(metadata);
-    return formatted || capitalized ? ActionResult.New : ActionResult.Ready;
+    return formatted || capitalized ? ActionResult.NEW : ActionResult.READY;
   }
 }

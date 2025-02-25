@@ -44,7 +44,7 @@ public class ExporterController {
       return exporterHelper.export(exportPackage);
     } catch (IOException ioe) {
       log.error(ioe.getMessage(), ioe);
-      return ActionResult.Error;
+      return ActionResult.ERROR;
     }
   }
 }

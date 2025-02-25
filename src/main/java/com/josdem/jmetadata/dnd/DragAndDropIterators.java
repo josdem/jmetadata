@@ -58,6 +58,32 @@ public class DragAndDropIterators {
     return new DragAllowedChangedIterator(validationResult);
   }
 
+  private static final class DoDropIterator implements DoInListeners<Boolean, DropListener> {
+    private final Point point;
+    private final DraggedObject draggedObject;
+    private final Container currentFrame;
+
+    private DoDropIterator(Point point, DraggedObject draggedObject, Container currentFrame) {
+      this.point = point;
+      this.draggedObject = draggedObject;
+      this.currentFrame = currentFrame;
+    }
+
+    @Override
+    public Boolean doIn(DropListener listener, Component component, Boolean lastResult) {
+      log("doDrop", component, listener);
+      Point location = convertToComponentRelativePoint(point, currentFrame, component);
+      boolean validateDrop = listener.validateDrop(draggedObject, location);
+      if (validateDrop) {
+        listener.doDrop(draggedObject, location);
+      }
+      return createBoolean(validateDrop, lastResult);
+    }
+
+    @Override
+    public void done() {}
+  }
+
   private static final class DragEnterIterator
       extends DoInListenersAdapter<Void, DragOverListener> {
     private final Point point;
@@ -134,47 +160,6 @@ public class DragAndDropIterators {
       log("dropOcurred", component, listener);
       listener.dropOcurred(success);
       return null;
-    }
-  }
-
-  private static final class DoDropIterator implements DoInListeners<Boolean, DropListener> {
-    private final Point point;
-    private final DraggedObject draggedObject;
-    private final Container currentFrame;
-
-    // private ExecutorService executorService;
-
-    private DoDropIterator(Point point, DraggedObject draggedObject, Container currentFrame) {
-      this.point = point;
-      this.draggedObject = draggedObject;
-      this.currentFrame = currentFrame;
-      // executorService = Executors.newSingleThreadExecutor();
-    }
-
-    @Override
-    public Boolean doIn(DropListener listener, Component component, Boolean lastResult) {
-      log("doDrop", component, listener);
-      Point location = convertToComponentRelativePoint(point, currentFrame, component);
-      boolean validateDrop = listener.validateDrop(draggedObject, location);
-      if (validateDrop) {
-        doDrop(listener, draggedObject, location);
-      }
-      return createBoolean(validateDrop, lastResult);
-    }
-
-    private void doDrop(
-        final DropListener listener, final DraggedObject draggedObject, final Point location) {
-      // executorService.execute(new Runnable() {
-      // @Override
-      // public void run() {
-      listener.doDrop(draggedObject, location);
-      // }
-      // });
-    }
-
-    @Override
-    public void done() {
-      // executorService.shutdown();
     }
   }
 

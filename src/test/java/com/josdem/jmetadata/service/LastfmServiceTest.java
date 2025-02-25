@@ -54,12 +54,12 @@ class LastfmServiceTest {
   void shouldCompleteMetadataFromLastfm() throws Exception {
     setCompleteHelperExpectations();
     when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
-    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
+    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.NEW);
 
     ActionResult result = lastfmService.completeLastFM(metadata);
 
     verify(completeService).isSomethingNew(lastfmAlbum, metadata);
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   @Test
@@ -67,7 +67,7 @@ class LastfmServiceTest {
     when(completeService.canLastFMHelpToComplete(metadata)).thenReturn(false);
 
     ActionResult result = lastfmService.completeLastFM(metadata);
-    assertEquals(ActionResult.Ready, result);
+    assertEquals(ActionResult.READY, result);
   }
 
   @Test
@@ -83,20 +83,20 @@ class LastfmServiceTest {
   @Test
   void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
     setCompleteHelperExpectations();
-    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Ready);
+    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.READY);
 
     ActionResult result = lastfmService.completeLastFM(metadata);
-    assertEquals(ActionResult.Ready, result);
+    assertEquals(ActionResult.READY, result);
   }
 
   @Test
   void shouldReturnSomethingnewValueIfNoBadFormatAndCapitalized() throws Exception {
     setCompleteHelperExpectations();
-    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
+    when(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.NEW);
 
     ActionResult result = lastfmService.completeLastFM(metadata);
 
-    assertEquals(ActionResult.New, result);
+    assertEquals(ActionResult.NEW, result);
   }
 
   void setCompleteHelperExpectations() throws MalformedURLException, IOException {
@@ -110,7 +110,7 @@ class LastfmServiceTest {
 
     ActionResult result = lastfmService.completeLastFM(metadata);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 
   @Test
@@ -119,6 +119,6 @@ class LastfmServiceTest {
 
     ActionResult result = lastfmService.completeLastFM(metadata);
 
-    assertEquals(ActionResult.Error, result);
+    assertEquals(ActionResult.ERROR, result);
   }
 }
