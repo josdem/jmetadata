@@ -727,6 +727,10 @@ public class MainWindow extends JFrame {
               viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
             }
           });
+
+      openButton
+          .getInputMap()
+          .put(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK), "open");
     }
     return openButton;
   }
