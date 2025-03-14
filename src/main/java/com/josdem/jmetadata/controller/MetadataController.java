@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 import javax.swing.JFileChooser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +50,17 @@ public class MetadataController {
   private final Properties properties;
   private final MetadataService metadataService;
   private final ControlEngineConfigurator configurator;
+  protected JFileChooser fileChooser;
 
   private List<Metadata> metadataList;
 
+  @PostConstruct
+  void setup() {
+    fileChooser = new JFileChooser();
+  }
+
   @ActionMethod(Actions.GET_METADATA)
   public void getMetadata() {
-    var fileChooser = new JFileChooser();
     fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     var selection = fileChooser.showOpenDialog(null);
     if (selection == JFileChooser.APPROVE_OPTION) {
