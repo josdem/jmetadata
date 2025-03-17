@@ -57,7 +57,7 @@ class MetadataControllerTest {
 
   @Test
   @DisplayName("informing user selected an empty directory")
-  void shouldGetMetadata(TestInfo testInfo) throws Exception {
+  void shouldInformEmptyDirectory(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
     when(fileChooser.getSelectedFile()).thenReturn(file);
@@ -71,5 +71,20 @@ class MetadataControllerTest {
     verify(controlEngine)
         .fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<>(file.getAbsolutePath()));
     verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY);
+  }
+
+  @Test
+  @DisplayName("informing user the directory does not exist")
+  void shouldInformDirectoryDoesNotExist(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
+    when(fileChooser.getSelectedFile()).thenReturn(file);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
+    when(file.exists()).thenReturn(false);
+
+    metadataController.getMetadata();
+
+    verify(fileChooser).setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+    verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<>(file.toString()));
   }
 }
