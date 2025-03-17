@@ -86,6 +86,18 @@ class MetadataControllerTest {
     verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<>(file.toString()));
   }
 
+  @Test
+  @DisplayName("validating user selects cancel option")
+  void shouldValidateUserSelectsCancelOption(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    setFileChooserExpectations();
+    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.CANCEL_OPTION);
+
+    metadataController.getMetadata();
+
+    verify(controlEngine).fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
+  }
+
   private void setFileChooserExpectations() {
     when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
     when(fileChooser.getSelectedFile()).thenReturn(file);
