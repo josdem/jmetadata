@@ -59,10 +59,10 @@ class MetadataControllerTest {
   @DisplayName("informing user selected an empty directory")
   void shouldInformEmptyDirectory(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
-    when(fileChooser.getSelectedFile()).thenReturn(file);
+
+    setFileChooserExpectations();
+
     when(file.exists()).thenReturn(true);
-    when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(metadataService.extractMetadata(file)).thenReturn(Collections.emptyList());
 
     metadataController.getMetadata();
@@ -77,14 +77,18 @@ class MetadataControllerTest {
   @DisplayName("informing user the directory does not exist")
   void shouldInformDirectoryDoesNotExist(TestInfo testInfo) {
     log.info(testInfo.getDisplayName());
-    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
-    when(fileChooser.getSelectedFile()).thenReturn(file);
-    when(configurator.getControlEngine()).thenReturn(controlEngine);
+    setFileChooserExpectations();
     when(file.exists()).thenReturn(false);
 
     metadataController.getMetadata();
 
     verify(fileChooser).setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
     verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<>(file.toString()));
+  }
+
+  private void setFileChooserExpectations() {
+    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
+    when(fileChooser.getSelectedFile()).thenReturn(file);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
   }
 }
