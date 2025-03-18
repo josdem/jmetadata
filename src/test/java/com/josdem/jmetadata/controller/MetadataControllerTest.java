@@ -20,8 +20,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.event.Events;
+import com.josdem.jmetadata.model.Metadata;
+import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.service.MetadataService;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import javax.swing.*;
@@ -57,12 +60,12 @@ class MetadataControllerTest {
 
   @Test
   @DisplayName("informing user selected an empty directory")
-  void shouldGetMetadata(TestInfo testInfo) throws Exception {
+  void shouldInformEmptyDirectory(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
-    when(fileChooser.getSelectedFile()).thenReturn(file);
+
+    setFileChooserExpectations();
+
     when(file.exists()).thenReturn(true);
-    when(configurator.getControlEngine()).thenReturn(controlEngine);
     when(metadataService.extractMetadata(file)).thenReturn(Collections.emptyList());
 
     metadataController.getMetadata();
@@ -71,5 +74,59 @@ class MetadataControllerTest {
     verify(controlEngine)
         .fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<>(file.getAbsolutePath()));
     verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY);
+  }
+
+  @Test
+  @DisplayName("informing user the directory does not exist")
+  void shouldInformDirectoryDoesNotExist(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    setFileChooserExpectations();
+    when(file.exists()).thenReturn(false);
+
+    metadataController.getMetadata();
+
+    verify(fileChooser).setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+    verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<>(file.toString()));
+  }
+
+  @Test
+  @DisplayName("validating user selects cancel option")
+  void shouldValidateUserSelectsCancelOption(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
+    setFileChooserExpectations();
+    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.CANCEL_OPTION);
+
+    metadataController.getMetadata();
+
+    verify(controlEngine).fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
+  }
+
+  @Test
+  @DisplayName("getting metadata")
+  void shouldGetMetadata(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    setFileChooserExpectations();
+
+    when(file.exists()).thenReturn(true);
+    var metadata1 = new Metadata();
+    var metadata2 = new Metadata();
+    metadata1.setTitle("Wish you were here");
+    metadata2.setTitle("The man who sold the world");
+    var metadataList = Arrays.asList(metadata1, metadata2);
+    when(metadataService.extractMetadata(file)).thenReturn(metadataList);
+
+    metadataController.getMetadata();
+
+    verify(fileChooser).setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+    verify(controlEngine).set(Model.METADATA, metadataList, null);
+    verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<>(metadataList));
+    verify(controlEngine).fireEvent(Events.LOADED);
+  }
+
+  private void setFileChooserExpectations() {
+    when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
+    when(fileChooser.getSelectedFile()).thenReturn(file);
+    when(configurator.getControlEngine()).thenReturn(controlEngine);
   }
 }
