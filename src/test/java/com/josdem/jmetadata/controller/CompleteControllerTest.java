@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +29,7 @@ import com.josdem.jmetadata.model.CoverArt;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.LastfmService;
 import com.josdem.jmetadata.service.MusicBrainzService;
+import com.josdem.jmetadata.service.RestService;
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter;
 import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter;
 import java.awt.Image;
@@ -40,6 +42,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @Slf4j
 class CompleteControllerTest {
@@ -56,6 +60,7 @@ class CompleteControllerTest {
   @Mock private Image imageIcon;
   @Mock private LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
   @Mock private MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
+  @Mock private RestService restService;
 
   private String artist = "Dave Deen";
   private String title = "Footprints (Original Mix)";
@@ -88,6 +93,7 @@ class CompleteControllerTest {
             musicBrainzService,
             musicBrainzCompleteServiceAdapter,
             lastFMCompleteServiceAdapter);
+    controller.restService = restService;
   }
 
   @Test
@@ -136,7 +142,8 @@ class CompleteControllerTest {
 
   @Test
   @DisplayName("completing metadata with LastFM service")
-  void shouldCompleteMetadata() {
+  void shouldCompleteMetadata(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     var metadataList = List.of(metadata);
     when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true);
     controller.completeLastFmMetadata(metadataList);
@@ -145,7 +152,8 @@ class CompleteControllerTest {
 
   @Test
   @DisplayName("not completing metadata with LastFM service")
-  void shouldNotCompleteMetadata() {
+  void shouldNotCompleteMetadata(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     var metadataList = List.of(metadata);
     when(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
     controller.completeLastFmMetadata(metadataList);
@@ -154,10 +162,26 @@ class CompleteControllerTest {
 
   @Test
   @DisplayName("not completing metadata with MusicBrainz service")
-  void shouldNotCompleteMetadataWithMusicBrainz() {
+  void shouldNotCompleteMetadataWithMusicBrainz(TestInfo testInfo) {
+    log.info(testInfo.getDisplayName());
     var metadataList = List.of(metadata);
     when(musicBrainzCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
 
     assertEquals(ActionResult.READY, controller.completeAlbumMetadata(metadataList));
+  }
+
+  @Test
+  @DisplayName("getting releases from MusicBrainz service")
+  void shouldGetReleasesFromMusicBrainz(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+    var metadataList = List.of(metadata);
+    var call = mock(Call.class);
+    var response = mock(Response.class);
+
+    when(call.execute()).thenReturn(response);
+    when(musicBrainzCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true);
+    when(restService.getReleases(album + " AND " + "artist:" + artist)).thenReturn(call);
+
+    assertEquals(ActionResult.NEW, controller.completeAlbumMetadata(metadataList));
   }
 }
