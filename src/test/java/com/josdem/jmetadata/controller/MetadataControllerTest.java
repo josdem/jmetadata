@@ -20,10 +20,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.jmetadata.event.Events;
+import com.josdem.jmetadata.exception.TooMuchFilesException;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.model.Model;
 import com.josdem.jmetadata.service.MetadataService;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
@@ -42,6 +44,7 @@ import org.mockito.MockitoAnnotations;
 @Slf4j
 class MetadataControllerTest {
 
+  public static final String MAX_FILES_ALLOWED = "50";
   private MetadataController metadataController;
 
   @Mock private Properties properties;
@@ -128,5 +131,52 @@ class MetadataControllerTest {
     when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
     when(fileChooser.getSelectedFile()).thenReturn(file);
     when(configurator.getControlEngine()).thenReturn(controlEngine);
+  }
+
+  @Test
+  @DisplayName("catching IOException")
+  void shouldCatchIOException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    setFileChooserExpectations();
+    when(file.exists()).thenReturn(true);
+    when(metadataService.extractMetadata(file)).thenThrow(new IOException("IO Exception"));
+
+    metadataController.getMetadata();
+
+    verify(controlEngine).fireEvent(Events.OPEN);
+  }
+
+  @Test
+  @DisplayName("catching illegal argument exception")
+  void shouldCatchIllegalArgumentException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    setFileChooserExpectations();
+    when(file.exists()).thenReturn(true);
+    when(metadataService.extractMetadata(file))
+        .thenThrow(new IllegalArgumentException("Illegal Argument Exception"));
+
+    metadataController.getMetadata();
+
+    verify(controlEngine).fireEvent(Events.OPEN);
+  }
+
+  @Test
+  @DisplayName("catching too much files exception")
+  void shouldCatchTooMuchFilesException(TestInfo testInfo) throws Exception {
+    log.info(testInfo.getDisplayName());
+
+    setFileChooserExpectations();
+    when(file.exists()).thenReturn(true);
+    when(properties.getProperty("max.files.allowed")).thenReturn(MAX_FILES_ALLOWED);
+    when(metadataService.extractMetadata(file))
+        .thenThrow(new TooMuchFilesException(Integer.valueOf(MAX_FILES_ALLOWED)));
+
+    metadataController.getMetadata();
+
+    verify(controlEngine)
+        .fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<>(file.getAbsolutePath()));
+    verify(controlEngine).fireEvent(Events.MUCH_FILES_LOADED, new ValueEvent<>(MAX_FILES_ALLOWED));
   }
 }
