@@ -151,4 +151,13 @@ class CompleteControllerTest {
     controller.completeLastFmMetadata(metadataList);
     verify(coverArtService, never()).completeLastFM(metadata);
   }
+
+  @Test
+  @DisplayName("not completing metadata with MusicBrainz service")
+  void shouldNotCompleteMetadataWithMusicBrainz() {
+    var metadataList = List.of(metadata);
+    when(musicBrainzCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false);
+
+    assertEquals(ActionResult.READY, controller.completeAlbumMetadata(metadataList));
+  }
 }
