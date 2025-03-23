@@ -54,7 +54,7 @@ public class CompleteController {
   private final MusicBrainzCompleteServiceAdapter musicBrainzCompleteServiceAdapter;
   private final LastFMCompleteServiceAdapter lastFMCompleteServiceAdapter;
 
-  private RestService restService;
+  protected RestService restService;
   private CoverArtRestService coverArtRestService;
 
   @PostConstruct
