@@ -85,7 +85,7 @@ class ScrobblerHelperTest {
   private void notSendToScrobblingMapAssertion() {
     verify(metadataMap, never()).size();
     verify(metadataMap, never()).put(isA(Metadata.class), isA(Long.class));
-    assertEquals(ActionResult.NOT_SCROBBLEABLE, result);
+    assertEquals(ActionResult.NOT_RECORDED, result);
   }
 
   @Test
@@ -112,7 +112,7 @@ class ScrobblerHelperTest {
             currentUser.getSession()))
         .thenReturn(result);
 
-    assertEquals(ActionResult.SESSIONLESS, helperScrobbler.send(metadata));
+    assertEquals(ActionResult.SESSION_LESS, helperScrobbler.send(metadata));
   }
 
   private void setMetadataTrackExpectations() {
