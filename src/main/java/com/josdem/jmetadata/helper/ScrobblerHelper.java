@@ -74,7 +74,7 @@ public class ScrobblerHelper {
       }
     } else {
       log.error("There isn't a valid session");
-      return ActionResult.SESSIONLESS;
+      return ActionResult.SESSION_LESS;
     }
   }
 
@@ -89,7 +89,7 @@ public class ScrobblerHelper {
       metadataMap.put(metadata, startTime);
       return scrobbling(metadata);
     }
-    return ActionResult.NOT_SCROBBLEABLE;
+    return ActionResult.NOT_RECORDED;
   }
 
   public void setControlEngine(ControlEngine controlEngine) {

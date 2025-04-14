@@ -16,16 +16,24 @@
 
 package com.josdem.jmetadata.action;
 
+import lombok.Getter;
+
+@Getter
 public enum ActionResult {
-  READY,
-  NEW,
-  ERROR,
-  NOT_SCROBBLEABLE,
-  SESSIONLESS,
-  NOT_FOUND,
-  UPDATED,
-  NOT_LOGGED,
-  SENT,
-  EXPORTED,
-  COMPLETE
+  READY("Ready"),
+  NEW("New"),
+  ERROR("Error"),
+  NOT_RECORDED("Not Recorded"),
+  SESSION_LESS("Session Less"),
+  UPDATED("Updated"),
+  NOT_LOGGED("Not Logged"),
+  SENT("Sent"),
+  EXPORTED("Exported"),
+  COMPLETE("Complete");
+
+  private final String value;
+
+  ActionResult(String value) {
+    this.value = value;
+  }
 }
