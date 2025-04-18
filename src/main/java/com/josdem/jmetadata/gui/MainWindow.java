@@ -221,14 +221,13 @@ public class MainWindow extends JFrame {
                             ApplicationConstants.THREE_HUNDRED),
                         CoverArtType.DRAG_AND_DROP);
                 metadata.setNewCoverArt(coverArt);
-                log.info("sertting image to the row: " + selectedRow);
+                log.info("setting image to the row: {}", selectedRow);
                 updateImage(selectedRow);
                 metadataWithAlbum.add(metadata);
                 getDescriptionTable()
                     .getModel()
                     .setValueAt(ActionResult.NEW, selectedRow, ApplicationConstants.STATUS_COLUMN);
                 getApplyButton().setEnabled(!working);
-                log.info("setting applyButton to : " + !working);
               }
             });
     multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -236,27 +235,24 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.USER_LOGGED)
   void onUserLogged(User currentUser) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationConstants.LOGGED_AS);
-    sb.append(currentUser.getUsername());
-    getLoginLabel().setText(sb.toString());
+      String sb = ApplicationConstants.LOGGED_AS +
+              currentUser.getUsername();
+    getLoginLabel().setText(sb);
     getSendButton().setEnabled(true);
   }
 
   @EventMethod(Events.COVER_ART_FAILED)
   void onCovertArtFailed(String title) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(title);
-    sb.append(ApplicationConstants.CORRUPTED_METADATA_LABEL);
-    dialogHelper.showMessageDialog(this, sb.toString());
+      String sb = title +
+              ApplicationConstants.CORRUPTED_METADATA_LABEL;
+    dialogHelper.showMessageDialog(this, sb);
   }
 
   @EventMethod(Events.LOAD_FILE_FAILED)
   void onLoadFileFailed(String fileName) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationConstants.FILE_NOT_FOUND);
-    sb.append(fileName);
-    dialogHelper.showMessageDialog(this, sb.toString());
+      String sb = ApplicationConstants.FILE_NOT_FOUND +
+              fileName;
+    dialogHelper.showMessageDialog(this, sb);
   }
 
   @EventMethod(Events.USER_LOGIN_FAILED)
@@ -275,19 +271,17 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.MUSIC_DIRECTORY_NOT_EXIST)
   void onMusicDirectoryNotExist(String path) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationConstants.DIRECTORY_NOT_FOUND);
-    sb.append(path);
-    dialogHelper.showMessageDialog(this, sb.toString());
+      String sb = ApplicationConstants.DIRECTORY_NOT_FOUND +
+              path;
+    dialogHelper.showMessageDialog(this, sb);
     getOpenButton().setEnabled(true);
   }
 
   @EventMethod(Events.TOO_MUCH_FILES_LOADED)
   void onTooMuchFilesLoaded(String maxFiles) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(ApplicationConstants.TOO_MUCH_FILES_LOADED);
-    sb.append(maxFiles);
-    dialogHelper.showMessageDialog(this, sb.toString());
+      String sb = ApplicationConstants.TOO_MUCH_FILES_LOADED +
+              maxFiles;
+    dialogHelper.showMessageDialog(this, sb);
     getOpenButton().setEnabled(true);
   }
 
@@ -312,26 +306,23 @@ public class MainWindow extends JFrame {
   void onTracksLoaded() {
     Set<File> filesWithoutMinimumMetadata =
         controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
-    List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+    List<Metadata> metadataList = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
     if (!filesWithoutMinimumMetadata.isEmpty()) {
       File file = new File("Music File");
-      Iterator<File> iterator = filesWithoutMinimumMetadata.iterator();
-      while (iterator.hasNext()) {
-        file = iterator.next();
-      }
+        for (File filesWithoutMinMetadata : filesWithoutMinimumMetadata) {
+            file = filesWithoutMinMetadata;
+        }
       if (filesWithoutMinimumMetadata.size() == 1) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(file.getName());
-        sb.append(ApplicationConstants.METADATA_FROM_FILE_LABEL);
-        dialogHelper.showMessageDialog(this, sb.toString());
+          String sb = file.getName() +
+                  ApplicationConstants.METADATA_FROM_FILE_LABEL;
+        dialogHelper.showMessageDialog(this, sb);
       } else {
         int otherFiles = filesWithoutMinimumMetadata.size() - 1;
-        StringBuilder sb = new StringBuilder();
-        sb.append(file.getName());
-        sb.append(ApplicationConstants.AND_ANOTHER);
-        sb.append(otherFiles);
-        sb.append(ApplicationConstants.METADATA_FROM_FILE_LABEL);
-        dialogHelper.showMessageDialog(this, sb.toString());
+          String sb = file.getName() +
+                  ApplicationConstants.AND_ANOTHER +
+                  otherFiles +
+                  ApplicationConstants.METADATA_FROM_FILE_LABEL;
+        dialogHelper.showMessageDialog(this, sb);
       }
     }
     resetStatus();
@@ -349,10 +340,10 @@ public class MainWindow extends JFrame {
   }
 
   @EventMethod(Events.LOAD_METADATA)
-  void onLoadMetadata(List<Metadata> metadatas) {
+  void onLoadMetadata(List<Metadata> metadataList) {
     JTable descriptionTable = getDescriptionTable();
     DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-    for (Metadata metadata : metadatas) {
+    for (Metadata metadata : metadataList) {
       int row = descriptionTable.getRowCount();
       model.addRow(new Object[] {"", "", "", "", "", "", "", ""});
       descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationConstants.ARTIST_COLUMN);
@@ -390,10 +381,10 @@ public class MainWindow extends JFrame {
     String cd = metadataValues.getCd();
     String cds = metadataValues.getCds();
     DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-    List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-    log.info("Album size: " + metadataWithAlbum.size());
+    List<Metadata> metadataList = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+      log.info("Album size: {}", metadataWithAlbum.size());
     for (int i = 0; i < model.getRowCount(); i++) {
-      Metadata metadata = metadatas.get(i);
+      Metadata metadata = metadataList.get(i);
       if (!StringUtils.isEmpty(artist)) {
         getDescriptionTable().getModel().setValueAt(artist, i, ApplicationConstants.ARTIST_COLUMN);
       }
@@ -767,7 +758,7 @@ public class MainWindow extends JFrame {
                 public void valueChanged(ListSelectionEvent e) {
                   if (tableLoaded) {
                     selectedRow = descriptionTable.getSelectedRow();
-                    log.info("SETTING SELECTED ROW to : " + selectedRow);
+                    log.info("SETTING SELECTED ROW to : {}", selectedRow);
                     updateImage(selectedRow);
                   }
                 }
@@ -786,7 +777,7 @@ public class MainWindow extends JFrame {
                     int row = e.getFirstRow();
                     String value =
                         getDescriptionTable().getModel().getValueAt(row, column).toString();
-                    log.info("value changed: " + value);
+                    log.info("value changed: {}", value);
                     List<Metadata> metadataList =
                         viewEngineConfigurator.getViewEngine().get(Model.METADATA);
                     Metadata metadata = metadataList.get(row);
@@ -795,13 +786,13 @@ public class MainWindow extends JFrame {
 
                     getDescriptionTable()
                         .getModel()
-                        .setValueAt(ActionResult.NEW, row, ApplicationConstants.STATUS_COLUMN);
+                        .setValueAt(ActionResult.NEW.getValue(), row, ApplicationConstants.STATUS_COLUMN);
 
                     controlEngineConfigurator
                         .getControlEngine()
                         .set(Model.METADATA_ARTIST, metadataWithAlbum, null);
                     getApplyButton().setEnabled(!working);
-                    log.info("setting applyButton to : " + !working);
+                    log.info("setting applyButton to : {}", !working);
                   }
                 }
               });
@@ -815,12 +806,11 @@ public class MainWindow extends JFrame {
     List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 
     Metadata metadata = metadataList.get(selectedRow);
-    log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
 
     imagePanel.removeAll();
     if (metadata.getNewCoverArt() != null) {
       CoverArt coverArt = metadata.getNewCoverArt();
-      log.info("setting coverArt to: " + coverArt.getType());
+      log.info("setting coverArt to: {}", coverArt.getType());
       ImageIcon imageIcon = new ImageIcon(coverArt.getImage());
       imagePanel.add(new JLabel(imageIcon));
       String label = ApplicationConstants.COVER_ART_FROM_LASTFM;
@@ -890,7 +880,7 @@ public class MainWindow extends JFrame {
                                 .setValueAt(
                                     result, getRow(metadata), ApplicationConstants.STATUS_COLUMN);
                             if (metadata.getCoverArt() != null && selectedRow == getRow(metadata)) {
-                              log.info("setting image to row: " + selectedRow);
+                              log.info("setting image to row: {}", selectedRow);
                               updateImage(selectedRow);
                             }
                             if (counter >= metadataWithAlbum.size()) {
@@ -904,7 +894,6 @@ public class MainWindow extends JFrame {
                             working = false;
                             getApplyButton().setEnabled(working);
                             getExportButton().setEnabled(true);
-                            log.info("setting applyButton to : " + working);
                             metadataWithAlbum.clear();
                           }
                         });
@@ -934,10 +923,9 @@ public class MainWindow extends JFrame {
               getLabel().setText(ApplicationConstants.GETTING_ALBUM);
               counter = 0;
               working = true;
-              log.info("Start to work...");
+              log.info("Process started...");
               getApplyButton().setEnabled(!working);
               getExportButton().setEnabled(!working);
-              log.info("setting applyButton to : " + !working);
               for (final Metadata metadata : metadataList) {
                 final int i = metadataList.indexOf(metadata);
                 MainWindow.this
@@ -996,7 +984,7 @@ public class MainWindow extends JFrame {
                           private void getFormatterData() {
                             getLabel().setText(ApplicationConstants.GETTING_FORMATTER);
                             counter = 0;
-                            log.info("Formating for " + metadataList.size() + " files");
+                              log.info("Formating for {} files", metadataList.size());
                             for (final Metadata metadata : metadataList) {
                               final int i = metadataList.indexOf(metadata);
                               MainWindow.this
@@ -1010,11 +998,7 @@ public class MainWindow extends JFrame {
                                         @Override
                                         public void onResponse(ActionResult response) {
                                           updateStatus(counter++, metadataList.size());
-                                          log.info(
-                                              "response in getFormatterData for "
-                                                  + metadata.getTitle()
-                                                  + ": "
-                                                  + response);
+                                            log.info("response in getFormatterData for {}: {}", metadata.getTitle(), response);
                                           if (response.equals(ActionResult.NEW)) {
                                             metadataWithAlbum.add(metadata);
                                             getDescriptionTable()
