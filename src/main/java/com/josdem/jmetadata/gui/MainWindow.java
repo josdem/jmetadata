@@ -49,9 +49,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.PostConstruct;
@@ -80,7 +78,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
@@ -227,7 +224,10 @@ public class MainWindow extends JFrame {
                 metadataWithAlbum.add(metadata);
                 getDescriptionTable()
                     .getModel()
-                    .setValueAt(ActionResult.NEW.getValue(), selectedRow, ApplicationConstants.STATUS_COLUMN);
+                    .setValueAt(
+                        ActionResult.NEW.getValue(),
+                        selectedRow,
+                        ApplicationConstants.STATUS_COLUMN);
                 getApplyButton().setEnabled(!working);
               }
             });
@@ -236,23 +236,20 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.USER_LOGGED)
   void onUserLogged(User currentUser) {
-      String sb = ApplicationConstants.LOGGED_AS +
-              currentUser.getUsername();
+    String sb = ApplicationConstants.LOGGED_AS + currentUser.getUsername();
     getLoginLabel().setText(sb);
     getSendButton().setEnabled(true);
   }
 
   @EventMethod(Events.COVER_ART_FAILED)
   void onCovertArtFailed(String title) {
-      String sb = title +
-              ApplicationConstants.CORRUPTED_METADATA_LABEL;
+    String sb = title + ApplicationConstants.CORRUPTED_METADATA_LABEL;
     dialogHelper.showMessageDialog(this, sb);
   }
 
   @EventMethod(Events.LOAD_FILE_FAILED)
   void onLoadFileFailed(String fileName) {
-      String sb = ApplicationConstants.FILE_NOT_FOUND +
-              fileName;
+    String sb = ApplicationConstants.FILE_NOT_FOUND + fileName;
     dialogHelper.showMessageDialog(this, sb);
   }
 
@@ -272,16 +269,14 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.MUSIC_DIRECTORY_NOT_EXIST)
   void onMusicDirectoryNotExist(String path) {
-      String sb = ApplicationConstants.DIRECTORY_NOT_FOUND +
-              path;
+    String sb = ApplicationConstants.DIRECTORY_NOT_FOUND + path;
     dialogHelper.showMessageDialog(this, sb);
     getOpenButton().setEnabled(true);
   }
 
   @EventMethod(Events.TOO_MUCH_FILES_LOADED)
   void onTooMuchFilesLoaded(String maxFiles) {
-      String sb = ApplicationConstants.TOO_MUCH_FILES_LOADED +
-              maxFiles;
+    String sb = ApplicationConstants.TOO_MUCH_FILES_LOADED + maxFiles;
     dialogHelper.showMessageDialog(this, sb);
     getOpenButton().setEnabled(true);
   }
@@ -310,19 +305,19 @@ public class MainWindow extends JFrame {
     List<Metadata> metadataList = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
     if (!filesWithoutMinimumMetadata.isEmpty()) {
       File file = new File("Music File");
-        for (File filesWithoutMinMetadata : filesWithoutMinimumMetadata) {
-            file = filesWithoutMinMetadata;
-        }
+      for (File filesWithoutMinMetadata : filesWithoutMinimumMetadata) {
+        file = filesWithoutMinMetadata;
+      }
       if (filesWithoutMinimumMetadata.size() == 1) {
-          String sb = file.getName() +
-                  ApplicationConstants.METADATA_FROM_FILE_LABEL;
+        String sb = file.getName() + ApplicationConstants.METADATA_FROM_FILE_LABEL;
         dialogHelper.showMessageDialog(this, sb);
       } else {
         int otherFiles = filesWithoutMinimumMetadata.size() - 1;
-          String sb = file.getName() +
-                  ApplicationConstants.AND_ANOTHER +
-                  otherFiles +
-                  ApplicationConstants.METADATA_FROM_FILE_LABEL;
+        String sb =
+            file.getName()
+                + ApplicationConstants.AND_ANOTHER
+                + otherFiles
+                + ApplicationConstants.METADATA_FROM_FILE_LABEL;
         dialogHelper.showMessageDialog(this, sb);
       }
     }
@@ -383,7 +378,7 @@ public class MainWindow extends JFrame {
     String cds = metadataValues.getCds();
     DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
     List<Metadata> metadataList = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-      log.info("Album size: {}", metadataWithAlbum.size());
+    log.info("Album size: {}", metadataWithAlbum.size());
     for (int i = 0; i < model.getRowCount(); i++) {
       Metadata metadata = metadataList.get(i);
       if (!StringUtils.isEmpty(artist)) {
@@ -412,7 +407,7 @@ public class MainWindow extends JFrame {
             .setValueAt(cds, i, ApplicationConstants.TOTAL_CDS_NUMBER_COLUMN);
       }
       if (metadataValues.getCoverArt() != null) {
-          log.info("coverArt detected for: {}", metadata.getTitle());
+        log.info("coverArt detected for: {}", metadata.getTitle());
         CoverArt coverArt = new CoverArt(metadataValues.getCoverArt(), CoverArtType.DRAG_AND_DROP);
         metadata.setNewCoverArt(coverArt);
         metadataWithAlbum.add(metadata);
@@ -787,7 +782,8 @@ public class MainWindow extends JFrame {
 
                     getDescriptionTable()
                         .getModel()
-                        .setValueAt(ActionResult.NEW.getValue(), row, ApplicationConstants.STATUS_COLUMN);
+                        .setValueAt(
+                            ActionResult.NEW.getValue(), row, ApplicationConstants.STATUS_COLUMN);
 
                     controlEngineConfigurator
                         .getControlEngine()
@@ -859,7 +855,7 @@ public class MainWindow extends JFrame {
               log.info("Starting to write...");
               getApplyButton().setEnabled(!working);
               getExportButton().setEnabled(!working);
-                log.info("Ready for write {} files", metadataWithAlbum.size());
+              log.info("Ready for write {} files", metadataWithAlbum.size());
               for (final Metadata metadata : metadataWithAlbum) {
                 viewEngineConfigurator
                     .getViewEngine()
@@ -869,12 +865,15 @@ public class MainWindow extends JFrame {
                         new ResponseCallback<ActionResult>() {
 
                           public void onResponse(ActionResult result) {
-                              log.info("Writing metadata to {} w/result: {}", metadata.getTitle(), result);
+                            log.info(
+                                "Writing metadata to {} w/result: {}", metadata.getTitle(), result);
                             updateStatus(counter++, metadataWithAlbum.size());
                             getDescriptionTable()
                                 .getModel()
                                 .setValueAt(
-                                    result.getValue(), getRow(metadata), ApplicationConstants.STATUS_COLUMN);
+                                    result.getValue(),
+                                    getRow(metadata),
+                                    ApplicationConstants.STATUS_COLUMN);
                             if (metadata.getCoverArt() != null && selectedRow == getRow(metadata)) {
                               log.info("setting image to row: {}", selectedRow);
                               updateImage(selectedRow);
@@ -971,7 +970,8 @@ public class MainWindow extends JFrame {
                             }
                             getDescriptionTable()
                                 .getModel()
-                                .setValueAt(response.getValue(), i, ApplicationConstants.STATUS_COLUMN);
+                                .setValueAt(
+                                    response.getValue(), i, ApplicationConstants.STATUS_COLUMN);
                             if (counter >= metadataList.size()) {
                               getFormatterData();
                             }
@@ -980,7 +980,7 @@ public class MainWindow extends JFrame {
                           private void getFormatterData() {
                             getLabel().setText(ApplicationConstants.GETTING_FORMATTER);
                             counter = 0;
-                              log.info("Formating for {} files", metadataList.size());
+                            log.info("Formating for {} files", metadataList.size());
                             for (final Metadata metadata : metadataList) {
                               final int i = metadataList.indexOf(metadata);
                               MainWindow.this
@@ -994,7 +994,10 @@ public class MainWindow extends JFrame {
                                         @Override
                                         public void onResponse(ActionResult response) {
                                           updateStatus(counter++, metadataList.size());
-                                            log.info("response in getFormatterData for {}: {}", metadata.getTitle(), response);
+                                          log.info(
+                                              "response in getFormatterData for {}: {}",
+                                              metadata.getTitle(),
+                                              response);
                                           if (response.equals(ActionResult.NEW)) {
                                             metadataWithAlbum.add(metadata);
                                             getDescriptionTable()
@@ -1084,7 +1087,9 @@ public class MainWindow extends JFrame {
                                           getDescriptionTable()
                                               .getModel()
                                               .setValueAt(
-                                                  response.getValue(), i, ApplicationConstants.STATUS_COLUMN);
+                                                  response.getValue(),
+                                                  i,
+                                                  ApplicationConstants.STATUS_COLUMN);
                                         }
                                         afterComplete(metadataWithAlbum);
                                       }
@@ -1094,7 +1099,7 @@ public class MainWindow extends JFrame {
                           private void getLastfmData() {
                             getLabel().setText(ApplicationConstants.GETTING_LAST_FM);
                             counter = 0;
-                              log.info("Searching in lastfm for {} files", metadataList.size());
+                            log.info("Searching in lastfm for {} files", metadataList.size());
                             for (final Metadata metadata : metadataList) {
                               final int i = metadataList.indexOf(metadata);
                               MainWindow.this
@@ -1235,12 +1240,14 @@ public class MainWindow extends JFrame {
                         new ResponseCallback<ActionResult>() {
 
                           public void onResponse(ActionResult response) {
-                              log.info("response on sending {}: {}", metadata.getTitle(), response);
+                            log.info("response on sending {}: {}", metadata.getTitle(), response);
                             updateStatus(counter++, metadataList.size());
                             getDescriptionTable()
                                 .getModel()
                                 .setValueAt(
-                                    response.getValue(), getRow(metadata), ApplicationConstants.STATUS_COLUMN);
+                                    response.getValue(),
+                                    getRow(metadata),
+                                    ApplicationConstants.STATUS_COLUMN);
                           }
                         });
               }
@@ -1291,7 +1298,9 @@ public class MainWindow extends JFrame {
                             getDescriptionTable()
                                 .getModel()
                                 .setValueAt(
-                                    response.getValue(), getRow(metadata), ApplicationConstants.STATUS_COLUMN);
+                                    response.getValue(),
+                                    getRow(metadata),
+                                    ApplicationConstants.STATUS_COLUMN);
                           }
                         }
                       });
