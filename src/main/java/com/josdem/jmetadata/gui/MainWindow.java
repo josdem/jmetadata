@@ -236,21 +236,21 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.USER_LOGGED)
   void onUserLogged(User currentUser) {
-    String sb = ApplicationConstants.LOGGED_AS + currentUser.getUsername();
-    getLoginLabel().setText(sb);
+    var message = ApplicationConstants.LOGGED_AS + currentUser.getUsername();
+    getLoginLabel().setText(message);
     getSendButton().setEnabled(true);
   }
 
   @EventMethod(Events.COVER_ART_FAILED)
   void onCovertArtFailed(String title) {
-    String sb = title + ApplicationConstants.CORRUPTED_METADATA_LABEL;
-    dialogHelper.showMessageDialog(this, sb);
+    var message = title + ApplicationConstants.CORRUPTED_METADATA_LABEL;
+    dialogHelper.showMessageDialog(this, message);
   }
 
   @EventMethod(Events.LOAD_FILE_FAILED)
   void onLoadFileFailed(String fileName) {
-    String sb = ApplicationConstants.FILE_NOT_FOUND + fileName;
-    dialogHelper.showMessageDialog(this, sb);
+    var message = ApplicationConstants.FILE_NOT_FOUND + fileName;
+    dialogHelper.showMessageDialog(this, message);
   }
 
   @EventMethod(Events.USER_LOGIN_FAILED)
@@ -269,15 +269,15 @@ public class MainWindow extends JFrame {
 
   @EventMethod(Events.MUSIC_DIRECTORY_NOT_EXIST)
   void onMusicDirectoryNotExist(String path) {
-    String sb = ApplicationConstants.DIRECTORY_NOT_FOUND + path;
-    dialogHelper.showMessageDialog(this, sb);
+    var message = ApplicationConstants.DIRECTORY_NOT_FOUND + path;
+    dialogHelper.showMessageDialog(this, message);
     getOpenButton().setEnabled(true);
   }
 
   @EventMethod(Events.TOO_MUCH_FILES_LOADED)
   void onTooMuchFilesLoaded(String maxFiles) {
-    String sb = ApplicationConstants.TOO_MUCH_FILES_LOADED + maxFiles;
-    dialogHelper.showMessageDialog(this, sb);
+    var message = ApplicationConstants.TOO_MUCH_FILES_LOADED + maxFiles;
+    dialogHelper.showMessageDialog(this, message);
     getOpenButton().setEnabled(true);
   }
 
@@ -309,16 +309,16 @@ public class MainWindow extends JFrame {
         file = filesWithoutMinMetadata;
       }
       if (filesWithoutMinimumMetadata.size() == 1) {
-        String sb = file.getName() + ApplicationConstants.METADATA_FROM_FILE_LABEL;
-        dialogHelper.showMessageDialog(this, sb);
+        var message = file.getName() + ApplicationConstants.METADATA_FROM_FILE_LABEL;
+        dialogHelper.showMessageDialog(this, message);
       } else {
         int otherFiles = filesWithoutMinimumMetadata.size() - 1;
-        String sb =
+        var message =
             file.getName()
                 + ApplicationConstants.AND_ANOTHER
                 + otherFiles
                 + ApplicationConstants.METADATA_FROM_FILE_LABEL;
-        dialogHelper.showMessageDialog(this, sb);
+        dialogHelper.showMessageDialog(this, message);
       }
     }
     resetStatus();
