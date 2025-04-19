@@ -980,7 +980,7 @@ public class MainWindow extends JFrame {
                           private void getFormatterData() {
                             getLabel().setText(ApplicationConstants.GETTING_FORMATTER);
                             counter = 0;
-                            log.info("Formating for {} files", metadataList.size());
+                            log.info("Formatting for {} files", metadataList.size());
                             for (final Metadata metadata : metadataList) {
                               final int i = metadataList.indexOf(metadata);
                               MainWindow.this
