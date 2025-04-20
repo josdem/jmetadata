@@ -6,6 +6,7 @@ plugins {
     id 'com.diffplug.spotless' version '6.25.0'
     id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.20'
 }
 
 group = 'com.josdem.jmetadata'
@@ -15,6 +16,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 application {
@@ -34,6 +39,7 @@ ext {
     mockitoVersion = '3.12.4'
     mockitoInlineVersion = '5.2.0'
     targetDir = "src/main/java/com/josdem/jmetadata"
+    mockitoKotlinVersion = "5.4.0"
 }
 
 configurations {
@@ -54,6 +60,13 @@ spotless {
         }
         googleJavaFormat()
         removeUnusedImports()
+        endWithNewline()
+    }
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**")
+        ktlint()
+        trimTrailingWhitespace()
         endWithNewline()
     }
 }
@@ -79,6 +92,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
     implementation files('lib/last.fm-bindings-0.1.0.jar')
 }
 
