@@ -18,12 +18,17 @@ package com.josdem.jmetadata.helper
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
 
 internal class FormatterHelperTest {
     private val formatterHelper: FormatterHelper = FormatterHelper()
 
+    private val log = LoggerFactory.getLogger(this::class.java)
+
     @Test
-    fun `should format keyword deleting special characters`() {
+    fun `should format keyword deleting special characters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val word = "de - pazz"
         val expectedWord = "depazz"
 
