@@ -16,22 +16,24 @@
 
 package com.josdem.jmetadata.helper
 
+import com.josdem.jmetadata.gui.LoginWindow
+import com.josdem.jmetadata.gui.MainWindow
+import org.asmatron.messengine.engines.DefaultEngine
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 internal class ApplicationContextSingletonTest {
-
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     fun `should create an application context`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val applicationContext = ApplicationContextSingleton.getApplicationContext()
-        val defaultEngine = applicationContext.getBean("defaultEngine")
-        val mainWindow = applicationContext.getBean("mainWindow")
-        val loginWindow = applicationContext.getBean("loginWindow")
+        val defaultEngine = applicationContext.getBean(DefaultEngine::class.java)
+        val mainWindow = applicationContext.getBean(MainWindow::class.java)
+        val loginWindow = applicationContext.getBean(LoginWindow::class.java)
         assertNotNull(defaultEngine)
         assertNotNull(mainWindow)
         assertNotNull(loginWindow)
