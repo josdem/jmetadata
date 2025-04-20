@@ -20,14 +20,13 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class FormatterHelperTest {
-    private lateinit var formatterHelper: FormatterHelper
+    private val formatterHelper: FormatterHelper = FormatterHelper()
 
     @Test
     fun `should format keyword deleting special characters`() {
         val word = "de - pazz"
         val expectedWord = "depazz"
 
-        formatterHelper = FormatterHelper()
         assertEquals(expectedWord, formatterHelper.getBasicFormat(word))
     }
 }
