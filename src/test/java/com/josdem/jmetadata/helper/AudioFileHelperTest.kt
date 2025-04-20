@@ -23,18 +23,21 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
+import java.io.File
 
 @SpringBootTest
-@ContextConfiguration(classes = [ApplicationContextSingleton::class, ArtworkHelper::class])
-internal class ArtworkHelperTest {
+@ContextConfiguration(classes = [ApplicationContextSingleton::class, AudioFileHelper::class])
+internal class AudioFileHelperTest {
     @Autowired
-    private lateinit var artworkHelper: ArtworkHelper
+    private lateinit var audioFileHelper: AudioFileHelper
+
+    private val pepeGardenFile = File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3")
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    fun `should create an artwork helper`(testInfo: TestInfo) {
+    fun `should read an audio file`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        assertNotNull(artworkHelper.createArtwork()) { "should create an artwork" }
+        assertNotNull(audioFileHelper.read(pepeGardenFile)) { "should read an audio file" }
     }
 }
