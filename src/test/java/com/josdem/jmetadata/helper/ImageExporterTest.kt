@@ -28,6 +28,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
 import java.awt.Image
@@ -84,6 +85,13 @@ internal class ImageExporterTest {
         imageExporter.export(exportPackage)
         verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn-Bliksem")
         verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA-Blue Skies (Andy Tau Remix)")
+    }
+
+    @Test
+    fun `should not export if no image`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        imageExporter.export(exportPackage)
+        verify(imageUtils, never()).saveCoverArtToFile(metadataList.first().coverArt, root, StringUtils.EMPTY)
     }
 
     private fun setSecondMetadataExpectations(): Metadata {
