@@ -14,12 +14,12 @@
    limitations under the License.
 */
 
-package com.josdem.jmetadata.helper;
+package com.josdem.jmetadata.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.josdem.jmetadata.ApplicationConstants;
-import com.josdem.jmetadata.service.ImageService;
+import com.josdem.jmetadata.helper.ApplicationContextSingleton;
 import com.josdem.jmetadata.service.impl.ImageServiceImpl;
 import java.io.File;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = {ApplicationContextSingleton.class, ImageServiceImpl.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class ImageHelperTest {
+class ImageServiceTest {
 
   private final ImageService imageService;
 
