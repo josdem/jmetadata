@@ -19,9 +19,8 @@ package com.josdem.jmetadata.helper;
 import com.josdem.jmetadata.Auth;
 import com.josdem.jmetadata.model.GenreTypes;
 import de.umass.lastfm.Album;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,14 +34,13 @@ public class LastFMAlbumHelper {
     return Album.getInfo(artist, album, Auth.KEY);
   }
 
-  public String getYear(Date releaseDate) {
+  public String getYear(LocalDate releaseDate) {
     if (releaseDate == null) {
       return StringUtils.EMPTY;
     }
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
-    String year = simpleDateFormat.format(releaseDate);
+    var year = releaseDate.getYear();
     log.info("Year: {}", year);
-    return year;
+    return String.valueOf(year);
   }
 
   public String getGenre(Album album) {
@@ -53,7 +51,7 @@ public class LastFMAlbumHelper {
       log.info("lastFmTag: {}", lastFmTag);
       if (GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN) {
         log.info(
-            "lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
+                "lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
         return GenreTypes.getGenreByName(lastFmTag).getName();
       }
     }
