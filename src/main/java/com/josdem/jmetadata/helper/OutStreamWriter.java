@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OutStreamWriter {
 
   public OutputStream getWriter(File file) throws FileNotFoundException {
