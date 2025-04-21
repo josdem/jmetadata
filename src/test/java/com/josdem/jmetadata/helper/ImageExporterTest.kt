@@ -25,6 +25,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -72,5 +73,25 @@ internal class ImageExporterTest {
         `when`(metadataService.isSameAlbum(metadataList)).thenReturn(true)
         imageExporter.export(exportPackage)
         verify(imageUtils).saveCoverArtToFile(metadataList.first().coverArt, root, StringUtils.EMPTY)
+    }
+
+    @Test
+    fun `should export different images`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.coverArt).thenReturn(coverArt)
+        val secondMetadata = setSecondMetadataExpectations()
+        metadataList.add(secondMetadata)
+        imageExporter.export(exportPackage)
+        verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn-Bliksem")
+        verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA-Blue Skies (Andy Tau Remix)")
+    }
+
+    private fun setSecondMetadataExpectations(): Metadata {
+        val metadata: Metadata = mock(Metadata::class.java)
+        `when`(metadata.album).thenReturn("Blue Skies")
+        `when`(metadata.artist).thenReturn("ATA")
+        `when`(metadata.title).thenReturn("Blue Skies (Andy Tau Remix)")
+        `when`(metadata.coverArt).thenReturn(coverArt)
+        return metadata
     }
 }
