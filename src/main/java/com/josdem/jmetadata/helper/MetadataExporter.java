@@ -52,14 +52,14 @@ public class MetadataExporter {
   private final FormatterService formatter;
 
   public void export(ExportPackage exportPackage)
-          throws IOException,
+      throws IOException,
           CannotReadException,
           TagException,
           ReadOnlyFileException,
           MetadataException {
     File file =
-            fileUtils.createFile(
-                    exportPackage.getRoot(), StringUtils.EMPTY, ApplicationConstants.FILE_EXT);
+        fileUtils.createFile(
+            exportPackage.getRoot(), StringUtils.EMPTY, ApplicationConstants.FILE_EXT);
     log.info("Exporting metadata to: {}", file.getAbsolutePath());
     OutputStream writer = outputStreamWriter.getWriter(file);
     int counter = 1;

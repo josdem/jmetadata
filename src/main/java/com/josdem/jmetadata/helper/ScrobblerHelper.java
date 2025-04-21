@@ -64,10 +64,10 @@ public class ScrobblerHelper {
       try {
         // According to Caching Rule (http://www.u-mass.de/lastfm/doc)
         ScheduledFuture<ActionResult> future =
-                scheduler.schedule(
-                        new ScrobbleTask(metadata, currentUser.getSession()),
-                        REQUEST_PERIOD,
-                        TimeUnit.MICROSECONDS);
+            scheduler.schedule(
+                new ScrobbleTask(metadata, currentUser.getSession()),
+                REQUEST_PERIOD,
+                TimeUnit.MICROSECONDS);
         return future.get();
       } catch (ExecutionException eex) {
         log.error(eex.getMessage(), eex);
@@ -84,8 +84,8 @@ public class ScrobblerHelper {
 
     // According to submission rules http://www.last.fm/api/submissions
     if (StringUtils.isNotEmpty(metadata.getArtist())
-            && StringUtils.isNotEmpty(metadata.getTitle())
-            && metadata.getLength() > MIN_LENGTH) {
+        && StringUtils.isNotEmpty(metadata.getTitle())
+        && metadata.getLength() > MIN_LENGTH) {
       long startTime = time - ((long) metadataMap.size() * DELTA);
       metadataMap.put(metadata, startTime);
       return scrobbling(metadata);
@@ -105,16 +105,16 @@ public class ScrobblerHelper {
     @Override
     public ActionResult call() throws Exception {
       ScrobbleResult result =
-              lastFMTrackHelper.scrobble(
-                      metadata.getArtist(),
-                      metadata.getTitle(),
-                      metadataMap.get(metadata).intValue(),
-                      session);
+          lastFMTrackHelper.scrobble(
+              metadata.getArtist(),
+              metadata.getTitle(),
+              metadataMap.get(metadata).intValue(),
+              session);
       if (result.isSuccessful() && !result.isIgnored()) {
         log.info(
-                "{} - {} scrobbling to Last.fm was Successful",
-                metadata.getArtist(),
-                metadata.getTitle());
+            "{} - {} scrobbling to Last.fm was Successful",
+            metadata.getArtist(),
+            metadata.getTitle());
         return ActionResult.SENT;
       } else {
         log.error("Submitting track {} to Last.fm failed: {}", metadata.getTitle(), result);

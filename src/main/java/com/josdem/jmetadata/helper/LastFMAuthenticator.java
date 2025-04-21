@@ -18,10 +18,8 @@ package com.josdem.jmetadata.helper;
 
 import de.umass.lastfm.Session;
 import java.io.IOException;
-
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
