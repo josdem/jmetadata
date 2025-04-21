@@ -20,6 +20,6 @@ public final class Auth {
 
   private Auth() {}
 
-  public static final String KEY = "50a3a676e26ba30791bdd4ebe78456be";
-  public static final String SECRET = "f86dac0a575b4592f3d4d4f4c92fdaf7";
+  public static final String KEY = "LASTFM_API_KEY";
+  public static final String SECRET = "LASTFM_API_SECRET";
 }
