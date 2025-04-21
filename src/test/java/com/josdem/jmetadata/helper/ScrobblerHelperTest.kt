@@ -20,6 +20,7 @@ import com.josdem.jmetadata.action.ActionResult
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.model.Model
 import com.josdem.jmetadata.model.User
+import de.umass.lastfm.scrobble.ScrobbleResult
 import org.apache.commons.lang3.StringUtils
 import org.asmatron.messengine.ControlEngine
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -50,6 +51,8 @@ internal class ScrobblerHelperTest {
 
     @Mock private lateinit var controlEngine: ControlEngine
 
+    @Mock private lateinit var scrobbleResult: ScrobbleResult
+
     @Mock private lateinit var metadataMap: HashMap<Metadata, Long>
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -74,6 +77,58 @@ internal class ScrobblerHelperTest {
         result = scrobblerHelper.send(metadata)
 
         notSendToScrobblingMapAssertion()
+    }
+
+    @Test
+    fun `should not add scrobbling if no artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setExpectations()
+        `when`(metadata.artist).thenReturn(StringUtils.EMPTY)
+        `when`(metadata.title).thenReturn("Anjunabeach")
+
+        result = scrobblerHelper.send(metadata)
+
+        notSendToScrobblingMapAssertion()
+    }
+
+    @Test
+    fun `should not add scrobbling if no title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setExpectations()
+        `when`(metadata.artist).thenReturn("Above & Beyond")
+        `when`(metadata.title).thenReturn(StringUtils.EMPTY)
+
+        result = scrobblerHelper.send(metadata)
+
+        notSendToScrobblingMapAssertion()
+    }
+
+    @Test
+    fun `should fail when submit a scrobbler`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadataMap.get(metadata)).thenReturn(100L)
+        setExpectations()
+        setMetadataTrackExpectations()
+        `when`(scrobbleResult.isSuccessful).thenReturn(false)
+        `when`(
+            lastFMTrackHelper.scrobble(
+                metadata.artist,
+                metadata.title,
+                100,
+                currentUser.session,
+            ),
+        ).thenReturn(scrobbleResult)
+
+        assertEquals(ActionResult.SESSION_LESS, scrobblerHelper.send(metadata))
+    }
+
+    @Test
+    fun `should return if no login`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataTrackExpectations()
+        `when`(currentUser.username).thenReturn(StringUtils.EMPTY)
+
+        assertEquals(ActionResult.NOT_LOGGED, scrobblerHelper.send(metadata))
     }
 
     private fun setExpectations() {

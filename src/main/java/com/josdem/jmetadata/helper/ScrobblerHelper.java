@@ -86,7 +86,7 @@ public class ScrobblerHelper {
     if (StringUtils.isNotEmpty(metadata.getArtist())
         && StringUtils.isNotEmpty(metadata.getTitle())
         && metadata.getLength() > MIN_LENGTH) {
-      long startTime = time - (metadataMap.size() * DELTA);
+      long startTime = time - ((long) metadataMap.size() * DELTA);
       metadataMap.put(metadata, startTime);
       return scrobbling(metadata);
     }
