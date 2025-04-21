@@ -19,7 +19,9 @@ package com.josdem.jmetadata.helper;
 import de.umass.lastfm.Session;
 import de.umass.lastfm.Track;
 import de.umass.lastfm.scrobble.ScrobbleResult;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LastFMTrackHelper {
 
   public ScrobbleResult scrobble(String artist, String title, int time, Session session) {
