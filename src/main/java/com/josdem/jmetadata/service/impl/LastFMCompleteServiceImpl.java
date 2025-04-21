@@ -29,6 +29,8 @@ import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 import java.awt.Image;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -117,7 +119,8 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
     }
     if (release != null) {
       log.info("Year date format: {}", release);
-      lastfmAlbum.setYear(lastfmHelper.getYear(release));
+      var localDate = convertToLocalDateViaInstant(release);
+      lastfmAlbum.setYear(lastfmHelper.getYear(localDate));
       log.info("Year metadata format: {}", lastfmAlbum.getYear());
     } else {
       lastfmAlbum.setYear(StringUtils.EMPTY);
@@ -141,5 +144,9 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
       metadata.setGenre(lastfmAlbum.getGenre());
     }
     return ActionResult.NEW;
+  }
+
+  private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+    return dateToConvert.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
   }
 }

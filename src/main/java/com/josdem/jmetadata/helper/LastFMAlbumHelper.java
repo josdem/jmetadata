@@ -51,7 +51,7 @@ public class LastFMAlbumHelper {
       log.info("lastFmTag: {}", lastFmTag);
       if (GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN) {
         log.info(
-                "lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
+            "lastFmTag matched in GenreTypes: {}", GenreTypes.getGenreByName(lastFmTag).getName());
         return GenreTypes.getGenreByName(lastFmTag).getName();
       }
     }
