@@ -41,7 +41,7 @@ class ImageServiceTest {
 
   @Test
   @DisplayName("creating a temp file for cover art")
-  public void shouldCreateTempFile(TestInfo testInfo) throws Exception {
+  void shouldCreateTempFile(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
     File tempFile = imageService.createTempFile();
     assertTrue(tempFile.getName().contains(ApplicationConstants.PREFIX));
