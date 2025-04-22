@@ -31,29 +31,30 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-
-/**
- * @understands A class who knows how to send scrobblings
- */
 @Service
+@RequiredArgsConstructor
 public class ScrobblerHelper {
   private static final int ONE_THOUSAND = 1000;
-  private static final int MIN_LENGHT = 240;
+  private static final int MIN_LENGTH = 240;
   private static final int REQUEST_PERIOD = 250;
-  private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
-  private LastFMTrackHelper lastFMTrackHelper = new LastFMTrackHelper();
-  private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+  private final Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
   private static final int DELTA = 120;
 
-  private ControlEngine controlEngine;
+  private final LastFMTrackHelper lastFMTrackHelper;
 
-  private ActionResult scrobbling(Metadata metadata) throws IOException, InterruptedException {
+  @Setter private ControlEngine controlEngine;
+
+  private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+  private ActionResult scrobbling(Metadata metadata) throws InterruptedException {
     User currentUser = controlEngine.get(Model.CURRENT_USER);
     if (StringUtils.isEmpty(currentUser.getUsername())) {
       return ActionResult.NOT_LOGGED;
@@ -84,16 +85,12 @@ public class ScrobblerHelper {
     // According to submission rules http://www.last.fm/api/submissions
     if (StringUtils.isNotEmpty(metadata.getArtist())
         && StringUtils.isNotEmpty(metadata.getTitle())
-        && metadata.getLength() > MIN_LENGHT) {
-      long startTime = time - (metadataMap.size() * DELTA);
+        && metadata.getLength() > MIN_LENGTH) {
+      long startTime = time - ((long) metadataMap.size() * DELTA);
       metadataMap.put(metadata, startTime);
       return scrobbling(metadata);
     }
     return ActionResult.NOT_RECORDED;
-  }
-
-  public void setControlEngine(ControlEngine controlEngine) {
-    this.controlEngine = controlEngine;
   }
 
   private class ScrobbleTask implements Callable<ActionResult> {
@@ -114,14 +111,13 @@ public class ScrobblerHelper {
               metadataMap.get(metadata).intValue(),
               session);
       if (result.isSuccessful() && !result.isIgnored()) {
-        log.debug(
-            metadata.getArtist()
-                + " - "
-                + metadata.getTitle()
-                + " scrobbling to Last.fm was Successful");
+        log.info(
+            "{} - {} scrobbling to Last.fm was Successful",
+            metadata.getArtist(),
+            metadata.getTitle());
         return ActionResult.SENT;
       } else {
-        log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + result);
+        log.error("Submitting track {} to Last.fm failed: {}", metadata.getTitle(), result);
         return ActionResult.ERROR;
       }
     }

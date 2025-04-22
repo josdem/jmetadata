@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,6 +35,7 @@ import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 import java.awt.Image;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -171,7 +173,7 @@ class LastFMCompleteServiceTest {
   private void setYearAndGenreExpectations() {
     var date = new Date();
     when(albumFromLastFM.getReleaseDate()).thenReturn(date);
-    when(lastfmHelper.getYear(date)).thenReturn(year);
+    when(lastfmHelper.getYear(isA(LocalDate.class))).thenReturn(year);
     when(lastfmHelper.getGenre(albumFromLastFM)).thenReturn(genre);
   }
 

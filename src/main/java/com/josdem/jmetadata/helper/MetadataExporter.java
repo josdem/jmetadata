@@ -27,16 +27,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MetadataExporter {
   private static final String NEW_LINE = "\n";
   private static final String DASH = " - ";
@@ -44,11 +45,11 @@ public class MetadataExporter {
   private static final String PAR_OPEN = " (";
   private static final String PAR_CLOSE = ")";
   private static final String BY = " by ";
-  private FileUtils fileUtils = new FileUtils();
-  private OutStreamWriter outputStreamWriter = new OutStreamWriter();
 
-  @Autowired private MetadataService metadataService;
-  @Autowired private FormatterService formatter;
+  private final FileUtils fileUtils;
+  private final OutStreamWriter outputStreamWriter;
+  private final MetadataService metadataService;
+  private final FormatterService formatter;
 
   public void export(ExportPackage exportPackage)
       throws IOException,
@@ -59,18 +60,18 @@ public class MetadataExporter {
     File file =
         fileUtils.createFile(
             exportPackage.getRoot(), StringUtils.EMPTY, ApplicationConstants.FILE_EXT);
-    log.info("Exporting metadata to: " + file.getAbsolutePath());
+    log.info("Exporting metadata to: {}", file.getAbsolutePath());
     OutputStream writer = outputStreamWriter.getWriter(file);
     int counter = 1;
-    List<Metadata> metadatas = exportPackage.getMetadataList();
-    if (metadataService.isSameAlbum(metadatas)) {
-      writer.write(metadatas.get(0).getAlbum().getBytes());
+    List<Metadata> metadataList = exportPackage.getMetadataList();
+    if (metadataService.isSameAlbum(metadataList)) {
+      writer.write(metadataList.getFirst().getAlbum().getBytes());
       writer.write(BY.getBytes());
-      writer.write(metadatas.get(0).getArtist().getBytes());
+      writer.write(metadataList.getFirst().getArtist().getBytes());
       writer.write(NEW_LINE.getBytes());
       writer.write(NEW_LINE.getBytes());
     }
-    for (Metadata metadata : metadatas) {
+    for (Metadata metadata : metadataList) {
       writer.write(Integer.toString(counter++).getBytes());
       writer.write(DOT.getBytes());
       writer.write(metadata.getArtist().getBytes());

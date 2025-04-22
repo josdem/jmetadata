@@ -14,10 +14,14 @@
    limitations under the License.
 */
 
-package com.josdem.jmetadata.helper;
+package com.josdem.jmetadata.service;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.josdem.jmetadata.ApplicationConstants;
+import com.josdem.jmetadata.helper.ApplicationContextSingleton;
+import com.josdem.jmetadata.service.impl.ImageServiceImpl;
+import java.io.File;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -29,16 +33,18 @@ import org.springframework.test.context.ContextConfiguration;
 
 @Slf4j
 @SpringBootTest
-@ContextConfiguration(classes = {ApplicationContextSingleton.class, ArtworkHelper.class})
+@ContextConfiguration(classes = {ApplicationContextSingleton.class, ImageServiceImpl.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-class ArtworkHelperTest {
+class ImageServiceTest {
 
-  private final ArtworkHelper artworkHelper;
+  private final ImageService imageService;
 
   @Test
-  @DisplayName("creating an artwork")
-  public void shouldCreateAnArtWork(TestInfo testInfo) {
+  @DisplayName("creating a temp file for cover art")
+  void shouldCreateTempFile(TestInfo testInfo) throws Exception {
     log.info(testInfo.getDisplayName());
-    assertNotNull(artworkHelper.createArtwork(), "should create an artwork");
+    File tempFile = imageService.createTempFile();
+    assertTrue(tempFile.getName().contains(ApplicationConstants.PREFIX));
+    assertTrue(tempFile.getName().contains(ApplicationConstants.IMAGE_EXT));
   }
 }
