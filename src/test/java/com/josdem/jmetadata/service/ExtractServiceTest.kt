@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import kotlin.test.assertEquals
 
+private const val EXPECTED_ARTIST = "Jennifer Lopez"
+
 internal class ExtractServiceTest {
     private lateinit var extractService: ExtractService
 
@@ -48,7 +50,19 @@ internal class ExtractServiceTest {
 
         val result = extractService.extractFromFileName(file)
 
-        assertEquals("Jennifer Lopez", result.artist)
+        assertEquals(EXPECTED_ARTIST, result.artist)
         assertEquals("9A", result.title)
+    }
+
+    @Test
+    fun `should extract metadata from file when no dash`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val fileName = "Jennifer Lopez.mp3"
+        `when`(file.name).thenReturn(fileName)
+
+        val result = extractService.extractFromFileName(file)
+
+        assertEquals(EXPECTED_ARTIST, result.artist)
+        assertEquals(EXPECTED_ARTIST, result.title)
     }
 }
