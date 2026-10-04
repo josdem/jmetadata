@@ -30,9 +30,7 @@ public class DragAndDropActionEmpty implements DragAndDropAction {
   }
 
   @Override
-  public void dragExit() {
-    throw new UnsupportedOperationException("dragExit() is not implemented");
-  }
+  public void dragExit() {}
 
   @Override
   public void setLocation(Point location) {
