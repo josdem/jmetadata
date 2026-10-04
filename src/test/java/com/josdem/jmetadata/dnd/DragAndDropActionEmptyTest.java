@@ -24,8 +24,7 @@ class DragAndDropActionEmptyTest {
 
   @Test
   void dragExitShouldNotThrowException() {
-    DragAndDropAction action = new DragAndDropActionEmpty();
-
+    var action = new DragAndDropActionEmpty();
     assertDoesNotThrow(action::dragExit);
   }
 }
