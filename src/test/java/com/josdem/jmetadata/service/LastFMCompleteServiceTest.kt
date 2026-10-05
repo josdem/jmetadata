@@ -27,6 +27,9 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 
+private const val YEAR = "2011"
+private const val GENRE = "Minimal Techno"
+
 internal class LastFMCompleteServiceTest {
     private lateinit var service: LastFMCompleteService
 
@@ -47,9 +50,23 @@ internal class LastFMCompleteServiceTest {
     @Test
     fun `should complete if no metadata`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        metadata.artist = "Linas"
-        metadata.album = "Time Lapse"
+        setArtistAndAlbum()
 
         assertTrue { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    @Test
+    fun `should complete if no cover art`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        metadata.year = YEAR
+        metadata.genre = GENRE
+
+        assertTrue { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    private fun setArtistAndAlbum() {
+        metadata.artist = "Linas"
+        metadata.album = "Time Lapse"
     }
 }
