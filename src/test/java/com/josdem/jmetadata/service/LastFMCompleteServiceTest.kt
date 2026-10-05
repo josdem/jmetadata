@@ -19,6 +19,7 @@ package com.josdem.jmetadata.service
 import com.josdem.jmetadata.helper.LastFMAlbumHelper
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl
+import de.umass.lastfm.Album
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -42,6 +43,8 @@ internal class LastFMCompleteServiceTest {
     @Mock private lateinit var lastFMAlbumHelper: LastFMAlbumHelper
 
     @Mock private lateinit var image: Image
+
+    @Mock private lateinit var albumLastFM: Album
 
     private var metadata = Metadata()
 
@@ -96,6 +99,24 @@ internal class LastFMCompleteServiceTest {
         log.info(testInfo.displayName)
         setArtistAndAlbum()
         setYearGenreAndCoverArt()
+
+        assertFalse { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    @Test
+    fun `should not complete if no artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setYearGenreAndCoverArt()
+        metadata.album = ALBUM
+
+        assertFalse { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    @Test
+    fun `should not complete if no album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setYearGenreAndCoverArt()
+        metadata.artist = ARTIST
 
         assertFalse { service.canLastFMHelpToComplete(metadata) }
     }
