@@ -26,6 +26,7 @@ import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
+import java.awt.Image
 
 private const val YEAR = "2011"
 private const val GENRE = "Minimal Techno"
@@ -36,6 +37,8 @@ internal class LastFMCompleteServiceTest {
     @Mock private lateinit var imageService: ImageService
 
     @Mock private lateinit var lastFMAlbumHelper: LastFMAlbumHelper
+
+    @Mock private lateinit var image: Image
 
     private var metadata = Metadata()
 
@@ -61,6 +64,16 @@ internal class LastFMCompleteServiceTest {
         setArtistAndAlbum()
         metadata.year = YEAR
         metadata.genre = GENRE
+
+        assertTrue { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    @Test
+    fun `should complete if no genre`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        metadata.year = YEAR
+        metadata.coverArt = image
 
         assertTrue { service.canLastFMHelpToComplete(metadata) }
     }
