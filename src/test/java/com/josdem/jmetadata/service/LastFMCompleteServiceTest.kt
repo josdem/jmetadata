@@ -27,7 +27,10 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 import java.awt.Image
+import kotlin.test.assertFalse
 
+private const val ARTIST = "Linas"
+private const val ALBUM = "Time Lapse"
 private const val YEAR = "2011"
 private const val GENRE = "Minimal Techno"
 
@@ -78,8 +81,33 @@ internal class LastFMCompleteServiceTest {
         assertTrue { service.canLastFMHelpToComplete(metadata) }
     }
 
+    @Test
+    fun `should complete if no year`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        metadata.genre = GENRE
+        metadata.coverArt = image
+
+        assertTrue { service.canLastFMHelpToComplete(metadata) }
+    }
+
+    @Test
+    fun `should validate if metadata is complete`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        setYearGenreAndCoverArt()
+
+        assertFalse { service.canLastFMHelpToComplete(metadata) }
+    }
+
     private fun setArtistAndAlbum() {
-        metadata.artist = "Linas"
-        metadata.album = "Time Lapse"
+        metadata.artist = ARTIST
+        metadata.album = ALBUM
+    }
+
+    private fun setYearGenreAndCoverArt() {
+        metadata.year = YEAR
+        metadata.genre = GENRE
+        metadata.coverArt = image
     }
 }
