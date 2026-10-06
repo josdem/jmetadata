@@ -104,6 +104,17 @@ internal class LastfmServiceTest {
         assertEquals(ActionResult.READY, result)
     }
 
+    @Test
+    fun `should detect new values`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setCompleteHelperExpectations()
+        `when`(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.NEW)
+
+        val result = lastfmService.completeLastFM(metadata)
+
+        assertEquals(ActionResult.NEW, result)
+    }
+
     private fun setCompleteHelperExpectations() {
         `when`(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true)
         `when`(completeService.getLastFM(metadata)).thenReturn(lastfmAlbum)
