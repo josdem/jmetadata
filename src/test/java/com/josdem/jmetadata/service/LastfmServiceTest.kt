@@ -32,6 +32,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 import java.awt.Image
+import java.net.MalformedURLException
 
 private const val GENRE = "Minimal Techno"
 
@@ -113,6 +114,17 @@ internal class LastfmServiceTest {
         val result = lastfmService.completeLastFM(metadata)
 
         assertEquals(ActionResult.NEW, result)
+    }
+
+    @Test
+    fun `should send error when malformed URL`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setCompleteHelperExpectations()
+        `when`(completeService.getLastFM(metadata)).thenThrow(MalformedURLException("Malformed URL"))
+
+        val result = lastfmService.completeLastFM(metadata)
+
+        assertEquals(ActionResult.ERROR, result)
     }
 
     private fun setCompleteHelperExpectations() {
