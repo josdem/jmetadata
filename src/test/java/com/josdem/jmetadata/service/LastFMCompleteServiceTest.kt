@@ -23,6 +23,7 @@ import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl
 import com.josdem.jmetadata.util.ApplicationState
 import de.umass.lastfm.Album
+import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -31,6 +32,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.isA
@@ -164,6 +167,18 @@ internal class LastFMCompleteServiceTest {
         val result = service.isSomethingNew(lastfmAlbum, metadata)
 
         assertEquals(ActionResult.NEW, result)
+    }
+
+    @Test
+    fun `should detect when lastfm album has genre`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.album = ALBUM
+        metadata.genre = GENRE
+
+        val result = service.getLastFM(metadata)
+
+        verify(lastFMAlbumHelper, never()).getGenre(albumLastFM)
+        assertTrue(StringUtils.isEmpty(result.genre))
     }
 
     private fun setArtistAndAlbum() {
