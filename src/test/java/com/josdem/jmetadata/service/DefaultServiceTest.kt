@@ -70,7 +70,7 @@ internal class DefaultServiceTest {
     }
 
     @Test
-    fun shouldCompleteCdNumber(testInfo: TestInfo) {
+    fun `should cComplete cd number`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         `when`(metadataOne.totalTracks).thenReturn(TOTAL_TRACKS)
         `when`(metadataTwo.totalTracks).thenReturn(TOTAL_TRACKS)
@@ -83,7 +83,7 @@ internal class DefaultServiceTest {
     }
 
     @Test
-    fun shouldCompleteTotalCds(testInfo: TestInfo) {
+    fun `should complete total cds`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         `when`(metadataOne.totalTracks).thenReturn(TOTAL_TRACKS)
         `when`(metadataTwo.totalTracks).thenReturn(TOTAL_TRACKS)
@@ -96,7 +96,7 @@ internal class DefaultServiceTest {
     }
 
     @Test
-    fun shouldNotCompleteIfSingleTrack(testInfo: TestInfo) {
+    fun `should not complete if single track`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val metadataList = mutableListOf<Metadata>()
 
@@ -133,7 +133,7 @@ internal class DefaultServiceTest {
     }
 
     @Test
-    fun shouldNotCompleteMetadataWhenNoNecessary(testInfo: TestInfo) {
+    fun `should not complete metadata when no necessary`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         `when`(metadataOne.totalTracks).thenReturn(TOTAL_TRACKS)
         `when`(metadataTwo.totalTracks).thenReturn(TOTAL_TRACKS)
@@ -147,7 +147,7 @@ internal class DefaultServiceTest {
     }
 
     @Test
-    fun shouldNotCompleteWhenNoTrackNumber(testInfo: TestInfo) {
+    fun `should not complete when no track number`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         `when`(metadataOne.trackNumber).thenReturn(StringUtils.EMPTY)
         `when`(metadataTwo.trackNumber).thenReturn(StringUtils.EMPTY)
