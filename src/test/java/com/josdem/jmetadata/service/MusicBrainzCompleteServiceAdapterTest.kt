@@ -18,6 +18,7 @@ package com.josdem.jmetadata.service
 
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -65,6 +66,6 @@ internal class MusicBrainzCompleteServiceAdapterTest {
         log.info(testInfo.displayName)
         `when`(metadataService.isSameAlbum(listOf(metadata))).thenReturn(false)
         `when`(metadataService.isSameArtist(listOf(metadata))).thenReturn(false)
-        assertTrue { !musicBrainzCompleteServiceAdapter.canComplete(listOf(metadata)) }
+        assertFalse { musicBrainzCompleteServiceAdapter.canComplete(listOf(metadata)) }
     }
 }
