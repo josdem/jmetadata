@@ -16,7 +16,9 @@
 
 package com.josdem.jmetadata.service
 
+import com.josdem.jmetadata.action.ActionResult
 import com.josdem.jmetadata.helper.LastFMAlbumHelper
+import com.josdem.jmetadata.model.LastfmAlbum
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl
 import com.josdem.jmetadata.util.ApplicationState
@@ -43,6 +45,8 @@ private const val GENRE = "Minimal Techno"
 
 internal class LastFMCompleteServiceTest {
     private lateinit var service: LastFMCompleteService
+
+    @Mock private lateinit var lastfmAlbum: LastfmAlbum
 
     @Mock private lateinit var imageService: ImageService
 
@@ -141,6 +145,25 @@ internal class LastFMCompleteServiceTest {
         assertEquals(GENRE, result.genre)
         assertEquals(image, result.imageIcon)
         assertEquals(albumLastFM, ApplicationState.lastFmCache[ALBUM])
+    }
+
+    @Test
+    fun `should detect when nothing changed`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val result = service.isSomethingNew(lastfmAlbum, metadata)
+
+        assertEquals(ActionResult.READY, result)
+    }
+
+    @Test
+    fun `should detect when year changed`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(lastfmAlbum.year).thenReturn(YEAR)
+
+        val result = service.isSomethingNew(lastfmAlbum, metadata)
+
+        assertEquals(ActionResult.NEW, result)
     }
 
     private fun setArtistAndAlbum() {
