@@ -24,12 +24,16 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.mockito.ArgumentMatchers.isA
 import org.mockito.Mock
+import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 import java.awt.Image
+
+private const val GENRE = "Minimal Techno"
 
 internal class LastfmServiceTest {
     private lateinit var lastfmService: LastfmServiceImpl
@@ -76,6 +80,17 @@ internal class LastfmServiceTest {
         val result = lastfmService.completeLastFM(metadata)
 
         assertEquals(ActionResult.READY, result)
+    }
+
+    @Test
+    fun `should not complete genre if the file has one`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setCompleteHelperExpectations()
+        `when`(metadata.genre).thenReturn(GENRE)
+
+        lastfmService.completeLastFM(metadata)
+
+        verify(metadata, never()).genre = isA(String::class.java)
     }
 
     private fun setCompleteHelperExpectations() {
