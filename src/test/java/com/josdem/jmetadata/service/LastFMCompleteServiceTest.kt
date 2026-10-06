@@ -26,6 +26,7 @@ import de.umass.lastfm.Album
 import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -179,6 +180,29 @@ internal class LastFMCompleteServiceTest {
 
         verify(lastFMAlbumHelper, never()).getGenre(albumLastFM)
         assertTrue(StringUtils.isEmpty(result.genre))
+    }
+
+    @Test
+    fun `should detect when lastfm album has year`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.album = ALBUM
+        metadata.year = YEAR
+
+        val result = service.getLastFM(metadata)
+
+        verify(albumLastFM, never()).releaseDate
+        assertTrue(StringUtils.isEmpty(result.year))
+    }
+
+    @Test
+    fun `should not complete from lastFM since it does not have info`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        `when`(lastFMAlbumHelper.getAlbum(ARTIST, ALBUM)).thenReturn(null)
+
+        service.getLastFM(metadata)
+
+        assertNull(ApplicationState.lastFmCache[ALBUM])
     }
 
     private fun setArtistAndAlbum() {
