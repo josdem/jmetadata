@@ -93,6 +93,17 @@ internal class LastfmServiceTest {
         verify(metadata, never()).genre = isA(String::class.java)
     }
 
+    @Test
+    fun `should return metadata complete if Lastfm has no new values`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setCompleteHelperExpectations()
+        `when`(completeService.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.READY)
+
+        val result = lastfmService.completeLastFM(metadata)
+
+        assertEquals(ActionResult.READY, result)
+    }
+
     private fun setCompleteHelperExpectations() {
         `when`(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true)
         `when`(completeService.getLastFM(metadata)).thenReturn(lastfmAlbum)
