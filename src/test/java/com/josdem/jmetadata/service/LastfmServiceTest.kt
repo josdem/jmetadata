@@ -68,6 +68,16 @@ internal class LastfmServiceTest {
         assertEquals(ActionResult.NEW, result)
     }
 
+    @Test
+    fun `should not complete metadata using LastFM service when no new data`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(completeService.canLastFMHelpToComplete(metadata)).thenReturn(false)
+
+        val result = lastfmService.completeLastFM(metadata)
+
+        assertEquals(ActionResult.READY, result)
+    }
+
     private fun setCompleteHelperExpectations() {
         `when`(completeService.canLastFMHelpToComplete(metadata)).thenReturn(true)
         `when`(completeService.getLastFM(metadata)).thenReturn(lastfmAlbum)
