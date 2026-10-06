@@ -19,16 +19,22 @@ package com.josdem.jmetadata.service
 import com.josdem.jmetadata.helper.LastFMAlbumHelper
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceImpl
+import com.josdem.jmetadata.util.ApplicationState
 import de.umass.lastfm.Album
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.isA
 import org.slf4j.LoggerFactory
 import java.awt.Image
-import kotlin.test.assertFalse
+import java.util.Date
 
 private const val ARTIST = "Linas"
 private const val ALBUM = "Time Lapse"
@@ -53,6 +59,7 @@ internal class LastFMCompleteServiceTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
+        `when`(lastFMAlbumHelper.getAlbum(ARTIST, ALBUM)).thenReturn(albumLastFM)
         service = LastFMCompleteServiceImpl(imageService, lastFMAlbumHelper)
     }
 
@@ -121,6 +128,21 @@ internal class LastFMCompleteServiceTest {
         assertFalse { service.canLastFMHelpToComplete(metadata) }
     }
 
+    @Test
+    fun `should get metadata from lastFm`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setArtistAndAlbum()
+        setImageLastFM()
+        setYearAndGenreExpectations()
+
+        val result = service.getLastFM(metadata)
+
+        assertEquals(YEAR, result.year)
+        assertEquals(GENRE, result.genre)
+        assertEquals(image, result.imageIcon)
+        assertEquals(albumLastFM, ApplicationState.lastFmCache[ALBUM])
+    }
+
     private fun setArtistAndAlbum() {
         metadata.artist = ARTIST
         metadata.album = ALBUM
@@ -130,5 +152,18 @@ internal class LastFMCompleteServiceTest {
         metadata.year = YEAR
         metadata.genre = GENRE
         metadata.coverArt = image
+    }
+
+    private fun setImageLastFM() {
+        val imageURL = "http://userserve-ak.last.fm/serve/300x300/35560281.png"
+        `when`(albumLastFM.getImageURL(isA())).thenReturn(imageURL)
+        `when`(imageService.readImage(imageURL)).thenReturn(image)
+    }
+
+    private fun setYearAndGenreExpectations() {
+        val date = Date()
+        `when`(albumLastFM.releaseDate).thenReturn(date)
+        `when`(lastFMAlbumHelper.getYear(any())).thenReturn(YEAR)
+        `when`(lastFMAlbumHelper.getGenre(albumLastFM)).thenReturn(GENRE)
     }
 }
