@@ -26,12 +26,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 import retrofit2.Call
 import retrofit2.Retrofit
+import java.io.IOException
 
 private const val ALBUM_NAME = "Night Life"
 private const val ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780"
@@ -73,6 +75,13 @@ internal class MusicBrainzServiceTest {
         val result = musicBrainzService.getAlbumByName(ALBUM_NAME)
 
         assertEquals(ALBUM_ID, result.id)
+    }
+
+    @Test
+    fun `should not getting release id by name due to exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(call.execute()).thenThrow(IOException("Network error"))
+        assertThrows<RuntimeException> { musicBrainzService.getAlbumByName(ALBUM_NAME) }
     }
 
     private fun getExpectedResponse(): MusicBrainzResponse {
