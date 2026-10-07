@@ -19,14 +19,17 @@ package com.josdem.jmetadata.service
 import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.helper.RetrofitInstance
 import com.josdem.jmetadata.model.Album
+import com.josdem.jmetadata.model.CoverArtImage
 import com.josdem.jmetadata.model.CoverArtResponse
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.model.MusicBrainzResponse
 import com.josdem.jmetadata.model.Release
+import com.josdem.jmetadata.model.Thumbnail
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl
 import com.josdem.jmetadata.util.ApplicationState
 import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -40,17 +43,22 @@ import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
 import retrofit2.Call
 import retrofit2.Retrofit
+import java.awt.Image
 import java.io.IOException
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 private const val ALBUM_NAME = "Night Life"
 private const val ARTIST = "Pet shop boys"
 private const val ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780"
+private const val COVER_ART_URL = "https://coverartarchive.org/release/b04558a9-b69c-45bd-a6f4-d65706067780/1234567890.jpg"
 
 internal class MusicBrainzServiceTest {
     private lateinit var musicBrainzService: MusicBrainzServiceImpl
 
     private val metadata = Metadata()
     private val album = Album()
+
+    @Mock private lateinit var image: Image
 
     @Mock private lateinit var retrofit: Retrofit
 
@@ -136,6 +144,22 @@ internal class MusicBrainzServiceTest {
         assertThrows<BusinessException> { musicBrainzService.completeCoverArt(metadataList, coverArtResponse) }
     }
 
+    @Test
+    fun `should complete cover art`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val coverArtResponse = setCoverArtExpectations()
+        setMetadataExpectations()
+        metadata.coverArt = null
+        val metadataList = listOf(metadata)
+        `when`(imageService.readImage(COVER_ART_URL)).thenReturn(image)
+
+        val result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse)
+
+        assertEquals(image, result.first().coverArt)
+        assertNotNull(result.first().newCoverArt)
+        assertEquals(1, result.size)
+    }
+
     private fun setMetadataExpectations() {
         metadata.album = ALBUM_NAME
         metadata.artist = ARTIST
@@ -148,5 +172,15 @@ internal class MusicBrainzServiceTest {
         val releases = listOf(release)
         musicBrainzResponse.releases = releases
         return musicBrainzResponse
+    }
+
+    private fun setCoverArtExpectations(): CoverArtResponse {
+        val coverArtResponse = CoverArtResponse()
+        val coverArtImage = CoverArtImage()
+        val thumbnail = Thumbnail()
+        thumbnail.large = COVER_ART_URL
+        coverArtImage.thumbnails = thumbnail
+        coverArtResponse.images = listOf(coverArtImage)
+        return coverArtResponse
     }
 }
