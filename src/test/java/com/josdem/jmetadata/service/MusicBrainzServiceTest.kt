@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.service
 
+import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.helper.RetrofitInstance
 import com.josdem.jmetadata.model.Album
 import com.josdem.jmetadata.model.Metadata
@@ -23,6 +24,7 @@ import com.josdem.jmetadata.model.MusicBrainzResponse
 import com.josdem.jmetadata.model.Release
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl
 import com.josdem.jmetadata.util.ApplicationState
+import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -106,6 +108,19 @@ internal class MusicBrainzServiceTest {
 
         assertEquals("1999", result.first().year)
         assertEquals(1, result.size)
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = ["", " "])
+    fun `should not complete year if not valid format`(metadataYear: String?) {
+        log.info("should not complete year if not valid format with metadataYear: $metadataYear")
+        setMetadataExpectations()
+        metadata.year = StringUtils.EMPTY
+        val metadataList = listOf(metadata)
+        album.date = metadataYear
+
+        assertThrows<BusinessException> { musicBrainzService.completeYear(metadataList, album) }
     }
 
     private fun setMetadataExpectations() {
