@@ -18,6 +18,7 @@ package com.josdem.jmetadata.service
 
 import com.josdem.jmetadata.helper.RetrofitInstance
 import com.josdem.jmetadata.model.Album
+import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.model.MusicBrainzResponse
 import com.josdem.jmetadata.model.Release
 import com.josdem.jmetadata.service.impl.MusicBrainzServiceImpl
@@ -27,6 +28,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.NullSource
+import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
@@ -36,10 +40,14 @@ import retrofit2.Retrofit
 import java.io.IOException
 
 private const val ALBUM_NAME = "Night Life"
+private const val ARTIST = "Pet shop boys"
 private const val ALBUM_ID = "b04558a9-b69c-45bd-a6f4-d65706067780"
 
 internal class MusicBrainzServiceTest {
     private lateinit var musicBrainzService: MusicBrainzServiceImpl
+
+    private val metadata = Metadata()
+    private val album = Album()
 
     @Mock private lateinit var retrofit: Retrofit
 
@@ -82,6 +90,27 @@ internal class MusicBrainzServiceTest {
         log.info(testInfo.displayName)
         `when`(call.execute()).thenThrow(IOException("Network error"))
         assertThrows<RuntimeException> { musicBrainzService.getAlbumByName(ALBUM_NAME) }
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = ["", " "])
+    fun `should complete year from album`(metadataYear: String?) {
+        log.info("should complete year from album with metadataYear: $metadataYear")
+        setMetadataExpectations()
+        metadata.setYear(metadataYear)
+        val metadataList = listOf(metadata)
+        album.date = "1999-03-29"
+
+        val result = musicBrainzService.completeYear(metadataList, album)
+
+        assertEquals("1999", result.first().year)
+        assertEquals(1, result.size)
+    }
+
+    private fun setMetadataExpectations() {
+        metadata.album = ALBUM_NAME
+        metadata.artist = ARTIST
     }
 
     private fun getExpectedResponse(): MusicBrainzResponse {
