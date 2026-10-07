@@ -19,6 +19,7 @@ package com.josdem.jmetadata.service
 import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.helper.RetrofitInstance
 import com.josdem.jmetadata.model.Album
+import com.josdem.jmetadata.model.CoverArtResponse
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.model.MusicBrainzResponse
 import com.josdem.jmetadata.model.Release
@@ -121,6 +122,18 @@ internal class MusicBrainzServiceTest {
         album.date = metadataYear
 
         assertThrows<BusinessException> { musicBrainzService.completeYear(metadataList, album) }
+    }
+
+    @Test
+    fun `should not completing cover art since response is empty`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        val coverArtResponse = CoverArtResponse()
+        coverArtResponse.images = emptyList()
+        metadata.coverArt = null
+        val metadataList = emptyList<Metadata>()
+
+        assertThrows<BusinessException> { musicBrainzService.completeCoverArt(metadataList, coverArtResponse) }
     }
 
     private fun setMetadataExpectations() {
