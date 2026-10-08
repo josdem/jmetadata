@@ -160,6 +160,18 @@ internal class MusicBrainzServiceTest {
         assertEquals(1, result.size)
     }
 
+    @Test
+    fun `should not completing cover art since error reading image`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val coverArtResponse = setCoverArtExpectations()
+        setMetadataExpectations()
+        metadata.coverArt = null
+        val metadataList = listOf(metadata)
+        `when`(imageService.readImage(COVER_ART_URL)).thenThrow(IOException("Error reading image"))
+
+        assertThrows<BusinessException> { musicBrainzService.completeCoverArt(metadataList, coverArtResponse) }
+    }
+
     private fun setMetadataExpectations() {
         metadata.album = ALBUM_NAME
         metadata.artist = ARTIST
