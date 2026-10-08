@@ -172,6 +172,20 @@ internal class MusicBrainzServiceTest {
         assertThrows<BusinessException> { musicBrainzService.completeCoverArt(metadataList, coverArtResponse) }
     }
 
+    @Test
+    fun `should not completing cover art since it already exists`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        metadata.coverArt = image
+        val metadataList = listOf(metadata)
+        val coverArtResponse = setCoverArtExpectations()
+
+        val result = musicBrainzService.completeCoverArt(metadataList, coverArtResponse)
+
+        assertEquals(image, result.first().coverArt)
+        assertEquals(1, result.size)
+    }
+
     private fun setMetadataExpectations() {
         metadata.album = ALBUM_NAME
         metadata.artist = ARTIST
