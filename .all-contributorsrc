@@ -44,6 +44,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "vianavitor-dev",
+      "name": "Vitor Hugo Marques Viana",
+      "avatar_url": "https://avatars.githubusercontent.com/u/176242424?v=4",
+      "profile": "https://github.com/vianavitor-dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
