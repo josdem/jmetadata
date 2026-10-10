@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.dnd;
 
+import com.josdem.jmetadata.enums.IconType;
 import com.josdem.jmetadata.util.FileSystemValidatorLight;
 import com.josdem.jmetadata.util.Picture;
 import java.awt.*;
@@ -37,30 +38,6 @@ public class DragTooltipDialog extends JDialog {
   private static final int DEFAULT_MIN_FONT_WIDTH = 4;
   private static final int SPACER_WIDTH = 4;
   private static final int ROW_HEIGHT = 20;
-
-  public enum IconType {
-    Track("tracks", Object.class, 14, 14);
-
-    @Getter private final String text;
-    private final Class<?> clazz;
-    private final int width;
-    private final int height;
-
-    IconType(String text, Class<?> clazz, int width, int height) {
-      this.text = text;
-      this.clazz = clazz;
-      this.width = width;
-      this.height = height;
-    }
-
-    public static IconType getIconType(Object object) {
-      if (IconType.Track.clazz.isAssignableFrom(object.getClass())) {
-        return IconType.Track;
-      }
-      return null;
-    }
-  }
-
   private static final long serialVersionUID = 1L;
   private JPanel dragAcceptedPanel;
   private static final Dimension compactSize = new Dimension(44, 44);
@@ -131,10 +108,9 @@ public class DragTooltipDialog extends JDialog {
 
   public void setContent(String... message) {
     jContentPane.setName(DRAG_DIALOG_NAME);
-    Dimension contentSize = fillContent(Arrays.asList(message));
   }
 
-  public void setContent(final Picture picture) {
+  public void setContent() {
     jContentPane.setName(DRAG_DIALOG_NAME);
   }
 
