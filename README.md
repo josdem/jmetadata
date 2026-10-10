@@ -1,8 +1,6 @@
 jmetadata
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-[![GitHub](https://github.com/josdem/jmetadata/actions/workflows/main.yml/badge.svg)](https://github.com/josdem/jmetadata/actions)
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=josdem_jmetadata&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=josdem_jmetadata)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ---------------------------------------
 Complete metadata automatically with MusicBrainz, LastFM or manually.
@@ -49,6 +47,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ehallscherwitz"><img src="https://avatars.githubusercontent.com/u/129916652?v=4?s=100" width="100px;" alt="Ethan Scherwitz"/><br /><sub><b>Ethan Scherwitz</b></sub></a><br /><a href="https://github.com/josdem/jmetadata/commits?author=ehallscherwitz" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ionesosa-e"><img src="https://avatars.githubusercontent.com/u/183152944?v=4?s=100" width="100px;" alt="ionesosa-e"/><br /><sub><b>ionesosa-e</b></sub></a><br /><a href="https://github.com/josdem/jmetadata/commits?author=ionesosa-e" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ShruthiNarasimhan"><img src="https://avatars.githubusercontent.com/u/199464140?v=4?s=100" width="100px;" alt="ShruthiGit"/><br /><sub><b>ShruthiGit</b></sub></a><br /><a href="https://github.com/josdem/jmetadata/commits?author=ShruthiNarasimhan" title="Code">💻</a> <a href="https://github.com/josdem/jmetadata/commits?author=ShruthiNarasimhan" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/vianavitor-dev"><img src="https://avatars.githubusercontent.com/u/176242424?v=4?s=100" width="100px;" alt="Vitor Hugo Marques Viana"/><br /><sub><b>Vitor Hugo Marques Viana</b></sub></a><br /><a href="https://github.com/josdem/jmetadata/commits?author=vianavitor-dev" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
