@@ -18,12 +18,7 @@ package com.josdem.jmetadata.dnd;
 
 import com.josdem.jmetadata.util.FileSystemValidatorLight;
 import com.josdem.jmetadata.util.Picture;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Frame;
-import java.awt.Rectangle;
-import java.awt.Window;
+import java.awt.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -44,16 +39,18 @@ public class DragTooltipDialog extends JDialog {
   private static final int ROW_HEIGHT = 20;
 
   public enum IconType {
-    Track("tracks", Object.class, 14);
+    Track("tracks", Object.class, 14, 14);
 
     @Getter private final String text;
     private final Class<?> clazz;
     private final int width;
+    private final int height;
 
-    IconType(String text, Class<?> clazz, int width) {
+    IconType(String text, Class<?> clazz, int width, int height) {
       this.text = text;
       this.clazz = clazz;
       this.width = width;
+      this.height = height;
     }
 
     public static IconType getIconType(Object object) {
@@ -65,6 +62,9 @@ public class DragTooltipDialog extends JDialog {
   }
 
   private static final long serialVersionUID = 1L;
+  private JPanel dragAcceptedPanel;
+  private static final Dimension compactSize = new Dimension(44, 44);
+  private Dimension fullSize = new Dimension(100, 100);
   private JPanel jContentPane = null;
   private JLabel dragIcon = null;
   private JPanel descriptionPanel = null;
@@ -72,6 +72,23 @@ public class DragTooltipDialog extends JDialog {
 
   public DragTooltipDialog(Window owner) {
     super((owner instanceof Frame) ? (JFrame) owner : null, null, false);
+    initialize();
+  }
+
+  private void initialize() {
+    this.setSize(this.getPreferredSize());
+    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    this.setContentPane(getJContentPane());
+    this.setUndecorated(true);
+    this.setAlwaysOnTop(true);
+  }
+
+  private JPanel getJContentPane() {
+    if (jContentPane == null) {
+      jContentPane = new JPanel(null);
+      jContentPane.setName(DRAG_DIALOG_NAME);
+    }
+    return jContentPane;
   }
 
   public void setAllowed(boolean allowed) {
@@ -82,14 +99,30 @@ public class DragTooltipDialog extends JDialog {
     if (dragIcon != null) {
       try {
         if (allowed) {
+          this.setContentPane(getDragAcceptedPanel());
+          this.setSize(compactSize);
           dragIcon.setName("dragPermitted");
         } else {
+          this.setContentPane(getJContentPane());
+          this.setSize(fullSize);
           dragIcon.setName("dragNotPermitted");
         }
       } catch (IllegalArgumentException ex) {
         log.debug("Drag tootltip display error.");
       }
     }
+  }
+
+  private JPanel getDragAcceptedPanel() {
+    if (dragAcceptedPanel == null) {
+      dragAcceptedPanel = new JPanel(new BorderLayout());
+      dragAcceptedPanel.setName("transparent");
+      JLabel dragIconAccepted = new JLabel();
+      dragIconAccepted.setName("dragPermittedPanel");
+      dragAcceptedPanel.add(dragIconAccepted, BorderLayout.CENTER);
+      dragAcceptedPanel.setSize(compactSize);
+    }
+    return dragAcceptedPanel;
   }
 
   public void setContent(FileSystemValidatorLight validator) {
@@ -126,11 +159,13 @@ public class DragTooltipDialog extends JDialog {
       return null;
     }
 
-    var type = IconType.getIconType(list.getFirst());
+    var typeText = (IconType.getIconType(list.getFirst()) == null)
+            ? "ERROR"
+            : IconType.Track.getText();
     String text =
         list.isEmpty()
             ? null
-            : (list.size()) + " " + (type == null ? "ERROR" : IconType.Track.getText());
+            : (list.size()) + " " + typeText;
     if (list.size() == 1) {
       text =
           list.getFirst() instanceof File
