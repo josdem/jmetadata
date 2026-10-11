@@ -107,6 +107,21 @@ internal class MetadataServiceTest {
         assertTrue(metadataList.isEmpty(), "should be empty due to not valid audio file")
     }
 
+    @Test
+    fun `should clean metadata list`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMp3Expectations()
+        setFileListExpectations()
+
+        var metadataList = metadataService.extractMetadata(root)
+
+        assertEquals(1, metadataList.size)
+
+        metadataList = metadataService.extractMetadata(root)
+
+        assertEquals(1, metadataList.size)
+    }
+
     private fun setFileListExpectations() {
         `when`(metadata.artist).thenReturn("Jaytech")
         `when`(metadata.title).thenReturn("Pepe Garden (Original Mix)")
