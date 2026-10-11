@@ -36,6 +36,8 @@ import java.io.File
 import java.util.Properties
 import kotlin.test.assertEquals
 
+private const val ALBUM = "Lemon Flavored Kiss"
+
 internal class MetadataServiceTest {
     private lateinit var metadataService: MetadataServiceImpl
 
@@ -61,9 +63,13 @@ internal class MetadataServiceTest {
 
     @Mock private lateinit var metadata: Metadata
 
+    @Mock private lateinit var anotherMetadata: Metadata
+
     @Mock private lateinit var filesWithoutMinimumMetadata: MutableSet<File?>
 
     private val fileList: MutableList<File?> = ArrayList<File?>()
+
+    private val metadatas: MutableList<Metadata?> = ArrayList<Metadata?>()
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -138,6 +144,21 @@ internal class MetadataServiceTest {
         assertEquals(1, metadataList.size)
         verify(extractService).extractFromFileName(pepeGarden)
         verify(filesWithoutMinimumMetadata).add(pepeGarden)
+    }
+
+    @Test
+    fun `should validate same album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.album).thenReturn(ALBUM)
+        `when`(anotherMetadata.album).thenReturn(ALBUM)
+        addMetadatas()
+
+        assertTrue { metadataService.isSameAlbum(metadatas) }
+    }
+
+    private fun addMetadatas() {
+        metadatas.add(metadata)
+        metadatas.add(anotherMetadata)
     }
 
     private fun setFileListExpectations() {
