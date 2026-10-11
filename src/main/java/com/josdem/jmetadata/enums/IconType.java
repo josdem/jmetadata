@@ -3,7 +3,7 @@ package com.josdem.jmetadata.enums;
 import lombok.Getter;
 
 public enum IconType {
-    Track("tracks", Object.class, 14, 14);
+    TRACK("tracks", Object.class, 14, 14);
 
     @Getter
     private final String text;
@@ -19,8 +19,8 @@ public enum IconType {
     }
 
     public static IconType getIconType(Object object) {
-      if (IconType.Track.clazz.isAssignableFrom(object.getClass())) {
-        return IconType.Track;
+      if (IconType.TRACK.clazz.isAssignableFrom(object.getClass())) {
+        return IconType.TRACK;
       }
       return null;
     }

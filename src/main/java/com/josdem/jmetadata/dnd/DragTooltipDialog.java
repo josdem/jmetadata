@@ -34,17 +34,12 @@ import lombok.extern.slf4j.Slf4j;
 public class DragTooltipDialog extends JDialog {
   private static final String DRAG_DIALOG_NAME = "dragDialog";
 
-  private static final Rectangle DRAG_ICON_BOUNDS = new Rectangle(1, 1, 18, 18);
-  private static final int DEFAULT_MIN_FONT_WIDTH = 4;
-  private static final int SPACER_WIDTH = 4;
-  private static final int ROW_HEIGHT = 20;
   private static final long serialVersionUID = 1L;
   private JPanel dragAcceptedPanel;
   private static final Dimension compactSize = new Dimension(44, 44);
   private Dimension fullSize = new Dimension(100, 100);
   private JPanel jContentPane = null;
   private JLabel dragIcon = null;
-  private JPanel descriptionPanel = null;
   private boolean allowed;
 
   public DragTooltipDialog(Window owner) {
@@ -106,91 +101,8 @@ public class DragTooltipDialog extends JDialog {
     jContentPane.setName(DRAG_DIALOG_NAME);
   }
 
-  public void setContent(String... message) {
-    jContentPane.setName(DRAG_DIALOG_NAME);
-  }
-
   public void setContent() {
     jContentPane.setName(DRAG_DIALOG_NAME);
   }
-
-  private Dimension fillContent(List<?>... stuff) {
-    var height = 0;
-    var width = 0;
-    for (List<?> list : stuff) {
-      DynamicPanel dynamicPanel = getDynamicPanel(list);
-      if (dynamicPanel == null) {
-        continue;
-      }
-      width = Math.max(width, dynamicPanel.getPanelWidth());
-      height += dynamicPanel.getPanelHeight();
-      descriptionPanel.setBounds(21, 3, width, height);
-      descriptionPanel.add(dynamicPanel.getPanel());
-    }
-    return new Dimension(width, height);
-  }
-
-  private DynamicPanel getDynamicPanel(List<?> list) {
-    if (list == null || list.isEmpty()) {
-      return null;
-    }
-
-    var typeText = (IconType.getIconType(list.getFirst()) == null)
-            ? "ERROR"
-            : IconType.Track.getText();
-    String text =
-        list.isEmpty()
-            ? null
-            : (list.size()) + " " + typeText;
-    if (list.size() == 1) {
-      text =
-          list.getFirst() instanceof File
-              ? ((File) list.getFirst()).getName()
-              : list.getFirst().toString();
-    }
-
-    var dynamicText = new JLabel(text);
-    dynamicText.setForeground(Color.WHITE);
-    FontMetrics fontMetrics = dynamicText.getFontMetrics(dynamicText.getFont());
-    var width = fontMetrics.stringWidth(dynamicText.getText()) + DEFAULT_MIN_FONT_WIDTH;
-    var realHeight = ROW_HEIGHT;
-    var longestText = "";
-    while (text.contains("<br>")) {
-      text = text.substring(text.indexOf("<br>") + DEFAULT_MIN_FONT_WIDTH);
-      if (text.length() > longestText.length()) {
-        longestText = text;
-      }
-      realHeight += ROW_HEIGHT;
-    }
-    if (!longestText.isEmpty()) {
-      width = fontMetrics.stringWidth(longestText) + DEFAULT_MIN_FONT_WIDTH;
-    }
-    var dynamicPanel = new JPanel();
-    return new DynamicPanel(dynamicPanel, width, realHeight);
-  }
 }
 
-class DynamicPanel {
-  private JPanel panel;
-  private int panelWidth;
-  private int panelHeight;
-
-  public DynamicPanel(JPanel panel, int panelWidth, int panelHeight) {
-    super();
-    this.panel = panel;
-    this.panelWidth = panelWidth;
-    this.panelHeight = panelHeight;
-  }
-
-  public JPanel getPanel() {
-    return panel;
-  }
-
-  public int getPanelWidth() {
-    return panelWidth;
-  }
-
-  public int getPanelHeight() {
-    return panelHeight;
-  }
-}
