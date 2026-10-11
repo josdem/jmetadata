@@ -61,6 +61,8 @@ internal class MetadataServiceTest {
 
     @Mock private lateinit var metadata: Metadata
 
+    @Mock private lateinit var filesWithoutMinimumMetadata: MutableSet<File?>
+
     private val fileList: MutableList<File?> = ArrayList<File?>()
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -120,6 +122,22 @@ internal class MetadataServiceTest {
         metadataList = metadataService.extractMetadata(root)
 
         assertEquals(1, metadataList.size)
+    }
+
+    @Test
+    fun `should extract metadata from file name`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMp3Expectations()
+        fileList.add(pepeGarden)
+
+        `when`(metadataHelper.createHashSet()).thenReturn(filesWithoutMinimumMetadata)
+        `when`(fileUtils.getFileList(root)).thenReturn(fileList)
+
+        val metadataList = metadataService.extractMetadata(root)
+
+        assertEquals(1, metadataList.size)
+        verify(extractService).extractFromFileName(pepeGarden)
+        verify(filesWithoutMinimumMetadata).add(pepeGarden)
     }
 
     private fun setFileListExpectations() {
