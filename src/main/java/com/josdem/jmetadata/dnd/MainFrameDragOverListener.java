@@ -43,17 +43,16 @@ public class MainFrameDragOverListener implements DragOverListener {
       if (!validator.hasError()) {
         dialog.setContent(validator);
       } else {
-        dialog.setContent("mainFrameDrop.error.1level");
+        dialog.setContent();
       }
     } else if (draggedObject.is(Picture.class)) {
-      Picture picture = draggedObject.get(Picture.class);
-      dialog.setContent(picture);
+      dialog.setContent();
       dialog.setVisible(true);
     } else if (draggedObject.get() == null) {
-      dialog.setContent("");
+      dialog.setContent();
       dialog.setVisible(true);
     } else {
-      dialog.setContent("It is impossible to insert what you dragged. Cause its evil");
+      dialog.setContent();
     }
     dialog.setVisible(true);
   }
