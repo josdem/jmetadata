@@ -45,10 +45,7 @@ public class MainFrameDragOverListener implements DragOverListener {
       } else {
         dialog.setContent();
       }
-    } else if (draggedObject.is(Picture.class)) {
-      dialog.setContent();
-      dialog.setVisible(true);
-    } else if (draggedObject.get() == null) {
+    } else if (draggedObject.is(Picture.class) || draggedObject.get() == null) {
       dialog.setContent();
       dialog.setVisible(true);
     } else {

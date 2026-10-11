@@ -16,18 +16,12 @@
 
 package com.josdem.jmetadata.dnd;
 
-import com.josdem.jmetadata.enums.IconType;
 import com.josdem.jmetadata.util.FileSystemValidatorLight;
-import com.josdem.jmetadata.util.Picture;
 import java.awt.*;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -105,4 +99,3 @@ public class DragTooltipDialog extends JDialog {
     jContentPane.setName(DRAG_DIALOG_NAME);
   }
 }
-
