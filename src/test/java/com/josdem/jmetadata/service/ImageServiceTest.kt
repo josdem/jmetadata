@@ -30,7 +30,6 @@ import org.springframework.test.context.ContextConfiguration
 @SpringBootTest
 @ContextConfiguration(classes = [ApplicationContextSingleton::class, ImageServiceImpl::class])
 internal class ImageServiceTest {
-
     @Autowired
     private lateinit var imageService: ImageService
 

@@ -23,6 +23,7 @@ import com.josdem.jmetadata.service.impl.MetadataServiceImpl
 import com.josdem.jmetadata.util.FileUtils
 import org.asmatron.messengine.ControlEngine
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -53,6 +54,8 @@ internal class MetadataServiceTest {
     @Mock private lateinit var fileUtils: FileUtils
 
     @Mock private lateinit var pepeGarden: File
+
+    @Mock private lateinit var styleFile: File
 
     @Mock private lateinit var root: File
 
@@ -91,6 +94,17 @@ internal class MetadataServiceTest {
         assertEquals(1, metadataList.size)
         verify(fileUtils).getFileList(root)
         assertEquals("Jaytech", result.artist)
+    }
+
+    @Test
+    fun `should not extracting metadata due to not having a valid audio file`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        fileList.add(styleFile)
+        `when`(fileUtils.getFileList(root)).thenReturn(fileList)
+
+        val metadataList = metadataService.extractMetadata(root)
+
+        assertTrue(metadataList.isEmpty(), "should be empty due to not valid audio file")
     }
 
     private fun setFileListExpectations() {
