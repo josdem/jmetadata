@@ -140,4 +140,49 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals("tú", metadata.artist)
     }
+
+    @Test
+    fun `should format a accent mark album`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.album = "¿Cu&aacute;ndo?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Cuándo?", metadata.album)
+    }
+
+    @Test
+    fun `should format e accent mark album`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.album = "¿Qu&eacute;?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Qué?", metadata.album)
+    }
+
+    @Test
+    fun `should format i accent mark album`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.album = "m&iacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("mí", metadata.album)
+    }
+
+    @Test
+    fun `should format o accent mark album`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.album = "¿C&oacute;mo?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Cómo?", metadata.album)
+    }
+
+    @Test
+    fun `should format u accent mark album`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.album = "t&uacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("tú", metadata.album)
+    }
 }
