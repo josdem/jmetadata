@@ -239,4 +239,37 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasCamelized(metadata) }
         assertEquals("Vision", metadata.album)
     }
+
+    @Test
+    fun `should validate when title has a dash`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "blue-eyed"
+        val expectedTitle = "Blue-eyed"
+
+        metadata.title = title
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should validate when artist has a dash`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "blue-eyed"
+        val expectedArtist = "Blue-eyed"
+
+        metadata.artist = artist
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedArtist, metadata.artist)
+    }
+
+    @Test
+    fun `should validate when album has a dash`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val album = "blue-eyed"
+        val expectedAlbum = "Blue-eyed"
+
+        metadata.album = album
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedAlbum, metadata.album)
+    }
 }
