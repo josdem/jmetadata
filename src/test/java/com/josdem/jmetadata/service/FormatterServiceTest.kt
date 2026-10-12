@@ -299,4 +299,40 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals("What's The Time", metadata.album)
     }
+
+    @Test
+    fun `should add missing capital letters when parenthesis`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "as the rush comes (chillout mix)"
+        val expectedTitle = "As The Rush Comes (chillout Mix)"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should add missing capital letters when numbers`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "rabbit in your headlights (3d mix)"
+        val expectedTitle = "Rabbit In Your Headlights (3d Mix)"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should add missing capital letters when apostrophe`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "jesus, joy of man's desiring"
+        val expectedTitle = "Jesus, Joy Of Man's Desiring"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
 }
