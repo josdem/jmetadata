@@ -212,4 +212,31 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasCamelized(metadata) }
         assertEquals("Vision", metadata.album)
     }
+
+    @Test
+    fun `should validate when title is all in capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.title = TITLE.uppercase()
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Legends Of The Fall", metadata.title)
+    }
+
+    @Test
+    fun `should validate when artist is all in capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.artist = ARTIST.uppercase()
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Angel Tears", metadata.artist)
+    }
+
+    @Test
+    fun `should validate when album is all in capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.album = ALBUM.uppercase()
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Vision", metadata.album)
+    }
 }
