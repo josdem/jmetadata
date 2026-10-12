@@ -52,11 +52,47 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect accent mark title`(testInfo: TestInfo) {
+    fun `should detect a accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "¿Cu&aacute;ndo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals("¿Cuándo?", metadata.title)
+    }
+
+    @Test
+    fun `should detect e accent mark title`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.title = "¿Qu&eacute;?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Qué?", metadata.title)
+    }
+
+    @Test
+    fun `should detect i accent mark title`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.title = "m&iacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("mí", metadata.title)
+    }
+
+    @Test
+    fun `should detect o accent mark title`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.title = "¿C&oacute;mo?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Cómo?", metadata.title)
+    }
+
+    @Test
+    fun `should detect u accent mark title`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.title = "t&uacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("tú", metadata.title)
     }
 }
