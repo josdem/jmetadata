@@ -335,4 +335,40 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasCamelized(metadata) }
         assertEquals(expectedTitle, metadata.title)
     }
+
+    @Test
+    fun `should format grave accent`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Lumi&egrave;res De Skye"
+        val expectedTitle = "Lumieres De Skye"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should format e acute accent`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Le Vent d'&Eacute;cosse"
+        val expectedTitle = "Le Vent d'Écosse"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should format e circum-flex accent`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Entre-Nous... La f&ecirc;te"
+        val expectedTitle = "Entre-Nous... La fête"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
 }
