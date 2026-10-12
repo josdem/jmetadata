@@ -21,8 +21,10 @@ import com.josdem.jmetadata.metadata.Mp3Reader
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.MetadataServiceImpl
 import com.josdem.jmetadata.util.FileUtils
+import org.apache.commons.lang3.StringUtils
 import org.asmatron.messengine.ControlEngine
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,6 +39,8 @@ import java.util.Properties
 import kotlin.test.assertEquals
 
 private const val ALBUM = "Lemon Flavored Kiss"
+private const val MY_REMIXES = "My Remixes"
+private const val ARTIST = "Raul Islas"
 
 internal class MetadataServiceTest {
     private lateinit var metadataService: MetadataServiceImpl
@@ -154,6 +158,48 @@ internal class MetadataServiceTest {
         addMetadatas()
 
         assertTrue { metadataService.isSameAlbum(metadatas) }
+    }
+
+    @Test
+    fun `should validate different album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.album).thenReturn(ALBUM)
+        `when`(anotherMetadata.album).thenReturn(MY_REMIXES)
+        addMetadatas()
+
+        assertFalse { metadataService.isSameAlbum(metadatas) }
+    }
+
+    @Test
+    fun `should validate empty album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.album).thenReturn(StringUtils.EMPTY)
+        `when`(anotherMetadata.album).thenReturn(MY_REMIXES)
+
+        addMetadatas()
+
+        assertFalse { metadataService.isSameAlbum(metadatas) }
+    }
+
+    @Test
+    fun `should validate not the same album if empty`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.album).thenReturn(StringUtils.EMPTY)
+        `when`(anotherMetadata.album).thenReturn(StringUtils.EMPTY)
+
+        addMetadatas()
+
+        assertFalse { metadataService.isSameAlbum(metadatas) }
+    }
+
+    @Test
+    fun `should validate same artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.artist).thenReturn(ARTIST)
+        `when`(anotherMetadata.artist).thenReturn(ARTIST)
+        addMetadatas()
+
+        assertTrue { metadataService.isSameArtist(metadatas) }
     }
 
     private fun addMetadatas() {
