@@ -194,4 +194,22 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasCamelized(metadata) }
         assertEquals("Legends Of The Fall", metadata.title)
     }
+
+    @Test
+    fun `should validate when artist is without capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.artist = ARTIST
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Angel Tears", metadata.artist)
+    }
+
+    @Test
+    fun `should validate when album is without capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.album = ALBUM
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Vision", metadata.album)
+    }
 }
