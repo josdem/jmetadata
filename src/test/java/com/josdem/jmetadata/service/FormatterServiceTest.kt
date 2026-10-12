@@ -53,7 +53,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format a accent mark title`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.title = "¿Cu&aacute;ndo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -62,7 +62,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format e accent mark title`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.title = "¿Qu&eacute;?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -71,7 +71,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format i accent mark title`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.title = "m&iacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -80,7 +80,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format o accent mark title`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.title = "¿C&oacute;mo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -89,7 +89,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format u accent mark title`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.title = "t&uacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -98,7 +98,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format a accent mark artist`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.artist = "¿Cu&aacute;ndo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -107,7 +107,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format e accent mark artist`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.artist = "¿Qu&eacute;?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -116,7 +116,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format i accent mark artist`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.artist = "m&iacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -125,7 +125,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format o accent mark artist`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.artist = "¿C&oacute;mo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -134,7 +134,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format u accent mark artist`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.artist = "t&uacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -143,7 +143,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format a accent mark album`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.album = "¿Cu&aacute;ndo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -152,7 +152,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format e accent mark album`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.album = "¿Qu&eacute;?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -161,7 +161,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format i accent mark album`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.album = "m&iacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -170,7 +170,7 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format o accent mark album`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.album = "¿C&oacute;mo?"
 
         assertTrue { formatterService.wasFormatted(metadata) }
@@ -179,10 +179,19 @@ internal class FormatterServiceTest {
 
     @Test
     fun `should format u accent mark album`(testInfo: TestInfo) {
-        log.info(testInfo.toString())
+        log.info(testInfo.displayName)
         metadata.album = "t&uacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals("tú", metadata.album)
+    }
+
+    @Test
+    fun `should validate when title is without capital letters`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.title = TITLE
+
+        assertTrue { formatterService.wasCamelized(metadata) }
+        assertEquals("Legends Of The Fall", metadata.title)
     }
 }
