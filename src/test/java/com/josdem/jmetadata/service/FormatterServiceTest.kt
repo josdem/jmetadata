@@ -187,7 +187,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when title is without capital letters`(testInfo: TestInfo) {
+    fun `should format when title is without capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.title = TITLE
 
@@ -196,7 +196,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when artist is without capital letters`(testInfo: TestInfo) {
+    fun `should format when artist is without capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.artist = ARTIST
 
@@ -205,7 +205,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when album is without capital letters`(testInfo: TestInfo) {
+    fun `should format when album is without capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.album = ALBUM
 
@@ -214,7 +214,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when title is all in capital letters`(testInfo: TestInfo) {
+    fun `should format when title is all in capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.title = TITLE.uppercase()
 
@@ -223,7 +223,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when artist is all in capital letters`(testInfo: TestInfo) {
+    fun `should format when artist is all in capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.artist = ARTIST.uppercase()
 
@@ -232,7 +232,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when album is all in capital letters`(testInfo: TestInfo) {
+    fun `should format when album is all in capital letters`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         metadata.album = ALBUM.uppercase()
 
@@ -241,7 +241,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when title has a dash`(testInfo: TestInfo) {
+    fun `should format when title has a dash`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val title = "blue-eyed"
         val expectedTitle = "Blue-eyed"
@@ -252,7 +252,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when artist has a dash`(testInfo: TestInfo) {
+    fun `should format when artist has a dash`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val artist = "blue-eyed"
         val expectedArtist = "Blue-eyed"
@@ -263,7 +263,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate when album has a dash`(testInfo: TestInfo) {
+    fun `should format when album has a dash`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val album = "blue-eyed"
         val expectedAlbum = "Blue-eyed"
@@ -271,5 +271,32 @@ internal class FormatterServiceTest {
         metadata.album = album
         assertTrue { formatterService.wasCamelized(metadata) }
         assertEquals(expectedAlbum, metadata.album)
+    }
+
+    @Test
+    fun `should format apostrophe in title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.title = "What&acute;s The Time"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("What's The Time", metadata.title)
+    }
+
+    @Test
+    fun `should format apostrophe in artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.artist = "What&acute;s The Time"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("What's The Time", metadata.artist)
+    }
+
+    @Test
+    fun `should format apostrophe in album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        metadata.album = "What&acute;s The Time"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("What's The Time", metadata.album)
     }
 }
