@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.service
 
+import com.josdem.jmetadata.exception.TooMuchFilesException
 import com.josdem.jmetadata.helper.MetadataHelper
 import com.josdem.jmetadata.metadata.Mp3Reader
 import com.josdem.jmetadata.model.Metadata
@@ -29,7 +30,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -74,6 +77,8 @@ internal class MetadataServiceTest {
     private val fileList: MutableList<File?> = ArrayList<File?>()
 
     private val metadatas: MutableList<Metadata?> = ArrayList<Metadata?>()
+
+    private val maxFilesAllowed = 50
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -200,6 +205,49 @@ internal class MetadataServiceTest {
         addMetadatas()
 
         assertTrue { metadataService.isSameArtist(metadatas) }
+    }
+
+    @Test
+    fun `should validate different artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.artist).thenReturn(ARTIST)
+        `when`(anotherMetadata.artist).thenReturn("Paul Van Dyk")
+        addMetadatas()
+
+        assertFalse { metadataService.isSameArtist(metadatas) }
+    }
+
+    @Test
+    fun `should validate empty artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.artist).thenReturn(ARTIST)
+        `when`(anotherMetadata.artist).thenReturn(StringUtils.EMPTY)
+        addMetadatas()
+
+        assertFalse { metadataService.isSameArtist(metadatas) }
+    }
+
+    @Test
+    fun `should validate not the same artist if empty`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.artist).thenReturn(StringUtils.EMPTY)
+        `when`(anotherMetadata.artist).thenReturn(StringUtils.EMPTY)
+        addMetadatas()
+
+        assertFalse { metadataService.isSameArtist(metadatas) }
+    }
+
+    @Test
+    fun `should not extract metadata when too much files`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val fileList = mock(MutableList::class.java) as MutableList<File?>
+
+        `when`(fileList.size).thenReturn(maxFilesAllowed + 1)
+        `when`(fileUtils.getFileList(root)).thenReturn(fileList)
+
+        assertThrows<TooMuchFilesException> {
+            metadataService.extractMetadata(root)
+        }
     }
 
     private fun addMetadatas() {
