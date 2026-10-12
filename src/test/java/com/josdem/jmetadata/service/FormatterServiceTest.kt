@@ -52,7 +52,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect a accent mark title`(testInfo: TestInfo) {
+    fun `should format a accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "¿Cu&aacute;ndo?"
 
@@ -61,7 +61,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect e accent mark title`(testInfo: TestInfo) {
+    fun `should format e accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "¿Qu&eacute;?"
 
@@ -70,7 +70,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect i accent mark title`(testInfo: TestInfo) {
+    fun `should format i accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "m&iacute;"
 
@@ -79,7 +79,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect o accent mark title`(testInfo: TestInfo) {
+    fun `should format o accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "¿C&oacute;mo?"
 
@@ -88,11 +88,56 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should detect u accent mark title`(testInfo: TestInfo) {
+    fun `should format u accent mark title`(testInfo: TestInfo) {
         log.info(testInfo.toString())
         metadata.title = "t&uacute;"
 
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals("tú", metadata.title)
+    }
+
+    @Test
+    fun `should format a accent mark artist`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.artist = "¿Cu&aacute;ndo?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Cuándo?", metadata.artist)
+    }
+
+    @Test
+    fun `should format e accent mark artist`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.artist = "¿Qu&eacute;?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Qué?", metadata.artist)
+    }
+
+    @Test
+    fun `should format i accent mark artist`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.artist = "m&iacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("mí", metadata.artist)
+    }
+
+    @Test
+    fun `should format o accent mark artist`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.artist = "¿C&oacute;mo?"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("¿Cómo?", metadata.artist)
+    }
+
+    @Test
+    fun `should format u accent mark artist`(testInfo: TestInfo) {
+        log.info(testInfo.toString())
+        metadata.artist = "t&uacute;"
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals("tú", metadata.artist)
     }
 }
