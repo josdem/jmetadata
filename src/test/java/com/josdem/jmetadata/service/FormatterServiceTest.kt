@@ -402,9 +402,45 @@ internal class FormatterServiceTest {
         val album = "Bl&uuml;chel & von Deylen"
         val expectedAlbum = "Blüchel & von Deylen"
 
-        metadata.title = album
+        metadata.album = album
 
         assertTrue { formatterService.wasFormatted(metadata) }
-        assertEquals(expectedAlbum, metadata.title)
+        assertEquals(expectedAlbum, metadata.album)
+    }
+
+    @Test
+    fun `should validate degree format in title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Déj&agrave; Vu"
+        val expectedTitle = "Déja Vu"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should validate degree format in artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "Déj&agrave; Vu"
+        val expectedArtist = "Déja Vu"
+
+        metadata.artist = artist
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedArtist, metadata.artist)
+    }
+
+    @Test
+    fun `should validate degree format in album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val album = "Déj&agrave; Vu"
+        val expectedAlbum = "Déja Vu"
+
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedAlbum, metadata.album)
     }
 }
