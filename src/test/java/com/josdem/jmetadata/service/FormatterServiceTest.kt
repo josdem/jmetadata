@@ -371,4 +371,40 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals(expectedTitle, metadata.title)
     }
+
+    @Test
+    fun `should validate u uml accent in title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Bl&uuml;chel & von Deylen"
+        val expectedTitle = "Blüchel & von Deylen"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should validate u uml accent in artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "Bl&uuml;chel & von Deylen"
+        val expectedArtist = "Blüchel & von Deylen"
+
+        metadata.title = artist
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedArtist, metadata.title)
+    }
+
+    @Test
+    fun `should validate u uml accent in album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val album = "Bl&uuml;chel & von Deylen"
+        val expectedAlbum = "Blüchel & von Deylen"
+
+        metadata.title = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedAlbum, metadata.title)
+    }
 }
