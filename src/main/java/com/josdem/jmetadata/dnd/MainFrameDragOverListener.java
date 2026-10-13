@@ -1,5 +1,5 @@
 /*
-   Copyright 2025 Jose Morales contact@josdem.io
+   Copyright 2026 Jose Morales contact@josdem.io
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -43,17 +43,13 @@ public class MainFrameDragOverListener implements DragOverListener {
       if (!validator.hasError()) {
         dialog.setContent(validator);
       } else {
-        dialog.setContent("mainFrameDrop.error.1level");
+        dialog.setContent();
       }
-    } else if (draggedObject.is(Picture.class)) {
-      Picture picture = draggedObject.get(Picture.class);
-      dialog.setContent(picture);
-      dialog.setVisible(true);
-    } else if (draggedObject.get() == null) {
-      dialog.setContent("");
+    } else if (draggedObject.is(Picture.class) || draggedObject.get() == null) {
+      dialog.setContent();
       dialog.setVisible(true);
     } else {
-      dialog.setContent("It is impossible to insert what you dragged. Cause its evil");
+      dialog.setContent();
     }
     dialog.setVisible(true);
   }
