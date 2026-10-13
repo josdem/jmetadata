@@ -512,4 +512,40 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals(expectedAlbum, metadata.album)
     }
+
+    @Test
+    fun `should format a umlaut mark in title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "J&auml;hdytin"
+        val expectedTitle = "Jähdytin"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should format a umlaut mark in artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "J&auml;hdytin"
+        val expectedArtist = "Jähdytin"
+
+        metadata.artist = artist
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedArtist, metadata.artist)
+    }
+
+    @Test
+    fun `should format a umlaut mark in album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val album = "J&auml;hdytin"
+        val expectedAlbum = "Jähdytin"
+
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedAlbum, metadata.album)
+    }
 }
