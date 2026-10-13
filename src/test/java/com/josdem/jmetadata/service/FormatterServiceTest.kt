@@ -16,6 +16,7 @@
 
 package com.josdem.jmetadata.service
 
+import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.helper.ApplicationContextSingleton
 import com.josdem.jmetadata.helper.FormatterHelper
 import com.josdem.jmetadata.model.Metadata
@@ -24,6 +25,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -547,5 +550,58 @@ internal class FormatterServiceTest {
 
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals(expectedAlbum, metadata.album)
+    }
+
+    @Test
+    fun `should validate if metadata is analyzable`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Beatniks"
+        val artist = "Jaytin"
+        val album = "Nina"
+
+        metadata.title = title
+        metadata.artist = artist
+        metadata.album = album
+
+        assertDoesNotThrow { formatterService.isAnalyzable(metadata) }
+    }
+
+    @Test
+    fun `should validate metadata is not analyzable due to title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "Jaytin"
+        val album = "Nina"
+
+        metadata.title = null
+        metadata.artist = artist
+        metadata.album = album
+
+        assertThrows<BusinessException> { formatterService.isAnalyzable(metadata) }
+    }
+
+    @Test
+    fun `should validate metadata is not analyzable due to artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Beatniks"
+        val album = "Nina"
+
+        metadata.title = title
+        metadata.artist = null
+        metadata.album = album
+
+        assertThrows<BusinessException> { formatterService.isAnalyzable(metadata) }
+    }
+
+    @Test
+    fun `should validate metadata is not analyzable due to album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Beatniks"
+        val artist = "Jaytin"
+
+        metadata.title = title
+        metadata.artist = artist
+        metadata.album = null
+
+        assertThrows<BusinessException> { formatterService.isAnalyzable(metadata) }
     }
 }
