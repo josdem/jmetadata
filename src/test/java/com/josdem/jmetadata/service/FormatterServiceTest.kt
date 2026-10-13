@@ -476,4 +476,40 @@ internal class FormatterServiceTest {
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals(expectedAlbum, metadata.album)
     }
+
+    @Test
+    fun `should format n tilde in title`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val title = "Ni&ntilde;a"
+        val expectedTitle = "Niña"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should format n tilde in artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val artist = "Ni&ntilde;a"
+        val expectedArtist = "Niña"
+
+        metadata.artist = artist
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedArtist, metadata.artist)
+    }
+
+    @Test
+    fun `should format n tilde in album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val album = "Ni&ntilde;a"
+        val expectedAlbum = "Niña"
+
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedAlbum, metadata.album)
+    }
 }
