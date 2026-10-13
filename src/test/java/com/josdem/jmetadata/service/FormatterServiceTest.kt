@@ -409,7 +409,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate degree format in title`(testInfo: TestInfo) {
+    fun `should format grave format in title`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val title = "Déj&agrave; Vu"
         val expectedTitle = "Déja Vu"
@@ -421,7 +421,7 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate degree format in artist`(testInfo: TestInfo) {
+    fun `should format grave format in artist`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val artist = "Déj&agrave; Vu"
         val expectedArtist = "Déja Vu"
@@ -433,10 +433,43 @@ internal class FormatterServiceTest {
     }
 
     @Test
-    fun `should validate degree format in album`(testInfo: TestInfo) {
+    fun `should format grave format in album`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val album = "Déj&agrave; Vu"
         val expectedAlbum = "Déja Vu"
+
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedAlbum, metadata.album)
+    }
+
+    @Test
+    fun `should format degree format in title`(testInfo: TestInfo) {
+        val title = "Beatniks&deg;"
+        val expectedTitle = "Beatniks°"
+
+        metadata.title = title
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedTitle, metadata.title)
+    }
+
+    @Test
+    fun `should format degree format in artist`(testInfo: TestInfo) {
+        val artist = "Beatniks&deg;"
+        val expectedArtist = "Beatniks°"
+
+        metadata.artist = artist
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+        assertEquals(expectedArtist, metadata.artist)
+    }
+
+    @Test
+    fun `should format degree format in album`(testInfo: TestInfo) {
+        val album = "Beatniks&deg;"
+        val expectedAlbum = "Beatniks°"
 
         metadata.album = album
 
