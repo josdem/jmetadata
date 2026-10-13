@@ -21,6 +21,7 @@ import com.josdem.jmetadata.helper.ApplicationContextSingleton
 import com.josdem.jmetadata.helper.FormatterHelper
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.impl.FormatterServiceImpl
+import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -639,5 +640,53 @@ internal class FormatterServiceTest {
 
         assertTrue { formatterService.wasFormatted(metadata) }
         assertEquals(expectedAlbum, metadata.album)
+    }
+
+    @Test
+    fun `should format even if title is empty`(testInfo: TestInfo) {
+        val title = StringUtils.EMPTY
+        val artist = "¿Cu&aacute;ndo?"
+        val album = "¿Qu&eacute;?"
+
+        metadata.title = title
+        metadata.artist = artist
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+    }
+
+    @Test
+    fun `should format even if artist is empty`(testInfo: TestInfo) {
+        val title = "¿Cu&aacute;ndo?"
+        val artist = StringUtils.EMPTY
+        val album = "¿Qu&eacute;?"
+
+        metadata.title = title
+        metadata.artist = artist
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+    }
+
+    @Test
+    fun `should format even if album is empty`(testInfo: TestInfo) {
+        val title = "¿Cu&aacute;ndo?"
+        val artist = "¿Qu&eacute;?"
+        val album = StringUtils.EMPTY
+
+        metadata.title = title
+        metadata.artist = artist
+        metadata.album = album
+
+        assertTrue { formatterService.wasFormatted(metadata) }
+    }
+
+    @Test
+    fun `should get duration from seconds`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val length = 397
+        val expectedDuration = "6:37"
+
+        assertEquals(expectedDuration, formatterService.getDuration(length))
     }
 }
