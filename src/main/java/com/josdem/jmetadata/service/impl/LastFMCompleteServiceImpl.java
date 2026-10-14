@@ -83,7 +83,6 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
     Album album = ApplicationState.lastFmCache.get(metadata.getAlbum());
     if (album != null) {
       imageURL = album.getImageURL(ImageSize.EXTRALARGE);
-      log.info("imageURL: {} from album: {}", imageURL, album.getName());
     }
     if (!StringUtils.isEmpty(imageURL)) {
       Image image = imageService.readImage(imageURL);
@@ -118,10 +117,8 @@ public class LastFMCompleteServiceImpl implements LastFMCompleteService {
       release = album.getReleaseDate();
     }
     if (release != null) {
-      log.info("Year date format: {}", release);
       var localDate = convertToLocalDateViaInstant(release);
       lastfmAlbum.setYear(lastfmHelper.getYear(localDate));
-      log.info("Year metadata format: {}", lastfmAlbum.getYear());
     } else {
       lastfmAlbum.setYear(StringUtils.EMPTY);
     }

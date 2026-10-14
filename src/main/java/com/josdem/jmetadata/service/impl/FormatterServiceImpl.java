@@ -16,10 +16,10 @@
 
 package com.josdem.jmetadata.service.impl;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.helper.FormatterHelper;
 import com.josdem.jmetadata.model.Metadata;
 import com.josdem.jmetadata.service.FormatterService;
-import java.util.Objects;
 import java.util.StringTokenizer;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -176,8 +176,10 @@ public class FormatterServiceImpl implements FormatterService {
   }
 
   public void isAnalyzable(Metadata metadata) {
-    Objects.requireNonNull(metadata.getTitle());
-    Objects.requireNonNull(metadata.getArtist());
-    Objects.requireNonNull(metadata.getAlbum());
+    if (metadata.getArtist() == null
+        || metadata.getAlbum() == null
+        || metadata.getTitle() == null) {
+      throw new BusinessException("Null values are not allowed");
+    }
   }
 }
