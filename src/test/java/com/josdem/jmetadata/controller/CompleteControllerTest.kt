@@ -19,10 +19,14 @@ package com.josdem.jmetadata.controller
 import com.josdem.jmetadata.action.ActionResult
 import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.metadata.MetadataWriter
+import com.josdem.jmetadata.model.Album
 import com.josdem.jmetadata.model.CoverArt
+import com.josdem.jmetadata.model.CoverArtArchive
 import com.josdem.jmetadata.model.Metadata
+import com.josdem.jmetadata.model.MusicBrainzResponse
 import com.josdem.jmetadata.service.LastfmService
 import com.josdem.jmetadata.service.MusicBrainzService
+import com.josdem.jmetadata.service.RestService
 import com.josdem.jmetadata.service.impl.LastFMCompleteServiceAdapter
 import com.josdem.jmetadata.service.impl.MusicBrainzCompleteServiceAdapter
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -35,6 +39,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.never
 import org.slf4j.LoggerFactory
+import retrofit2.Call
+import retrofit2.Response
 import java.awt.Image
 import java.io.File
 
@@ -51,13 +57,23 @@ private const val TOTAL_CDS = "2"
 internal class CompleteControllerTest {
     private lateinit var completeController: CompleteController
 
+    @Mock private lateinit var call: Call<MusicBrainzResponse?>
+
+    @Mock private lateinit var response: Response<MusicBrainzResponse?>
+
     @Mock private lateinit var file: File
+
+    @Mock private lateinit var album: Album
+
+    @Mock private lateinit var coverArtArchive: CoverArtArchive
 
     @Mock private lateinit var metadata: Metadata
 
     @Mock private lateinit var coverArt: CoverArt
 
     @Mock private lateinit var image: Image
+
+    @Mock private lateinit var restService: RestService
 
     @Mock private lateinit var lastfmService: LastfmService
 
@@ -87,6 +103,8 @@ internal class CompleteControllerTest {
 
         completeController =
             CompleteController(metadataWriter, lastfmService, musicBrainzService, musicBrainzServiceAdapter, lastFMCompleteServiceAdapter)
+
+        completeController.setup()
     }
 
     @Test
@@ -165,5 +183,20 @@ internal class CompleteControllerTest {
         val result = completeController.completeLastFmMetadata(metadataList)
 
         assertEquals(ActionResult.READY, result)
+    }
+
+    @Test
+    fun `should get releases from MusicBrainz service`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val metadataList = listOf(metadata)
+        `when`(musicBrainzService.getAlbumByName(ALBUM)).thenReturn(album)
+        `when`(album.coverArtArchive).thenReturn(coverArtArchive)
+        `when`(call.execute()).thenReturn(response)
+        `when`(musicBrainzServiceAdapter.canComplete(metadataList)).thenReturn(true)
+        `when`(restService.getReleases("$ALBUM AND artist:$ARTIST")).thenReturn(call)
+
+        val result = completeController.completeAlbumMetadata(metadataList)
+
+        assertEquals(ActionResult.NEW, result)
     }
 }
