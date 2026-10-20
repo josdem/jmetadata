@@ -155,4 +155,15 @@ internal class CompleteControllerTest {
 
         verify(lastfmService, never()).completeLastFM(metadata)
     }
+
+    @Test
+    fun `should validate MusicBrainz service can not complete metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val metadataList = listOf(metadata)
+        `when`(musicBrainzServiceAdapter.canComplete(metadataList)).thenReturn(false)
+
+        val result = completeController.completeLastFmMetadata(metadataList)
+
+        assertEquals(ActionResult.READY, result)
+    }
 }
