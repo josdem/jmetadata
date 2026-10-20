@@ -33,6 +33,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.never
 import org.slf4j.LoggerFactory
 import java.awt.Image
 import java.io.File
@@ -142,5 +143,16 @@ internal class CompleteControllerTest {
         completeController.completeLastFmMetadata(metadataList)
 
         verify(lastfmService).completeLastFM(metadata)
+    }
+
+    @Test
+    fun `should validate lastFM service can not complete metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val metadataList = listOf(metadata)
+        `when`(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(false)
+
+        completeController.completeLastFmMetadata(metadataList)
+
+        verify(lastfmService, never()).completeLastFM(metadata)
     }
 }
