@@ -18,6 +18,7 @@ package com.josdem.jmetadata.controller
 
 import com.josdem.jmetadata.action.ActionResult
 import com.josdem.jmetadata.metadata.MetadataWriter
+import com.josdem.jmetadata.model.CoverArt
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.service.LastfmService
 import com.josdem.jmetadata.service.MusicBrainzService
@@ -32,6 +33,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
+import java.awt.Image
 import java.io.File
 
 private const val ARTIST = "Dave Deen"
@@ -50,6 +52,10 @@ internal class CompleteControllerTest {
     @Mock private lateinit var file: File
 
     @Mock private lateinit var metadata: Metadata
+
+    @Mock private lateinit var coverArt: CoverArt
+
+    @Mock private lateinit var image: Image
 
     @Mock private lateinit var lastfmService: LastfmService
 
@@ -98,6 +104,20 @@ internal class CompleteControllerTest {
         verify(metadataWriter).writeTotalCds(TOTAL_CDS)
         verify(metadataWriter).writeYear(YEAR)
         verify(metadataWriter).writeGenre(GENRE)
+        assertEquals(ActionResult.UPDATED, result)
+    }
+
+    @Test
+    fun `should remove cover art`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.newCoverArt).thenReturn(coverArt)
+        `when`(coverArt.image).thenReturn(image)
+
+        val result = completeController.completeAlbum(metadata)
+
+        verify(metadataWriter).removeCoverArt()
+        verify(metadataWriter).writeCoverArt(image)
+        verify(metadata).coverArt = image
         assertEquals(ActionResult.UPDATED, result)
     }
 }
