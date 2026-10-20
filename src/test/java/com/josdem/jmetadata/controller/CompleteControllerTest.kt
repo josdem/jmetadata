@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.controller
 
 import com.josdem.jmetadata.action.ActionResult
+import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.metadata.MetadataWriter
 import com.josdem.jmetadata.model.CoverArt
 import com.josdem.jmetadata.model.Metadata
@@ -119,5 +120,16 @@ internal class CompleteControllerTest {
         verify(metadataWriter).writeCoverArt(image)
         verify(metadata).coverArt = image
         assertEquals(ActionResult.UPDATED, result)
+    }
+
+    @Test
+    fun `should not complete metadata due to error`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(metadata.file).thenReturn(file)
+        `when`(metadataWriter.writeAlbum(ALBUM)).thenThrow(BusinessException::class.java)
+
+        val result = completeController.completeAlbum(metadata)
+
+        assertEquals(ActionResult.ERROR, result)
     }
 }
