@@ -26,6 +26,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.slf4j.LoggerFactory
+import java.io.IOException
 import kotlin.test.assertEquals
 
 internal class ExporterControllerTest {
@@ -51,5 +52,15 @@ internal class ExporterControllerTest {
         val result = exporterController.sendMetadata(exportPackage)
 
         assertEquals(ActionResult.EXPORTED, result)
+    }
+
+    @Test
+    fun `should report an error when sending metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(exporterHelper.export(exportPackage)).thenThrow(IOException())
+
+        val result = exporterController.sendMetadata(exportPackage)
+
+        assertEquals(ActionResult.ERROR, result)
     }
 }
