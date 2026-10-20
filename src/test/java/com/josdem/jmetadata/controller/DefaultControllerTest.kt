@@ -25,6 +25,7 @@ import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
 import kotlin.test.assertEquals
@@ -53,5 +54,16 @@ internal class DefaultControllerTest {
 
         verify(defaultService).complete(metadataList)
         assertEquals(ActionResult.NEW, result)
+    }
+
+    @Test
+    fun `should not complete total tracks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(defaultService.isCompletable(metadataList)).thenReturn(false)
+
+        val result = defaultController.complete(metadataList)
+
+        verify(defaultService, never()).complete(metadataList)
+        assertEquals(ActionResult.READY, result)
     }
 }
