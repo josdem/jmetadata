@@ -132,4 +132,15 @@ internal class CompleteControllerTest {
 
         assertEquals(ActionResult.ERROR, result)
     }
+
+    @Test
+    fun `should complete metadata with LastFM service`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val metadataList = listOf(metadata)
+        `when`(lastFMCompleteServiceAdapter.canComplete(metadataList)).thenReturn(true)
+
+        completeController.completeLastFmMetadata(metadataList)
+
+        verify(lastfmService).completeLastFM(metadata)
+    }
 }
