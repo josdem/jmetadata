@@ -37,4 +37,15 @@ internal class FormatterControllerTest {
 
         assertEquals(ActionResult.NEW, result)
     }
+
+    @Test
+    fun `should format when no camelized`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(formatterService.wasFormatted(metadata)).thenReturn(false)
+        `when`(formatterService.wasCamelized(metadata)).thenReturn(true)
+
+        val result = formatterController.format(metadata)
+
+        assertEquals(ActionResult.NEW, result)
+    }
 }
