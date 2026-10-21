@@ -70,4 +70,12 @@ internal class LoginControllerTest {
         verify(controlEngine).set(Model.CURRENT_USER, user, null)
         verify(controlEngine).fireEvent(eq(Events.LOGGED), any())
     }
+
+    @Test
+    fun `should not login`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        loginController.login(user)
+
+        verify(controlEngine).fireEvent(Events.LOGIN_FAILED)
+    }
 }
