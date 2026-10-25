@@ -90,4 +90,14 @@ internal class ScrobblerControllerTest {
 
         assertEquals(ActionResult.ERROR, result)
     }
+
+    @Test
+    fun `should catch InterruptedException`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(scrobblerHelper.send(metadata)).thenThrow(InterruptedException())
+
+        val result = scrobblerController.sendMetadata(metadata)
+
+        assertEquals(ActionResult.ERROR, result)
+    }
 }
