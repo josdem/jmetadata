@@ -32,6 +32,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.io.IOException
 import java.util.Properties
 import javax.swing.JFileChooser
 
@@ -115,6 +116,18 @@ internal class MetadataControllerTest {
         verify(controlEngine).set(Model.METADATA, metadataList, null)
         verify(controlEngine).fireEvent(Events.LOAD, ValueEvent(metadataList))
         verify(controlEngine).fireEvent(Events.LOADED)
+    }
+
+    @Test
+    fun `should catch IOException`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(file.exists()).thenReturn(true)
+        `when`(metadataService.extractMetadata(file)).thenThrow(IOException())
+
+        metadataController.getMetadata()
+
+        verify(controlEngine).fireEvent(Events.OPEN)
     }
 
     private fun setFileChooserExpectations() {
