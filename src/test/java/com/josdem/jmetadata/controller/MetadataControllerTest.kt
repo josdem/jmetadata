@@ -130,6 +130,18 @@ internal class MetadataControllerTest {
         verify(controlEngine).fireEvent(Events.OPEN)
     }
 
+    @Test
+    fun `should catch illegal argument exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(file.exists()).thenReturn(true)
+        `when`(metadataService.extractMetadata(file)).thenThrow(IllegalArgumentException())
+
+        metadataController.getMetadata()
+
+        verify(controlEngine).fireEvent(Events.OPEN)
+    }
+
     private fun setFileChooserExpectations() {
         `when`(jFileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION)
         `when`(jFileChooser.selectedFile).thenReturn(file)
