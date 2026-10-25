@@ -29,6 +29,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
+import java.io.IOException
 import kotlin.test.assertEquals
 
 internal class ScrobblerControllerTest {
@@ -56,7 +57,7 @@ internal class ScrobblerControllerTest {
         log.info(testInfo.displayName)
         `when`(scrobblerHelper.send(metadata)).thenReturn(ActionResult.NEW)
 
-        val result = scrobblerHelper.send(metadata)
+        val result = scrobblerController.sendMetadata(metadata)
 
         verify(scrobblerHelper).send(metadata)
         assertEquals(ActionResult.NEW, result)
@@ -67,7 +68,7 @@ internal class ScrobblerControllerTest {
         log.info(testInfo.displayName)
         `when`(scrobblerHelper.send(metadata)).thenReturn(ActionResult.ERROR)
 
-        val result = scrobblerHelper.send(metadata)
+        val result = scrobblerController.sendMetadata(metadata)
 
         verify(scrobblerHelper).send(metadata)
         assertEquals(ActionResult.ERROR, result)
@@ -78,5 +79,15 @@ internal class ScrobblerControllerTest {
         log.info(testInfo.displayName)
         scrobblerController.setup()
         verify(scrobblerHelper).setControlEngine(controlEngine)
+    }
+
+    @Test
+    fun `should catch IO exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(scrobblerHelper.send(metadata)).thenThrow(IOException())
+
+        val result = scrobblerController.sendMetadata(metadata)
+
+        assertEquals(ActionResult.ERROR, result)
     }
 }
