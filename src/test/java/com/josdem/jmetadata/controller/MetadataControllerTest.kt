@@ -17,6 +17,7 @@
 package com.josdem.jmetadata.controller
 
 import com.josdem.jmetadata.event.Events
+import com.josdem.jmetadata.exception.TooMuchFilesException
 import com.josdem.jmetadata.model.Metadata
 import com.josdem.jmetadata.model.Model
 import com.josdem.jmetadata.service.MetadataService
@@ -35,6 +36,8 @@ import java.io.File
 import java.io.IOException
 import java.util.Properties
 import javax.swing.JFileChooser
+
+private const val MAX_FILES_ALLOWED = "50"
 
 internal class MetadataControllerTest {
     private lateinit var metadataController: MetadataController
@@ -140,6 +143,20 @@ internal class MetadataControllerTest {
         metadataController.getMetadata()
 
         verify(controlEngine).fireEvent(Events.OPEN)
+    }
+
+    @Test
+    fun `should inform to the user too many files were selected`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(file.exists()).thenReturn(true)
+        `when`(properties.getProperty("max.files.allowed")).thenReturn(MAX_FILES_ALLOWED)
+        `when`(metadataService.extractMetadata(file)).thenThrow(TooMuchFilesException(Integer.valueOf(MAX_FILES_ALLOWED)))
+
+        metadataController.getMetadata()
+
+        verify(controlEngine).fireEvent(Events.DIRECTORY_SELECTED, ValueEvent(file.absolutePath))
+        verify(controlEngine).fireEvent(Events.MUCH_FILES_LOADED, ValueEvent(MAX_FILES_ALLOWED))
     }
 
     private fun setFileChooserExpectations() {
