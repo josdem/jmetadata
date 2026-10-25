@@ -72,6 +72,18 @@ internal class MetadataControllerTest {
         verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY)
     }
 
+    @Test
+    fun `should inform to the user that the directory does not exist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(file.exists()).thenReturn(false)
+
+        metadataController.getMetadata()
+
+        verify(jFileChooser).fileSelectionMode = JFileChooser.FILES_AND_DIRECTORIES
+        verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, ValueEvent(file.toString()))
+    }
+
     private fun setFileChooserExpectations() {
         `when`(jFileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION)
         `when`(jFileChooser.selectedFile).thenReturn(file)
