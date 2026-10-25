@@ -72,4 +72,11 @@ internal class ScrobblerControllerTest {
         verify(scrobblerHelper).send(metadata)
         assertEquals(ActionResult.ERROR, result)
     }
+
+    @Test
+    fun `should setup scrobbler`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        scrobblerController.setup()
+        verify(scrobblerHelper).setControlEngine(controlEngine)
+    }
 }
