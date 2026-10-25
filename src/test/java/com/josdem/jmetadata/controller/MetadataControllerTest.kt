@@ -84,6 +84,17 @@ internal class MetadataControllerTest {
         verify(controlEngine).fireEvent(Events.DIRECTORY_NOT_EXIST, ValueEvent(file.toString()))
     }
 
+    @Test
+    fun `should detect user selects cancel option`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(jFileChooser.showOpenDialog(null)).thenReturn(JFileChooser.CANCEL_OPTION)
+
+        metadataController.getMetadata()
+
+        verify(controlEngine).fireEvent(Events.DIRECTORY_SELECTED_CANCEL)
+    }
+
     private fun setFileChooserExpectations() {
         `when`(jFileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION)
         `when`(jFileChooser.selectedFile).thenReturn(file)
