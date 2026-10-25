@@ -17,6 +17,8 @@
 package com.josdem.jmetadata.controller
 
 import com.josdem.jmetadata.event.Events
+import com.josdem.jmetadata.model.Metadata
+import com.josdem.jmetadata.model.Model
 import com.josdem.jmetadata.service.MetadataService
 import org.asmatron.messengine.ControlEngine
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator
@@ -93,6 +95,26 @@ internal class MetadataControllerTest {
         metadataController.getMetadata()
 
         verify(controlEngine).fireEvent(Events.DIRECTORY_SELECTED_CANCEL)
+    }
+
+    @Test
+    fun `should get metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setFileChooserExpectations()
+        `when`(file.exists()).thenReturn(true)
+        val metadata1 = Metadata()
+        val metadata2 = Metadata()
+        metadata1.title = "Wish you were here"
+        metadata2.title = "The man who sold the world"
+        val metadataList = listOf(metadata1, metadata2)
+        `when`(metadataService.extractMetadata(file)).thenReturn(metadataList)
+
+        metadataController.getMetadata()
+
+        verify(jFileChooser).fileSelectionMode = JFileChooser.FILES_AND_DIRECTORIES
+        verify(controlEngine).set(Model.METADATA, metadataList, null)
+        verify(controlEngine).fireEvent(Events.LOAD, ValueEvent(metadataList))
+        verify(controlEngine).fireEvent(Events.LOADED)
     }
 
     private fun setFileChooserExpectations() {
