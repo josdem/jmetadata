@@ -1,0 +1,66 @@
+/*
+   Copyright 2026 Jose Morales contact@josdem.io
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+package com.josdem.jmetadata.controller
+
+import com.josdem.jmetadata.action.ActionResult
+import com.josdem.jmetadata.helper.ExporterHelper
+import com.josdem.jmetadata.model.ExportPackage
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
+import org.slf4j.LoggerFactory
+import java.io.IOException
+import kotlin.test.assertEquals
+
+internal class ExporterControllerTest {
+    private lateinit var exporterController: ExporterController
+
+    @Mock private lateinit var exportPackage: ExportPackage
+
+    @Mock private lateinit var exporterHelper: ExporterHelper
+
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    @BeforeEach
+    fun setUp() {
+        MockitoAnnotations.openMocks(this)
+        exporterController = ExporterController(exporterHelper)
+    }
+
+    @Test
+    fun `should send metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(exporterHelper.export(exportPackage)).thenReturn(ActionResult.EXPORTED)
+
+        val result = exporterController.sendMetadata(exportPackage)
+
+        assertEquals(ActionResult.EXPORTED, result)
+    }
+
+    @Test
+    fun `should report an error when sending metadata`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        `when`(exporterHelper.export(exportPackage)).thenThrow(IOException())
+
+        val result = exporterController.sendMetadata(exportPackage)
+
+        assertEquals(ActionResult.ERROR, result)
+    }
+}
