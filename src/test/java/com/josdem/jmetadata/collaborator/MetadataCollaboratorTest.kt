@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory
 import kotlin.test.assertEquals
 
 private const val ARTIST = "Boris Brejcha"
+private const val ALBUM = "Feuerfalter Part 02"
 
 internal class MetadataCollaboratorTest {
     private val metadataCollaborator = MetadataCollaborator()
@@ -58,6 +59,16 @@ internal class MetadataCollaboratorTest {
     }
 
     @Test
+    fun `should validate the collection has different artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.artist).thenReturn(ARTIST)
+        `when`(metadataTwo.artist).thenReturn("Paul Van Dyk")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.artist)
+    }
+
+    @Test
     fun `should validate an invalid artist`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
@@ -68,13 +79,13 @@ internal class MetadataCollaboratorTest {
     }
 
     @Test
-    fun `should validate the collection has different artist`(testInfo: TestInfo) {
+    fun `should get album`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
-        `when`(metadataOne.artist).thenReturn(ARTIST)
-        `when`(metadataTwo.artist).thenReturn("Paul Van Dyk")
+        `when`(metadataOne.album).thenReturn(ALBUM)
+        `when`(metadataTwo.album).thenReturn(ALBUM)
 
-        assertEquals(StringUtils.EMPTY, metadataCollaborator.artist)
+        assertEquals(ALBUM, metadataCollaborator.album)
     }
 
     private fun setMetadataExpectations() {
