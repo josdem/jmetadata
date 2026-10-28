@@ -57,11 +57,14 @@ public class MetadataCollaborator {
   }
 
   public String getGenre() {
-    var genres = new ArrayList<>();
-    metadataList.forEach(
-        metadata ->
-            genres.add(Objects.requireNonNull(metadata.getGenre(), "genre cannot be null")));
-    return genres.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getGenre() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid Genre");
+            });
+    return metadataList.stream().map(Metadata::getGenre).distinct().count() <= 1
         ? metadataList.getFirst().getGenre()
         : StringUtils.EMPTY;
   }

@@ -31,6 +31,7 @@ import kotlin.test.assertEquals
 
 private const val ARTIST = "Boris Brejcha"
 private const val ALBUM = "Feuerfalter Part 02"
+private const val GENRE = "Tech House"
 
 internal class MetadataCollaboratorTest {
     private val metadataCollaborator = MetadataCollaborator()
@@ -106,6 +107,36 @@ internal class MetadataCollaboratorTest {
         `when`(metadataTwo.album).thenReturn(null)
 
         assertThrows<BusinessException> { metadataCollaborator.album }
+    }
+
+    @Test
+    fun `should get genre`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.genre).thenReturn(GENRE)
+        `when`(metadataTwo.genre).thenReturn(GENRE)
+
+        assertEquals(GENRE, metadataCollaborator.genre)
+    }
+
+    @Test
+    fun `should validate the collection has different genre`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.genre).thenReturn(GENRE)
+        `when`(metadataTwo.genre).thenReturn("Trance")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.genre)
+    }
+
+    @Test
+    fun `should validate an invalid genre`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.genre).thenReturn(null)
+        `when`(metadataTwo.genre).thenReturn(null)
+
+        assertThrows<BusinessException> { metadataCollaborator.genre }
     }
 
     private fun setMetadataExpectations() {
