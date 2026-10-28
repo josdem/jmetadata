@@ -70,10 +70,14 @@ public class MetadataCollaborator {
   }
 
   public String getYear() {
-    var years = new ArrayList<>();
-    metadataList.forEach(
-        metadata -> years.add(Objects.requireNonNull(metadata.getYear(), "year cannot be null")));
-    return years.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getYear() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid Year");
+            });
+    return metadataList.stream().map(Metadata::getYear).distinct().count() <= 1
         ? metadataList.getFirst().getYear()
         : StringUtils.EMPTY;
   }

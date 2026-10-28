@@ -32,6 +32,7 @@ import kotlin.test.assertEquals
 private const val ARTIST = "Boris Brejcha"
 private const val ALBUM = "Feuerfalter Part 02"
 private const val GENRE = "Tech House"
+private const val YEAR = "2024"
 
 internal class MetadataCollaboratorTest {
     private val metadataCollaborator = MetadataCollaborator()
@@ -137,6 +138,36 @@ internal class MetadataCollaboratorTest {
         `when`(metadataTwo.genre).thenReturn(null)
 
         assertThrows<BusinessException> { metadataCollaborator.genre }
+    }
+
+    @Test
+    fun `should get year`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.year).thenReturn(YEAR)
+        `when`(metadataTwo.year).thenReturn(YEAR)
+
+        assertEquals(YEAR, metadataCollaborator.year)
+    }
+
+    @Test
+    fun `should validate the collection has different year`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.year).thenReturn(YEAR)
+        `when`(metadataTwo.year).thenReturn("Trance")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.year)
+    }
+
+    @Test
+    fun `should validate an invalid year`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.year).thenReturn(null)
+        `when`(metadataTwo.year).thenReturn(null)
+
+        assertThrows<BusinessException> { metadataCollaborator.year }
     }
 
     private fun setMetadataExpectations() {
