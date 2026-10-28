@@ -83,12 +83,14 @@ public class MetadataCollaborator {
   }
 
   public String getTotalTracks() {
-    var tracks = new ArrayList<>();
-    metadataList.forEach(
-        metadata ->
-            tracks.add(
-                Objects.requireNonNull(metadata.getTotalTracks(), "totalTracks cannot be null")));
-    return tracks.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getTotalTracks() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid total tracks");
+            });
+    return metadataList.stream().map(Metadata::getTotalTracks).distinct().count() <= 1
         ? metadataList.getFirst().getTotalTracks()
         : StringUtils.EMPTY;
   }
