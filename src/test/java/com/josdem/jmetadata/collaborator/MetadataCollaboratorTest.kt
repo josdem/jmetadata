@@ -35,6 +35,7 @@ private const val GENRE = "Tech House"
 private const val YEAR = "2024"
 private const val TOTAL_TRACKS = "8"
 private const val CD_NUMBER = "1"
+private const val TOTAL_CDS = "2"
 
 internal class MetadataCollaboratorTest {
     private val metadataCollaborator = MetadataCollaborator()
@@ -230,6 +231,36 @@ internal class MetadataCollaboratorTest {
         `when`(metadataTwo.cdNumber).thenReturn(null)
 
         assertThrows<BusinessException> { metadataCollaborator.cdNumber }
+    }
+
+    @Test
+    fun `should get total cds`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.totalCds).thenReturn(TOTAL_CDS)
+        `when`(metadataTwo.totalCds).thenReturn(TOTAL_CDS)
+
+        assertEquals(TOTAL_CDS, metadataCollaborator.totalCds)
+    }
+
+    @Test
+    fun `should validate the collection has different total cds`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.totalCds).thenReturn(TOTAL_CDS)
+        `when`(metadataTwo.totalCds).thenReturn("Trance")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.totalCds)
+    }
+
+    @Test
+    fun `should validate an invalid total cds`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.totalCds).thenReturn(null)
+        `when`(metadataTwo.totalCds).thenReturn(null)
+
+        assertThrows<BusinessException> { metadataCollaborator.totalCds }
     }
 
     private fun setMetadataExpectations() {

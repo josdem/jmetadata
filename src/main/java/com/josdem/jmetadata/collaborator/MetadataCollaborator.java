@@ -18,9 +18,7 @@ package com.josdem.jmetadata.collaborator;
 
 import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Metadata;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -96,11 +94,14 @@ public class MetadataCollaborator {
   }
 
   public String getTotalCds() {
-    var cds = new ArrayList<>();
-    metadataList.forEach(
-        metadata ->
-            cds.add(Objects.requireNonNull(metadata.getTotalCds(), "totalCds cannot be null")));
-    return cds.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getTotalCds() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid total CDS");
+            });
+    return metadataList.stream().map(Metadata::getTotalCds).distinct().count() <= 1
         ? metadataList.getFirst().getTotalCds()
         : StringUtils.EMPTY;
   }
