@@ -18,6 +18,7 @@ package com.josdem.jmetadata.collaborator
 
 import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.model.Metadata
+import org.apache.commons.lang3.StringUtils
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -60,10 +61,20 @@ internal class MetadataCollaboratorTest {
     fun `should validate an invalid artist`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
-        `when`(metadataOne.artist).thenReturn(ARTIST)
+        `when`(metadataOne.artist).thenReturn(null)
         `when`(metadataTwo.artist).thenReturn(null)
 
         assertThrows<BusinessException> { metadataCollaborator.artist }
+    }
+
+    @Test
+    fun `should validate the collection has different artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.artist).thenReturn(ARTIST)
+        `when`(metadataTwo.artist).thenReturn("Paul Van Dyk")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.artist)
     }
 
     private fun setMetadataExpectations() {
