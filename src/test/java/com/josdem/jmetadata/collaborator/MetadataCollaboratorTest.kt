@@ -34,6 +34,7 @@ private const val ALBUM = "Feuerfalter Part 02"
 private const val GENRE = "Tech House"
 private const val YEAR = "2024"
 private const val TOTAL_TRACKS = "8"
+private const val CD_NUMBER = "1"
 
 internal class MetadataCollaboratorTest {
     private val metadataCollaborator = MetadataCollaborator()
@@ -199,6 +200,36 @@ internal class MetadataCollaboratorTest {
         `when`(metadataTwo.totalTracks).thenReturn(null)
 
         assertThrows<BusinessException> { metadataCollaborator.totalTracks }
+    }
+
+    @Test
+    fun `should get cd number`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.cdNumber).thenReturn(CD_NUMBER)
+        `when`(metadataTwo.cdNumber).thenReturn(CD_NUMBER)
+
+        assertEquals(CD_NUMBER, metadataCollaborator.cdNumber)
+    }
+
+    @Test
+    fun `should validate the collection has different cd number`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.cdNumber).thenReturn(CD_NUMBER)
+        `when`(metadataTwo.cdNumber).thenReturn("2")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.cdNumber)
+    }
+
+    @Test
+    fun `should validate an invalid cd number`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.cdNumber).thenReturn(null)
+        `when`(metadataTwo.cdNumber).thenReturn(null)
+
+        assertThrows<BusinessException> { metadataCollaborator.cdNumber }
     }
 
     private fun setMetadataExpectations() {

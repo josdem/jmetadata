@@ -106,12 +106,14 @@ public class MetadataCollaborator {
   }
 
   public String getCdNumber() {
-    var cdNumber = new ArrayList<>();
-    metadataList.forEach(
-        metadata ->
-            cdNumber.add(
-                Objects.requireNonNull(metadata.getCdNumber(), "cdNumber cannot be null")));
-    return cdNumber.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getCdNumber() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid CD number");
+            });
+    return metadataList.stream().map(Metadata::getCdNumber).distinct().count() <= 1
         ? metadataList.getFirst().getCdNumber()
         : StringUtils.EMPTY;
   }
