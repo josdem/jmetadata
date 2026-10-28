@@ -18,6 +18,7 @@ package com.josdem.jmetadata.collaborator
 
 import org.jaudiotagger.audio.AudioHeader
 import org.jaudiotagger.tag.Tag
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -44,5 +45,17 @@ internal class JAudioTaggerCollaboratorTest {
     fun `should validate tag and header`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         assertTrue { jAudioTaggerCollaborator.isValid(tag, header) }
+    }
+
+    @Test
+    fun `should detect invalid tag`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        assertFalse { jAudioTaggerCollaborator.isValid(null, header) }
+    }
+
+    @Test
+    fun `should detect invalid header`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        assertFalse { jAudioTaggerCollaborator.isValid(tag, null) }
     }
 }
