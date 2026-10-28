@@ -79,6 +79,16 @@ internal class MetadataCollaboratorTest {
     }
 
     @Test
+    fun `should get album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.album).thenReturn(ALBUM)
+        `when`(metadataTwo.album).thenReturn(ALBUM)
+
+        assertEquals(ALBUM, metadataCollaborator.album)
+    }
+
+    @Test
     fun `should validate the collection has different album`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
@@ -89,13 +99,13 @@ internal class MetadataCollaboratorTest {
     }
 
     @Test
-    fun `should get album`(testInfo: TestInfo) {
+    fun `should validate an invalid album`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
-        `when`(metadataOne.album).thenReturn(ALBUM)
-        `when`(metadataTwo.album).thenReturn(ALBUM)
+        `when`(metadataOne.album).thenReturn(null)
+        `when`(metadataTwo.album).thenReturn(null)
 
-        assertEquals(ALBUM, metadataCollaborator.album)
+        assertThrows<BusinessException> { metadataCollaborator.album }
     }
 
     private fun setMetadataExpectations() {

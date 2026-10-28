@@ -34,7 +34,7 @@ public class MetadataCollaborator {
         .filter(metadata -> metadata.getArtist() == null)
         .findAny()
         .ifPresent(
-            artist -> {
+            it -> {
               throw new BusinessException("Invalid artist");
             });
 
@@ -44,11 +44,14 @@ public class MetadataCollaborator {
   }
 
   public String getAlbum() {
-    var albums = new ArrayList<>();
-    metadataList.forEach(
-        metadata ->
-            albums.add(Objects.requireNonNull(metadata.getAlbum(), "album cannot be null")));
-    return albums.stream().distinct().count() <= 1
+    metadataList.stream()
+        .filter(metadata -> metadata.getAlbum() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid album");
+            });
+    return metadataList.stream().map(Metadata::getAlbum).distinct().count() <= 1
         ? metadataList.getFirst().getAlbum()
         : StringUtils.EMPTY;
   }
