@@ -79,6 +79,16 @@ internal class MetadataCollaboratorTest {
     }
 
     @Test
+    fun `should validate the collection has different album`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.album).thenReturn(ALBUM)
+        `when`(metadataTwo.album).thenReturn("Elements Of Life")
+
+        assertEquals(StringUtils.EMPTY, metadataCollaborator.album)
+    }
+
+    @Test
     fun `should get album`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         setMetadataExpectations()
