@@ -16,10 +16,12 @@
 
 package com.josdem.jmetadata.collaborator
 
+import com.josdem.jmetadata.exception.BusinessException
 import com.josdem.jmetadata.model.Metadata
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
@@ -54,9 +56,19 @@ internal class MetadataCollaboratorTest {
         assertEquals(ARTIST, metadataCollaborator.artist)
     }
 
+    @Test
+    fun `should validate an invalid artist`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        setMetadataExpectations()
+        `when`(metadataOne.artist).thenReturn(ARTIST)
+        `when`(metadataTwo.artist).thenReturn(null)
+
+        assertThrows<BusinessException> { metadataCollaborator.artist }
+    }
+
     private fun setMetadataExpectations() {
         metadataList.add(metadataOne)
         metadataList.add(metadataTwo)
-        metadataCollaborator.setMetadatas(metadataList)
+        metadataCollaborator.setMetadataList(metadataList)
     }
 }
