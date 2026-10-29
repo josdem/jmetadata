@@ -136,7 +136,7 @@ public class MetadataDialog extends AllDialog {
     this.message = message;
     imageUtils = new ImageUtils(new ImageServiceImpl(), new FileUtils());
     List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-    metadataCollaborator.setMetadatas(metadatas);
+    metadataCollaborator.setMetadataList(metadatas);
     initializeContentPane();
     getTitleLabel().setText(dialogTitle());
     MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();

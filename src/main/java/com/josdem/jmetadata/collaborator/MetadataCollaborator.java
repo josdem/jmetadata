@@ -16,88 +16,106 @@
 
 package com.josdem.jmetadata.collaborator;
 
+import com.josdem.jmetadata.exception.BusinessException;
 import com.josdem.jmetadata.model.Metadata;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+@Setter
 public class MetadataCollaborator {
 
-  private List<Metadata> metadatas;
-
-  public void setMetadatas(List<Metadata> metadatas) {
-    this.metadatas = metadatas;
-  }
+  private List<Metadata> metadataList;
 
   public String getArtist() {
-    var artists = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            artists.add(Objects.requireNonNull(metadata.getArtist(), "artist cannot be null")));
-    return artists.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getArtist()
+    metadataList.stream()
+        .filter(metadata -> metadata.getArtist() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid artist");
+            });
+
+    return metadataList.stream().map(Metadata::getArtist).distinct().count() <= 1
+        ? metadataList.getFirst().getArtist()
         : StringUtils.EMPTY;
   }
 
   public String getAlbum() {
-    var albums = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            albums.add(Objects.requireNonNull(metadata.getAlbum(), "album cannot be null")));
-    return albums.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getAlbum()
+    metadataList.stream()
+        .filter(metadata -> metadata.getAlbum() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid album");
+            });
+    return metadataList.stream().map(Metadata::getAlbum).distinct().count() <= 1
+        ? metadataList.getFirst().getAlbum()
         : StringUtils.EMPTY;
   }
 
   public String getGenre() {
-    var genres = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            genres.add(Objects.requireNonNull(metadata.getGenre(), "genre cannot be null")));
-    return genres.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getGenre()
+    metadataList.stream()
+        .filter(metadata -> metadata.getGenre() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid Genre");
+            });
+    return metadataList.stream().map(Metadata::getGenre).distinct().count() <= 1
+        ? metadataList.getFirst().getGenre()
         : StringUtils.EMPTY;
   }
 
   public String getYear() {
-    var years = new ArrayList<>();
-    metadatas.forEach(
-        metadata -> years.add(Objects.requireNonNull(metadata.getYear(), "year cannot be null")));
-    return years.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getYear()
+    metadataList.stream()
+        .filter(metadata -> metadata.getYear() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid Year");
+            });
+    return metadataList.stream().map(Metadata::getYear).distinct().count() <= 1
+        ? metadataList.getFirst().getYear()
         : StringUtils.EMPTY;
   }
 
   public String getTotalTracks() {
-    var tracks = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            tracks.add(
-                Objects.requireNonNull(metadata.getTotalTracks(), "totalTracks cannot be null")));
-    return tracks.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getTotalTracks()
+    metadataList.stream()
+        .filter(metadata -> metadata.getTotalTracks() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid total tracks");
+            });
+    return metadataList.stream().map(Metadata::getTotalTracks).distinct().count() <= 1
+        ? metadataList.getFirst().getTotalTracks()
         : StringUtils.EMPTY;
   }
 
   public String getTotalCds() {
-    var cds = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            cds.add(Objects.requireNonNull(metadata.getTotalCds(), "totalCds cannot be null")));
-    return cds.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getTotalCds()
+    metadataList.stream()
+        .filter(metadata -> metadata.getTotalCds() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid total CDS");
+            });
+    return metadataList.stream().map(Metadata::getTotalCds).distinct().count() <= 1
+        ? metadataList.getFirst().getTotalCds()
         : StringUtils.EMPTY;
   }
 
   public String getCdNumber() {
-    var cdNumber = new ArrayList<>();
-    metadatas.forEach(
-        metadata ->
-            cdNumber.add(
-                Objects.requireNonNull(metadata.getCdNumber(), "cdNumber cannot be null")));
-    return cdNumber.stream().distinct().count() <= 1
-        ? metadatas.getFirst().getCdNumber()
+    metadataList.stream()
+        .filter(metadata -> metadata.getCdNumber() == null)
+        .findAny()
+        .ifPresent(
+            it -> {
+              throw new BusinessException("Invalid CD number");
+            });
+    return metadataList.stream().map(Metadata::getCdNumber).distinct().count() <= 1
+        ? metadataList.getFirst().getCdNumber()
         : StringUtils.EMPTY;
   }
 }
